@@ -1,0 +1,129 @@
+/*
+ * Typography for rich-text output.
+ *
+ * KERN is class-based: only `html` and `body` carry element selectors, everything
+ * else needs a kern-* class. A rich-text editor produces bare <p>, <ul>, <a> and
+ * <h2>, so without this file that content renders completely unstyled.
+ *
+ * Two alternatives were considered and rejected:
+ *   - Injecting classes server-side via parseFunc/HTMLparser. Robust in principle,
+ *     but externalBlocks makes lists and tables a special case and the behaviour
+ *     would need verifying per TYPO3 major for something purely cosmetic.
+ *   - Having CKEditor write the classes. Editors can then delete them, and existing
+ *     content would only pick them up on re-save.
+ *
+ * So the bridge is a stylesheet, scoped twice: `.kernt3-rte` for the frontend and
+ * `.ck-content` for the editing view. One rule set, so the editor shows what the
+ * page will show. Values come from KERN's own tokens, so a change to KERN's scale is
+ * inherited rather than re-typed.
+ */
+.kernt3-rte,
+.ck-content {
+    font-family: var(--kern-typography-font-family-default, "Fira Sans"), system-ui, sans-serif;
+    color: var(--kern-color-layout-text-default, #1a1a1a);
+}
+
+.kernt3-rte > :first-child,
+.ck-content > :first-child {
+    margin-top: 0;
+}
+
+.kernt3-rte > :last-child,
+.ck-content > :last-child {
+    margin-bottom: 0;
+}
+
+.kernt3-rte p,
+.ck-content p {
+    margin-block: var(--kern-metric-space-default, 16px);
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
+
+.kernt3-rte h2,
+.kernt3-rte h3,
+.kernt3-rte h4,
+.ck-content h2,
+.ck-content h3,
+.ck-content h4 {
+    margin-block: var(--kern-metric-space-large, 24px) var(--kern-metric-space-small, 8px);
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    line-height: 1.2;
+}
+
+.kernt3-rte h2, .ck-content h2 { font-size: 1.75rem; }
+.kernt3-rte h3, .ck-content h3 { font-size: 1.375rem; }
+.kernt3-rte h4, .ck-content h4 { font-size: 1.125rem; }
+
+.kernt3-rte ul,
+.kernt3-rte ol,
+.ck-content ul,
+.ck-content ol {
+    margin-block: var(--kern-metric-space-default, 16px);
+    padding-left: var(--kern-metric-space-large, 24px);
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
+
+.kernt3-rte li,
+.ck-content li {
+    margin-block: var(--kern-metric-space-x-small, 4px);
+}
+
+.kernt3-rte a,
+.ck-content a {
+    color: var(--kern-color-action-default, #0b4f9e);
+    text-decoration: underline;
+}
+
+/* Same focus ring KERN applies everywhere, so rich-text links do not become the one
+ * place on the page where focus looks different. */
+.kernt3-rte a:focus-visible,
+.ck-content a:focus-visible {
+    outline: 4px solid var(--kern-color-action-focus-default-contextual, #454b6b);
+    outline-offset: 0;
+}
+
+/* Wide tables scroll inside their own box; the wrapper carries tabindex so keyboard
+ * users can reach the scroll area, the same rule KERN applies to its own tables. */
+.kernt3-rte .kern-table-responsive,
+.ck-content table {
+    overflow-x: auto;
+}
+
+.kernt3-rte table,
+.ck-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+}
+
+.kernt3-rte caption,
+.ck-content caption {
+    text-align: left;
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    padding-block-end: var(--kern-metric-space-small, 8px);
+}
+
+.kernt3-rte th,
+.kernt3-rte td,
+.ck-content th,
+.ck-content td {
+    padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
+    border-bottom: var(--kern-metric-border-width-light, 1px) solid
+        var(--kern-color-layout-border, #e5e5e5);
+    text-align: left;
+    vertical-align: top;
+}
+
+.kernt3-rte th,
+.ck-content th {
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+}
+
+@media (forced-colors: active) {
+    .kernt3-rte th,
+    .kernt3-rte td {
+        border-bottom: 1px solid CanvasText;
+    }
+}

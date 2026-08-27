@@ -1,0 +1,23 @@
+<f:comment>
+    Asset inclusion lives in Fluid rather than TypoScript so the boolean site
+    settings stay booleans. TypoScript constant substitution would flatten them into
+    strings and force conditions around every include.
+</f:comment>
+<f:if condition="{site.settings.kernUx.assets.includeCss}">
+    <f:asset.css identifier="kern-ux" href="{site.settings.kernUx.assets.basePath}kern.min.css" />
+</f:if>
+<f:if condition="{site.settings.kernUx.assets.includeFonts}">
+    <f:asset.css identifier="kern-ux-fira-sans" href="{site.settings.kernUx.assets.basePath}fonts/fira-sans.css" />
+</f:if>
+<f:if condition="{site.settings.kernUx.assets.includeNotoSans}">
+    <f:asset.css identifier="kern-ux-noto-sans" href="{site.settings.kernUx.assets.basePath}fonts/noto-sans.css" />
+</f:if>
+<f:asset.css identifier="kern-ux-kernt3" href="EXT:kern_ux/Resources/Public/Css/kernt3.css" />
+<f:comment>
+    rte.css is scoped to .kernt3-rte for the frontend and .ck-content for the editing
+    view, so both show the same thing. It was previously wired into the CKEditor
+    preset only, which left every rich-text block unstyled on the rendered page.
+</f:comment>
+<f:asset.css identifier="kern-ux-rte" href="EXT:kern_ux/Resources/Public/Css/rte.css" />
+<f:asset.script identifier="kern-ux-navigation" src="EXT:kern_ux/Resources/Public/JavaScript/navigation.js" />
+<f:asset.script identifier="kern-ux-dialog" src="EXT:kern_ux/Resources/Public/JavaScript/dialog.js" />

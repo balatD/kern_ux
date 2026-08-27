@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: Static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-progress --no-interaction
+
+      - name: Lint PHP
+        run: find Classes Tests -name '*.php' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
+
+      - name: Coding standards
+        run: composer cgl:check
+
+      - name: PHPStan
+        run: composer phpstan
+
+  tests:
+    name: T3 ${{ matrix.typo3 }} / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Content Blocks 1.x is TYPO3 13 only and 2.x is 14 only, so each major
+        # resolves a different dependency graph and both have to be exercised.
+        typo3: ['13', '14']
+        php: ['8.2', '8.3', '8.4']
+        dependencies: ['highest']
+        include:
+          - typo3: '13'
+            php: '8.2'
+            dependencies: 'lowest'
+          - typo3: '14'
+            php: '8.2'
+            dependencies: 'lowest'
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: intl, mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Pin TYPO3 ${{ matrix.typo3 }}
+        run: |
+          CONSTRAINT="^${{ matrix.typo3 }}.4"
+          if [ "${{ matrix.typo3 }}" = "14" ]; then CONSTRAINT="^14.3"; fi
+          composer require --no-update --no-interaction "typo3/cms-core:${CONSTRAINT}"
+          composer require --no-update --no-interaction --dev "typo3/cms-form:${CONSTRAINT}" "typo3/cms-rte-ckeditor:${CONSTRAINT}"
+
+      - name: Install dependencies (${{ matrix.dependencies }})
+        run: |
+          # Two steps: typo3/class-alias-loader is a Composer plugin whose major
+          # differs per TYPO3 version, so the autoload dump needs a fresh process.
+          if [ "${{ matrix.dependencies }}" = "lowest" ]; then
+            composer update --no-progress --no-interaction --no-autoloader --prefer-lowest --prefer-stable
+          else
+            composer update --no-progress --no-interaction --no-autoloader
+          fi
+          composer dump-autoload --no-interaction
+
+      - name: Unit tests
+        run: composer test:unit
+
+      - name: Functional tests
+        env:
+          typo3DatabaseDriver: pdo_sqlite
+        run: composer test:functional
+
+  a11y:
+    name: Accessibility (axe)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: composer update --no-progress --no-interaction
+
+      # Both commands run without a database: the installer only fetches files and
+      # the dump only renders Fluid, so no TYPO3 instance has to be set up here.
+      - name: Fetch the pinned KERN distribution
+        run: vendor/bin/typo3 kern-ux:assets:install
+
+      - name: Dump the component gallery
+        run: vendor/bin/typo3 kern-ux:styleguide:dump --target=var/styleguide
+
+      - name: Install axe and Chromium
+        working-directory: Tests/A11y
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Run axe against the gallery
+        working-directory: Tests/A11y
+        run: npm test

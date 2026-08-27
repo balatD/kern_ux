@@ -1,0 +1,29 @@
+<f:comment>
+    Each status gets its own id and the step link points at it with aria-describedby,
+    so a screen reader announces "Persönliche Daten, Erledigt" instead of leaving the
+    badge as a stray label somewhere after the link.
+
+    A step without a link renders as plain text rather than a dead link - that is how
+    a step which cannot be started yet should behave.
+
+    The numbering checkbox reaches the list as well as the items: without numbers the
+    steps are a set rather than a sequence, and KERN renders that variant as a ul. Left
+    unwired it produced an ol whose items showed no numbers at all.
+</f:comment><f:variable name="level" value="2"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="level" value="{data.header_layout}" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><f:if condition="{data.tx_kernux_tasklist_steps}"><k:organism.taskList
+    title="{f:if(condition: '{data.header_layout} != 100', then: data.header)}"
+    level="{level}"
+    numbered="{data.tx_kernux_tasklist_numbered}"
+><f:for each="{data.tx_kernux_tasklist_steps}" as="step" iteration="i"><k:molecule.taskListItem
+    title="{step.title}"
+    number="{f:if(condition: data.tx_kernux_tasklist_numbered, then: i.cycle, else: 0)}"
+    link="{f:uri.typolink(parameter: step.link)}"
+    status="{step.status}"
+    statusVariant="{step.statusVariant}"
+    statusId="{kux:uniqueId(prefix: 'task', uid: data.uid, suffix: 'status-{i.cycle}')}"
+/></f:for></k:organism.taskList></f:if></k:molecule.section>

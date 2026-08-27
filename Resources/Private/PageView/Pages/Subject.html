@@ -1,0 +1,15 @@
+<f:layout name="Default" />
+<f:section name="Main">
+    <div class="kern-container kernt3-content-area">
+        <div class="kern-grid kern-grid-cols-1 kern-grid-cols-12-lg kern-gap-lg">
+            <div class="kern-col-12 kern-col-8-lg">
+                <f:cObject typoscriptObjectPath="lib.kernUx.content.main" />
+            </div>
+            <f:if condition="{f:cObject(typoscriptObjectPath: 'lib.kernUx.content.aside')}">
+                <aside class="kern-col-12 kern-col-4-lg">
+                    <f:cObject typoscriptObjectPath="lib.kernUx.content.aside" />
+                </aside>
+            </f:if>
+        </div>
+    </div>
+</f:section>

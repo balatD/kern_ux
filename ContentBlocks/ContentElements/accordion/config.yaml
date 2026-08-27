@@ -1,0 +1,22 @@
+name: kern-ux/accordion
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: panels
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 255
+      - identifier: text
+        type: Textarea
+        enableRichtext: true
+        richtextConfiguration: kern_ux
+      - identifier: expanded
+        type: Checkbox
+        default: 0

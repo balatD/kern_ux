@@ -1,0 +1,24 @@
+name: kern-ux/alert
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: variant
+    type: Select
+    renderType: selectSingle
+    default: info
+    items:
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.info'
+        value: info
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.success'
+        value: success
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.warning'
+        value: warning
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.danger'
+        value: danger
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux

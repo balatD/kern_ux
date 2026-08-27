@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    KERN wraps the select in an extra div so it can draw its own chevron - the wrapper
+    is not optional decoration, the control looks unfinished without it.
+</f:comment>
+<formvh:renderRenderable renderable="{element}">
+    <f:render partial="Field/Field" arguments="{element: element}" contentAs="elementContent">
+        <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <div class="kern-form-input__select-wrapper">
+                <f:form.select
+                    property="{element.identifier}"
+                    id="{element.uniqueIdentifier}"
+                    options="{formvh:translateElementProperty(element: element, property: 'options')}"
+                    class="kern-form-input__select"
+                    errorClass="kern-form-input__select--error"
+                    prependOptionLabel="{formvh:translateElementProperty(element: element, property: 'prependOptionLabel')}"
+                    prependOptionValue="{formvh:translateElementProperty(element: element, property: 'prependOptionValue')}"
+                    additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription)}"
+                />
+            </div>
+        </f:form.validationResults>
+    </f:render>
+</formvh:renderRenderable>
+</html>

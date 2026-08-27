@@ -1,0 +1,21 @@
+name: kern-ux/gallery
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: images
+    type: File
+    minitems: 1
+    allowed: common-image-types
+  - identifier: columns
+    type: SelectNumber
+    default: 3
+    items:
+      - label: '2'
+        value: 2
+      - label: '3'
+        value: 3
+      - label: '4'
+        value: 4

@@ -1,0 +1,28 @@
+<f:argument name="spaceBefore" type="string" optional="{true}" default=""
+            description="Value of the core space_before_class field."
+/><f:argument name="spaceAfter" type="string" optional="{true}" default=""
+            description="Value of the core space_after_class field."
+/><f:argument name="tag" type="string" optional="{true}" default="div"
+            description="div | section | article. Use section or article only where the content really is one."
+/><f:argument name="id" type="string" optional="{true}" default=""
+/><f:comment>
+    The wrapper every content block sits in. It exists because a block usually emits
+    several sibling elements (a heading plus its body), and vertical spacing has to
+    attach to something that encloses all of them.
+
+    The base class is always there, and that is what carries the default vertical
+    rhythm between blocks. Without it every element sat flush against the next, because
+    core's "default" spacing value means "nothing" and that is what most blocks have -
+    so the page had no rhythm at all unless an editor set one per block.
+
+    An editor's own choice is added as a KERN margin utility and wins: the default is
+    declared inside :where(), which has no specificity, so any class beats it.
+</f:comment><f:variable name="classes" value="kernt3-content {kux:spacingClass(before: spaceBefore, after: spaceAfter)}"
+/><f:variable name="classes" value="{classes -> f:format.trim()}"
+/><f:spaceless>
+<f:switch expression="{tag}">
+    <f:case value="section"><section<f:if condition="{id}"> id="{id}"</f:if><f:if condition="{classes}"> class="{classes}"</f:if>><f:slot /></section></f:case>
+    <f:case value="article"><article<f:if condition="{id}"> id="{id}"</f:if><f:if condition="{classes}"> class="{classes}"</f:if>><f:slot /></article></f:case>
+    <f:defaultCase><div<f:if condition="{id}"> id="{id}"</f:if><f:if condition="{classes}"> class="{classes}"</f:if>><f:slot /></div></f:defaultCase>
+</f:switch>
+</f:spaceless>

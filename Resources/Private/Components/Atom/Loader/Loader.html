@@ -1,0 +1,12 @@
+<f:argument name="visible" type="bool" optional="{true}" default="{true}"
+/><f:argument name="label" type="string" optional="{true}" default=""
+            description="Screen-reader text describing what is loading. Without it the spinner is silent to assistive technology."
+/><f:variable name="classes" value="kern-loader"
+/><f:if condition="{visible}"><f:variable name="classes" value="{classes} kern-loader--visible" /></f:if
+><f:spaceless>
+<div class="{classes}"<f:if condition="{label}"> role="status"</f:if>>
+    <f:if condition="{label}">
+        <span class="kern-sr-only">{label}</span>
+    </f:if>
+</div>
+</f:spaceless>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/sitemap">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Sitemap</source>
+                <target>Sitemap</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>An index of the subpages.</source>
+                <target>Verzeichnis der Unterseiten.</target>
+            </trans-unit>
+            <trans-unit id="startPage.label">
+                <source>Start page</source>
+                <target>Startseite</target>
+            </trans-unit>
+            <trans-unit id="startPage.description">
+                <source>The subpages of this page are listed. Empty uses the current page.</source>
+                <target>Die Unterseiten dieser Seite werden aufgelistet. Leer nutzt die aktuelle Seite.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

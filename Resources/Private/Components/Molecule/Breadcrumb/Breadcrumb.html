@@ -1,0 +1,23 @@
+<f:argument name="items" type="array"
+            description="Ordered trail. Each item needs title and link; the last one is rendered as the current page."
+/><f:argument name="label" type="string" optional="{true}" default=""
+            description="Accessible name of the nav landmark. Needed because a page usually has several. Empty uses the translated default."
+/><f:variable name="labelText" value="{label}"
+/><f:if condition="!{labelText}"><f:variable name="labelText"><f:translate key="breadcrumb.label" extensionName="KernUx" /></f:variable></f:if><f:comment>
+    KERN has no breadcrumb component, so this is ours (kernt3-). Separators are drawn
+    in CSS rather than markup: a chevron in the DOM would be read out between every
+    item. An ordered list because the trail has a direction.
+</f:comment><f:spaceless>
+<nav class="kernt3-breadcrumb" aria-label="{labelText}">
+    <ol class="kern-list">
+        <f:for each="{items}" as="item" iteration="i">
+            <li class="kernt3-breadcrumb__item">
+                <f:if condition="{i.isLast}">
+                    <f:then><span class="kernt3-breadcrumb__current" aria-current="page">{item.title}</span></f:then>
+                    <f:else><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></f:else>
+                </f:if>
+            </li>
+        </f:for>
+    </ol>
+</nav>
+</f:spaceless>

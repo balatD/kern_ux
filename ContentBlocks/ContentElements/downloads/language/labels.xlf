@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/downloads">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Downloads</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A list of files with format and size.</source>
+            </trans-unit>
+            <trans-unit id="files.label">
+                <source>Files</source>
+            </trans-unit>
+            <trans-unit id="files.description">
+                <source>Format and size are read from the file itself, so they cannot go stale. A title on the file is used as the link text.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

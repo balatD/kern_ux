@@ -1,0 +1,9 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.tx_kernux_descriptionlist_entries}"><dl class="kern-description-list{f:if(condition: data.tx_kernux_descriptionlist_stacked, then: ' kern-description-list--col')}"><f:for each="{data.tx_kernux_descriptionlist_entries}" as="entry"><div class="kern-description-list-item"><dt class="kern-description-list-item__key">{entry.term}</dt><dd class="kern-description-list-item__value">{entry.definition}</dd></div></f:for></dl></f:if></k:molecule.section>

@@ -1,0 +1,26 @@
+# Composer / Node
+/vendor/
+/node_modules/
+/composer.lock
+/.Build/
+/package-lock.json
+
+# KERN assets are fetched, never committed (EUPL-1.2, upstream ships no font licences)
+/Resources/Public/Vendor/
+
+# Tooling caches
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+/.phpstan.cache
+/Build/testing-docker/
+
+# Test artefacts
+/var/
+/Tests/A11y/node_modules/
+# Screenshots and traces a browser tool drops here while debugging
+/.playwright-mcp/
+
+# Editors / OS
+/.idea/
+/.vscode/
+.DS_Store

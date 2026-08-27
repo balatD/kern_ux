@@ -1,0 +1,30 @@
+name: kern-ux/button-group
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Spacing
+fields:
+  - identifier: buttons
+    type: Collection
+    labelField: label
+    fields:
+      - identifier: label
+        type: Text
+        required: true
+        max: 255
+      - identifier: link
+        type: Link
+        required: true
+      - identifier: variant
+        type: Select
+        renderType: selectSingle
+        default: ''
+        items:
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.auto'
+            value: ''
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.primary'
+            value: primary
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.secondary'
+            value: secondary
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.tertiary'
+            value: tertiary

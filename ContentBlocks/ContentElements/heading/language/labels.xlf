@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/heading">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Heading</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A heading with an optional kicker and subline.</source>
+            </trans-unit>
+            <trans-unit id="preline.label">
+                <source>Kicker</source>
+            </trans-unit>
+            <trans-unit id="preline.description">
+                <source>Sits above the heading and belongs to it, so it does not add an entry of its own to the document outline.</source>
+            </trans-unit>
+            <trans-unit id="subline.label">
+                <source>Subline</source>
+            </trans-unit>
+            <trans-unit id="subline.description">
+                <source>Sits below the heading and belongs to it in the same way.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

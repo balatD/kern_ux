@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/button-group">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Buttons</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A group of links rendered as KERN buttons.</source>
+            </trans-unit>
+            <trans-unit id="buttons.label">
+                <source>Buttons</source>
+            </trans-unit>
+            <trans-unit id="buttons.label.label">
+                <source>Text</source>
+            </trans-unit>
+            <trans-unit id="buttons.label.description">
+                <source>Name the action, not the mechanism: "Apply for an identity card" rather than "Click here".</source>
+            </trans-unit>
+            <trans-unit id="buttons.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="buttons.variant.label">
+                <source>Emphasis</source>
+            </trans-unit>
+            <trans-unit id="buttons.variant.description">
+                <source>"Automatic" makes the first button primary and every other one secondary, which keeps to one primary action per group.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

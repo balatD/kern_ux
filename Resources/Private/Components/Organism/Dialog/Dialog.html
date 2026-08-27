@@ -1,0 +1,29 @@
+<f:argument name="id" type="string"
+            description="Referenced by the trigger via data-kernt3-dialog."
+/><f:argument name="title" type="string"
+/><f:argument name="level" type="int" optional="{true}" default="2"
+/><f:argument name="closeLabel" type="string" optional="{true}" default=""
+            description="Accessible name of the close button. Empty uses the translated default."
+/><f:variable name="closeLabelText" value="{closeLabel}"
+/><f:if condition="!{closeLabelText}"><f:variable name="closeLabelText"><f:translate key="dialog.close" extensionName="KernUx" /></f:variable></f:if><f:comment>
+    Native <dialog>, which KERN prescribes - but KERN ships no JavaScript for it, so
+    dialog.js supplies showModal(), Escape, backdrop dismissal and focus return.
+
+    aria-labelledby rather than aria-label: the accessible name then IS the visible
+    heading, so what a screen reader announces and what a sighted user reads cannot
+    drift apart.
+</f:comment><f:spaceless>
+<dialog id="{id}" class="kern-dialog" aria-labelledby="{id}-title">
+    <header class="kern-dialog__header">
+        <h{level} class="kern-title kern-title--large" id="{id}-title">{title}</h{level}>
+        <button type="button" class="kern-btn kern-btn--tertiary" data-kernt3-dialog-close>
+            <k:atom.icon name="close" />
+            <span class="kern-label kern-sr-only">{closeLabelText}</span>
+        </button>
+    </header>
+    <section class="kern-dialog__body"><f:slot /></section>
+    <f:if condition="{f:slot(name: 'footer')}">
+        <footer class="kern-dialog__footer"><f:slot name="footer" /></footer>
+    </f:if>
+</dialog>
+</f:spaceless>

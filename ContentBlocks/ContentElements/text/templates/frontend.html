@@ -1,0 +1,12 @@
+<f:comment>
+    Content is wrapped in .kernt3-rte: KERN styles almost nothing by element, so bare
+    rich-text markup needs the scoped stylesheet to look like the rest of the system.
+</f:comment><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></k:molecule.section>

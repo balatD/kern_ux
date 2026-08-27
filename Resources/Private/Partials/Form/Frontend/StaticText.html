@@ -1,0 +1,11 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<formvh:renderRenderable renderable="{element}">
+    <div class="kernt3-rte">
+        <f:if condition="{element.properties.text}">
+            <f:format.html parseFuncTSPath="lib.kernUx.rte">{formvh:translateElementProperty(element: element, property: 'text')}</f:format.html>
+        </f:if>
+    </div>
+</formvh:renderRenderable>
+</html>

@@ -1,0 +1,22 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:comment>
+    The poster URI is built in a guarded step rather than inline. An inline f:if
+    evaluates both of its branches before deciding, so f:uri.image would run even
+    without a poster - and it throws on an empty image instead of returning nothing,
+    which took the whole element down for every audio file.
+</f:comment><f:variable name="posterUri" value=""
+/><f:if condition="{data.tx_kernux_media_poster.0}"><f:variable name="posterUri" value="{f:uri.image(image: data.tx_kernux_media_poster.0, width: 1280)}" /></f:if
+><f:if condition="{data.tx_kernux_media_file.0}"><k:molecule.mediaPlayer
+    src="{data.tx_kernux_media_file.0.publicUrl}"
+    audio="{data.tx_kernux_media_audio}"
+    captionsSrc="{data.tx_kernux_media_captions.0.publicUrl}"
+    poster="{posterUri}"
+    transcript="{data.tx_kernux_media_transcript}"
+/></f:if></k:molecule.section>

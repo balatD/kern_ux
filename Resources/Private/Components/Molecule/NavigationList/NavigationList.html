@@ -1,0 +1,27 @@
+<f:argument name="items" type="array"
+            description="Menu items from the menu data processor: title, link, active, current and children."
+/><f:argument name="level" type="int" optional="{true}" default="1"
+            description="Depth, counted from 1. Decides which set of classes applies; the component calls itself for anything below."
+/><f:comment>
+    One list, any depth. The component renders itself for a sublist rather than the
+    header repeating a loop per level - which is what limited the navigation to two
+    levels before, so a visitor on a third-level page could not see its siblings and the
+    page they were on was not in the menu at all.
+
+    Every item carries its children, not just the active branch: the flyout has to be
+    able to open on hover or focus anywhere in the bar, and a panel can only open for an
+    item whose children are in the markup.
+</f:comment><f:variable name="listClass" value="{f:if(condition: '{level} == 1', then: 'kernt3-nav', else: 'kernt3-nav__sub')}"
+/><f:variable name="linkClass" value="{f:if(condition: '{level} == 1', then: 'kernt3-nav__link', else: 'kernt3-nav__sublink')}"
+/><f:spaceless>
+<ul class="{listClass}">
+    <f:for each="{items}" as="item">
+        <li class="kernt3-nav__item">
+            <a class="kern-link {linkClass}<f:if condition="{item.active}"> {linkClass}--active</f:if>" href="{item.link}"<f:if condition="{item.current}"> aria-current="page"</f:if>>{item.title}</a>
+            <f:if condition="{item.children}">
+                <k:molecule.navigationList items="{item.children}" level="{level + 1}" />
+            </f:if>
+        </li>
+    </f:for>
+</ul>
+</f:spaceless>

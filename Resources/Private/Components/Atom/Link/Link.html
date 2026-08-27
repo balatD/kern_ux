@@ -1,0 +1,25 @@
+<f:argument name="href" type="string"
+/><f:argument name="icon" type="string" optional="{true}" default=""
+/><f:argument name="iconPosition" type="string" optional="{true}" default="before"
+            description="'before' or 'after'. KERN's own link examples lead with the icon."
+/><f:argument name="small" type="bool" optional="{true}" default="{false}"
+/><f:argument name="stretched" type="bool" optional="{true}" default="{false}"
+            description="Makes the whole positioned ancestor clickable. Used by cards."
+/><f:argument name="noVisitedState" type="bool" optional="{true}" default="{false}"
+            description="Suppresses the visited colour. Only for links whose target changes, e.g. pagination."
+/><f:argument name="external" type="bool" optional="{true}" default="{false}"
+            description="Opens in a new tab. Adds rel=noopener and, unless another icon is given, the open-in-new icon - a link that changes context has to announce it (WCAG 3.2.5)."
+/><f:variable name="classes" value="kern-link"
+/><f:if condition="{small}"><f:variable name="classes" value="{classes} kern-link--small" /></f:if
+><f:if condition="{stretched}"><f:variable name="classes" value="{classes} kern-link--stretched" /></f:if
+><f:if condition="{noVisitedState}"><f:variable name="classes" value="{classes} kern-link--no-visited-state" /></f:if
+><f:variable name="effectiveIcon" value="{icon}"
+/><f:variable name="position" value="{iconPosition}"
+/><f:if condition="{external} && !{icon}"
+    ><f:variable name="effectiveIcon" value="open-in-new" /><f:variable name="position" value="after" /></f:if
+><f:comment>
+    Deliberately one line. f:spaceless only strips whitespace *between* tags, and the
+    slot is a text node - so a line break anywhere around it survives into the markup
+    as a visible gap inside the link. The tag's own `>` also has to sit flush against
+    the first content, which rules out breaking after the attribute conditionals.
+</f:comment><a class="{classes}" href="{href}"<f:if condition="{external}"> target="_blank" rel="noopener noreferrer"</f:if>><f:if condition="{effectiveIcon} && {position} == 'before'"><k:atom.icon name="{effectiveIcon}" /></f:if><f:slot /><f:if condition="{effectiveIcon} && {position} == 'after'"><k:atom.icon name="{effectiveIcon}" /></f:if></a>

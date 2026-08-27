@@ -1,0 +1,33 @@
+<f:argument name="variant" type="string" optional="{true}" default="info"
+            description="info | success | warning | danger. Also picks the matching KERN icon."
+/><f:argument name="title" type="string" optional="{true}" default=""
+/><f:argument name="level" type="int" optional="{true}" default="2"
+            description="Heading level of the title. KERN ships h2 and tells integrators to re-level it to fit the document - the look stays the same either way."
+/><f:argument name="titleAsHeading" type="bool" optional="{true}" default="{true}"
+            description="A single-sentence note is a statement, not a section. Set false and the title becomes a paragraph in KERN's title style: same look, but it stays out of the document outline, where an entry like 'New registrations cost 30 euros' would be wrong."
+/><f:argument name="live" type="bool" optional="{true}" default="{false}"
+            description="Adds role=alert. Off by default: an editorially placed alert exists when the page loads, and an assertive live region then interrupts the screen reader for something that was never news."
+/><f:comment>
+    KERN names the alert icons after the variants, so the variant is the icon name.
+
+    The body is captured first so it can be left out entirely when it is empty: KERN's
+    alert body carries a white background and the rounded bottom corners, so an empty one
+    renders as a blank white strip under the heading. Without it the alert is the coloured
+    row on its own, which is the form KERN's own examples use for a one-line note.
+</f:comment><f:variable name="body"><f:slot /></f:variable
+><f:spaceless>
+<div class="kern-alert kern-alert--{variant}"<f:if condition="{live}"> role="alert"</f:if>>
+    <f:if condition="{title}">
+        <div class="kern-alert__header">
+            <k:atom.icon name="{variant}" />
+            <f:if condition="{titleAsHeading}">
+                <f:then><k:atom.heading level="{level}" appearance="title">{title}</k:atom.heading></f:then>
+                <f:else><p class="kern-title">{title}</p></f:else>
+            </f:if>
+        </div>
+    </f:if>
+    <f:if condition="{body -> f:format.trim()}">
+        <div class="kern-alert__body"><f:format.raw>{body}</f:format.raw></div>
+    </f:if>
+</div>
+</f:spaceless>

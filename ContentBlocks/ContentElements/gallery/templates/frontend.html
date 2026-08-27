@@ -1,0 +1,9 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.tx_kernux_gallery_images}"><k:organism.gallery columns="{data.tx_kernux_gallery_columns}"><f:for each="{data.tx_kernux_gallery_images}" as="image"><li><k:molecule.figure image="{image}" sizes="(min-width: 62rem) 33vw, (min-width: 48rem) 50vw, 100vw" /></li></f:for></k:organism.gallery></f:if></k:molecule.section>

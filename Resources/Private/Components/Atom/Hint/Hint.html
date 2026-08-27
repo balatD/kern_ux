@@ -1,0 +1,9 @@
+<f:argument name="id" type="string"
+            description="Referenced from the field's aria-describedby. KERN does not associate hint text automatically, so the id is mandatory rather than optional."
+/><f:spaceless>
+<f:comment>
+    A div, not a p - that is what KERN prescribes. KERN also forbids links inside
+    hint text, because screen readers do not announce them reliably here.
+</f:comment>
+<div class="kern-hint" id="{id}"><f:slot /></div>
+</f:spaceless>

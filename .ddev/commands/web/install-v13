@@ -1,0 +1,5 @@
+#!/bin/bash
+## Description: Install TYPO3 13.4 LTS with EXT:kern_ux
+## Usage: install-v13
+## Example: ddev install-v13
+exec /mnt/ddev_config/scripts/install-typo3.sh v13 '^13.4'

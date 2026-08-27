@@ -1,0 +1,13 @@
+<f:comment>
+    Rendered through lib.kernUx.sitemap rather than a data processor: Content Blocks
+    only reads a per-block setup.typoscript from version 2.3 - the TYPO3 14 line - so
+    the menu definition lives in the site set and is called by path from here.
+</f:comment><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><nav aria-label="{f:translate(key: 'sitemap.label', extensionName: 'KernUx')}"><f:cObject typoscriptObjectPath="lib.kernUx.sitemap" data="{data}" table="tt_content" /></nav></k:molecule.section>

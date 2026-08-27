@@ -1,0 +1,755 @@
+/*
+ * Styles for the components KERN does not ship.
+ *
+ * Everything here is built from KERN's own design tokens so it stays consistent
+ * with the rest of the system, and everything carries the kernt3- prefix so it can
+ * never collide with a future KERN component of the same name.
+ */
+
+/* --- Baseline ------------------------------------------------------------
+ * KERN gives `body` a background colour but never a text colour: its typography is
+ * class-based, so a bare text node inherits the browser default black. Against the
+ * dark theme's black background that is invisible. The value is KERN's own token, so
+ * a theme switch carries it.
+ *
+ * `margin: 0` for the same kind of reason. KERN's reset zeroes `html` and touches
+ * `body` only for the background colour, so the user agent's own `body { margin: 8px }`
+ * survives - and every full-bleed band stops 8px short of the viewport on all four
+ * sides: the Kopfzeile, the header's bottom border, the footer's background. KERN never
+ * hits this because its documentation renders each component inside a div on a page it
+ * does not own; a page shell is the integrator's job, which is to say ours.
+ *
+ * `color-scheme` makes the browser's own surfaces - scrollbars, the select popup,
+ * autofill, the canvas behind a short page - follow the same theme instead of
+ * staying light while the page is dark.
+ */
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    margin: 0;
+    color: var(--kern-color-layout-text-default, #131525);
+}
+
+/* An explicit choice overrides the system preference for native widgets too.
+ * `:has()` is a progressive enhancement: without it the pair above still applies.
+ */
+:root:has(> body[data-kern-theme="light"]) {
+    color-scheme: light;
+}
+
+:root:has(> body[data-kern-theme="dark"]) {
+    color-scheme: dark;
+}
+
+/* --- Content area -------------------------------------------------------
+ * KERN carries this rule:
+ *
+ *   .kern-container:has(.kern-grid) { padding: 0; }
+ *
+ * A container holding a grid anywhere inside it loses *all* its padding - the block
+ * axis included. Its reasoning is that a grid brings its own gutters, but that only
+ * holds for KERN's .kern-row, whose columns get 1rem; .kern-grid children get nothing.
+ *
+ * The effect was two bugs at once: the vertical rhythm set on a content area vanished
+ * on any page containing a card grid, and the left edge of the content moved between
+ * pages depending on whether one happened to be there.
+ *
+ * So the content area re-asserts both. Specificity is deliberately equal to KERN's rule
+ * (two classes each) and this file loads after kern.min.css, so source order decides -
+ * no !important needed, and a project overriding either still can.
+ */
+.kern-container.kernt3-content-area,
+.kern-container-fluid.kernt3-content-area {
+    padding-inline: var(--kern-metric-space-default, 16px);
+    padding-block: var(--kern-metric-space-x-large, 32px);
+}
+
+/* The stage opens a page, so it needs room above but not below: the block that follows
+ * brings its own. */
+.kern-container.kernt3-content-area--top,
+.kern-container-fluid.kernt3-content-area--top {
+    padding-block: var(--kern-metric-space-x-large, 32px) 0;
+}
+
+.kern-container.kernt3-content-area--bottom,
+.kern-container-fluid.kernt3-content-area--bottom {
+    padding-block: 0 var(--kern-metric-space-x-large, 32px);
+}
+
+/* --- Content rhythm -----------------------------------------------------
+ * Vertical spacing between content blocks.
+ *
+ * KERN defines a spacing scale but says nothing about the gap between two content
+ * elements - that is an integration decision, and leaving it unmade meant every block
+ * sat flush against the next: core's "default" spacing value means "nothing", and that
+ * is what almost every record has.
+ *
+ * Declared inside :where() so it has zero specificity. Any margin utility an editor
+ * puts on the block therefore wins, in both directions - including kern-mt-none to
+ * close the gap entirely.
+ *
+ * Adjacent siblings only, so the first block in a column keeps its container padding
+ * instead of being pushed down twice.
+ */
+:where(.kernt3-content + .kernt3-content) {
+    margin-top: var(--kern-metric-space-2x-large, 40px);
+}
+
+/* --- Heading to content -------------------------------------------------
+ * KERN's headings carry a few pixels of baseline padding and nothing more, so a block's
+ * heading sat directly on its own body text.
+ *
+ * Applied to the element *after* the heading rather than as a margin below it: a block
+ * whose heading is its only content then gets no trailing margin it does not need.
+ */
+:where(.kernt3-content > :is(h1, h2, h3, h4, h5, h6) + *) {
+    margin-top: var(--kern-metric-space-default, 16px);
+}
+
+/* --- Forms --------------------------------------------------------------
+ * KERN gives .kern-form-input a gap of zero and .kern-fieldset a margin of zero: its
+ * form components define their internals and leave the distance between two fields to
+ * the integration. Nothing filled that in, so every field sat flush against the next.
+ *
+ * Between siblings only, so the first field does not push away from the heading above
+ * it, which already has its own spacing.
+ */
+.kernt3-form__page > * + * {
+    margin-top: var(--kern-metric-space-x-large, 32px);
+}
+
+/* A checkbox or radio group is one field, so its options stay tighter than the gap
+ * between two separate fields - otherwise the group reads as several. */
+.kern-fieldset__body > * + * {
+    margin-top: var(--kern-metric-space-small, 8px);
+}
+
+.kernt3-form__navigation {
+    margin-top: var(--kern-metric-space-3x-large, 48px);
+}
+
+/* The progress indicator introduces the step, so it belongs to the heading below it
+ * rather than floating at the same distance as a field. */
+.kernt3-form > .kern-progress {
+    margin-bottom: var(--kern-metric-space-x-large, 32px);
+}
+
+/* The error summary appears only after a failed submit, and it has to read as belonging
+ * to the form rather than to whatever precedes it. */
+.kernt3-form__page > .kern-alert:first-child {
+    margin-bottom: var(--kern-metric-space-2x-large, 40px);
+}
+
+/* --- Skip link -----------------------------------------------------------
+ * BITV requires a way to bypass repeated blocks; KERN provides none.
+ * Positioned off-screen rather than display:none, which would remove it from the
+ * tab order and make it useless.
+ */
+.kernt3-skip-link {
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    z-index: 1000;
+    padding: var(--kern-metric-space-small) var(--kern-metric-space-default);
+    background: var(--kern-color-layout-layer-surface-contextual, #f7f7f9);
+    color: var(--kern-color-layout-text-default, #1a1a1a);
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+    text-decoration: underline;
+}
+
+.kernt3-skip-link:focus {
+    left: var(--kern-metric-space-default);
+    top: var(--kern-metric-space-default);
+    outline: 4px solid var(--kern-color-action-focus-default-contextual, #454b6b);
+    outline-offset: 0;
+}
+
+/* --- Header ------------------------------------------------------------- */
+.kernt3-header__logo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* --- Header --------------------------------------------------------------
+ * KERN ships no header component, only the grid pattern, so this is ours - built from
+ * KERN tokens.
+ *
+ * From the navigation breakpoint up: two bands, brand and service links sharing the
+ * first row, the main navigation getting the second.
+ *
+ * Below it: one column in document order - brand bar, search, then the panel with the
+ * main navigation and the service links under a divider. That order is the markup's,
+ * not the stylesheet's, so the mobile tab sequence needs no reordering at all; the
+ * desktop band layout is the case that reorders, and it does so with grid areas.
+ *
+ * Both menus collapse behind the toggle below the breakpoint, which is why the panels
+ * start hidden and navigation.js only flips a class.
+ */
+.kernt3-header {
+    border-bottom: var(--kern-metric-border-width-default, 2px) solid
+        var(--kern-color-decorative-border-contextual, #e5e5e5);
+}
+
+.kernt3-header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--kern-metric-space-large, 24px);
+    padding-block: var(--kern-metric-space-default, 16px);
+}
+
+.kernt3-header__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--kern-metric-space-default, 16px);
+    text-decoration: none;
+}
+
+.kernt3-header__logo {
+    display: block;
+    width: auto;
+    height: var(--kern-metric-dimension-large, 32px);
+}
+
+.kernt3-header__toggles {
+    display: flex;
+    gap: var(--kern-metric-space-x-small, 4px);
+}
+
+.kernt3-header__search {
+    padding-bottom: var(--kern-metric-space-default, 16px);
+}
+
+.kernt3-header__main {
+    padding-bottom: var(--kern-metric-space-small, 8px);
+}
+
+/* --- Service navigation --------------------------------------------------
+ * On desktop the links beside the brand; below the breakpoint the tail of the collapsed
+ * panel, under a rule that separates them from the main navigation - they are a
+ * different kind of link (sign language, easy language, language switch) and would
+ * otherwise read as two more menu entries.
+ *
+ * Icon and label sit on one line and never break apart, because an icon alone would say
+ * nothing.
+ */
+.kernt3-service {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kern-metric-space-small, 8px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kernt3-service__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kern-metric-space-x-small, 4px);
+    font-size: var(--kern-typography-font-size-small-static, 16px);
+    text-decoration: none;
+}
+
+.kernt3-service__link:hover,
+.kernt3-service__link:focus-visible {
+    text-decoration: underline;
+}
+
+/* --- Main navigation -----------------------------------------------------
+ * Every anchor keeps `kern-link` so KERN's focus ring and colour states still apply - a
+ * navigation that loses the focus ring is unusable by keyboard, and that ring is one of
+ * the things KERN gets right.
+ *
+ * A column below the breakpoint, a row from there on: the mobile toggle only shows and
+ * hides the whole panel, so the column state has to be the default.
+ */
+.kernt3-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kern-metric-space-default, 16px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.kernt3-nav__link {
+    display: inline-block;
+    padding-bottom: var(--kern-metric-space-x-small, 4px);
+    font-weight: var(--kern-typography-font-weight-medium, 500);
+    /* Reserved so switching to the active weight and border does not move the row. */
+    border-bottom: var(--kern-metric-border-width-bold, 4px) solid transparent;
+    text-decoration: none;
+}
+
+.kernt3-nav__link:hover,
+.kernt3-nav__link:focus-visible {
+    text-decoration: underline;
+}
+
+/* The branch the visitor is in. */
+.kernt3-nav__link--active {
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    border-bottom-color: var(--kern-color-action-default-contextual, #0b4f9e);
+}
+
+.kernt3-nav__sub {
+    display: flex;
+    flex-direction: column;
+    margin: var(--kern-metric-space-small, 8px) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* One row per sub-item, with the state marker in a reserved left border so nothing
+ * shifts when it appears. */
+.kernt3-nav__sublink {
+    display: block;
+    padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
+    border-left: var(--kern-metric-border-width-bold, 4px) solid transparent;
+    font-size: var(--kern-typography-font-size-small-static, 16px);
+    text-decoration: none;
+}
+
+.kernt3-nav__sublink:hover,
+.kernt3-nav__sublink:focus-visible {
+    background: var(--kern-color-layout-background-hued, #f7f7f9);
+    text-decoration: underline;
+}
+
+/* A sub-page whose own subtree holds the current page. It needs a marker of its own:
+ * with weight alone it was indistinguishable from an ordinary item at a glance, and the
+ * current page is often a level deeper and therefore not in the menu at all - so this is
+ * the only thing telling a visitor where they are. */
+.kernt3-nav__sublink--active {
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    border-left-color: var(--kern-color-action-default-contextual, #0b4f9e);
+}
+
+/* The page itself. Never colour alone: weight and the border carry it too (WCAG 1.4.1). */
+.kernt3-nav__link[aria-current="page"],
+.kernt3-nav__sublink[aria-current="page"] {
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    color: var(--kern-color-layout-text-default-contextual, #131525);
+    text-decoration: none;
+}
+
+.kernt3-nav__sublink[aria-current="page"] {
+    border-left-color: var(--kern-color-action-default-contextual, #0b4f9e);
+    background: var(--kern-color-layout-background-hued, #f7f7f9);
+}
+
+/* Below the flyout breakpoint the sublist is part of the collapsed panel, so the
+ * hierarchy has to be visible in the flow: a rule down the left edge does that without
+ * adding list semantics a screen reader would read out item by item. */
+@media (max-width: 61.999rem) {
+    .kernt3-nav__sub {
+        margin-left: var(--kern-metric-space-small, 8px);
+        border-left: var(--kern-metric-border-width-default, 2px) solid
+            var(--kern-color-decorative-border-contextual, #e5e5e5);
+    }
+
+    /* The collapsed panel holds the whole second level plus the service links now, so it
+     * can get taller than the screen. Scrolling it beats a disclosure per branch: that
+     * would need JavaScript for a hierarchy the indented flow already shows.
+     *
+     * The bound is on the panel and not on the main navigation, so the service links
+     * scroll with the menu they belong to instead of being pinned below a box that
+     * scrolls on its own - and so they stay reachable when the menu is long. */
+    .kernt3-header__panel {
+        max-height: min(70vh, 34rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* Room for the divider under it - 8px reads as a cramped rule rather than a
+     * separation between two kinds of link. */
+    .kernt3-header__main {
+        padding-bottom: var(--kern-metric-space-default, 16px);
+    }
+
+    .kernt3-header__service {
+        padding-block: var(--kern-metric-space-default, 16px);
+    }
+
+    /* A border rather than an <hr>: it divides nothing semantically, and an <hr> between
+     * two nav landmarks is one more thing announced for no reason.
+     *
+     * On the sibling selector so it only appears where it actually separates something -
+     * a header configured with service links but no main menu would otherwise open its
+     * panel with a rule across the top and nothing above it. */
+    .kernt3-header__main + .kernt3-header__service {
+        border-top: var(--kern-metric-border-width-default, 2px) solid
+            var(--kern-color-decorative-border-contextual, #e5e5e5);
+    }
+}
+
+@media (min-width: 62rem) {
+    /* Two bands out of four rows of markup. The panel is display:contents so its two
+     * navigations become areas of this grid directly - which is the whole reason the
+     * service links can be last in the document and still sit top right. */
+    .kernt3-header__inner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas:
+            "brand   service"
+            "search  search"
+            "main    main";
+        align-items: center;
+    }
+
+    .kernt3-header__panel {
+        display: contents;
+    }
+
+    .kernt3-header__bar {
+        grid-area: brand;
+    }
+
+    .kernt3-header__search {
+        grid-area: search;
+    }
+
+    .kernt3-header__main {
+        grid-area: main;
+    }
+
+    .kernt3-header__service {
+        grid-area: service;
+        justify-self: end;
+    }
+
+    .kernt3-service {
+        flex-direction: row;
+        gap: var(--kern-metric-space-x-large, 32px);
+    }
+
+    .kernt3-header__toggles {
+        display: none;
+    }
+
+    .kernt3-nav {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--kern-metric-space-2x-large, 40px);
+    }
+
+    /* --- Flyout ---------------------------------------------------------
+     * From here the sublist becomes a panel that opens on hover and on keyboard focus,
+     * rather than a second row that is always there - which is what made the header
+     * three bands tall on every page inside a section.
+     *
+     * :focus-within is what makes the keyboard case work without JavaScript: tabbing to
+     * the parent link opens the panel, and the sub-items are then in the tab order.
+     *
+     * WCAG 1.4.13 asks content shown on hover or focus to be dismissible, hoverable and
+     * persistent. Hoverable and persistent come free from the panel being adjacent to
+     * its trigger and staying open while hovered or focused. Dismissible does not - that
+     * needs Escape, and Escape needs a key listener, which is the one thing navigation.js
+     * adds here.
+     */
+    .kernt3-nav__item {
+        position: relative;
+    }
+
+    .kernt3-nav__item > .kernt3-nav__sub {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: calc(-1 * var(--kern-metric-space-default, 16px));
+        z-index: 30;
+        min-width: 16rem;
+        max-width: 24rem;
+        /* Bounded because every branch now carries its children: a section with
+         * nineteen pages would otherwise run off the bottom of the viewport with no
+         * way to reach the rest. overscroll-behavior keeps the scroll in the panel. */
+        max-height: min(70vh, 30rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        margin: 0;
+        padding-block: var(--kern-metric-space-x-small, 4px);
+        border: var(--kern-metric-border-width-default, 2px) solid
+            var(--kern-color-decorative-border-contextual, #e5e5e5);
+        background: var(--kern-color-layout-background-default-contextual, #fff);
+        box-shadow: 0 var(--kern-metric-space-x-small, 4px) var(--kern-metric-space-default, 16px)
+            rgb(0 0 0 / 12%);
+    }
+
+    .kernt3-nav__item:hover > .kernt3-nav__sub,
+    .kernt3-nav__item:focus-within > .kernt3-nav__sub {
+        display: flex;
+    }
+
+    /* Set by navigation.js on Escape, cleared as soon as hover or focus moves on. */
+    .kernt3-nav__item[data-kernt3-flyout-dismissed] > .kernt3-nav__sub {
+        display: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .kernt3-nav__link--active,
+    .kernt3-nav__link[aria-current="page"],
+    .kernt3-nav__sublink--active,
+    .kernt3-nav__sublink[aria-current="page"] {
+        border-color: LinkText;
+        text-decoration: underline;
+    }
+
+    .kernt3-nav__item > .kernt3-nav__sub {
+        border-color: CanvasText;
+    }
+}
+
+/* --- Hero ---------------------------------------------------------------
+ * The opening block of a service or start page. KERN has none, so this is ours.
+ *
+ * One column by default and two from the navigation breakpoint on - the same breakpoint
+ * the header uses, so the page changes shape once rather than twice. Below it the image
+ * moves under the text, because two columns at that width leave a line length nobody can
+ * read.
+ *
+ * The visual side comes from grid order, never from the source: the text is always first
+ * in the DOM (see the component for why).
+ */
+.kernt3-hero {
+    display: grid;
+    gap: var(--kern-metric-space-x-large, 32px);
+}
+
+.kernt3-hero__text > * + * {
+    margin-top: var(--kern-metric-space-default, 16px);
+}
+
+/* The note is a separate statement, not the next paragraph of the lead. */
+.kernt3-hero__note {
+    margin-top: var(--kern-metric-space-large, 24px);
+}
+
+.kernt3-hero__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+}
+
+@media (min-width: 62rem) {
+    .kernt3-hero {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+
+    .kernt3-hero--media-left .kernt3-hero__text {
+        order: 2;
+    }
+
+    .kernt3-hero--media-left .kernt3-hero__media {
+        order: 1;
+    }
+
+    /* Without an image the text keeps a readable measure instead of stretching across
+     * the full container - a heading line that wide is hard to track back from. */
+    .kernt3-hero--media-none {
+        grid-template-columns: minmax(0, 44rem);
+    }
+}
+
+/* --- Figure -------------------------------------------------------------
+ * KERN has no figure component; images appear only inside its card. This is the
+ * standalone case, kept deliberately plain so it inherits the surrounding measure.
+ */
+.kernt3-figure {
+    margin: 0;
+}
+
+.kernt3-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+}
+
+.kernt3-figure__caption {
+    margin-top: var(--kern-metric-space-small, 8px);
+    color: var(--kern-color-layout-text-muted-contextual, #595959);
+}
+
+/* --- Breadcrumb ---------------------------------------------------------
+ * Separators are drawn here rather than placed in the DOM: a chevron character
+ * between items gets announced by some screen readers on every step.
+ */
+.kernt3-breadcrumb > .kern-list {
+    display: flex;
+    /* KERN's own .kern-list is a *column* flex container. Setting display alone leaves
+     * that direction in place, which turned the trail into a vertical staircase. */
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kern-metric-space-x-small, 4px) var(--kern-metric-space-small, 8px);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.kernt3-breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--kern-metric-space-small, 8px);
+}
+
+.kernt3-breadcrumb__item + .kernt3-breadcrumb__item::before {
+    content: "";
+    flex: none;
+    width: 0.4em;
+    height: 0.4em;
+    border-top: var(--kern-metric-border-width-default, 2px) solid currentcolor;
+    border-right: var(--kern-metric-border-width-default, 2px) solid currentcolor;
+    transform: rotate(45deg);
+    opacity: 0.6;
+}
+
+.kernt3-breadcrumb__current {
+    font-size: var(--kern-typography-font-size-small-static, 16px);
+    color: var(--kern-color-layout-text-muted-contextual, #595959);
+}
+
+/* --- Footer ------------------------------------------------------------- */
+.kernt3-footer {
+    margin-top: var(--kern-metric-space-4x-large, 48px);
+    border-top: var(--kern-metric-border-width-default, 2px) solid
+        var(--kern-color-layout-border, #e5e5e5);
+    background: var(--kern-color-layout-layer-surface-contextual, #f7f7f9);
+}
+
+/* KERN drops a kern-container's inline padding as soon as the container holds a
+ * kern-grid (.kern-container:has(.kern-grid) { padding: 0 }), which the footer's link
+ * columns are. From 576px up the container's own max-width still leaves an inset, so the
+ * footer looked fine on a desktop and sat flush against both edges of a phone.
+ *
+ * Two classes, so it ties KERN's :has() rule on specificity and wins on source order -
+ * the same shape kernt3-content-area uses for the same reason. */
+.kern-container.kernt3-footer__inner {
+    padding-inline: var(--kern-metric-space-default, 16px);
+}
+
+.kernt3-footer__meta > .kern-list {
+    padding-block: var(--kern-metric-space-default, 16px);
+}
+
+/* The Dachmarke note row: statement on the left, funding mark on the right, stacked on
+ * a narrow screen. The marks themselves are never shipped - see the component. */
+.kernt3-footer__note {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kern-metric-space-large, 24px);
+    padding-block: var(--kern-metric-space-x-large, 32px);
+}
+
+@media (min-width: 48rem) {
+    .kernt3-footer__note {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--kern-metric-space-3x-large, 48px);
+    }
+}
+
+.kernt3-footer__note-body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--kern-metric-space-large, 24px);
+    /* The note is prose, so it keeps a readable measure instead of running the full
+     * width of a wide footer. */
+    max-width: 68ch;
+}
+
+.kernt3-footer__note-logo {
+    flex: none;
+    /* alt="" on the image: the note beside it already says what the mark says, and a
+     * screen reader announcing both would repeat itself. */
+    width: auto;
+    height: var(--kern-metric-dimension-large, 32px);
+}
+
+.kernt3-footer__funding-logo {
+    flex: none;
+    width: auto;
+    height: var(--kern-metric-dimension-x-large, 48px);
+}
+
+@media (forced-colors: active) {
+    .kernt3-footer {
+        border-top: 1px solid CanvasText;
+    }
+}
+
+/* --- Styleguide gallery -------------------------------------------------
+ * Only ever loaded by the opt-in component gallery, never by site pages.
+ */
+.kernt3-styleguide__toc {
+    margin-block: var(--kern-metric-space-x-large, 32px);
+}
+
+.kernt3-styleguide__section {
+    margin-block: var(--kern-metric-space-3x-large, 40px);
+    padding-top: var(--kern-metric-space-large, 24px);
+    border-top: var(--kern-metric-border-width-default, 2px) solid
+        var(--kern-color-layout-border, #e5e5e5);
+}
+
+.kernt3-styleguide__example {
+    margin-block: var(--kern-metric-space-large, 24px);
+}
+
+.kernt3-styleguide__render {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kern-metric-space-default, 16px);
+    padding: var(--kern-metric-space-default, 16px);
+    border: var(--kern-metric-border-width-light, 1px) dashed
+        var(--kern-color-layout-border, #e5e5e5);
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+}
+
+/* Wide snippets scroll inside their own box, and tabindex makes that reachable
+ * by keyboard - the same rule KERN applies to its responsive tables. */
+.kernt3-styleguide__source {
+    overflow-x: auto;
+    margin: 0;
+    padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
+    background: var(--kern-color-layout-layer-surface-contextual, #f7f7f9);
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+    font-size: var(--kern-typography-font-size-small-static, 16px);
+}
+
+/* --- Media ---------------------------------------------------------------
+ * KERN has no media component. The native player is used with `controls`, so this
+ * only has to make it fit the surrounding measure.
+ */
+.kernt3-media__player {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+    background: #000;
+}
+
+.kernt3-media > .kern-accordion {
+    margin-top: var(--kern-metric-space-default, 16px);
+}
+
+/* --- Download list ------------------------------------------------------ */
+.kernt3-download-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kern-metric-space-small, 8px);
+    padding: 0;
+    list-style: none;
+}
+
+.kernt3-download-list__item > .kern-body {
+    margin-top: var(--kern-metric-space-x-small, 4px);
+    color: var(--kern-color-layout-text-muted-contextual, #595959);
+}

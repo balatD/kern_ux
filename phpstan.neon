@@ -1,0 +1,19 @@
+parameters:
+    level: max
+    paths:
+        - Classes
+        - Tests
+
+    # The same code is analysed against two TYPO3 majors whose Fluid versions differ in
+    # type declarations, so a check that is required on one is redundant on the other.
+    # Without this, every such ignore would itself be reported as unmatched on the
+    # major that needs the check.
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        # RenderingContext::$renderingContext is nullable in Fluid 5 (TYPO3 14) and
+        # non-nullable in Fluid 4 (TYPO3 13). Guarding for null is correct on 14 and
+        # reported as always-false on 13; dropping the guard would fail analysis on 14.
+        -
+            identifier: identical.alwaysFalse
+            path: Classes/ViewHelpers/FormErrorSummaryViewHelper.php

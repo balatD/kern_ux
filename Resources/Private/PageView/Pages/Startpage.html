@@ -1,0 +1,25 @@
+<f:layout name="Default" />
+<f:section name="Main">
+    <f:comment>
+        The stage used to sit outside any container, on the theory that a full-bleed hero
+        would bring its own. No content block does that, so in practice every heading in
+        the stage ended up flush against the viewport edge with no space above or below
+        it. It gets the same container as the rest.
+
+        Top padding only: the gap to the content below comes from that block's own
+        padding, and two of them would double it.
+    </f:comment>
+    <f:if condition="{f:cObject(typoscriptObjectPath: 'lib.kernUx.content.hero')}">
+        <div class="kern-container kernt3-content-area kernt3-content-area--top">
+            <f:cObject typoscriptObjectPath="lib.kernUx.content.hero" />
+        </div>
+    </f:if>
+    <div class="kern-container kernt3-content-area">
+        <f:cObject typoscriptObjectPath="lib.kernUx.content.main" />
+    </div>
+    <f:if condition="{f:cObject(typoscriptObjectPath: 'lib.kernUx.content.teaser')}">
+        <div class="kern-container kernt3-content-area kernt3-content-area--bottom">
+            <f:cObject typoscriptObjectPath="lib.kernUx.content.teaser" />
+        </div>
+    </f:if>
+</f:section>

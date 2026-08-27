@@ -1,0 +1,8 @@
+<f:comment>
+    Decorative by default. A rule is only announced when it genuinely separates two
+    sections that screen reader users need to perceive as separate.
+</f:comment><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:atom.divider decorative="{f:if(condition: data.tx_kernux_divider_semantic, then: 0, else: 1)}" /></k:molecule.section>

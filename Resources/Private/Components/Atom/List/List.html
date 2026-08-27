@@ -1,0 +1,15 @@
+<f:argument name="tag" type="string" optional="{true}" default="ul"
+            description="ul | ol. Use ol when the order carries meaning, e.g. process steps."
+/><f:argument name="variant" type="string" optional="{true}" default=""
+            description="bullet | number | horizontal. Empty renders KERN's unstyled list, which is what navigation and footers use."
+/><f:argument name="size" type="string" optional="{true}" default=""
+            description="small | large."
+/><f:variable name="classes" value="kern-list"
+/><f:if condition="{variant}"><f:variable name="classes" value="{classes} kern-list--{variant}" /></f:if
+><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-list--{size}" /></f:if
+><f:spaceless>
+<f:if condition="{tag} == 'ol'">
+    <f:then><ol class="{classes}"><f:slot /></ol></f:then>
+    <f:else><ul class="{classes}"><f:slot /></ul></f:else>
+</f:if>
+</f:spaceless>

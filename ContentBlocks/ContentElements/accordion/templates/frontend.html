@@ -1,0 +1,13 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:for each="{data.tx_kernux_accordion_panels}" as="panel" iteration="i"><k:molecule.accordionItem
+    title="{panel.title}"
+    open="{panel.expanded}"
+    id="{kux:uniqueId(prefix: 'accordion', uid: data.uid, suffix: i.cycle)}"
+><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{panel.text}</f:format.html></div></k:molecule.accordionItem></f:for></k:molecule.section>

@@ -1,0 +1,27 @@
+services:
+    web:
+        environment:
+            - EXTENSION_KEY=kern_ux
+            - PACKAGE_NAME=balatd/kern-ux
+
+            - TYPO3_DB_DRIVER=mysqli
+            - TYPO3_DB_USERNAME=root
+            - TYPO3_DB_PASSWORD=root
+            - TYPO3_DB_HOST=db
+            - TYPO3_SETUP_ADMIN_EMAIL=admin@example.com
+            - TYPO3_SETUP_ADMIN_USERNAME=admin
+            - TYPO3_SETUP_ADMIN_PASSWORD=Joh316!!
+            - TYPO3_PROJECT_NAME=EXT:kern_ux Dev Environment
+            - TYPO3_SERVER_TYPE=apache
+        volumes:
+            - type: bind
+              source: ../
+              target: /var/www/kern_ux
+              consistency: cached
+            - v13-data:/var/www/html/v13
+            - v14-data:/var/www/html/v14
+volumes:
+    v13-data:
+        name: "${DDEV_SITENAME}-v13-data"
+    v14-data:
+        name: "${DDEV_SITENAME}-v14-data"

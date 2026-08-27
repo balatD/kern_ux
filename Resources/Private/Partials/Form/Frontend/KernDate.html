@@ -1,0 +1,37 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    Three fields in one fieldset, the way KERN specifies a date.
+
+    Each part is a plain text input with inputmode="numeric", not type="number": a
+    spinner on a day-of-month is meaningless, and number inputs silently drop leading
+    zeros and accept exponents.
+
+    Widths come from KERN's own modifiers - two characters for day and month, four for
+    the year - so the fields look like what they expect rather than like full-width
+    text boxes.
+
+    The parts carry aria-invalid but not aria-describedby: the hint and the error are
+    announced once, from the fieldset, rather than three times over.
+</f:comment>
+<formvh:renderRenderable renderable="{element}">
+    <f:render partial="Field/Group" arguments="{element: element, horizontal: 1}" contentAs="elementContent">
+        <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <f:variable name="partAttributes" value="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, scope: 'child')}" />
+            <div class="kern-form-input">
+                <label class="kern-label" for="{element.uniqueIdentifier}-day"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:date.day" /></label>
+                <f:form.textfield property="{element.identifier}.day" id="{element.uniqueIdentifier}-day" class="kern-form-input__input kern-form-input__input--width-2" errorClass="kern-form-input__input--error" inputmode="numeric" additionalAttributes="{partAttributes}" />
+            </div>
+            <div class="kern-form-input">
+                <label class="kern-label" for="{element.uniqueIdentifier}-month"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:date.month" /></label>
+                <f:form.textfield property="{element.identifier}.month" id="{element.uniqueIdentifier}-month" class="kern-form-input__input kern-form-input__input--width-2" errorClass="kern-form-input__input--error" inputmode="numeric" additionalAttributes="{partAttributes}" />
+            </div>
+            <div class="kern-form-input">
+                <label class="kern-label" for="{element.uniqueIdentifier}-year"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:date.year" /></label>
+                <f:form.textfield property="{element.identifier}.year" id="{element.uniqueIdentifier}-year" class="kern-form-input__input kern-form-input__input--width-4" errorClass="kern-form-input__input--error" inputmode="numeric" additionalAttributes="{partAttributes}" />
+            </div>
+        </f:form.validationResults>
+    </f:render>
+</formvh:renderRenderable>
+</html>

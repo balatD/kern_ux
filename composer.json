@@ -1,0 +1,77 @@
+{
+    "name": "balatd/kern-ux",
+    "type": "typo3-cms-extension",
+    "description": "KERN UX-Standard for TYPO3 - accessible Fluid components, Content Blocks and form templates for German public sector websites. Independent community integration, not an official KERN project.",
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "TYPO3",
+        "kern-ux",
+        "accessibility",
+        "bitv",
+        "wcag",
+        "content-blocks",
+        "design-system",
+        "oeffentliche-verwaltung"
+    ],
+    "homepage": "https://github.com/balatD/typo3-kern-ux",
+    "support": {
+        "issues": "https://github.com/balatD/typo3-kern-ux/issues",
+        "source": "https://github.com/balatD/typo3-kern-ux"
+    },
+    "authors": [
+        {
+            "name": "Dragan Balatinac",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^13.4 || ^14.3",
+        "friendsoftypo3/content-blocks": "^1.6 || ^2.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "typo3/cms-form": "^13.4 || ^14.3",
+        "typo3/cms-rte-ckeditor": "^13.4 || ^14.3",
+        "typo3/coding-standards": "^0.9",
+        "typo3/testing-framework": "^9.6"
+    },
+    "suggest": {
+        "typo3/cms-form": "Required for the KERN-compliant ext:form templates and the KernDate form element.",
+        "typo3/cms-rte-ckeditor": "Required for the KERN rich-text preset; without it RTE fields fall back to a plain textarea."
+    },
+    "autoload": {
+        "psr-4": {
+            "BalatD\\KernUx\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BalatD\\KernUx\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "kern_ux",
+            "version": "0.1.0",
+            "Package": {
+                "providesPackages": {}
+            },
+            "web-dir": ".Build/public"
+        }
+    },
+    "scripts": {
+        "cgl": "php-cs-fixer fix",
+        "cgl:check": "php-cs-fixer fix --dry-run --diff",
+        "phpstan": "phpstan analyse",
+        "test:unit": "phpunit -c Build/phpunit/UnitTests.xml",
+        "test:functional": "phpunit -c Build/phpunit/FunctionalTests.xml"
+    }
+}

@@ -1,0 +1,37 @@
+<f:argument name="title" type="string"
+/><f:argument name="level" type="int" optional="{true}" default="3"
+            description="Cards usually sit under a section heading, so the default is one level deeper than a content heading."
+/><f:argument name="link" type="string" optional="{true}" default=""
+            description="Makes the whole card clickable via KERN stretched link. The link stays on the title, so its accessible name is the title rather than the whole card."
+/><f:argument name="preline" type="string" optional="{true}" default=""
+/><f:argument name="subline" type="string" optional="{true}" default=""
+/><f:argument name="size" type="string" optional="{true}" default=""
+            description="small | large."
+/><f:argument name="surface" type="bool" optional="{true}" default="{false}"
+            description="Renders the card on a raised surface."
+/><f:argument name="media" type="mixed" optional="{true}"
+            description="A FAL file reference shown above the card body."
+/><f:variable name="classes" value="kern-card"
+/><f:if condition="{link}"><f:variable name="classes" value="{classes} kern-card--interactive" /></f:if
+><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-card--{size}" /></f:if
+><f:if condition="{surface}"><f:variable name="classes" value="{classes} kern-card--surface" /></f:if
+><f:spaceless>
+<article class="{classes}">
+    <f:if condition="{media}">
+        <div class="kern-card__media"><k:molecule.figure image="{media}" sizes="(min-width: 62rem) 33vw, 100vw" /></div>
+    </f:if>
+    <div class="kern-card__container">
+        <header class="kern-card__header">
+            <hgroup class="kern-hgroup">
+                <f:if condition="{preline}"><k:atom.preline>{preline}</k:atom.preline></f:if>
+                <k:atom.heading level="{level}" appearance="title"><f:if condition="{link}"><f:then><k:atom.link href="{link}" stretched="{true}">{title}</k:atom.link></f:then><f:else>{title}</f:else></f:if></k:atom.heading>
+                <f:if condition="{subline}"><k:atom.subline>{subline}</k:atom.subline></f:if>
+            </hgroup>
+        </header>
+        <section class="kern-card__body"><f:slot /></section>
+        <f:if condition="{f:slot(name: 'footer')}">
+            <footer class="kern-card__footer"><f:slot name="footer" /></footer>
+        </f:if>
+    </div>
+</article>
+</f:spaceless>

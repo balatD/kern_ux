@@ -1,0 +1,17 @@
+<f:argument name="title" type="string"
+/><f:argument name="open" type="bool" optional="{true}" default="{false}"
+            description="Start expanded. Use sparingly - an accordion whose panels are all open is just a document with extra clicks."
+/><f:argument name="id" type="string" optional="{true}" default=""
+/><f:comment>
+    Native details/summary, which is what KERN prescribes: the disclosure behaviour,
+    keyboard operation and screen-reader announcement all come from the browser, so
+    there is no JavaScript to get wrong.
+
+    Adjacent accordions are spaced by a sibling selector in KERN's CSS, so there is no
+    group wrapper - two accordions next to each other simply work.
+</f:comment><f:spaceless>
+<details class="kern-accordion"<f:if condition="{id}"> id="{id}"</f:if><f:if condition="{open}"> open</f:if>>
+    <summary class="kern-accordion__header"><span class="kern-title">{title}</span></summary>
+    <section class="kern-accordion__body"><f:slot /></section>
+</details>
+</f:spaceless>

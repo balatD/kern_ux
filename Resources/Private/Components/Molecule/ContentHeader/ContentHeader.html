@@ -1,0 +1,28 @@
+<f:argument name="header" type="string" optional="{true}" default=""
+/><f:argument name="layout" type="string" optional="{true}" default="0"
+            description="Value of the core header_layout field: 0 uses the block default, 1-5 force that heading level, 100 hides the heading."
+/><f:argument name="appearance" type="string" optional="{true}" default="medium"
+            description="KERN visual size, independent of the level."
+/><f:argument name="defaultLevel" type="int" optional="{true}" default="2"
+            description="Level used when the editor left header_layout on default."
+/><f:argument name="link" type="string" optional="{true}" default=""
+            description="Wraps the heading text in a link. KERN uses a stretched link for cards."
+/><f:comment>
+    Bridges the core header fields to the heading component.
+
+    Level and visual size stay separate all the way through: KERN requires it so a
+    block can sit at any depth of the document outline without changing its look, and
+    header_layout = 100 is core's "hide this heading", which has to mean *no element*
+    rather than a visually hidden one.
+</f:comment><f:comment>
+    An empty appearance means "use the default". Guarded here rather than in every
+    block: the blocks pass the raw database value through, and an empty one would
+    otherwise render the invalid class "kern-heading-".
+</f:comment><f:variable name="effectiveAppearance" value="{appearance}"
+/><f:if condition="!{effectiveAppearance}"><f:variable name="effectiveAppearance" value="medium" /></f:if
+><f:variable name="level" value="{defaultLevel}"
+/><f:if condition="{layout} > 0 && {layout} < 6"><f:variable name="level" value="{layout}" /></f:if
+><f:comment>
+    One line: the heading text is a text node, so any line break around it survives
+    f:spaceless and shows up inside the heading.
+</f:comment><f:if condition="{header} && {layout} != 100"><k:atom.heading level="{level}" appearance="{effectiveAppearance}"><f:if condition="{link}"><f:then><k:atom.link href="{link}">{header}</k:atom.link></f:then><f:else>{header}</f:else></f:if></k:atom.heading></f:if>

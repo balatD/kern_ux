@@ -1,0 +1,28 @@
+name: kern-ux/list
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: variant
+    type: Select
+    renderType: selectSingle
+    default: bullet
+    items:
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:list.bullet'
+        value: bullet
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:list.number'
+        value: number
+  # A collection rather than a rich-text list: the entries stay structured data, so
+  # the same content can later back a task list or a summary without being retyped.
+  - identifier: items
+    type: Collection
+    labelField: text
+    fields:
+      - identifier: text
+        type: Text
+        required: true
+        max: 500
+      - identifier: link
+        type: Link

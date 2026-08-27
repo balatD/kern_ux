@@ -1,0 +1,16 @@
+<f:comment>
+    The trigger is a button, not a link: it opens something on the same page rather
+    than navigating. dialog.js turns it into showModal(), so the focus trap, Escape
+    and focus return all come from the browser.
+</f:comment><f:variable name="dialogId" value="{kux:uniqueId(prefix: 'dialog', uid: data.uid)}"
+/><f:variable name="level" value="2"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="level" value="{data.header_layout}" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><button type="button" class="kern-btn kern-btn--{data.tx_kernux_dialog_triggerVariant}" data-kernt3-dialog="{dialogId}"><span class="kern-label">{data.tx_kernux_dialog_triggerLabel}</span></button><k:organism.dialog
+    id="{dialogId}"
+    title="{data.header}"
+    level="{level}"
+><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></k:organism.dialog></k:molecule.section>

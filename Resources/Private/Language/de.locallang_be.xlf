@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-25" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="backendLayout.default">
+                <source>Standard</source>
+                <target>Standard</target>
+            </trans-unit>
+            <trans-unit id="backendLayout.startpage">
+                <source>Home page</source>
+                <target>Startseite</target>
+            </trans-unit>
+            <trans-unit id="backendLayout.subject">
+                <source>Subject page with side column</source>
+                <target>Fachinhalt mit Seitenspalte</target>
+            </trans-unit>
+            <trans-unit id="backendLayout.application">
+                <source>Application journey</source>
+                <target>Antragsstrecke</target>
+            </trans-unit>
+            <trans-unit id="column.main">
+                <source>Content</source>
+                <target>Inhalt</target>
+            </trans-unit>
+            <trans-unit id="column.hero">
+                <source>Stage</source>
+                <target>Bühne</target>
+            </trans-unit>
+            <trans-unit id="column.aside">
+                <source>Side column</source>
+                <target>Seitenspalte</target>
+            </trans-unit>
+            <trans-unit id="column.teaser">
+                <source>Teaser</source>
+                <target>Teaser</target>
+            </trans-unit>
+            <trans-unit id="tab.appearance">
+                <source>Appearance</source>
+                <target>Erscheinungsbild</target>
+            </trans-unit>
+            <trans-unit id="palette.spacing">
+                <source>Spacing</source>
+                <target>Abstand</target>
+            </trans-unit>
+            <trans-unit id="palette.header">
+                <source>Heading</source>
+                <target>Überschrift</target>
+            </trans-unit>
+            <trans-unit id="field.headingAppearance">
+                <source>Visual size</source>
+                <target>Darstellung</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.default">
+                <source>Element default</source>
+                <target>Standard des Elements</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.display">
+                <source>Display</source>
+                <target>Display</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.xLarge">
+                <source>Extra large</source>
+                <target>Sehr groß</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.large">
+                <source>Large</source>
+                <target>Groß</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.medium">
+                <source>Medium</source>
+                <target>Mittel</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.small">
+                <source>Small</source>
+                <target>Klein</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.titleLarge">
+                <source>Title large</source>
+                <target>Titel groß</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="headingAppearance.titleSmall">
+                <source>Title small</source>
+                <target>Titel klein</target>
+            </trans-unit>
+            <trans-unit id="group.kern">
+                <source>KERN</source>
+                <target>KERN</target>
+            </trans-unit>
+            <trans-unit id="list.bullet">
+                <source>Bulleted</source>
+                <target>Aufzählung</target>
+            </trans-unit>
+            <trans-unit id="list.number">
+                <source>Numbered</source>
+                <target>Nummeriert</target>
+            </trans-unit>
+            <trans-unit id="button.auto">
+                <source>Automatic (first is primary)</source>
+                <target>Automatisch (erste primär)</target>
+            </trans-unit>
+            <trans-unit id="button.primary">
+                <source>Primary</source>
+                <target>Primär</target>
+            </trans-unit>
+            <trans-unit id="button.secondary">
+                <source>Secondary</source>
+                <target>Sekundär</target>
+            </trans-unit>
+            <trans-unit id="button.tertiary">
+                <source>Tertiary</source>
+                <target>Tertiär</target>
+            </trans-unit>
+            <trans-unit id="mediaPosition.above">
+                <source>Above the text</source>
+                <target>Über dem Text</target>
+            </trans-unit>
+            <trans-unit id="mediaPosition.below">
+                <source>Below the text</source>
+                <target>Unter dem Text</target>
+            </trans-unit>
+            <trans-unit id="mediaPosition.left">
+                <source>Left of the text</source>
+                <target>Links neben dem Text</target>
+            </trans-unit>
+            <trans-unit id="mediaPosition.right">
+                <source>Right of the text</source>
+                <target>Rechts neben dem Text</target>
+            </trans-unit>
+            <trans-unit id="alert.info">
+                <source>Information</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="alert.success">
+                <source>Success</source>
+                <target>Erfolg</target>
+            </trans-unit>
+            <trans-unit id="alert.warning">
+                <source>Warning</source>
+                <target>Warnung</target>
+            </trans-unit>
+            <trans-unit id="alert.danger">
+                <source>Error</source>
+                <target>Fehler</target>
+            </trans-unit>
+            <trans-unit id="preview.sections">
+                <source>%s sections</source>
+                <target>%s Abschnitte</target>
+            </trans-unit>
+            <trans-unit id="preview.buttons">
+                <source>%s buttons</source>
+                <target>%s Schaltflächen</target>
+            </trans-unit>
+            <trans-unit id="preview.cards">
+                <source>%s cards</source>
+                <target>%s Karten</target>
+            </trans-unit>
+            <trans-unit id="preview.entries">
+                <source>%s entries</source>
+                <target>%s Einträge</target>
+            </trans-unit>
+            <trans-unit id="preview.files">
+                <source>%s files</source>
+                <target>%s Dateien</target>
+            </trans-unit>
+            <trans-unit id="preview.images">
+                <source>%s images</source>
+                <target>%s Bilder</target>
+            </trans-unit>
+            <trans-unit id="preview.rows">
+                <source>%s rows</source>
+                <target>%s Zeilen</target>
+            </trans-unit>
+            <trans-unit id="preview.steps">
+                <source>%s steps</source>
+                <target>%s Schritte</target>
+            </trans-unit>
+            <trans-unit id="preview.divider">
+                <source>Divider</source>
+                <target>Trenner</target>
+            </trans-unit>
+            <trans-unit id="preview.sitemap">
+                <source>Sitemap</source>
+                <target>Sitemap</target>
+            </trans-unit>
+            <trans-unit id="preview.toc">
+                <source>Anchors to this page's headings</source>
+                <target>Sprungmarken dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="preview.withCaptions">
+                <source>with captions</source>
+                <target>mit Untertiteln</target>
+            </trans-unit>
+            <trans-unit id="preview.withoutCaptions">
+                <source>without captions</source>
+                <target>ohne Untertitel</target>
+            </trans-unit>
+            <trans-unit id="spacing.none">
+                <source>No spacing</source>
+                <target>Kein Abstand</target>
+            </trans-unit>
+            <trans-unit id="page.navIcon">
+                <source>Icon in the service navigation</source>
+                <target>Symbol in der Servicenavigation</target>
+            </trans-unit>
+            <trans-unit id="page.navIcon.description">
+                <source>Shown before the link text where this page appears in the header service navigation. Only used there, and only if the page is part of that menu.</source>
+                <target>Erscheint vor dem Linktext, wenn diese Seite in der Servicenavigation der Kopfzeile steht. Wird nur dort genutzt, und nur wenn die Seite Teil dieses Menüs ist.</target>
+            </trans-unit>
+            <trans-unit id="preview.media.audio">
+                <source>Audio</source>
+                <target>Audio</target>
+            </trans-unit>
+            <trans-unit id="preview.media.video">
+                <source>Video</source>
+                <target>Video</target>
+            </trans-unit>
+            <trans-unit id="preview.withTranscript">
+                <source>with transcript</source>
+                <target>mit Transkript</target>
+            </trans-unit>
+            <trans-unit id="preview.dividerSemantic">
+                <source>separates two topics</source>
+                <target>trennt zwei Themen</target>
+            </trans-unit>
+            <trans-unit id="mediaPosition.none">
+                <source>No image</source>
+                <target>Kein Bild</target>
+            </trans-unit>
+            <trans-unit id="preview.columns">
+                <source>%s columns</source>
+                <target>%s Spalten</target>
+            </trans-unit>
+            <trans-unit id="preview.level">
+                <source>Level %s</source>
+                <target>Stufe %s</target>
+            </trans-unit>
+            <trans-unit id="preview.stacked">
+                <source>term and value stacked</source>
+                <target>Begriff und Wert untereinander</target>
+            </trans-unit>
+            <trans-unit id="preview.sideBySide">
+                <source>term and value side by side</source>
+                <target>Begriff und Wert nebeneinander</target>
+            </trans-unit>
+            <trans-unit id="preview.numbered">
+                <source>numbered</source>
+                <target>nummeriert</target>
+            </trans-unit>
+            <trans-unit id="preview.unnumbered">
+                <source>without numbers</source>
+                <target>ohne Nummern</target>
+            </trans-unit>
+            <trans-unit id="preview.listBullet">
+                <source>Bulleted list</source>
+                <target>Liste mit Aufzählungspunkten</target>
+            </trans-unit>
+            <trans-unit id="preview.listNumber">
+                <source>Numbered list</source>
+                <target>Nummerierte Liste</target>
+            </trans-unit>
+            <trans-unit id="preview.noImage">
+                <source>No image</source>
+                <target>Kein Bild</target>
+            </trans-unit>
+            <trans-unit id="preview.note">
+                <source>Note</source>
+                <target>Hinweis</target>
+            </trans-unit>
+            <trans-unit id="palette.heroNote">
+                <source>Note</source>
+                <target>Hinweis</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

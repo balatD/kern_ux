@@ -1,0 +1,13 @@
+<f:argument name="columns" type="int" optional="{true}" default="3"
+/><f:comment>
+    A grid of figures, passed in as slot content - the same shape as cardGrid. The
+    grid does not need to know where the images come from, which is also what makes it
+    demonstrable without editorial content.
+
+    No lightbox: it would need its own focus management, keyboard handling and close
+    affordance, and a gallery that merely shows images does not need any of that.
+</f:comment><f:spaceless>
+<ul class="kern-list kern-grid kern-grid-cols-1 kern-grid-cols-2-md kern-grid-cols-{columns}-lg kern-gap-md">
+    <f:slot />
+</ul>
+</f:spaceless>

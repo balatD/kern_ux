@@ -1,0 +1,72 @@
+# KERN rendering for ext:form.
+#
+# On TYPO3 14 this file is a "form set" and is discovered automatically. On TYPO3 13
+# form sets do not exist yet, so the same file is registered through
+# plugin./module.tx_form.settings.yamlConfigurations - see the site set's
+# setup.typoscript and ext_localconf.php. The two mechanisms coexist without
+# conflicting, which is what lets one file serve both majors.
+#
+# priority 200 puts this above core's base set (10) and above the range third-party
+# extensions are asked to use, so a site package can still override it.
+name: kern-ux/form
+label: 'KERN UX-Standard'
+priority: 200
+
+prototypes:
+  standard:
+    # A date as three separate fields, which is what KERN prescribes: no
+    # <input type="date"> (browser-specific picker, uncontrollable announcement) and no
+    # JavaScript datepicker (fails without JavaScript). TYPO3 14 deprecated its own
+    # DatePicker element too (#109152), so this is the forward-looking choice as well.
+    validatorsDefinition:
+      KernDate:
+        implementationClassName: BalatD\KernUx\Form\Validation\KernDateValidator
+
+    formElementsDefinition:
+      KernDate:
+        implementationClassName: BalatD\KernUx\Form\FormElements\KernDate
+        renderingOptions:
+          templateName: KernDate
+        formEditor:
+          label: 'formEditor.elements.KernDate.label'
+          group: custom
+          groupSorting: 100
+          iconIdentifier: form-date-picker
+          predefinedDefaults:
+            defaultValue: {}
+          editors:
+            100:
+              identifier: header
+              templateName: Inspector-FormElementHeaderEditor
+            200:
+              identifier: label
+              templateName: Inspector-TextEditor
+              label: 'formEditor.elements.FormElement.editor.label.label'
+              propertyPath: label
+            300:
+              identifier: elementDescription
+              templateName: Inspector-TextEditor
+              label: 'formEditor.elements.FormElement.editor.elementDescription.label'
+              propertyPath: properties.elementDescription
+            700:
+              identifier: validators
+              templateName: Inspector-ValidatorsEditor
+              label: 'formEditor.elements.FormElement.editor.validators.label'
+              selectOptions:
+                10:
+                  value: ''
+                  label: 'formEditor.elements.FormElement.editor.validators.EmptyValue.label'
+                20:
+                  value: KernDate
+                  label: 'formEditor.elements.KernDate.editor.validators.KernDate.label'
+      Form:
+        renderingOptions:
+          # Index 20 is what the core docs use for a site package. Core's own paths sit
+          # below it, and Fluid resolves paths highest-index-first - which is also why
+          # our overrides may be named *.html even though core's v14 partials are
+          # *.fluid.html: resolution tries both extensions per path before moving on
+          # to the next path.
+          templateRootPaths:
+            20: 'EXT:kern_ux/Resources/Private/Templates/Form/Frontend/'
+          partialRootPaths:
+            20: 'EXT:kern_ux/Resources/Private/Partials/Form/Frontend/'

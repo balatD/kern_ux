@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/dialog">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Dialog</source>
+                <target>Dialog</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A modal dialog opened by a button.</source>
+                <target>Modaler Dialog, der über eine Schaltfläche geöffnet wird.</target>
+            </trans-unit>
+            <trans-unit id="triggerLabel.label">
+                <source>Button text</source>
+                <target>Text der Schaltfläche</target>
+            </trans-unit>
+            <trans-unit id="triggerLabel.description">
+                <source>Says what the dialog will show, so the button still makes sense read on its own.</source>
+                <target>Benennt, was der Dialog zeigt, damit die Schaltfläche auch für sich gelesen verständlich bleibt.</target>
+            </trans-unit>
+            <trans-unit id="triggerVariant.label">
+                <source>Button emphasis</source>
+                <target>Gewichtung der Schaltfläche</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,18 @@
+<f:comment>
+    Media beside text uses KERNs CSS grid, and the source order stays text-then-media
+    regardless of the visual side: reading order has to follow the content, not the
+    layout. The visual side comes from the grid order utilities.
+</f:comment><f:variable name="position" value="{data.tx_kernux_textmedia_media_position}"
+/><f:variable name="beside" value="0"
+/><f:if condition="{position} == 'left' || {position} == 'right'"><f:variable name="beside" value="1" /></f:if
+><f:variable name="media"><f:if condition="{data.assets}"><f:for each="{data.assets}" as="asset"><k:molecule.figure image="{asset}" lazy="{f:if(condition: '{position} == \'above\'', then: 0, else: 1)}" /></f:for></f:if></f:variable
+><f:variable name="text"><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></f:variable
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{beside}"><f:then><div class="kern-grid kern-grid-cols-1 kern-grid-cols-12-lg kern-gap-lg"><div class="kern-col-12 kern-col-7-lg{f:if(condition: '{position} == \'left\'', then: ' kern-order-2-lg')}"><f:format.raw>{text}</f:format.raw></div><div class="kern-col-12 kern-col-5-lg{f:if(condition: '{position} == \'left\'', then: ' kern-order-1-lg')}"><f:format.raw>{media}</f:format.raw></div></div></f:then><f:else><f:if condition="{position} == 'above'"><f:format.raw>{media}</f:format.raw></f:if><f:format.raw>{text}</f:format.raw><f:if condition="{position} == 'below'"><f:format.raw>{media}</f:format.raw></f:if></f:else></f:if></k:molecule.section>

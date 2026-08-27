@@ -1,0 +1,22 @@
+# Fachinhalt - content with a side column for contact details and downloads.
+mod.web_layout.BackendLayouts.subject {
+    title = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:backendLayout.subject
+    config.backend_layout {
+        colCount = 2
+        rowCount = 1
+        rows.1.columns {
+            1 {
+                identifier = main
+                name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.main
+                colPos = 0
+                colspan = 1
+            }
+            2 {
+                identifier = aside
+                name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.aside
+                colPos = 2
+                colspan = 1
+            }
+        }
+    }
+}

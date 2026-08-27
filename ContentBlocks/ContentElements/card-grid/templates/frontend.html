@@ -1,0 +1,20 @@
+<f:comment>
+    Card headings sit one level below the block heading, so the outline stays intact
+    whether or not the block itself has a heading.
+</f:comment><f:variable name="cardLevel" value="3"
+/><f:if condition="!{data.header} || {data.header_layout} == 100"><f:variable name="cardLevel" value="2" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.tx_kernux_cardgrid_cards}"><k:organism.cardGrid columns="{data.tx_kernux_cardgrid_columns}"><f:for each="{data.tx_kernux_cardgrid_cards}" as="card"><k:molecule.card
+    title="{card.title}"
+    level="{cardLevel}"
+    preline="{card.preline}"
+    link="{f:uri.typolink(parameter: card.link)}"
+    media="{card.image.0}"
+>{card.text}</k:molecule.card></f:for></k:organism.cardGrid></f:if></k:molecule.section>

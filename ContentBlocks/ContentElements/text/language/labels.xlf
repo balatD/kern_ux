@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/text">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Text</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A heading and body text.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

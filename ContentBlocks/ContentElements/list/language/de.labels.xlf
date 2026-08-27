@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/list">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>List</source>
+                <target>Liste</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A bulleted or numbered list in KERN markup.</source>
+                <target>Aufzählung oder nummerierte Liste mit KERN-Markup.</target>
+            </trans-unit>
+            <trans-unit id="variant.label">
+                <source>Style</source>
+                <target>Darstellung</target>
+            </trans-unit>
+            <trans-unit id="items.label">
+                <source>Entries</source>
+                <target>Einträge</target>
+            </trans-unit>
+            <trans-unit id="items.text.label">
+                <source>Text</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="items.link.label">
+                <source>Target</source>
+                <target>Ziel</target>
+            </trans-unit>
+            <trans-unit id="items.link.description">
+                <source>Optional. Turns the entry into a link.</source>
+                <target>Optional. Macht den Eintrag zu einem Link.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

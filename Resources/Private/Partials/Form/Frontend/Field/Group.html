@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    The grouped variant: checkbox and radio groups are a kern-fieldset, not a
+    kern-form-input.
+
+    aria-describedby sits on the fieldset, but every child input additionally needs
+    aria-invalid and the error class - KERN is explicit about this, and missing it
+    leaves the group with a red bar while the individual controls look untouched,
+    which fails WCAG 1.4.1.
+</f:comment>
+<f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+    <f:variable name="hint" value="{formvh:translateElementProperty(element: element, property: 'elementDescription')}" />
+    <f:variable name="describedBy" value="" />
+    <f:if condition="{hint}"><f:variable name="describedBy" value="{element.uniqueIdentifier}-hint" /></f:if>
+    <f:if condition="{validationResults.errors}"><f:variable name="describedBy" value="{f:if(condition: describedBy, then: '{describedBy} ', else: '')}{element.uniqueIdentifier}-error" /></f:if>
+    <fieldset class="kern-fieldset{f:if(condition: validationResults.errors, then: ' kern-fieldset--error')}" id="{element.uniqueIdentifier}"<f:if condition="{describedBy}"> aria-describedby="{describedBy}"</f:if>>
+        <legend class="kern-label">{formvh:translateElementProperty(element: element, property: 'label')}<f:if condition="!{kux:formFieldRequired(element: element)}"> <span class="kern-label__optional"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:optional" /></span></f:if></legend>
+        <f:if condition="{hint}">
+            <div class="kern-hint" id="{element.uniqueIdentifier}-hint">{hint}</div>
+        </f:if>
+        <div class="kern-fieldset__body{f:if(condition: horizontal, then: ' kern-fieldset__body--horizontal')}">
+            <f:format.raw>{elementContent}</f:format.raw>
+        </div>
+        <f:if condition="{validationResults.errors}">
+            <p class="kern-error" id="{element.uniqueIdentifier}-error"><span class="kern-icon kern-icon--danger" aria-hidden="true"></span><span class="kern-body"><f:for each="{validationResults.errors}" as="error"><f:format.htmlspecialchars>{formvh:translateElementError(element: element, error: error)}</f:format.htmlspecialchars> </f:for></span></p>
+        </f:if>
+    </fieldset>
+</f:form.validationResults>
+</html>

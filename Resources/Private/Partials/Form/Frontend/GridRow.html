@@ -1,0 +1,11 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<formvh:renderRenderable renderable="{element}">
+    <div class="kern-grid kern-grid-cols-1 kern-grid-cols-12-lg kern-gap-md">
+        <f:for each="{element.elements}" as="element">
+            <f:render partial="{element.templateName}" arguments="{element: element}" />
+        </f:for>
+    </div>
+</formvh:renderRenderable>
+</html>

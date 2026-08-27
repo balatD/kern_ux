@@ -1,0 +1,54 @@
+<f:argument name="title" type="string"
+/><f:argument name="number" type="int" optional="{true}" default="0"
+            description="Step number. 0 omits it - use that together with organism.taskList's numbered={false} for KERN's unnumbered variant."
+/><f:argument name="link" type="string" optional="{true}" default=""
+            description="Empty renders the step as plain text - which is how a step that cannot be started yet should appear, rather than as a dead link."
+/><f:argument name="status" type="string" optional="{true}" default=""
+/><f:argument name="statusVariant" type="string" optional="{true}" default="info"
+            description="info | success | warning | danger."
+/><f:argument name="statusIcon" type="string" optional="{true}" default=""
+            description="Icon inside the status badge, e.g. 'success' for a completed step. KERN shows both the plain and the iconised badge, so this is the author's call."
+/><f:argument name="statusId" type="string" optional="{true}" default=""
+            description="Id of the status element. Required when a status is given: the link points at it with aria-describedby so the status is announced together with the step, not as a stray badge."
+/><f:argument name="stretched" type="bool" optional="{true}" default="{true}"
+            description="Makes the whole row the click target, which is what KERN's reference does. Turn it off if the row ever gains a second control - a stretched link swallows everything under it."
+/><f:variable name="linkClasses" value="kern-link kern-task-list__content-wrapper"
+/><f:if condition="{stretched}"><f:variable name="linkClasses" value="kern-link kern-link--stretched kern-task-list__content-wrapper" /></f:if
+><f:comment>
+    The number sits INSIDE the link. KERN moved it there in 2.7.0 because screen
+    readers otherwise skip it, so a step announced as "Persönliche Daten" gave no clue
+    which step it was. KERN keeps a fallback for the old shape - the number as a direct
+    child of the item - but marks it deprecated and slated for removal, so it is not
+    used here.
+
+    kern-task-list__title wraps the step AND its status. That is not cosmetic: the
+    wrapper is what wraps the badge onto its own line below 768px (flex-wrap: wrap, reset
+    to nowrap from there up). Without it both sit in the item's own flex row, which never
+    wraps - so on a phone the badge squeezed the step title instead of moving under it.
+
+    kern-link--stretched turns the whole row into the click target and is what drives
+    KERN's hover and active tint on the item; without it only the words were clickable
+    and the row had no hover state at all.
+</f:comment><f:spaceless>
+<li class="kern-task-list__item">
+    <div class="kern-task-list__title">
+        <f:if condition="{link}">
+            <f:then>
+                <a class="{linkClasses}" href="{link}"<f:if condition="{status} && {statusId}"> aria-describedby="{statusId}"</f:if>><f:if condition="{number}"><span class="kern-number">{number}</span></f:if><span>{title}</span></a>
+            </f:then>
+            <f:else>
+                <f:comment>
+                    A p, not a span: .kern-body carries block padding, which an inline box
+                    silently drops - so the unlinked step sat a few pixels higher than a
+                    linked one in the same list. KERN's reference uses a p too, and the
+                    component CSS zeroes its margin.
+                </f:comment>
+                <div class="kern-task-list__content-wrapper"><f:if condition="{number}"><span class="kern-number">{number}</span></f:if><p class="kern-body">{title}</p></div>
+            </f:else>
+        </f:if>
+        <f:if condition="{status}">
+            <div class="kern-task-list__status"<f:if condition="{statusId}"> id="{statusId}"</f:if>><k:atom.badge variant="{statusVariant}" icon="{statusIcon}">{status}</k:atom.badge></div>
+        </f:if>
+    </div>
+</li>
+</f:spaceless>

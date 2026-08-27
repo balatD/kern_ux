@@ -1,0 +1,26 @@
+name: kern-ux/text-media
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+  - identifier: assets
+    useExistingField: true
+  - identifier: media_position
+    type: Select
+    renderType: selectSingle
+    default: above
+    items:
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.above'
+        value: above
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.below'
+        value: below
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.left'
+        value: left
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.right'
+        value: right

@@ -1,0 +1,22 @@
+<f:argument name="level" type="int" optional="{true}" default="2"
+            description="Semantic heading level, 1-6. Comes from the document outline, never from how large the text should look."
+/><f:argument name="appearance" type="string" optional="{true}" default="medium"
+            description="Visual size, independent of level: display, x-large, large, medium, small, title, title-large, title-small. KERN relies on this split so a component can keep its look at any outline depth."
+/><f:argument name="additionalClasses" type="string" optional="{true}" default=""
+            description="Extra classes on the heading element. Needed where KERN styles a heading through a descendant selector - its task list header expects the base kern-heading class alongside the size class."
+/><f:variable name="appearanceClass" value="kern-heading-{appearance}"
+/><f:if condition="{appearance} == 'title'"><f:variable name="appearanceClass" value="kern-title" /></f:if
+><f:if condition="{appearance} == 'title-large'"><f:variable name="appearanceClass" value="kern-title kern-title--large" /></f:if
+><f:if condition="{appearance} == 'title-small'"><f:variable name="appearanceClass" value="kern-title kern-title--small" /></f:if
+><f:if condition="{additionalClasses}"><f:variable name="appearanceClass" value="{appearanceClass} {additionalClasses}" /></f:if
+><f:spaceless>
+<f:switch expression="{level}">
+    <f:case value="1"><h1 class="{appearanceClass}"><f:slot /></h1></f:case>
+    <f:case value="2"><h2 class="{appearanceClass}"><f:slot /></h2></f:case>
+    <f:case value="3"><h3 class="{appearanceClass}"><f:slot /></h3></f:case>
+    <f:case value="4"><h4 class="{appearanceClass}"><f:slot /></h4></f:case>
+    <f:case value="5"><h5 class="{appearanceClass}"><f:slot /></h5></f:case>
+    <f:case value="6"><h6 class="{appearanceClass}"><f:slot /></h6></f:case>
+    <f:defaultCase><h2 class="{appearanceClass}"><f:slot /></h2></f:defaultCase>
+</f:switch>
+</f:spaceless>

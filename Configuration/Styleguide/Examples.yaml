@@ -1,0 +1,267 @@
+# Gallery entries for the styleguide route.
+#
+# Every component must appear here: ComponentCatalog::undocumentedComponents()
+# compares this file against the component tree, a test asserts the difference is
+# empty, and the route prints any gap. A gallery that silently omits components reads
+# as "this is everything".
+#
+# The `source` is rendered as Fluid *and* shown verbatim, so these double as the
+# usage documentation.
+components:
+  atom.button:
+    - label: Varianten
+      source: '<k:atom.button>Primär</k:atom.button> <k:atom.button variant="secondary">Sekundär</k:atom.button> <k:atom.button variant="tertiary">Tertiär</k:atom.button>'
+    - label: Mit Icon
+      source: '<k:atom.button variant="secondary" icon="arrow-forward">Weiter</k:atom.button>'
+    - label: Nur Icon
+      source: '<k:atom.button variant="tertiary" icon="edit" iconOnly="{true}">Bearbeiten</k:atom.button>'
+      note: 'Der Beschriftungstext bleibt als kern-sr-only erhalten (WCAG 1.1.1).'
+    - label: Deaktiviert
+      source: '<k:atom.button disabled="{true}">Absenden</k:atom.button>'
+      note: 'KERN verlangt aria-disabled statt des nativen Attributs, damit das Element fokussierbar und für Screenreader wahrnehmbar bleibt.'
+    - label: Größe und Breite
+      source: '<k:atom.button size="x-small">Klein</k:atom.button> <k:atom.button block="{true}">Volle Breite</k:atom.button>'
+
+  atom.icon:
+    - label: Dekorativ
+      source: '<k:atom.icon name="search" /> <k:atom.icon name="download" /> <k:atom.icon name="calendar-today" />'
+      note: 'Dekorative Icons sind aria-hidden. Das ist der Normalfall.'
+    - label: Bedeutungstragend
+      source: '<k:atom.icon name="warning" label="Warnung" />'
+      note: 'Nur wenn kein benachbarter Text die Bedeutung schon vermittelt.'
+    - label: Größen
+      source: '<k:atom.icon name="info" size="small" /> <k:atom.icon name="info" /> <k:atom.icon name="info" size="large" /> <k:atom.icon name="info" size="x-large" />'
+
+  atom.heading:
+    - label: Visuelle Größen
+      source: '<k:atom.heading level="4" appearance="display">Display</k:atom.heading><k:atom.heading level="4" appearance="x-large">X-Large</k:atom.heading><k:atom.heading level="4" appearance="large">Large</k:atom.heading><k:atom.heading level="4" appearance="medium">Medium</k:atom.heading><k:atom.heading level="4" appearance="small">Small</k:atom.heading>'
+      note: 'Alle auf Stufe 4, damit die Überschriftenordnung dieser Galerie intakt bleibt - die Optik ist davon unabhängig.'
+    - label: Title-Varianten
+      source: '<k:atom.heading level="4" appearance="title-large">Title Large</k:atom.heading><k:atom.heading level="4" appearance="title">Title</k:atom.heading><k:atom.heading level="4" appearance="title-small">Title Small</k:atom.heading>'
+    - label: Stufe unabhängig von der Optik
+      source: '<k:atom.heading level="4" appearance="display">h4, sieht aus wie Display</k:atom.heading>'
+      note: 'KERN verlangt das ausdrücklich: Alert und Task-List liefern eine Überschrift, deren Stufe in die Dokumentstruktur eingepasst werden muss, ohne dass sich die Optik ändert.'
+
+  atom.body:
+    - label: Varianten
+      source: '<k:atom.body variant="large">Large</k:atom.body><k:atom.body>Default</k:atom.body><k:atom.body variant="small">Small</k:atom.body><k:atom.body variant="bold">Bold</k:atom.body><k:atom.body variant="muted">Muted</k:atom.body>'
+
+  atom.link:
+    - label: Standard und mit Icon
+      source: '<k:atom.link href="#">Standardlink</k:atom.link> <k:atom.link href="#" icon="download">Merkblatt</k:atom.link>'
+    - label: Extern
+      source: '<k:atom.link href="https://www.kern-ux.de" external="{true}">KERN UX-Standard</k:atom.link>'
+      note: 'Ein Link, der den Kontext wechselt, muss das ankündigen (WCAG 3.2.5) - daher das nachgestellte Icon.'
+    - label: Klein, ohne Visited-Zustand
+      source: '<k:atom.link href="#" small="{true}" noVisitedState="{true}">Seite 2</k:atom.link>'
+
+  atom.badge:
+    - label: Varianten
+      source: '<k:atom.badge variant="info">Info</k:atom.badge> <k:atom.badge variant="success">Erledigt</k:atom.badge> <k:atom.badge variant="warning">In Arbeit</k:atom.badge> <k:atom.badge variant="danger">Fehler</k:atom.badge>'
+      note: 'Der Text steckt in einem kern-label-Span - KERN formatiert Badge-Text über `.kern-badge .kern-label`, direkt eingesetzter Text erbt sonst den Kontext.'
+    - label: Mit Icon
+      source: '<k:atom.badge variant="success" icon="success">Erledigt</k:atom.badge> <k:atom.badge variant="danger" icon="danger">Fehler</k:atom.badge>'
+    - label: Klein
+      source: '<k:atom.badge variant="success" small="{true}">Erledigt</k:atom.badge>'
+
+  atom.label:
+    - label: Feldbeschriftung
+      source: '<k:atom.label for="sg-name">Name</k:atom.label>'
+    - label: Optionales Feld
+      source: '<k:atom.label for="sg-tel" optional="{true}">Telefonnummer</k:atom.label>'
+      note: 'KERN kennzeichnet die optionale Minderheit, nicht die Pflichtfelder. Es gibt kein Sternchen.'
+    - label: Legende
+      source: '<fieldset class="kern-fieldset"><k:atom.label size="large">Adresse</k:atom.label><div class="kern-fieldset__body"><k:atom.body>Feldinhalt</k:atom.body></div></fieldset>'
+      note: 'Ohne for-Attribut entsteht eine legend - für Fieldset-Überschriften.'
+
+  atom.hint:
+    - label: Hinweistext
+      source: '<k:atom.hint id="sg-hint">Beispielsweise: 17 3 2015</k:atom.hint>'
+      note: 'Ein div, kein p - so schreibt KERN es vor. Links sind darin nicht erlaubt.'
+
+  atom.error:
+    - label: Feldfehler
+      source: '<k:atom.error id="sg-error">Der Name darf nicht leer sein</k:atom.error>'
+    - label: Mit Live-Ankündigung
+      source: '<k:atom.error id="sg-error-live" alert="{true}">Die Eingabe ist ungültig</k:atom.error>'
+      note: 'role=alert lohnt nur, wenn die Meldung nach dem Laden erscheint.'
+
+  atom.divider:
+    - label: Dekorativ und semantisch
+      source: '<k:atom.divider /><k:atom.divider decorative="{false}" />'
+
+  atom.progress:
+    - label: Fortschritt
+      source: '<k:atom.progress id="sg-progress" value="2" max="5" label="Schritt 2 von 5" />'
+      note: 'Die Beschriftung trägt die Information, nicht der Balken.'
+
+  atom.loader:
+    - label: Ladeanzeige
+      source: '<k:atom.loader label="Ergebnisse werden geladen" />'
+
+  atom.list:
+    - label: Varianten
+      source: '<k:atom.list variant="bullet"><li>Erster Punkt</li><li>Zweiter Punkt</li></k:atom.list><k:atom.list tag="ol" variant="number"><li>Schritt eins</li><li>Schritt zwei</li></k:atom.list>'
+
+  molecule.skipLink:
+    - label: Sprungmarke
+      source: '<k:molecule.skipLink target="main">Zum Inhalt springen</k:molecule.skipLink>'
+      note: 'Erst bei Tastaturfokus sichtbar. KERN liefert keine Sprungmarke, BITV verlangt sie.'
+
+  atom.preline:
+    - label: Vorzeile
+      source: '<k:atom.preline>Dienstleistung</k:atom.preline>'
+      note: 'Innerhalb einer hgroup gehört die Vorzeile nicht zum zugänglichen Namen der Überschrift.'
+
+  atom.subline:
+    - label: Unterzeile
+      source: '<k:atom.subline>Bearbeitungszeit etwa 5 Werktage</k:atom.subline>'
+
+  molecule.hgroup:
+    - label: Überschriftengruppe
+      source: '<k:molecule.hgroup heading="Personalausweis beantragen" preline="Dienstleistung" subline="Bearbeitungszeit etwa 5 Werktage" level="4" />'
+      note: 'hgroup verbindet Vor- und Unterzeile mit der Überschrift, ohne dass sie Teil ihres Namens werden.'
+
+  molecule.figure:
+    - label: Bild mit Bildunterschrift
+      source: '<k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" alt="" caption="Beispielbild mit Bildunterschrift" />'
+      note: 'alt wird immer ausgegeben, auch leer: ein img ohne alt wird mit dem Dateinamen vorgelesen, alt="" kennzeichnet korrekt ein dekoratives Bild. Bei FAL-Referenzen entsteht zusätzlich ein srcset über 480/768/1024/1440.'
+
+  molecule.descriptionList:
+    - label: Schlüssel-Wert-Paare
+      source: "<k:molecule.descriptionList items=\"{0: {key: 'Gebühr', value: '37,00 €'}, 1: {key: 'Gültigkeit', value: '10 Jahre'}}\" />"
+    - label: Spaltenvariante
+      source: "<k:molecule.descriptionList columns=\"{true}\" items=\"{0: {key: 'Montag', value: '8-16 Uhr'}, 1: {key: 'Dienstag', value: '8-18 Uhr'}}\" />"
+
+  molecule.buttonGroup:
+    - label: Schaltflächengruppe
+      source: "<k:molecule.buttonGroup items=\"{0: {label: 'Antrag starten', link: '#'}, 1: {label: 'Merkblatt', link: '#', icon: 'download'}}\" />"
+      note: 'Als Links gerendert, nicht als Buttons - sie navigieren, und ein navigierender Button bricht Öffnen-im-neuen-Tab.'
+
+  molecule.alert:
+    - label: Varianten
+      source: '<k:molecule.alert variant="info" title="Information" level="4">Der Antrag kann auch online gestellt werden.</k:molecule.alert><k:molecule.alert variant="success" title="Erfolg" level="4">Ihr Antrag wurde übermittelt.</k:molecule.alert><k:molecule.alert variant="warning" title="Warnung" level="4">Die Frist endet am 31. März.</k:molecule.alert><k:molecule.alert variant="danger" title="Fehler" level="4">Das Formular konnte nicht gesendet werden.</k:molecule.alert>'
+      note: 'Ohne role=alert. Ein redaktionell platzierter Hinweis existiert beim Laden der Seite - eine assertive Live-Region würde den Screenreader für etwas unterbrechen, das keine Neuigkeit ist.'
+    - label: Ohne Titel
+      source: '<k:molecule.alert variant="info">Nur Text, ohne Kopfzeile.</k:molecule.alert>'
+
+  molecule.accordionItem:
+    - label: Aufklappbare Abschnitte
+      source: '<k:molecule.accordionItem title="Welche Unterlagen brauche ich?"><k:atom.body>Personalausweis und ein biometrisches Passbild.</k:atom.body></k:molecule.accordionItem><k:molecule.accordionItem title="Was kostet der Antrag?"><k:atom.body>37,00 Euro.</k:atom.body></k:molecule.accordionItem>'
+      note: 'Natives details/summary - Aufklappverhalten, Tastaturbedienung und Screenreader-Ansage kommen vom Browser. KERN setzt benachbarte Akkordeons über einen Geschwisterselektor ab, es gibt also keinen Gruppen-Wrapper.'
+    - label: Bereits geöffnet
+      source: '<k:molecule.accordionItem title="Standardmäßig offen" open="{true}"><k:atom.body>Sparsam einsetzen.</k:atom.body></k:molecule.accordionItem>'
+
+  molecule.card:
+    - label: Karte mit Stretched Link
+      source: '<k:molecule.card title="Personalausweis beantragen" level="4" preline="Dienstleistung" link="#">Antrag online oder vor Ort.</k:molecule.card>'
+      note: 'Der Link sitzt auf der Überschrift und wird über kern-link--stretched auf die ganze Karte gedehnt - so ist sein zugänglicher Name der Titel und nicht der gesamte Kartentext.'
+    - label: Mit Fußbereich
+      source: '<k:molecule.card title="Meldung" level="4"><f:fragment name="footer"><k:atom.badge variant="info">Neu</k:atom.badge></f:fragment><f:fragment name="default"><k:atom.body>Kurztext.</k:atom.body></f:fragment></k:molecule.card>'
+      note: 'Sobald ein benannter Slot verwendet wird, muss auch der Standardinhalt in ein f:fragment - Fluid verwirft sonst den Text außerhalb der Fragmente.'
+
+  organism.cardGrid:
+    - label: Kartengitter
+      source: '<k:organism.cardGrid columns="3"><k:molecule.card title="Erste" level="4">A</k:molecule.card><k:molecule.card title="Zweite" level="4">B</k:molecule.card><k:molecule.card title="Dritte" level="4">C</k:molecule.card></k:organism.cardGrid>'
+
+  molecule.taskListItem:
+    - label: Einzelner Schritt
+      source: '<k:organism.taskList><k:molecule.taskListItem title="Persönliche Daten" number="1" link="#" status="Erledigt" statusVariant="success" statusId="sg-task-1" /></k:organism.taskList>'
+      note: 'Die Nummer steht INNERHALB des Links - KERN hat das in 2.7.0 geändert, weil Screenreader sie sonst überspringen.'
+    - label: Noch nicht startbar
+      source: '<k:organism.taskList><k:molecule.taskListItem title="Nachweise hochladen" number="2" status="Offen" statusId="sg-task-2" /></k:organism.taskList>'
+      note: 'Ohne Link als reiner Text - ein Schritt, der noch nicht begonnen werden kann, sollte kein toter Link sein.'
+
+  organism.taskList:
+    - label: Aufgabenübersicht
+      source: '<k:organism.taskList title="Antrag auf Personalausweis" level="4"><k:molecule.taskListItem title="Persönliche Daten" number="1" link="#" status="Erledigt" statusVariant="success" statusIcon="success" statusId="sg-tl-1" /><k:molecule.taskListItem title="Nachweise" number="2" link="#" status="In Arbeit" statusVariant="warning" statusId="sg-tl-2" /><k:molecule.taskListItem title="Zusammenfassung" number="3" status="Offen" statusId="sg-tl-3" /></k:organism.taskList>'
+    - label: Ohne Nummerierung
+      source: '<k:organism.taskList title="Unterlagen" level="4" numbered="{false}"><k:molecule.taskListItem title="Personalausweis" link="#" status="Erledigt" statusVariant="success" statusIcon="success" statusId="sg-tlu-1" /><k:molecule.taskListItem title="Meldebescheinigung" status="Offen" statusId="sg-tlu-2" /></k:organism.taskList>'
+      note: 'Ohne Nummern eine ul statt einer ol - die Schritte sind dann eine Menge, keine Reihenfolge.'
+
+  organism.taskListGroup:
+    - label: Antrag mit mehreren Abschnitten
+      source: '<k:organism.taskListGroup><k:organism.taskList title="Persönliche Daten" level="4"><k:molecule.taskListItem title="Angaben zur Person machen" number="1" link="#" status="Erledigt" statusVariant="success" statusIcon="success" statusId="sg-tlg-1" /><k:molecule.taskListItem title="Aktuelle Meldeadresse angeben" number="2" link="#" status="Unvollständig" statusVariant="warning" statusId="sg-tlg-2" /><k:molecule.taskListItem title="Versandadresse meiner Briefwahlunterlagen angeben" number="3" status="Noch nicht zu bearbeiten" statusId="sg-tlg-3" /></k:organism.taskList><k:organism.taskList title="Zusammenfassung" level="4"><k:molecule.taskListItem title="Wenn Sie alle Angaben gemacht haben, können Sie diese hier noch einmal prüfen." number="4" status="Noch nicht zu bearbeiten" statusId="sg-tlg-4" /></k:organism.taskList></k:organism.taskListGroup>'
+      note: 'KERNs Referenzbeispiel: pro Abschnitt eine Überschrift mit eigener Liste, 32px Abstand aus kern-task-list-group.'
+
+  molecule.summaryItem:
+    - label: Bestätigungsschritt
+      source: "<k:molecule.summaryItem title=\"Persönliche Daten\" level=\"4\" number=\"1\" editLink=\"#\"><k:molecule.descriptionList items=\"{0: {key: 'Name', value: 'Erika Mustermann'}, 1: {key: 'Geburtsdatum', value: '12.08.1964'}}\" /></k:molecule.summaryItem>"
+      note: 'Der Bearbeiten-Link führt den Abschnittstitel als Screenreader-Text mit: mehrere gleichlautende Bearbeiten-Links auf einer Seite sind sonst nicht unterscheidbar (WCAG 2.4.4).'
+
+  organism.dialog:
+    - label: Modaler Dialog
+      source: '<button type="button" class="kern-btn kern-btn--secondary" data-kernt3-dialog="sg-dialog"><span class="kern-label">Dialog öffnen</span></button><k:organism.dialog id="sg-dialog" title="Antrag wirklich verwerfen?" level="4"><k:atom.body>Alle Eingaben gehen verloren.</k:atom.body><f:fragment name="footer"><k:atom.button variant="secondary">Abbrechen</k:atom.button><k:atom.button variant="primary">Verwerfen</k:atom.button></f:fragment></k:organism.dialog>'
+      note: 'Natives dialog-Element: Fokusfalle, Escape und Fokusrückgabe kommen vom Browser. KERN liefert dafür kein JavaScript - dialog.js ist die eine echte Skripting-Pflicht des Systems.'
+
+  organism.gallery:
+    - label: Bildergitter
+      source: '<k:organism.gallery columns="3"><li><k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" caption="Erstes Bild" /></li><li><k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" caption="Zweites Bild" /></li><li><k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" /></li></k:organism.gallery>'
+      note: 'Nimmt Figures als Slot-Inhalt, wie cardGrid Karten nimmt - das Gitter muss nicht wissen, woher die Bilder kommen.'
+
+  molecule.mediaPlayer:
+    - label: Video mit Untertiteln und Transkript
+      source: '<k:molecule.mediaPlayer src="/beispiel.mp4" captionsSrc="/beispiel.vtt" transcript="Sprecherin: Willkommen im Bürgerbüro." />'
+      note: 'Die Quellpfade sind Beispiele und zeigen hier kein Video - geprüft wird das Markup: natives Element mit controls, Untertitel-Track und Transkript. WCAG 1.2.2 verlangt Untertitel, 1.2.1 das Transkript.'
+    - label: Audio
+      source: '<k:molecule.mediaPlayer src="/beispiel.mp3" audio="{true}" transcript="Sprecher: Die Öffnungszeiten haben sich geändert." />'
+
+  molecule.downloadList:
+    - label: Dateiliste
+      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Merkblatt Personalausweis', format: 'PDF', size: '240 KB'}, 1: {url: '#', title: 'Antragsformular', format: 'PDF', size: '1,2 MB', description: 'Bitte vollständig ausfüllen.'}}\" />"
+      note: 'Format und Größe stehen im Linktext, nicht in einer eigenen Spalte: ein Link muss aus sich heraus verständlich sein (WCAG 2.4.4).'
+
+  molecule.section:
+    - label: Abstand vor und nach dem Block
+      source: '<k:molecule.section spaceBefore="large" spaceAfter="small"><k:atom.body>Block mit Abstand</k:atom.body></k:molecule.section>'
+      note: 'Nutzt Cores space_before_class/space_after_class und bildet sie auf KERNs Skala ab - so bleiben bestehende Inhalte migrierbar.'
+    - label: Ohne Abstand
+      source: '<k:molecule.section><k:atom.body>Kein class-Attribut</k:atom.body></k:molecule.section>'
+    - label: Semantisches Tag
+      source: '<k:molecule.section tag="section" spaceBefore="medium"><k:atom.body>Als section</k:atom.body></k:molecule.section>'
+
+  molecule.contentHeader:
+    - label: Stufe aus dem Core-Feld
+      source: '<k:molecule.contentHeader header="Überschrift Stufe 4" layout="4" appearance="large" />'
+      note: 'header_layout liefert die semantische Stufe, appearance die Optik - getrennt, wie KERN es verlangt.'
+    - label: Versteckte Überschrift
+      source: '<k:molecule.contentHeader header="Wird nicht gerendert" layout="100" />'
+      note: 'header_layout = 100 ist Cores "Überschrift verbergen". Das erzeugt kein Element, nicht bloß ein visuell verstecktes.'
+      rendersNothing: true
+    - label: Verlinkt
+      source: '<k:molecule.contentHeader header="Verlinkte Überschrift" layout="4" link="#" />'
+
+  molecule.breadcrumb:
+    - label: Brotkrumenpfad
+      source: "<k:molecule.breadcrumb items=\"{0: {title: 'Start', link: '#'}, 1: {title: 'Leistungen', link: '#'}, 2: {title: 'Personalausweis', link: '#'}}\" />"
+      note: 'Trennzeichen entstehen in CSS - im DOM würden sie bei jedem Schritt mitgelesen.'
+
+  molecule.navigationList:
+    - label: Hauptnavigation mit Unternavigation
+      source: "<k:molecule.navigationList items=\"{0: {title: 'Dienstleistungen', link: '#', active: 1, children: {0: {title: 'Personalausweis', link: '#', active: 1, current: 1, children: {0: {title: 'Gebühren', link: '#'}}}, 1: {title: 'Wohnsitz anmelden', link: '#'}}}, 1: {title: 'Aktuelles', link: '#'}}\" />"
+      note: 'Rendert sich für jede Ebene selbst, die Tiefe kommt also aus den Daten. Der aktive Zweig ist fett und unterstrichen markiert, die aktuelle Seite zusätzlich über aria-current - Farbe allein wäre kein ausreichendes Signal.'
+
+  organism.kopfzeile:
+    - label: Dachmarken-Kopfzeile
+      source: '<k:organism.kopfzeile />'
+      note: 'Ausschließlich Angeboten von Bund, Ländern und Kommunen vorbehalten. Standardmäßig deaktiviert.'
+
+  organism.header:
+    - label: Kopfbereich mit Navigation
+      source: "<k:organism.header siteTitle=\"Stadt Musterstadt\" searchUrl=\"#\" mainNavigation=\"{0: {title: 'Leistungen', link: '#', current: 1}, 1: {title: 'Aktuelles', link: '#'}}\" helpNavigation=\"{0: {title: 'Leichte Sprache', link: '#'}}\" />"
+      note: 'Folgt dem Grid-Header-Pattern von KERN. Die Umschalter sind erst unterhalb der lg-Breite sichtbar.'
+
+  organism.footer:
+    - label: Fußbereich
+      source: "<k:organism.footer columns=\"{0: {title: 'Verwaltung', children: {0: {title: 'Öffnungszeiten', link: '#'}, 1: {title: 'Standorte', link: '#'}}}}\" metaNavigation=\"{0: {title: 'Impressum', link: '#'}, 1: {title: 'Datenschutz', link: '#'}, 2: {title: 'Barrierefreiheit', link: '#'}}\" />"
+
+  organism.hero:
+    - label: Bühne mit Bild und Hinweis
+      source: '<k:organism.hero heading="Einen Hund anmelden oder abmelden" level="4" preline="Musterstädter Hunderegister" noteText="Neue Registrierungen kosten 30 Euro." imageSrc="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg"><k:atom.body>Wer in Musterstadt wohnt, muss den Hund registrieren. Das geht gleich hier.</k:atom.body></k:organism.hero>'
+      note: 'Der Hinweis ist eine KERN-Alert-Zeile ohne Überschrift - ein Satz wie "kostet 30 Euro" wäre in der Dokumentgliederung falsch. Die Stufe ist hier 4, damit die Galerie ihre eigene Überschriftenordnung behält; im Einsatz ist es eine h1.'
+    - label: Bild links
+      source: '<k:organism.hero heading="Wohnsitz anmelden" level="4" mediaPosition="left" imageSrc="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg"><k:atom.body>Innerhalb von zwei Wochen nach dem Umzug.</k:atom.body></k:organism.hero>'
+      note: 'Die Seite ist nur eine Grid-Reihenfolge: im Quelltext steht der Text immer vor dem Bild.'
+    - label: Ohne Bild
+      source: '<k:organism.hero heading="Terminvergabe" level="4" mediaPosition="none" noteVariant="warning" noteText="Zurzeit sind keine Termine verfügbar."><k:atom.body>Bitte versuchen Sie es in der nächsten Woche erneut.</k:atom.body></k:organism.hero>'
+      note: 'Ohne Bild behält der Text eine lesbare Zeilenlänge statt über den ganzen Container zu laufen.'

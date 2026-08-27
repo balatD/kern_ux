@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    A group is a kern-fieldset. Every child input carries aria-invalid and the error
+    modifier in addition to the fieldset's own error state: KERN is explicit that the
+    group error alone leaves the individual controls looking untouched, which fails
+    WCAG 1.4.1.
+</f:comment>
+<formvh:renderRenderable renderable="{element}">
+    <f:render partial="Field/Group" arguments="{element: element}" contentAs="elementContent">
+        <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <f:for each="{element.properties.options}" as="label" key="value" iteration="i">
+                <div class="kern-form-check{f:if(condition: validationResults.errors, then: ' kern-form-check--error')}">
+                    <f:form.radio
+                        property="{element.identifier}"
+                        id="{element.uniqueIdentifier}-{i.index}"
+                        class="kern-form-check__radio"
+                        errorClass="kern-form-check__radio--error"
+                        value="{value}"
+                        additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, scope: 'child')}"
+                    />
+                    <label class="kern-label" for="{element.uniqueIdentifier}-{i.index}">{formvh:translateElementProperty(element: element, property: '{0: \'options\', 1: value}')}</label>
+                </div>
+            </f:for>
+        </f:form.validationResults>
+    </f:render>
+</formvh:renderRenderable>
+</html>

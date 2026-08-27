@@ -1,0 +1,26 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{yaml,yml,neon,json}]
+indent_size = 2
+
+[*.html]
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+# Component templates must not end in a newline.
+# A trailing newline is a root-level text node in Fluid, so it lands in the rendered
+# markup - which for an inline component means a stray space before the next
+# character ("Status: X ." instead of "Status: X."). This is the one place where a
+# missing final newline is intentional.
+[Resources/Private/Components/**.html]
+insert_final_newline = false

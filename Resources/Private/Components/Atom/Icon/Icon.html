@@ -1,0 +1,23 @@
+<f:argument name="name" type="string"
+            description="KERN icon name without the kern-icon-- prefix, e.g. 'arrow-forward'."
+/><f:argument name="size" type="string" optional="{true}" default=""
+            description="small | large | x-large. Empty uses KERN's default size."
+/><f:argument name="label" type="string" optional="{true}" default=""
+            description="Set only when the icon carries meaning no adjacent text conveys. Leave empty for decorative icons, which is the normal case."
+/><f:variable name="classes" value="kern-icon kern-icon--{name}"
+/><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-icon--{size}" /></f:if
+><f:spaceless>
+<f:if condition="{label}">
+    <f:then>
+        <f:comment>
+            role="img" is added on top of KERN's documented aria-hidden="false" +
+            aria-label: an aria-label on a generic empty span is ignored by most
+            screen readers, so without a role the label would not be announced.
+        </f:comment>
+        <span class="{classes}" role="img" aria-label="{label}"></span>
+    </f:then>
+    <f:else>
+        <span class="{classes}" aria-hidden="true"></span>
+    </f:else>
+</f:if>
+</f:spaceless>

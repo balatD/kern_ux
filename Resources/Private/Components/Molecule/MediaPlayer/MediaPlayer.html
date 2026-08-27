@@ -1,0 +1,41 @@
+<f:argument name="src" type="string"
+            description="URL of the video or audio file."
+/><f:argument name="audio" type="bool" optional="{true}" default="{false}"
+            description="Renders an audio element instead of video."
+/><f:argument name="captionsSrc" type="string" optional="{true}" default=""
+            description="URL of a WebVTT caption track. Without it a video with speech fails WCAG 1.2.2."
+/><f:argument name="captionsLanguage" type="string" optional="{true}" default=""
+/><f:argument name="captionsLabel" type="string" optional="{true}" default=""
+/><f:argument name="poster" type="string" optional="{true}" default=""
+/><f:argument name="transcript" type="string" optional="{true}" default=""
+            description="Full text of what is said. Covers WCAG 1.2.1 and, unlike captions, also serves people who do not read captions comfortably."
+/><f:argument name="transcriptLabel" type="string" optional="{true}" default=""
+/><f:variable name="captionsLang" value="{captionsLanguage}"
+/><f:if condition="!{captionsLang}"><f:variable name="captionsLang"><f:translate key="mediaPlayer.captionsLanguage" extensionName="KernUx" /></f:variable></f:if
+><f:variable name="captionsName" value="{captionsLabel}"
+/><f:if condition="!{captionsName}"><f:variable name="captionsName"><f:translate key="mediaPlayer.captionsLabel" extensionName="KernUx" /></f:variable></f:if
+><f:variable name="transcriptLabelText" value="{transcriptLabel}"
+/><f:if condition="!{transcriptLabelText}"><f:variable name="transcriptLabelText"><f:translate key="mediaPlayer.transcript" extensionName="KernUx" /></f:variable></f:if><f:comment>
+    KERN has no media component, so this is ours (kernt3-).
+
+    Deliberately the native player with `controls`: a custom player means rebuilding
+    keyboard operation, focus handling and screen-reader labelling for every control,
+    and browsers already ship all of it correctly.
+
+    Takes URLs rather than FAL objects - the content block does that mapping, so this
+    component stays independent of where a file is managed.
+</f:comment><f:spaceless>
+<div class="kernt3-media">
+    <f:if condition="{audio}">
+        <f:then>
+            <audio class="kernt3-media__player" controls preload="metadata" src="{src}"><f:if condition="{captionsSrc}"><track kind="captions" srclang="{captionsLang}" label="{captionsName}" src="{captionsSrc}" default /></f:if></audio>
+        </f:then>
+        <f:else>
+            <video class="kernt3-media__player" controls preload="metadata"<f:if condition="{poster}"> poster="{poster}"</f:if> src="{src}"><f:if condition="{captionsSrc}"><track kind="captions" srclang="{captionsLang}" label="{captionsName}" src="{captionsSrc}" default /></f:if></video>
+        </f:else>
+    </f:if>
+    <f:if condition="{transcript}">
+        <k:molecule.accordionItem title="{transcriptLabelText}"><div class="kernt3-rte"><f:format.nl2br>{transcript}</f:format.nl2br></div></k:molecule.accordionItem>
+    </f:if>
+</div>
+</f:spaceless>

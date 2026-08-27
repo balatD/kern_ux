@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/hero">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Stage</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>The opening block of a page: heading, short lead, one note and a picture.</source>
+            </trans-unit>
+            <trans-unit id="preline.label">
+                <source>Kicker</source>
+            </trans-unit>
+            <trans-unit id="preline.description">
+                <source>Names the service or the register this page belongs to. It is not read as part of the heading.</source>
+            </trans-unit>
+            <trans-unit id="bodytext.label">
+                <source>Lead</source>
+            </trans-unit>
+            <trans-unit id="bodytext.description">
+                <source>Two or three sentences on what can be done here. Everything else belongs in the blocks below.</source>
+            </trans-unit>
+            <trans-unit id="noteText.label">
+                <source>Note</source>
+            </trans-unit>
+            <trans-unit id="noteText.description">
+                <source>One sentence the visitor has to know before starting: a fee, a deadline, a precondition. Leave empty and no note is shown.</source>
+            </trans-unit>
+            <trans-unit id="noteVariant.label">
+                <source>Kind of note</source>
+            </trans-unit>
+            <trans-unit id="image.label">
+                <source>Picture</source>
+            </trans-unit>
+            <trans-unit id="image.description">
+                <source>Illustrates the page and is never the message: it gets no caption, and anything the visitor needs belongs in the lead.</source>
+            </trans-unit>
+            <trans-unit id="media_position.label">
+                <source>Position of the picture</source>
+            </trans-unit>
+            <trans-unit id="media_position.description">
+                <source>Only the visual side. The text is always read before the picture.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

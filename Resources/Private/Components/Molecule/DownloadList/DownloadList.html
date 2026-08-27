@@ -1,0 +1,26 @@
+<f:argument name="items" type="array"
+            description="Each item needs url, title, format and size; description is optional."
+/><f:comment>
+    KERN has no download list, so this is ours (kernt3-).
+
+    Format and size belong in the link text, not in a separate column: a link has to be
+    understandable from its text alone (WCAG 2.4.4), and "Merkblatt" tells a screen
+    reader user nothing about what they are about to download.
+
+    Takes plain data rather than FAL objects, so the mapping lives in the content block
+    and the component can be shown without editorial content.
+</f:comment><f:spaceless>
+<ul class="kern-list kernt3-download-list">
+    <f:for each="{items}" as="item">
+        <li class="kernt3-download-list__item">
+            <a class="kern-link" href="{item.url}" download>
+                <k:atom.icon name="download" />
+                <span>{item.title} ({item.format}, {item.size})</span>
+            </a>
+            <f:if condition="{item.description}">
+                <k:atom.body variant="small">{item.description}</k:atom.body>
+            </f:if>
+        </li>
+    </f:for>
+</ul>
+</f:spaceless>

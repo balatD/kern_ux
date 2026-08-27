@@ -1,0 +1,16 @@
+<f:argument name="items" type="array"
+            description="Each item needs a key and a value."
+/><f:argument name="columns" type="bool" optional="{true}" default="{false}"
+            description="KERN's column variant, for short key/value pairs."
+/><f:variable name="classes" value="kern-description-list"
+/><f:if condition="{columns}"><f:variable name="classes" value="{classes} kern-description-list--col" /></f:if
+><f:spaceless>
+<dl class="{classes}">
+    <f:for each="{items}" as="item">
+        <div class="kern-description-list-item">
+            <dt class="kern-description-list-item__key">{item.key}</dt>
+            <dd class="kern-description-list-item__value">{item.value}</dd>
+        </div>
+    </f:for>
+</dl>
+</f:spaceless>

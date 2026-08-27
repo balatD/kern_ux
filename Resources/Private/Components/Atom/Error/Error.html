@@ -1,0 +1,10 @@
+<f:argument name="id" type="string"
+            description="Referenced from the field's aria-describedby, after the hint id."
+/><f:argument name="alert" type="bool" optional="{true}" default="{false}"
+            description="Adds role=alert. Only useful when the message appears after page load, e.g. client-side validation; on a server-rendered page there is nothing to announce."
+/><f:spaceless>
+<p class="kern-error" id="{id}"<f:if condition="{alert}"> role="alert"</f:if>>
+    <k:atom.icon name="danger" />
+    <span class="kern-body"><f:slot /></span>
+</p>
+</f:spaceless>

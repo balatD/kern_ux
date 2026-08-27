@@ -1,0 +1,44 @@
+# Heading for a content block: text, semantic level and visual size.
+#
+# Level and size are separate fields because KERN requires it - a block has to keep
+# its look at any depth of the document outline. header and header_layout are core
+# fields (header_layout already means "heading level" there, and 100 means hidden);
+# only the visual scale is new.
+identifier: KernUx/Heading
+fields:
+  - identifier: header_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.header'
+    fields:
+      - identifier: header
+        useExistingField: true
+      - type: Linebreak
+      - identifier: header_layout
+        useExistingField: true
+      - identifier: tx_kernux_heading_appearance
+        # Unprefixed: one shared column instead of one per content block, which is
+        # what the Content Blocks docs recommend for a field used by many blocks.
+        prefixField: false
+        type: Select
+        renderType: selectSingle
+        label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:field.headingAppearance'
+        default: ''
+        items:
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.default'
+            value: ''
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.display'
+            value: 'display'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.xLarge'
+            value: 'x-large'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.large'
+            value: 'large'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.medium'
+            value: 'medium'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.small'
+            value: 'small'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.titleLarge'
+            value: 'title-large'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.title'
+            value: 'title'
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:headingAppearance.titleSmall'
+            value: 'title-small'

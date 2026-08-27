@@ -1,0 +1,35 @@
+<f:argument name="variant" type="string" optional="{true}" default="primary"
+            description="KERN button variant: primary, secondary or tertiary."
+/><f:argument name="type" type="string" optional="{true}" default="button"
+            description="Native button type. Defaults to 'button' on purpose - KERN's own examples omit it, which submits the surrounding form by accident."
+/><f:argument name="size" type="string" optional="{true}" default=""
+            description="Optional size modifier. KERN only defines 'x-small'."
+/><f:argument name="block" type="bool" optional="{true}" default="{false}"
+            description="Render full width (kern-btn--block)."
+/><f:argument name="icon" type="string" optional="{true}" default=""
+            description="KERN icon name without prefix, e.g. 'arrow-forward'. Rendered as a decorative span."
+/><f:argument name="iconPosition" type="string" optional="{true}" default="after"
+            description="'before' or 'after' the label. Forced to 'before' when iconOnly is set."
+/><f:argument name="iconOnly" type="bool" optional="{true}" default="{false}"
+            description="Visually hide the label. WCAG 1.1.1 - the slot must still carry text."
+/><f:argument name="disabled" type="bool" optional="{true}" default="{false}"
+            description="Renders aria-disabled, never the native disabled attribute: KERN requires the control stay focusable and announced."
+/><f:argument name="name" type="string" optional="{true}" default=""
+/><f:argument name="value" type="string" optional="{true}" default=""
+/><f:argument name="id" type="string" optional="{true}" default=""
+/><f:variable name="classes" value="kern-btn kern-btn--{variant}"
+/><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-btn--{size}" /></f:if
+><f:if condition="{block}"><f:variable name="classes" value="{classes} kern-btn--block" /></f:if
+><f:variable name="position" value="{iconPosition}"
+/><f:if condition="{iconOnly}"><f:variable name="position" value="before" /></f:if
+><f:spaceless>
+<button type="{type}" class="{classes}"<f:if condition="{id}"> id="{id}"</f:if><f:if condition="{name}"> name="{name}"</f:if><f:if condition="{value}"> value="{value}"</f:if><f:if condition="{disabled}"> aria-disabled="true"</f:if>>
+    <f:if condition="{icon} && {position} == 'before'">
+        <span class="kern-icon kern-icon--{icon}" aria-hidden="true"></span>
+    </f:if>
+    <span class="kern-label{f:if(condition: iconOnly, then: ' kern-sr-only')}"><f:slot /></span>
+    <f:if condition="{icon} && {position} == 'after'">
+        <span class="kern-icon kern-icon--{icon}" aria-hidden="true"></span>
+    </f:if>
+</button>
+</f:spaceless>

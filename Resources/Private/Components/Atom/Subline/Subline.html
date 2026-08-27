@@ -1,0 +1,5 @@
+<f:argument name="variant" type="string" optional="{true}" default=""
+            description="small | large."
+/><f:variable name="classes" value="kern-subline"
+/><f:if condition="{variant}"><f:variable name="classes" value="{classes} kern-subline--{variant}" /></f:if
+><p class="{classes}"><f:slot /></p>

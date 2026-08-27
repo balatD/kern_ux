@@ -1,0 +1,26 @@
+name: kern-ux/dialog
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: triggerLabel
+    type: Text
+    required: true
+    max: 255
+  - identifier: triggerVariant
+    type: Select
+    renderType: selectSingle
+    default: secondary
+    items:
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.primary'
+        value: primary
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.secondary'
+        value: secondary
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.tertiary'
+        value: tertiary
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux

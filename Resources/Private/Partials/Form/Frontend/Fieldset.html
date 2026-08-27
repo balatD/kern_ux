@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    A section fieldset, not a choice group: KERN uses the large legend where it acts as
+    the heading of a whole block - an address or payment section - and the plain legend
+    for a checkbox or radio group.
+</f:comment>
+<formvh:renderRenderable renderable="{element}">
+    <fieldset class="kern-fieldset" id="{element.uniqueIdentifier}">
+        <f:if condition="{element.label}">
+            <legend class="kern-label kern-label--large">{formvh:translateElementProperty(element: element, property: 'label')}</legend>
+        </f:if>
+        <div class="kern-fieldset__body">
+            <f:for each="{element.elements}" as="element">
+                <f:render partial="{element.templateName}" arguments="{element: element}" />
+            </f:for>
+        </div>
+    </fieldset>
+</formvh:renderRenderable>
+</html>

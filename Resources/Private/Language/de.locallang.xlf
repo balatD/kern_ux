@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="skipLink.main">
+                <source>Skip to content</source>
+                <target>Zum Inhalt springen</target>
+            </trans-unit>
+            <trans-unit id="header.home">
+                <source>To the home page</source>
+                <target>Zur Startseite</target>
+            </trans-unit>
+            <trans-unit id="header.mainNavigation">
+                <source>Main navigation</source>
+                <target>Hauptnavigation</target>
+            </trans-unit>
+            <trans-unit id="header.helpNavigation">
+                <source>Service navigation</source>
+                <target>Hilfsnavigation</target>
+            </trans-unit>
+            <trans-unit id="header.showMenu">
+                <source>Show menu</source>
+                <target>Menü anzeigen</target>
+            </trans-unit>
+            <trans-unit id="header.showSearch">
+                <source>Show search</source>
+                <target>Suche anzeigen</target>
+            </trans-unit>
+            <trans-unit id="header.searchTerm">
+                <source>Search term</source>
+                <target>Suchbegriff</target>
+            </trans-unit>
+            <trans-unit id="header.submitSearch">
+                <source>Search</source>
+                <target>Suchen</target>
+            </trans-unit>
+            <trans-unit id="footer.label">
+                <source>Footer</source>
+                <target>Fußbereich</target>
+            </trans-unit>
+            <trans-unit id="footer.legalNavigation">
+                <source>Legal information</source>
+                <target>Rechtliche Hinweise</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.label">
+                <source>Breadcrumb</source>
+                <target>Brotkrumennavigation</target>
+            </trans-unit>
+            <trans-unit id="dialog.close">
+                <source>Close dialog</source>
+                <target>Dialog schließen</target>
+            </trans-unit>
+            <trans-unit id="summary.edit">
+                <source>Edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="label.optional">
+                <source>- Optional</source>
+                <target>- Optional</target>
+            </trans-unit>
+            <trans-unit id="toc.label">
+                <source>Table of contents</source>
+                <target>Inhaltsverzeichnis</target>
+            </trans-unit>
+            <trans-unit id="sitemap.label">
+                <source>Sitemap</source>
+                <target>Sitemap</target>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.transcript">
+                <source>Show transcript</source>
+                <target>Transkript anzeigen</target>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.captionsLanguage">
+                <source>en</source>
+                <target>de</target>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.captionsLabel">
+                <source>English</source>
+                <target>Deutsch</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

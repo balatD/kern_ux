@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-25" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="optional">
+                <source>- Optional</source>
+            </trans-unit>
+            <trans-unit id="progress">
+                <source>Step %1$s of %2$s</source>
+            </trans-unit>
+            <trans-unit id="errorSummary.title">
+                <source>The form could not be submitted</source>
+            </trans-unit>
+            <trans-unit id="errorSummary.intro">
+                <source>Please correct the following entries:</source>
+            </trans-unit>
+            <trans-unit id="date.day">
+                <source>Day</source>
+            </trans-unit>
+            <trans-unit id="date.month">
+                <source>Month</source>
+            </trans-unit>
+            <trans-unit id="date.year">
+                <source>Year</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.empty">
+                <source>Please enter a date.</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.incomplete">
+                <source>Please fill in day, month and year.</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.notNumeric">
+                <source>Please enter day, month and year as numbers.</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.invalid">
+                <source>That date does not exist.</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.tooEarly">
+                <source>The date is too far in the past.</source>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.tooLate">
+                <source>The date is too far in the future.</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.KernDate.label">
+                <source>Date (KERN)</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.KernDate.editor.validators.KernDate.label">
+                <source>Valid date</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

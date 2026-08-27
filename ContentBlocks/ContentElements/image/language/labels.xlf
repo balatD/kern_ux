@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/image">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A single image with a caption.</source>
+            </trans-unit>
+            <trans-unit id="image.label">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="caption.label">
+                <source>Caption</source>
+            </trans-unit>
+            <trans-unit id="caption.description">
+                <source>Visible to everyone. It does not replace the alternative text, which is kept on the file itself.</source>
+            </trans-unit>
+            <trans-unit id="aboveTheFold.label">
+                <source>Load immediately</source>
+            </trans-unit>
+            <trans-unit id="aboveTheFold.description">
+                <source>Only for an image already visible without scrolling. Every other image stays lazily loaded.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

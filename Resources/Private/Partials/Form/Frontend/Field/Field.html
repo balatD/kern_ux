@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    The KERN field row. Every kern-form-input control goes through here, which is the
+    point: KERN's form contract has several parts that are individually easy to forget,
+    and forgetting any one of them is an accessibility defect rather than a cosmetic
+    one.
+
+    DOM order is label, hint, control, error - that is the order KERN prescribes, and
+    it is also the order a screen reader reads.
+
+    The optional marker is inverted on purpose: KERN marks the optional minority and
+    leaves required fields unmarked, the opposite of ext:form's own convention. The
+    field is still announced as required, via aria-required on the control itself
+    (see kux:formFieldAttributes).
+</f:comment>
+<f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+    <f:variable name="hint" value="{formvh:translateElementProperty(element: element, property: 'elementDescription')}" />
+    <div class="kern-form-input{f:if(condition: validationResults.errors, then: ' kern-form-input--error')}">
+        <f:if condition="{doNotShowLabel} != 1">
+            <label class="kern-label" for="{element.uniqueIdentifier}">{formvh:translateElementProperty(element: element, property: 'label')}<f:if condition="!{kux:formFieldRequired(element: element)}"> <span class="kern-label__optional"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:optional" /></span></f:if></label>
+        </f:if>
+        <f:if condition="{hint}">
+            <div class="kern-hint" id="{element.uniqueIdentifier}-hint">{hint}</div>
+        </f:if>
+        <f:format.raw>{elementContent}</f:format.raw>
+        <f:if condition="{validationResults.errors}">
+            <p class="kern-error" id="{element.uniqueIdentifier}-error"><span class="kern-icon kern-icon--danger" aria-hidden="true"></span><span class="kern-body"><f:for each="{validationResults.errors}" as="error"><f:format.htmlspecialchars>{formvh:translateElementError(element: element, error: error)}</f:format.htmlspecialchars> </f:for></span></p>
+        </f:if>
+    </div>
+</f:form.validationResults>
+</html>
