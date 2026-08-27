@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/card-grid">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Cards</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A grid of cards, for example services or news items.</source>
+            </trans-unit>
+            <trans-unit id="columns.label">
+                <source>Columns</source>
+            </trans-unit>
+            <trans-unit id="columns.description">
+                <source>Upper limit on a wide screen. A narrow screen always shows one card per row.</source>
+            </trans-unit>
+            <trans-unit id="cards.label">
+                <source>Cards</source>
+            </trans-unit>
+            <trans-unit id="cards.title.label">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="cards.preline.label">
+                <source>Kicker</source>
+            </trans-unit>
+            <trans-unit id="cards.preline.description">
+                <source>Sits above the title, for example a category or a date.</source>
+            </trans-unit>
+            <trans-unit id="cards.text.label">
+                <source>Text</source>
+            </trans-unit>
+            <trans-unit id="cards.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="cards.image.label">
+                <source>Image</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

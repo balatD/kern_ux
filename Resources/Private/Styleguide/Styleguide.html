@@ -1,0 +1,83 @@
+<f:comment>
+    Standalone document: the gallery deliberately does not go through the page
+    templates, so a component can be inspected without any page tree or editorial
+    content existing.
+
+    Heading order is h1 (page) > h2 (component) > h3 (example), which is why the
+    heading examples are pinned to level 4 in Examples.yaml - otherwise the gallery
+    would itself violate the rule it exists to demonstrate.
+</f:comment><f:variable name="kernCss" value="{assetBase}kern.min.css" /><f:variable name="firaCss" value="{assetBase}fonts/fira-sans.css" /><!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>KERN UX Styleguide – EXT:kern_ux</title>
+    <link rel="stylesheet" href="{f:uri.resource(path: kernCss)}">
+    <link rel="stylesheet" href="{f:uri.resource(path: firaCss)}">
+    <link rel="stylesheet" href="{f:uri.resource(path: 'EXT:kern_ux/Resources/Public/Css/kernt3.css')}">
+</head>
+<body>
+<k:molecule.skipLink target="main">Zum Inhalt springen</k:molecule.skipLink>
+
+<main id="main" class="kern-container kern-py-xl">
+    <k:atom.heading level="1" appearance="display">KERN UX Styleguide</k:atom.heading>
+    <k:atom.body variant="large">
+        Jede Component dieser Extension in ihren dokumentierten Zuständen. Der
+        gezeigte Quelltext ist derselbe, der gerendert wurde.
+    </k:atom.body>
+
+    <f:if condition="{undocumented}">
+        <f:comment>
+            The gallery names its own gaps rather than quietly omitting components -
+            an incomplete gallery that looks complete is worse than no gallery.
+        </f:comment>
+        <div class="kern-alert kern-alert--warning" role="alert">
+            <div class="kern-alert__header">
+                <k:atom.icon name="warning" />
+                <k:atom.heading level="2" appearance="title">Ohne Beispiel</k:atom.heading>
+            </div>
+            <div class="kern-alert__body">
+                <k:atom.body>
+                    Diese Components sind vorhanden, aber in
+                    <code>Configuration/Styleguide/Examples.yaml</code> nicht erfasst:
+                </k:atom.body>
+                <k:atom.list variant="bullet">
+                    <f:for each="{undocumented}" as="name"><li><code>{name}</code></li></f:for>
+                </k:atom.list>
+            </div>
+        </div>
+    </f:if>
+
+    <nav class="kernt3-styleguide__toc" aria-label="Componentübersicht">
+        <k:atom.heading level="2" appearance="title">Components</k:atom.heading>
+        <k:atom.list variant="bullet">
+            <f:for each="{groups}" as="examples" key="component">
+                <li><k:atom.link href="#c-{component}">{component}</k:atom.link></li>
+            </f:for>
+        </k:atom.list>
+    </nav>
+
+    <f:for each="{groups}" as="examples" key="component">
+        <section class="kernt3-styleguide__section" id="c-{component}">
+            <k:atom.heading level="2" appearance="large">{component}</k:atom.heading>
+            <f:for each="{examples}" as="example">
+                <article class="kernt3-styleguide__example">
+                    <k:atom.heading level="3" appearance="title-small">{example.label}</k:atom.heading>
+                    <f:if condition="{example.note}">
+                        <k:atom.body variant="small">{example.note}</k:atom.body>
+                    </f:if>
+                    <div class="kernt3-styleguide__render">
+                        <f:if condition="{example.rendersNothing}">
+                            <f:then><k:atom.body variant="muted"><em>Rendert bewusst kein Markup.</em></k:atom.body></f:then>
+                            <f:else><f:format.raw>{example.markup}</f:format.raw></f:else>
+                        </f:if>
+                    </div>
+                    <pre class="kernt3-styleguide__source" tabindex="0"><code>{example.source}</code></pre>
+                </article>
+            </f:for>
+        </section>
+    </f:for>
+</main>
+</body>
+</html>

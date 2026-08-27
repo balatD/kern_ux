@@ -1,0 +1,19 @@
+<f:argument name="variant" type="string" optional="{true}" default="info"
+            description="info | success | warning | danger."
+/><f:argument name="small" type="bool" optional="{true}" default="{false}"
+/><f:argument name="icon" type="string" optional="{true}" default=""
+            description="KERN icon name, e.g. 'success'. Decorative - the badge text carries the meaning, so the icon is announced to nobody. Empty is KERN's plain variant."
+/><f:variable name="classes" value="kern-badge kern-badge--{variant}"
+/><f:if condition="{small}"><f:variable name="classes" value="{classes} kern-badge--small" /></f:if
+><f:comment>
+    The text goes in a kern-label span rather than straight into the badge: KERN styles
+    badge text through `.kern-badge .kern-label`, so text placed directly in the badge
+    inherits whatever the surrounding context happens to be - which is how our status
+    badges ended up lighter and smaller than KERN's.
+
+    No size class on the icon. KERN's own badge example writes `kern-icon--sm`, which
+    2.7.2 does not define at all (small | large | x-large); `.kern-badge .kern-icon`
+    already fixes the box at 24px.
+</f:comment><f:spaceless>
+<span class="{classes}"><f:if condition="{icon}"><k:atom.icon name="{icon}" /></f:if><span class="kern-label"><f:slot /></span></span>
+</f:spaceless>

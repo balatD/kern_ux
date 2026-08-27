@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/card-grid">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Cards</source>
+                <target>Karten</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A grid of cards, for example services or news items.</source>
+                <target>Gitter aus Karten, etwa für Dienstleistungen oder Meldungen.</target>
+            </trans-unit>
+            <trans-unit id="columns.label">
+                <source>Columns</source>
+                <target>Spalten</target>
+            </trans-unit>
+            <trans-unit id="columns.description">
+                <source>Upper limit on a wide screen. A narrow screen always shows one card per row.</source>
+                <target>Obergrenze auf breiten Bildschirmen. Auf schmalen Bildschirmen steht immer eine Karte je Zeile.</target>
+            </trans-unit>
+            <trans-unit id="cards.label">
+                <source>Cards</source>
+                <target>Karten</target>
+            </trans-unit>
+            <trans-unit id="cards.title.label">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="cards.preline.label">
+                <source>Kicker</source>
+                <target>Vorzeile</target>
+            </trans-unit>
+            <trans-unit id="cards.preline.description">
+                <source>Sits above the title, for example a category or a date.</source>
+                <target>Steht über dem Titel, etwa eine Kategorie oder ein Datum.</target>
+            </trans-unit>
+            <trans-unit id="cards.text.label">
+                <source>Text</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="cards.link.label">
+                <source>Target</source>
+                <target>Ziel</target>
+            </trans-unit>
+            <trans-unit id="cards.image.label">
+                <source>Image</source>
+                <target>Bild</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

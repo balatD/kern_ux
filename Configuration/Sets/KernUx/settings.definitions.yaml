@@ -1,0 +1,159 @@
+categories:
+  kernUx:
+    label: 'KERN UX-Standard'
+  kernUx.assets:
+    label: 'Assets'
+    parent: kernUx
+  kernUx.site:
+    label: 'Site'
+    parent: kernUx
+  kernUx.navigation:
+    label: 'Navigation'
+    parent: kernUx
+  kernUx.dachmarke:
+    label: 'Digitale Dachmarke'
+    parent: kernUx
+  kernUx.footer:
+    label: 'Footer'
+    parent: kernUx
+  kernUx.styleguide:
+    label: 'Styleguide'
+    parent: kernUx
+
+settings:
+  kernUx.assets.basePath:
+    label: 'Base path of the KERN distribution'
+    description: 'Where `kern-ux:assets:install` placed the KERN files. Point this elsewhere to serve them from a project-owned location.'
+    category: kernUx.assets
+    type: string
+    default: 'EXT:kern_ux/Resources/Public/Vendor/KernUx/'
+
+  kernUx.assets.includeCss:
+    label: 'Include the KERN stylesheet'
+    description: 'Disable only if the project bundles kern.css into its own build.'
+    category: kernUx.assets
+    type: bool
+    default: true
+
+  kernUx.assets.includeFonts:
+    label: 'Include Fira Sans'
+    description: 'KERN''s primary typeface. Disable only if the project self-hosts it elsewhere - KERN looks wrong without it.'
+    category: kernUx.assets
+    type: bool
+    default: true
+
+  kernUx.assets.includeNotoSans:
+    label: 'Include Noto Sans'
+    description: 'Optional secondary typeface. Off by default; KERN only needs it for specific content.'
+    category: kernUx.assets
+    type: bool
+    default: false
+
+  kernUx.theme:
+    label: 'Colour scheme'
+    description: '"auto" follows the visitor''s system preference via prefers-color-scheme.'
+    category: kernUx
+    type: string
+    enum:
+      auto: 'Follow system preference'
+      light: 'Always light'
+      dark: 'Always dark'
+    default: auto
+
+  kernUx.dachmarke.kopfzeileEnable:
+    label: 'Show the federal Kopfzeile'
+    description: 'The "Offizielle Website - Bundesrepublik Deutschland" bar is part of the Digitale Dachmarke and is reserved for federal, state and municipal offerings. Only enable it if your organisation is entitled to use it.'
+    category: kernUx.dachmarke
+    type: bool
+    default: false
+
+  kernUx.dachmarke.kopfzeileLabel:
+    label: 'Kopfzeile label override'
+    description: 'Leave empty to use the official wording. Set a value only if you have been granted different wording.'
+    category: kernUx.dachmarke
+    type: string
+    default: ''
+
+  kernUx.dachmarke.noteText:
+    label: 'Dachmarke note in the footer'
+    description: 'Wording of the note that the offering is part of the Digitale Dachmarke. Empty hides the whole row. No text is shipped: the official wording belongs to the Dachmarke, and only an entitled organisation may use it.'
+    category: kernUx.dachmarke
+    type: string
+    default: ''
+
+  kernUx.dachmarke.noteLogo:
+    label: 'Dachmarke note logo'
+    description: 'EXT: or absolute path to the Bund/Länder/Kommunen mark shown beside the note. Not shipped - it is a protected mark, released only by dachmarke@digitalservice.bund.de.'
+    category: kernUx.dachmarke
+    type: string
+    default: ''
+
+  kernUx.footer.fundingLogo:
+    label: 'Funding logo'
+    description: 'EXT: or absolute path to a funding mark for the right-hand side of the footer note row, for example the EU emblem.'
+    category: kernUx.footer
+    type: string
+    default: ''
+
+  kernUx.footer.fundingLabel:
+    label: 'Funding logo alternative text'
+    description: 'Names the funding programme, not the image. Required whenever a funding logo is set, otherwise the image is announced by its file name.'
+    category: kernUx.footer
+    type: string
+    default: ''
+
+  kernUx.site.title:
+    label: 'Organisation name'
+    description: 'Shown in the header when no logo is configured, so the header is never empty.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.logo:
+    label: 'Logo path'
+    description: 'EXT: or absolute path to the organisation logo. Must not be the Bildwortmarke of the Digitale Dachmarke unless permission was granted.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.searchUrl:
+    label: 'Search result page URL'
+    description: 'Empty hides the header search entirely, including its mobile toggle.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.navigation.helpRootPage:
+    label: 'Hilfsnavigation root page'
+    description: 'Children of this page become the Hilfsnavigation (language switch, Leichte Sprache, Gebärdensprache). 0 disables it.'
+    category: kernUx.navigation
+    type: page
+    default: 0
+
+  kernUx.navigation.footerRootPage:
+    label: 'Footer columns root page'
+    description: 'Each child of this page becomes one footer column, its own children the links inside. 0 disables it.'
+    category: kernUx.navigation
+    type: page
+    default: 0
+
+  kernUx.navigation.metaRootPage:
+    label: 'Legal links root page'
+    description: 'Children become the legal footer row: Impressum, Datenschutz, Barrierefreiheitserklärung. 0 disables it.'
+    category: kernUx.navigation
+    type: page
+    default: 0
+
+  kernUx.styleguide.enable:
+    label: 'Expose the component gallery'
+    description: 'Serves a standalone page rendering every component in every documented state. Off by default: it is a development and audit tool, not site content.'
+    category: kernUx.styleguide
+    type: bool
+    default: false
+
+  kernUx.styleguide.path:
+    label: 'Component gallery path'
+    description: 'Path the gallery responds on, relative to the site root.'
+    category: kernUx.styleguide
+    type: string
+    default: '/kern-ux-styleguide'

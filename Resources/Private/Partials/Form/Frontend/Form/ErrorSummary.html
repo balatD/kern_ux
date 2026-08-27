@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    KERN requires an error summary but ships no component for it - its own docs list
+    WCAG 4.1.3 ("error summary marked up as a status message") as
+    implementation-dependent. So this is assembled from KERN's alert.
+
+    role="alert" is correct *here*, unlike on a content alert: this markup only exists
+    after a failed submit, so there genuinely is something new to announce.
+
+    Each entry links to the field it belongs to, which is what turns the summary from
+    a list of complaints into a way of fixing them.
+</f:comment>
+<f:variable name="errors" value="{kux:formErrorSummary(form: form)}" />
+<f:if condition="{errors}">
+    <div class="kern-alert kern-alert--danger" role="alert" tabindex="-1" id="{form.identifier}-errors">
+        <div class="kern-alert__header">
+            <k:atom.icon name="danger" />
+            <h2 class="kern-title"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:errorSummary.title" /></h2>
+        </div>
+        <div class="kern-alert__body">
+            <k:atom.body><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:errorSummary.intro" /></k:atom.body>
+            <ul class="kern-list">
+                <f:for each="{errors}" as="error">
+                    <li><k:atom.link href="#{error.id}" icon="arrow-forward">{error.label}: {error.message}</k:atom.link></li>
+                </f:for>
+            </ul>
+        </div>
+    </div>
+</f:if>
+</html>

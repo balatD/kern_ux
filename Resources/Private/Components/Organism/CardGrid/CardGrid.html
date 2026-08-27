@@ -1,0 +1,10 @@
+<f:argument name="columns" type="int" optional="{true}" default="3"
+            description="Columns from the lg breakpoint up. Below that the grid is always single column - KERN cards do not read well side by side on a phone."
+/><f:comment>
+    A plain CSS grid of KERN utilities; KERN has no card-grid component. Cards are
+    passed in as slot content so the grid stays agnostic about what it lays out.
+</f:comment><f:spaceless>
+<div class="kern-grid kern-grid-cols-1 kern-grid-cols-2-md kern-grid-cols-{columns}-lg kern-gap-lg">
+    <f:slot />
+</div>
+</f:spaceless>

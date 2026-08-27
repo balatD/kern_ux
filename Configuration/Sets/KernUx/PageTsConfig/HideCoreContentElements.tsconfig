@@ -1,0 +1,19 @@
+# Hides the core content elements this extension replaces.
+#
+# Removed from the *wizard* only, deliberately not from the CType select: a site
+# migrating to KERN still has records with these types, and taking the type out of
+# the select would make them uneditable. Editors just cannot create new ones.
+#
+# Kept on purpose:
+#   list                 - the plugin container, without it no plugin (including
+#                          ext:form) can be inserted at all
+#   shortcut, menu_*     - no KERN block replaces these
+#   form_formframework   - the form plugin
+#
+# Types that only exist when fluid_styled_content is installed are listed anyway;
+# removeItems ignores what is not there.
+mod.wizards.newContentElement.wizardItems {
+    common.removeItems := addToList(header,text,textpic,textmedia,image,bullets,table,uploads,div,html)
+    special.removeItems := addToList(html,div)
+    default.removeItems := addToList(header,text,textpic,textmedia,image,bullets,table,uploads,div,html)
+}

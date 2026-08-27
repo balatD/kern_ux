@@ -1,0 +1,13 @@
+{
+    "name": "kern-ux-a11y",
+    "private": true,
+    "type": "module",
+    "description": "Accessibility checks for the EXT:kern_ux component gallery",
+    "scripts": {
+        "test": "node axe.mjs"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "^4.10.2",
+        "playwright": "^1.56.0"
+    }
+}

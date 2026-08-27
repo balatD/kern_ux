@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/heading">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Heading</source>
+                <target>Überschrift</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A heading with an optional kicker and subline.</source>
+                <target>Überschrift mit optionaler Vor- und Unterzeile.</target>
+            </trans-unit>
+            <trans-unit id="preline.label">
+                <source>Kicker</source>
+                <target>Vorzeile</target>
+            </trans-unit>
+            <trans-unit id="preline.description">
+                <source>Sits above the heading and belongs to it, so it does not add an entry of its own to the document outline.</source>
+                <target>Steht über der Überschrift und gehört zu ihr, erzeugt also keinen eigenen Eintrag in der Dokumentstruktur.</target>
+            </trans-unit>
+            <trans-unit id="subline.label">
+                <source>Subline</source>
+                <target>Unterzeile</target>
+            </trans-unit>
+            <trans-unit id="subline.description">
+                <source>Sits below the heading and belongs to it in the same way.</source>
+                <target>Steht unter der Überschrift und gehört auf dieselbe Weise zu ihr.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

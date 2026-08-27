@@ -1,0 +1,25 @@
+name: kern-ux/description-list
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  # KERN's own modifier is called --col but it *stacks* term and value; without it they
+  # sit side by side from 768px up. The field is named after what an editor sees, not
+  # after the class.
+  - identifier: stacked
+    type: Checkbox
+    default: 0
+  - identifier: entries
+    type: Collection
+    labelField: term
+    fields:
+      - identifier: term
+        type: Text
+        required: true
+        max: 255
+      - identifier: definition
+        type: Text
+        required: true
+        max: 500

@@ -1,0 +1,7 @@
+<f:argument name="target" type="string" optional="{true}" default="main"
+            description="id of the element to jump to. Must exist on the page."
+/><f:comment>
+    KERN ships no skip link, but BITV requires one, so this is our own kernt3-
+    component. Visually hidden until focused - never display:none, which would take
+    it out of the tab order and defeat the purpose.
+</f:comment><a class="kernt3-skip-link" href="#{target}"><f:slot /></a>

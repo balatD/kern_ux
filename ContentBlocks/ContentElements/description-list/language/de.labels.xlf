@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/description-list">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Description list</source>
+                <target>Definitionsliste</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Key/value pairs, for example opening hours or fees.</source>
+                <target>Schlüssel-Wert-Paare, etwa Öffnungszeiten oder Gebühren.</target>
+            </trans-unit>
+            <trans-unit id="stacked.label">
+                <source>Stack term and value</source>
+                <target>Begriff und Wert untereinander</target>
+            </trans-unit>
+            <trans-unit id="stacked.description">
+                <source>Off, term and value sit side by side from tablet width up. On, they stay stacked - which reads better for long values.</source>
+                <target>Aus stehen Begriff und Wert ab Tablet-Breite nebeneinander. An bleiben sie untereinander — das liest sich bei langen Werten besser.</target>
+            </trans-unit>
+            <trans-unit id="entries.label">
+                <source>Entries</source>
+                <target>Einträge</target>
+            </trans-unit>
+            <trans-unit id="entries.term.label">
+                <source>Term</source>
+                <target>Begriff</target>
+            </trans-unit>
+            <trans-unit id="entries.definition.label">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

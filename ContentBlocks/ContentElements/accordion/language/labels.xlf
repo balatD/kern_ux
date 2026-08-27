@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/accordion">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Accordion</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Collapsible sections, for example frequently asked questions.</source>
+            </trans-unit>
+            <trans-unit id="panels.label">
+                <source>Sections</source>
+            </trans-unit>
+            <trans-unit id="panels.description">
+                <source>Each section carries its own heading and stays closed until a visitor opens it.</source>
+            </trans-unit>
+            <trans-unit id="panels.title.label">
+                <source>Heading</source>
+            </trans-unit>
+            <trans-unit id="panels.text.label">
+                <source>Content</source>
+            </trans-unit>
+            <trans-unit id="panels.expanded.label">
+                <source>Open initially</source>
+            </trans-unit>
+            <trans-unit id="panels.expanded.description">
+                <source>For one section at most. Several open sections defeat the point of an accordion.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

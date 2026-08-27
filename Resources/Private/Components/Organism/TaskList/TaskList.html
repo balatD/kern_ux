@@ -1,0 +1,35 @@
+<f:argument name="title" type="string" optional="{true}" default=""
+/><f:argument name="level" type="int" optional="{true}" default="2"
+/><f:argument name="numbered" type="bool" optional="{true}" default="{true}"
+            description="False renders KERN's unnumbered variant: a ul instead of an ol, because without step numbers the steps are a set, not a sequence. Drop the number from every item as well."
+/><f:comment>
+    The GOV.UK-style task list KERN uses for application journeys.
+
+    The heading carries the base kern-heading class in addition to its size class:
+    KERN styles it through a descendant selector (.kern-task-list__header .kern-heading)
+    that only matches the base class - KERN's own example omits it and therefore misses
+    its own rule.
+
+    A journey with several sections - "Persönliche Daten", then "Zusammenfassung" - is
+    one organism.taskListGroup holding one of these per section. KERN's reference puts
+    several header/list pairs inside a single kern-task-list instead; both produce the
+    same 32px between sections (there from kern-task-list-group's gap, there from the
+    second header's margin-top), and one list per heading is the better markup: each
+    heading then labels a list of its own instead of one list carrying two headings.
+</f:comment><f:spaceless>
+<div class="kern-task-list">
+    <f:if condition="{title}">
+        <div class="kern-task-list__header">
+            <k:atom.heading level="{level}" appearance="medium" additionalClasses="kern-heading">{title}</k:atom.heading>
+        </div>
+    </f:if>
+    <f:if condition="{numbered}">
+        <f:then>
+            <ol class="kern-task-list__list"><f:slot /></ol>
+        </f:then>
+        <f:else>
+            <ul class="kern-task-list__list"><f:slot /></ul>
+        </f:else>
+    </f:if>
+</div>
+</f:spaceless>

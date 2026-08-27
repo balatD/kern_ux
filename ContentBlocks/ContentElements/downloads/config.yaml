@@ -1,0 +1,10 @@
+name: kern-ux/downloads
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: files
+    type: File
+    minitems: 1

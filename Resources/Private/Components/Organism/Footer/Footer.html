@@ -1,0 +1,81 @@
+<f:argument name="columns" type="array" optional="{true}"
+            description="Link columns in the shape TYPO3's menu data processor produces: each entry has a title and its sub-pages under `children`. Not `items` - that was the original guess here, and it left every column rendered as a heading with nothing under it while the tests passed on made-up data."
+/><f:argument name="metaNavigation" type="array" optional="{true}"
+            description="Impressum, Datenschutz, Barrierefreiheitserklärung - legally required on public sector sites."
+/><f:argument name="label" type="string" optional="{true}" default=""
+            description="Accessible name of the footer landmark. Empty uses the translated default."
+/><f:argument name="noteText" type="string" optional="{true}" default=""
+            description="Note that this offering is part of the Digitale Dachmarke. Empty leaves the whole note row out. No wording is shipped: the official text belongs to the Dachmarke and only an entitled organisation may use it."
+/><f:argument name="noteLogoSrc" type="string" optional="{true}" default=""
+            description="The Bund/Länder/Kommunen mark beside the note. Not shipped either - it is a protected mark."
+/><f:argument name="fundingLogoSrc" type="string" optional="{true}" default=""
+            description="A funding mark for the right-hand side of the note row, for example the EU emblem."
+/><f:argument name="fundingLabel" type="string" optional="{true}" default=""
+            description="Names the funding programme. Without it the logo would be announced by its file name."
+/><f:variable name="labelText" value="{label}"
+/><f:if condition="!{labelText}"><f:variable name="labelText"><f:translate key="footer.label" extensionName="KernUx" /></f:variable></f:if><f:comment>
+    Rendered only when there is something to show: an empty footer landmark is
+    announced to screen reader users as a region with no content.
+
+    KERN has no footer component, so this is ours (kernt3-), assembled from KERN
+    utilities and tokens so it stays visually consistent.
+</f:comment><f:if condition="{columns} || {metaNavigation} || {noteText}"><f:spaceless>
+<footer class="kernt3-footer" aria-label="{labelText}">
+    <f:comment>
+        kernt3-footer__inner is not decoration: KERN zeroes a kern-container's padding
+        when it contains a kern-grid, and the link columns below are one - so without a
+        class of our own to put the inline padding back, the footer sits flush against
+        both edges of a phone screen. Same reason kernt3-content-area carries it.
+    </f:comment>
+    <div class="kern-container kernt3-footer__inner">
+        <f:if condition="{columns}">
+            <div class="kern-grid kern-grid-cols-1 kern-grid-cols-4-md kern-gap-lg kern-py-xl">
+                <f:for each="{columns}" as="column">
+                    <nav aria-label="{column.title}">
+                        <k:atom.heading level="2" appearance="title-small">{column.title}</k:atom.heading>
+                        <ul class="kern-list kern-gap-y-xs">
+                            <f:for each="{column.children}" as="item">
+                                <li><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></li>
+                            </f:for>
+                        </ul>
+                    </nav>
+                </f:for>
+            </div>
+        </f:if>
+        <f:if condition="{metaNavigation}">
+            <k:atom.divider />
+            <nav class="kernt3-footer__meta" aria-label="{f:translate(key: 'footer.legalNavigation', extensionName: 'KernUx')}">
+                <ul class="kern-list kern-list--horizontal kern-gap-x-lg">
+                    <f:for each="{metaNavigation}" as="item">
+                        <li><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></li>
+                    </f:for>
+                </ul>
+            </nav>
+        </f:if>
+        <f:comment>
+            The Dachmarke note. Marks and wording are passed in rather than shipped: the
+            Bildwortmarke is reserved for federal, state and municipal offerings and is
+            released only by the Dachmarke office, and the official wording is theirs
+            too. So this renders the row and nothing that belongs to someone else.
+
+            Not a nav or a list - it is a statement about who runs the site, and the
+            funding logo beside it is a second, unrelated statement. Marked up as one
+            row of two blocks so it reflows to two rows on a narrow screen.
+        </f:comment>
+        <f:if condition="{noteText}">
+            <k:atom.divider />
+            <div class="kernt3-footer__note">
+                <div class="kernt3-footer__note-body">
+                    <f:if condition="{noteLogoSrc}">
+                        <img src="{noteLogoSrc}" alt="" class="kernt3-footer__note-logo" />
+                    </f:if>
+                    <k:atom.body variant="small">{noteText}</k:atom.body>
+                </div>
+                <f:if condition="{fundingLogoSrc}">
+                    <img src="{fundingLogoSrc}" alt="{fundingLabel}" class="kernt3-footer__funding-logo" />
+                </f:if>
+            </div>
+        </f:if>
+    </div>
+</footer>
+</f:spaceless></f:if>

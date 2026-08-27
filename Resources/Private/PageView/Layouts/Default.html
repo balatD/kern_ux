@@ -1,0 +1,76 @@
+<f:comment>
+    Page chrome shared by every backend layout. The page templates only arrange
+    content inside <main>, which keeps landmark structure and heading order in one
+    place instead of repeated per layout.
+
+    The chrome is wrapped in f:spaceless, but <main> deliberately is not: spaceless
+    collapses whitespace between tags, and editorial content relies on the space
+    between inline elements ("<em>a</em> <strong>b</strong>").
+</f:comment><f:spaceless>
+<f:render partial="Assets" arguments="{_all}" />
+<k:molecule.skipLink target="main"><f:translate key="skipLink.main" extensionName="KernUx" /></k:molecule.skipLink>
+<f:comment>
+    The Kopfzeile belongs to the Digitale Dachmarke and is reserved for federal,
+    state and municipal offerings, so it stays off unless a site opts in explicitly.
+</f:comment>
+<f:if condition="{site.settings.kernUx.dachmarke.kopfzeileEnable}">
+    <f:if condition="{site.settings.kernUx.dachmarke.kopfzeileLabel}">
+        <f:then><k:organism.kopfzeile label="{site.settings.kernUx.dachmarke.kopfzeileLabel}" /></f:then>
+        <f:else><k:organism.kopfzeile /></f:else>
+    </f:if>
+</f:if>
+<f:comment>
+    Both resolved up front: f:uri.resource does not degrade gracefully on an empty
+    path, and a header with neither logo nor title would render an empty link.
+</f:comment>
+<f:variable name="logoUri" value="" />
+<f:if condition="{site.settings.kernUx.site.logo}">
+    <f:variable name="logoUri" value="{f:uri.resource(path: site.settings.kernUx.site.logo)}" />
+</f:if>
+<f:variable name="headerTitle" value="{site.settings.kernUx.site.title}" />
+<f:if condition="!{headerTitle}">
+    <f:variable name="headerTitle" value="{site.configuration.websiteTitle}" />
+</f:if>
+<k:organism.header
+    homeUrl="{f:uri.page(pageUid: site.rootPageId)}"
+    logoSrc="{logoUri}"
+    logoAlt="{headerTitle}"
+    siteTitle="{headerTitle}"
+    searchUrl="{site.settings.kernUx.site.searchUrl}"
+    mainNavigation="{mainNavigation}"
+    helpNavigation="{helpNavigation}"
+/>
+<f:comment>
+    A one-item breadcrumb is just the current page and carries no information, so it
+    is suppressed rather than rendered as a dead end.
+</f:comment>
+<f:if condition="{breadcrumb -> f:count()} > 1">
+    <div class="kern-container kern-py-md">
+        <k:molecule.breadcrumb items="{breadcrumb}" />
+    </div>
+</f:if>
+</f:spaceless>
+<main id="main"><f:render section="Main" /></main>
+<f:spaceless>
+<f:comment>
+    Both logo paths are resolved up front: f:uri.resource does not degrade gracefully on
+    an empty path, and the note row is meant to work with a mark, without one, or not at
+    all.
+</f:comment>
+<f:variable name="footerNoteLogo" value="" />
+<f:if condition="{site.settings.kernUx.dachmarke.noteLogo}">
+    <f:variable name="footerNoteLogo" value="{f:uri.resource(path: site.settings.kernUx.dachmarke.noteLogo)}" />
+</f:if>
+<f:variable name="footerFundingLogo" value="" />
+<f:if condition="{site.settings.kernUx.footer.fundingLogo}">
+    <f:variable name="footerFundingLogo" value="{f:uri.resource(path: site.settings.kernUx.footer.fundingLogo)}" />
+</f:if>
+<k:organism.footer
+    columns="{footerColumns}"
+    metaNavigation="{metaNavigation}"
+    noteText="{site.settings.kernUx.dachmarke.noteText}"
+    noteLogoSrc="{footerNoteLogo}"
+    fundingLogoSrc="{footerFundingLogo}"
+    fundingLabel="{site.settings.kernUx.footer.fundingLabel}"
+/>
+</f:spaceless>

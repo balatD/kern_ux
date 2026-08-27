@@ -1,0 +1,1208 @@
+# Demo content for EXT:kern_ux.
+#
+# Installed by `kern-ux:demo:install` through the DataHandler, so every record goes
+# through the same validation an editor's input does - a fixture that bypassed it could
+# describe records the backend would refuse to save.
+#
+# Two kinds of page: four example pages that show what a real administration site looks
+# like, and one page per content block so each element can be inspected on its own.
+# Both are needed: the example pages catch how elements behave together (heading order,
+# spacing, landmark structure), the single-element pages catch what one element does.
+#
+# Placeholders: {page:<key>} becomes a t3://page link once the pages exist, and file
+# keys refer to the generated assets below.
+
+# Generated rather than shipped: an SVG, a WAV and a PDF can be written from a few
+# bytes of text, so the repository stays free of binaries and the demo still exercises
+# real FAL references, image processing and download metadata.
+files:
+    buergerbuero:
+        type: image
+        title: 'Bürgerbüro im Rathaus'
+        alternative: 'Schalterhalle des Bürgerbüros mit vier besetzten Beratungsplätzen'
+    rathaus:
+        type: image
+        title: 'Rathaus'
+        alternative: 'Historisches Rathaus mit Sandsteinfassade und Freitreppe'
+    ausweis:
+        type: image
+        title: 'Personalausweis'
+        alternative: 'Personalausweis in einer Hand, Vorderseite sichtbar'
+    stadtpark:
+        type: image
+        title: 'Stadtpark'
+        alternative: 'Allee im Stadtpark mit alten Linden'
+    baustelle:
+        type: image
+        title: 'Baustelle Ringstraße'
+        alternative: 'Aufgegrabene Fahrbahn mit Absperrgittern und Umleitungsschild'
+    antrag:
+        type: pdf
+        title: 'Antrag auf Ausstellung eines Personalausweises'
+    merkblatt:
+        type: pdf
+        title: 'Merkblatt zu biometrischen Passbildern'
+    ansage:
+        type: audio
+        title: 'Ansage der Öffnungszeiten'
+    ansage-untertitel:
+        type: captions
+        title: 'Untertitel zur Ansage'
+
+pages:
+    -   key: demoRoot
+        title: 'KERN UX Demo'
+        slug: kern-ux-demo
+        layout: default
+        content:
+            main:
+                -   type: kernux_text
+                    header: 'KERN UX Demo'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: |
+                            <p>Diese Seiten zeigen den KERN UX-Standard in TYPO3. Unter
+                            <strong>Beispielseiten</strong> stehen vier vollständige Seiten, wie sie in
+                            einer Verwaltung vorkommen. Unter <strong>Elemente</strong> liegt für jeden
+                            Inhaltstyp eine eigene Seite, damit sich jedes Element einzeln prüfen
+                            lässt.</p>
+                -   type: kernux_cardgrid
+                    header: 'Einstieg'
+                    header_layout: 2
+                    fields:
+                        tx_kernux_cardgrid_columns: 2
+                    collections:
+                        tx_kernux_cardgrid_cards:
+                            -   title: 'Beispielseiten'
+                                preline: '4 Seiten'
+                                text: 'Startseite, Dienstleistung, Antragsstrecke und eine Meldung.'
+                                link: '{page:examples}'
+                            -   title: 'Elemente'
+                                preline: '21 Seiten'
+                                text: 'Jeder Inhaltstyp einzeln, zum Prüfen von Markup und Bedienung.'
+                                link: '{page:elements}'
+
+        children:
+            # ---------------------------------------------------------------- examples
+            -   key: examples
+                title: 'Beispielseiten'
+                slug: beispiele
+                layout: default
+                content:
+                    main:
+                        -   type: kernux_text
+                            header: 'Beispielseiten'
+                            header_layout: 1
+                            fields:
+                                tx_kernux_heading_appearance: x-large
+                                bodytext: '<p>Vier Seiten, wie sie in einer Verwaltung tatsächlich gebraucht werden.</p>'
+                        -   type: kernux_sitemap
+                            header: 'Übersicht'
+                            header_layout: 2
+
+                children:
+                    -   key: exampleHome
+                        title: 'Kommunale Startseite'
+                        slug: kommunale-startseite
+                        layout: startpage
+                        content:
+                            hero:
+                                # The stage column is what the hero block is for. Its own
+                                # heading is the page's h1, so nothing below repeats it.
+                                -   type: kernux_hero
+                                    header: 'Ihre Verwaltung, online erreichbar'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: display
+                                        tx_kernux_hero_preline: 'Stadt Musterstadt'
+                                        tx_kernux_hero_media_position: right
+                                        bodytext: '<p>Termine buchen, Anträge stellen, Unterlagen herunterladen - ohne Weg ins Rathaus.</p>'
+                                    files:
+                                        tx_kernux_hero_image:
+                                            -   key: rathaus
+                            teaser:
+                                # The teaser row is the last row of the Startpage layout, so it holds
+                                # what belongs at the foot of a home page rather than a notice, which
+                                # nobody would read there.
+                                -   type: kernux_cardgrid
+                                    header: 'Aktuelles'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_cardgrid_columns: 2
+                                    collections:
+                                        tx_kernux_cardgrid_cards:
+                                            -   title: 'Ringstraße wird saniert'
+                                                preline: '3. März 2027'
+                                                text: 'Die Fahrbahn zwischen Marktplatz und Bahnhof wird ab Mai erneuert.'
+                                                link: '{page:exampleNews}'
+                                            -   title: 'Bürgerhaushalt 2028'
+                                                preline: '27. Februar 2027'
+                                                text: 'Vorschläge können bis zum 30. April eingereicht werden.'
+                                                link: '{page:examples}'
+                            main:
+                                -   type: kernux_alert
+                                    header: 'Geänderte Öffnungszeiten'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: info
+                                        bodytext: '<p>Am 24. und 31. Dezember bleibt das Bürgerbüro geschlossen. Termine können weiterhin online gebucht werden.</p>'
+                                -   type: kernux_cardgrid
+                                    header: 'Häufig gebraucht'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_cardgrid_columns: 3
+                                    collections:
+                                        tx_kernux_cardgrid_cards:
+                                            -   title: 'Personalausweis beantragen'
+                                                preline: 'Dienstleistung'
+                                                text: 'Erstausstellung, Verlängerung und Ersatz nach Verlust.'
+                                                link: '{page:exampleService}'
+                                            -   title: 'Wohnsitz anmelden'
+                                                preline: 'Dienstleistung'
+                                                text: 'Innerhalb von zwei Wochen nach dem Umzug.'
+                                                link: '{page:exampleService}'
+                                            -   title: 'Termin vereinbaren'
+                                                preline: 'Service'
+                                                text: 'Wartezeit vermeiden und einen Zeitpunkt reservieren.'
+                                                link: '{page:exampleApplication}'
+                                -   type: kernux_textmedia
+                                    header: 'Das Bürgerbüro'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_textmedia_media_position: right
+                                        bodytext: |
+                                            <p>Das Bürgerbüro im Erdgeschoss des Rathauses ist die erste Anlaufstelle für
+                                            Ausweise, Meldeangelegenheiten und Beglaubigungen. Vier Beratungsplätze sind
+                                            barrierefrei erreichbar, ein Platz ist mit einer Induktionsschleife
+                                            ausgestattet.</p>
+                                            <p>Wer einen Termin gebucht hat, wird ohne Wartezeit aufgerufen.</p>
+                                    files:
+                                        assets:
+                                            -   key: buergerbuero
+                                -   type: kernux_tasklist
+                                    header: 'So läuft ein Antrag'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_tasklist_numbered: 1
+                                    collections:
+                                        tx_kernux_tasklist_steps:
+                                            -   title: 'Unterlagen zusammenstellen'
+                                                status: 'Erledigt'
+                                                statusVariant: success
+                                                link: '{page:exampleService}'
+                                            -   title: 'Antrag ausfüllen'
+                                                status: 'In Bearbeitung'
+                                                statusVariant: info
+                                                link: '{page:exampleApplication}'
+                                            -   title: 'Termin wahrnehmen'
+                                                status: 'Offen'
+                                                statusVariant: warning
+
+                    -   key: exampleService
+                        title: 'Personalausweis beantragen'
+                        slug: personalausweis
+                        layout: subject
+                        content:
+                            main:
+                                -   type: kernux_hero
+                                    header: 'Personalausweis beantragen'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_hero_preline: 'Dienstleistung'
+                                        tx_kernux_hero_media_position: right
+                                        tx_kernux_hero_noteText: 'Der Ausweis wird persönlich beantragt, eine Vertretung ist nicht möglich.'
+                                        tx_kernux_hero_noteVariant: info
+                                        bodytext: '<p>Sie können den Personalausweis im Bürgerbüro beantragen. Einen Termin buchen Sie gleich hier.</p>'
+                                    files:
+                                        tx_kernux_hero_image:
+                                            -   key: ausweis
+                                -   type: kernux_toc
+                                    header: 'Auf dieser Seite'
+                                    header_layout: 2
+                                -   type: kernux_text
+                                    header: 'Wer den Ausweis braucht'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: |
+                                            <p>Wer in Deutschland gemeldet ist und das 16. Lebensjahr vollendet hat, muss
+                                            einen Personalausweis oder einen Reisepass besitzen. Für Kinder ist der
+                                            Ausweis freiwillig, wird aber für Reisen meist verlangt.</p>
+                                            <p>Der Ausweis wird persönlich beantragt. Eine Vertretung ist nicht
+                                            möglich, weil die Fingerabdrücke vor Ort aufgenommen werden.</p>
+                                -   type: kernux_descriptionlist
+                                    header: 'Gebühren und Fristen'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_descriptionlist_entries:
+                                            -   term: 'Gebühr ab 24 Jahren'
+                                                definition: '37,00 Euro'
+                                            -   term: 'Gebühr unter 24 Jahren'
+                                                definition: '22,80 Euro'
+                                            -   term: 'Gültigkeit'
+                                                definition: '10 Jahre, unter 24 Jahren 6 Jahre'
+                                            -   term: 'Bearbeitungszeit'
+                                                definition: '2 bis 4 Wochen'
+                                -   type: kernux_accordion
+                                    header: 'Häufige Fragen'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_accordion_panels:
+                                            -   title: 'Welche Unterlagen muss ich mitbringen?'
+                                                expanded: 1
+                                                text: |
+                                                    <p>Ein aktuelles biometrisches Passbild, den alten Ausweis oder eine
+                                                    Geburtsurkunde und - bei Namensänderung - die Heiratsurkunde.</p>
+                                            -   title: 'Kann ich den Ausweis vorläufig bekommen?'
+                                                text: |
+                                                    <p>Ja. Ein vorläufiger Personalausweis ist sofort verfügbar, kostet
+                                                    10,00 Euro und ist drei Monate gültig. Er berechtigt nicht zur Einreise
+                                                    in alle Länder.</p>
+                                            -   title: 'Was tun bei Verlust?'
+                                                text: |
+                                                    <p>Den Verlust unverzüglich melden. Die Online-Ausweisfunktion wird
+                                                    dabei gesperrt, damit der Ausweis nicht missbraucht werden kann.</p>
+                                -   type: kernux_buttongroup
+                                    collections:
+                                        tx_kernux_buttongroup_buttons:
+                                            -   label: 'Termin vereinbaren'
+                                                link: '{page:exampleApplication}'
+                                            -   label: 'Zur Übersicht'
+                                                link: '{page:examples}'
+                            aside:
+                                -   type: kernux_text
+                                    header: 'Zuständige Stelle'
+                                    header_layout: 3
+                                    fields:
+                                        bodytext: |
+                                            <p>Bürgerbüro der Stadt Musterstadt<br />
+                                            Rathausplatz 1, 12345 Musterstadt</p>
+                                            <p>Montag bis Freitag 8 bis 12 Uhr<br />
+                                            Donnerstag zusätzlich 14 bis 18 Uhr</p>
+                                -   type: kernux_downloads
+                                    header: 'Unterlagen'
+                                    header_layout: 3
+                                    files:
+                                        tx_kernux_downloads_files:
+                                            -   key: antrag
+                                                description: 'Zum Ausfüllen am Rechner vorbereitet.'
+                                            -   key: merkblatt
+
+                    -   key: exampleApplication
+                        title: 'Termin vereinbaren'
+                        slug: termin-vereinbaren
+                        layout: application
+                        content:
+                            main:
+                                -   type: kernux_progress
+                                    fields:
+                                        tx_kernux_progress_label: 'Schritt 3 von 4: Angaben prüfen'
+                                        tx_kernux_progress_value: 3
+                                        tx_kernux_progress_max: 4
+                                -   type: kernux_heading
+                                    header: 'Angaben prüfen'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: large
+                                        tx_kernux_heading_subline: 'Bitte kontrollieren Sie Ihre Eingaben, bevor der Termin verbindlich gebucht wird.'
+                                -   type: kernux_descriptionlist
+                                    header: 'Persönliche Daten'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_descriptionlist_entries:
+                                            -   term: 'Name'
+                                                definition: 'Erika Mustermann'
+                                            -   term: 'Geburtsdatum'
+                                                definition: '12. August 1964'
+                                            -   term: 'E-Mail-Adresse'
+                                                definition: 'e.mustermann@example.org'
+                                -   type: kernux_descriptionlist
+                                    header: 'Anliegen'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_descriptionlist_entries:
+                                            -   term: 'Dienstleistung'
+                                                definition: 'Personalausweis, Erstausstellung'
+                                            -   term: 'Wunschtermin'
+                                                definition: '17. März 2027, 9:30 Uhr'
+                                -   type: kernux_alert
+                                    header: 'Verbindliche Buchung'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: warning
+                                        bodytext: '<p>Mit dem Absenden wird der Termin verbindlich reserviert. Eine Absage ist bis 24 Stunden vorher möglich.</p>'
+                                -   type: kernux_buttongroup
+                                    collections:
+                                        tx_kernux_buttongroup_buttons:
+                                            -   label: 'Termin buchen'
+                                                link: '{page:exampleApplication}'
+                                                variant: primary
+                                            -   label: 'Zurück'
+                                                link: '{page:exampleService}'
+                                                variant: tertiary
+
+                    -   key: exampleNews
+                        title: 'Ringstraße wird saniert'
+                        slug: ringstrasse-wird-saniert
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_heading
+                                    header: 'Ringstraße wird saniert'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        tx_kernux_heading_preline: 'Meldung vom 3. März 2027'
+                                        tx_kernux_heading_subline: 'Die Fahrbahn zwischen Marktplatz und Bahnhof wird ab Mai erneuert. Die Arbeiten dauern voraussichtlich bis Oktober.'
+                                -   type: kernux_image
+                                    fields:
+                                        tx_kernux_image_caption: 'Die Fahrbahndecke der Ringstraße ist an mehreren Stellen aufgebrochen.'
+                                        tx_kernux_image_aboveTheFold: 1
+                                    files:
+                                        tx_kernux_image_image:
+                                            -   key: baustelle
+                                -   type: kernux_text
+                                    fields:
+                                        bodytext: |
+                                            <p>Die Ringstraße gehört zu den am stärksten befahrenen Straßen der Stadt.
+                                            Die Fahrbahndecke stammt aus dem Jahr 1987 und ist an mehreren Stellen
+                                            aufgebrochen. Gleichzeitig werden die Leitungen für Wasser und Fernwärme
+                                            erneuert, damit die Straße nicht zweimal aufgegraben werden muss.</p>
+                                            <h2>Umleitung</h2>
+                                            <p>Der Verkehr wird über die Parkstraße und den Nordring geleitet. Die
+                                            Buslinien 3 und 7 halten ersatzweise am Marktplatz.</p>
+                                            <ul>
+                                                <li>Mai bis Juli: Abschnitt Marktplatz bis Schillerstraße</li>
+                                                <li>August bis Oktober: Abschnitt Schillerstraße bis Bahnhof</li>
+                                            </ul>
+                                -   type: kernux_divider
+                                    fields:
+                                        tx_kernux_divider_semantic: 1
+                                -   type: kernux_text
+                                    header: 'Fragen zur Baustelle'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Das Tiefbauamt ist montags bis freitags von 9 bis 15 Uhr erreichbar.</p>'
+
+            # --------------------------------------------------------------- elements
+            # One page per content block. Where a block has variants, all of them appear
+            # on the same page: a variant nobody renders is a variant nobody tests, and
+            # seeing them next to each other is what makes a wrong one obvious.
+            -   key: elements
+                title: 'Elemente'
+                slug: elemente
+                layout: default
+                content:
+                    main:
+                        -   type: kernux_text
+                            header: 'Elemente'
+                            header_layout: 1
+                            fields:
+                                tx_kernux_heading_appearance: x-large
+                                bodytext: '<p>Für jeden Inhaltstyp eine eigene Seite. Wo ein Element Varianten hat, stehen sie alle auf derselben Seite.</p>'
+                        -   type: kernux_sitemap
+                            header: 'Alle Elemente'
+                            header_layout: 2
+
+                children:
+                    -   title: 'Bühne'
+                        slug: buehne
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_hero
+                                    header: 'Einen Hund anmelden oder abmelden'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_hero_preline: 'Musterstädter Hunderegister'
+                                        tx_kernux_hero_media_position: right
+                                        tx_kernux_hero_noteText: 'Neue Registrierungen kosten 30 Euro.'
+                                        tx_kernux_hero_noteVariant: info
+                                        bodytext: '<p>Wer in Musterstadt wohnt, muss den Hund registrieren. Das können Sie gleich hier tun.</p>'
+                                    files:
+                                        tx_kernux_hero_image:
+                                            -   key: stadtpark
+                                -   type: kernux_text
+                                    header: 'Wozu die Bühne da ist'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: |
+                                            <p>Die Bühne ist der Einstiegsblock einer Seite: sie sagt in einem Satz,
+                                            was hier erledigt werden kann, und nennt die eine Bedingung, die man vorher
+                                            wissen muss. Das Bild illustriert und trägt nie die Botschaft - es bekommt
+                                            deshalb keine Bildunterschrift.</p>
+                                            <p>Die Dachzeile steht in einer <code>hgroup</code>: sie gehört zur
+                                            Überschrift, wird aber nicht als Teil ihres Namens vorgelesen. Der Hinweis
+                                            ist eine KERN-Hinweiszeile ohne Überschrift, denn ein Satz wie „kostet 30
+                                            Euro" wäre in der Dokumentgliederung falsch.</p>
+                                -   type: kernux_hero
+                                    header: 'Bild auf der linken Seite'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_hero_media_position: left
+                                        bodytext: '<p>Nur die visuelle Seite ändert sich. Im Quelltext steht der Text immer vor dem Bild, damit die Lesereihenfolge dem Inhalt folgt und nicht dem Layout.</p>'
+                                    files:
+                                        tx_kernux_hero_image:
+                                            -   key: rathaus
+                                -   type: kernux_hero
+                                    header: 'Ohne Bild'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_hero_media_position: none
+                                        tx_kernux_hero_noteText: 'Zurzeit sind keine Termine verfügbar.'
+                                        tx_kernux_hero_noteVariant: warning
+                                        bodytext: '<p>Ohne Bild behält der Text eine lesbare Zeilenlänge, statt über die ganze Breite des Containers zu laufen.</p>'
+
+                    -   title: 'Text'
+                        slug: text
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Text'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: |
+                                            <p>Fließtext aus dem Rich-Text-Editor. KERN gestaltet nur
+                                            <code>html</code> und <code>body</code> als Elemente, alles andere über
+                                            Klassen - deshalb erhält die Editor-Ausgabe ihre Typografie über ein
+                                            eigenes, doppelt gescoptes Stylesheet.</p>
+                                            <h2>Zwischenüberschrift</h2>
+                                            <p>Ein Absatz mit <strong>fettem</strong> und <em>kursivem</em> Text, einem
+                                            <a href="https://www.kern-ux.de/">externen Link</a> und einer Aufzählung:</p>
+                                            <ul>
+                                                <li>erster Punkt</li>
+                                                <li>zweiter Punkt</li>
+                                            </ul>
+                                            <h3>Tabelle</h3>
+                                            <p>Tabellen erhalten den scrollbaren Rahmen, den KERN vorschreibt:</p>
+                                            <table>
+                                                <thead><tr><th>Leistung</th><th>Gebühr</th></tr></thead>
+                                                <tbody>
+                                                    <tr><td>Personalausweis</td><td>37,00 Euro</td></tr>
+                                                    <tr><td>Reisepass</td><td>70,00 Euro</td></tr>
+                                                </tbody>
+                                            </table>
+
+                    -   title: 'Text und Medien'
+                        slug: text-und-medien
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Text und Medien'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Dasselbe Element viermal, einmal je Position der Medien.</p>'
+                                -   type: kernux_textmedia
+                                    header: 'Medien oberhalb'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_textmedia_media_position: above
+                                        bodytext: '<p>Das Bild steht über dem Text und nimmt die volle Breite ein.</p>'
+                                    files:
+                                        assets:
+                                            -   key: rathaus
+                                -   type: kernux_textmedia
+                                    header: 'Medien rechts'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_textmedia_media_position: right
+                                        bodytext: |
+                                            <p>Auf schmalen Bildschirmen rutscht das Bild unter den Text, weil eine
+                                            zweispaltige Anordnung dort die Zeilenlänge unlesbar kurz machen würde.</p>
+                                    files:
+                                        assets:
+                                            -   key: stadtpark
+                                -   type: kernux_textmedia
+                                    header: 'Medien links'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_textmedia_media_position: left
+                                        bodytext: '<p>Spiegelbildlich zur Variante rechts.</p>'
+                                    files:
+                                        assets:
+                                            -   key: buergerbuero
+                                -   type: kernux_textmedia
+                                    header: 'Medien unterhalb'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_textmedia_media_position: below
+                                        bodytext: '<p>Für Bilder, die den Text belegen statt ihn anzukündigen.</p>'
+                                    files:
+                                        assets:
+                                            -   key: baustelle
+
+                    -   title: 'Überschrift'
+                        slug: ueberschrift
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Überschrift'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: |
+                                            <p>Stufe und Optik sind getrennte Felder. KERN verlangt das: eine Seite
+                                            braucht eine lückenlose Gliederung, und die Optik darf sich davon nicht
+                                            abhängig machen. Alle Überschriften hier stehen auf Stufe 2 und
+                                            unterscheiden sich nur in der Darstellung.</p>
+                                -   type: kernux_heading
+                                    header: 'Display'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: display
+                                        tx_kernux_heading_preline: 'Vorzeile'
+                                        tx_kernux_heading_subline: 'Unterzeile, die zur Überschrift gehört und keinen eigenen Gliederungspunkt erzeugt.'
+                                -   type: kernux_heading
+                                    header: 'Sehr groß'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                -   type: kernux_heading
+                                    header: 'Groß'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: large
+                                -   type: kernux_heading
+                                    header: 'Mittel'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: medium
+                                -   type: kernux_heading
+                                    header: 'Klein'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: small
+                                -   type: kernux_heading
+                                    header: 'Titel, groß'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: title-large
+                                -   type: kernux_heading
+                                    header: 'Titel'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: title
+                                -   type: kernux_heading
+                                    header: 'Titel, klein'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_heading_appearance: title-small
+
+                    -   title: 'Liste'
+                        slug: liste
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Liste'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Strukturierte Einträge, optional verlinkt - nicht aus dem Rich-Text-Editor, damit dieselben Daten später auch eine Aufgabenübersicht tragen können.</p>'
+                                -   type: kernux_list
+                                    header: 'Aufzählung'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_list_variant: bullet
+                                    collections:
+                                        tx_kernux_list_items:
+                                            -   text: 'Personalausweis und Reisepass'
+                                                link: '{page:exampleService}'
+                                            -   text: 'An- und Ummeldung des Wohnsitzes'
+                                            -   text: 'Beglaubigung von Unterlagen'
+                                -   type: kernux_list
+                                    header: 'Nummerierte Liste'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_list_variant: number
+                                    collections:
+                                        tx_kernux_list_items:
+                                            -   text: 'Unterlagen zusammenstellen'
+                                            -   text: 'Termin buchen'
+                                                link: '{page:exampleApplication}'
+                                            -   text: 'Antrag persönlich stellen'
+
+                    -   title: 'Definitionsliste'
+                        slug: definitionsliste
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Definitionsliste'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Begriff und Wert als Paar, etwa Gebühren oder Öffnungszeiten.</p>'
+                                -   type: kernux_descriptionlist
+                                    header: 'Nebeneinander'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_descriptionlist_entries:
+                                            -   term: 'Gebühr'
+                                                definition: '37,00 Euro'
+                                            -   term: 'Bearbeitungszeit'
+                                                definition: '2 bis 4 Wochen'
+                                            -   term: 'Zuständig'
+                                                definition: 'Bürgerbüro, Rathausplatz 1'
+                                -   type: kernux_descriptionlist
+                                    header: 'Untereinander'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_descriptionlist_stacked: 1
+                                    collections:
+                                        tx_kernux_descriptionlist_entries:
+                                            -   term: 'Montag bis Freitag'
+                                                definition: '8 bis 12 Uhr'
+                                            -   term: 'Donnerstag zusätzlich'
+                                                definition: '14 bis 18 Uhr'
+                                            -   term: 'Samstag und Sonntag'
+                                                definition: 'geschlossen'
+
+                    -   title: 'Trenner'
+                        slug: trenner
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Trenner'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Eine Linie ist normalerweise Dekoration und für Screenreader verborgen. Trennt sie zwei Themen, wird sie angekündigt.</p>'
+                                -   type: kernux_text
+                                    header: 'Dekorativ'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Absatz oberhalb der dekorativen Linie.</p>'
+                                -   type: kernux_divider
+                                -   type: kernux_text
+                                    fields:
+                                        bodytext: '<p>Absatz unterhalb der dekorativen Linie.</p>'
+                                -   type: kernux_text
+                                    header: 'Inhaltlich trennend'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Absatz oberhalb der inhaltlichen Linie.</p>'
+                                -   type: kernux_divider
+                                    fields:
+                                        tx_kernux_divider_semantic: 1
+                                -   type: kernux_text
+                                    fields:
+                                        bodytext: '<p>Absatz unterhalb der inhaltlichen Linie.</p>'
+
+                    -   title: 'Schaltflächen'
+                        slug: schaltflaechen
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Schaltflächen'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>KERN erlaubt eine primäre Handlung je Gruppe. Bleibt die Gewichtung auf „Automatisch“, sorgt das Element selbst dafür.</p>'
+                                -   type: kernux_buttongroup
+                                    collections:
+                                        tx_kernux_buttongroup_buttons:
+                                            -   label: 'Antrag stellen'
+                                                link: '{page:exampleApplication}'
+                                            -   label: 'Unterlagen ansehen'
+                                                link: '{page:exampleService}'
+                                            -   label: 'Abbrechen'
+                                                link: '{page:elements}'
+                                -   type: kernux_text
+                                    header: 'Gewichtung von Hand'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Primär, sekundär und tertiär, ausdrücklich gesetzt.</p>'
+                                -   type: kernux_buttongroup
+                                    collections:
+                                        tx_kernux_buttongroup_buttons:
+                                            -   label: 'Primär'
+                                                link: '{page:elements}'
+                                                variant: primary
+                                            -   label: 'Sekundär'
+                                                link: '{page:elements}'
+                                                variant: secondary
+                                            -   label: 'Tertiär'
+                                                link: '{page:elements}'
+                                                variant: tertiary
+
+                    -   title: 'Akkordeon'
+                        slug: akkordeon
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Akkordeon'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Aufklappbare Abschnitte über das native <code>details</code>-Element, also ohne eigenes JavaScript und mit Tastaturbedienung aus dem Browser.</p>'
+                                -   type: kernux_accordion
+                                    header: 'Häufige Fragen'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_accordion_panels:
+                                            -   title: 'Ein Abschnitt, der beim Laden offen ist'
+                                                expanded: 1
+                                                text: '<p>Höchstens einer sollte das sein, sonst hebt sich der Zweck des Akkordeons auf.</p>'
+                                            -   title: 'Ein geschlossener Abschnitt'
+                                                text: |
+                                                    <p>Mit Fließtext, einer Liste und einem Link:</p>
+                                                    <ul><li>erster Punkt</li><li>zweiter Punkt</li></ul>
+                                            -   title: 'Ein dritter Abschnitt'
+                                                text: '<p>Zwei Akkordeons nebeneinander brauchen keinen Gruppen-Wrapper - KERN setzt sie über einen Geschwisterselektor ab.</p>'
+                                -   type: kernux_accordion
+                                    header: 'Ein zweites Akkordeon'
+                                    header_layout: 2
+                                    collections:
+                                        tx_kernux_accordion_panels:
+                                            -   title: 'Abstand zum Akkordeon darüber'
+                                                text: '<p>Kommt aus dem CSS, nicht aus einem zusätzlichen Element.</p>'
+
+                    -   title: 'Hinweis'
+                        slug: hinweis
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Hinweis'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Alle vier Arten. Die Art bestimmt Farbe und Symbol und ist nach der Bedeutung zu wählen, nicht nach der gewünschten Aufmerksamkeit.</p>'
+                                -   type: kernux_alert
+                                    header: 'Information'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: info
+                                        bodytext: '<p>Das Bürgerbüro ist am 24. Dezember geschlossen.</p>'
+                                -   type: kernux_alert
+                                    header: 'Erfolg'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: success
+                                        bodytext: '<p>Ihr Antrag ist eingegangen. Sie erhalten eine Bestätigung per E-Mail.</p>'
+                                -   type: kernux_alert
+                                    header: 'Warnung'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: warning
+                                        bodytext: '<p>Ohne biometrisches Passbild kann der Antrag nicht bearbeitet werden.</p>'
+                                -   type: kernux_alert
+                                    header: 'Fehler'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_alert_variant: danger
+                                        bodytext: '<p>Die Online-Terminbuchung ist derzeit nicht erreichbar. Bitte rufen Sie an.</p>'
+
+                    -   title: 'Karten'
+                        slug: karten
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Karten'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Die Spaltenzahl ist eine Obergrenze für breite Bildschirme; schmale Bildschirme zeigen immer eine Karte je Zeile.</p>'
+                                -   type: kernux_cardgrid
+                                    header: 'Drei Spalten, mit Bild'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_cardgrid_columns: 3
+                                    collections:
+                                        tx_kernux_cardgrid_cards:
+                                            -   title: 'Personalausweis'
+                                                preline: 'Dienstleistung'
+                                                text: 'Erstausstellung, Verlängerung und Ersatz nach Verlust.'
+                                                link: '{page:exampleService}'
+                                                image: ausweis
+                                            -   title: 'Rathaus'
+                                                preline: 'Standort'
+                                                text: 'Rathausplatz 1, barrierefrei erreichbar.'
+                                                link: '{page:exampleHome}'
+                                                image: rathaus
+                                            -   title: 'Stadtpark'
+                                                preline: 'Freizeit'
+                                                text: 'Öffnungszeiten und Veranstaltungen.'
+                                                link: '{page:elements}'
+                                                image: stadtpark
+                                -   type: kernux_cardgrid
+                                    header: 'Zwei Spalten, ohne Bild'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_cardgrid_columns: 2
+                                    collections:
+                                        tx_kernux_cardgrid_cards:
+                                            -   title: 'Eine Karte ohne Link'
+                                                text: 'Ohne Ziel ist die Karte kein Link, sondern nur ein Container.'
+                                            -   title: 'Eine Karte mit Link'
+                                                text: 'Mit Ziel wird die ganze Karte anklickbar.'
+                                                link: '{page:elements}'
+                                -   type: kernux_cardgrid
+                                    header: 'Vier Spalten'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_cardgrid_columns: 4
+                                    collections:
+                                        tx_kernux_cardgrid_cards:
+                                            -   title: 'Bauen'
+                                                link: '{page:elements}'
+                                            -   title: 'Umwelt'
+                                                link: '{page:elements}'
+                                            -   title: 'Soziales'
+                                                link: '{page:elements}'
+                                            -   title: 'Verkehr'
+                                                link: '{page:elements}'
+
+                    -   title: 'Fortschritt'
+                        slug: fortschritt
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Fortschritt'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Die Beschriftung trägt die Information. Ein Balken allein sagt nichts aus, deshalb ist sie ein Pflichtfeld.</p>'
+                                -   type: kernux_progress
+                                    fields:
+                                        tx_kernux_progress_label: 'Schritt 1 von 4: Angaben zur Person'
+                                        tx_kernux_progress_value: 1
+                                        tx_kernux_progress_max: 4
+                                -   type: kernux_progress
+                                    fields:
+                                        tx_kernux_progress_label: 'Schritt 3 von 4: Angaben prüfen'
+                                        tx_kernux_progress_value: 3
+                                        tx_kernux_progress_max: 4
+                                -   type: kernux_progress
+                                    fields:
+                                        tx_kernux_progress_label: 'Schritt 4 von 4: Abgeschlossen'
+                                        tx_kernux_progress_value: 4
+                                        tx_kernux_progress_max: 4
+
+                    -   title: 'Aufgabenübersicht'
+                        slug: aufgabenuebersicht
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Aufgabenübersicht'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Die Schritte eines Antrags mit Status. Ein Schritt ohne Ziel erscheint als Text statt als toter Link - so sieht ein noch nicht startbarer Schritt aus.</p>'
+                                -   type: kernux_tasklist
+                                    header: 'Nummeriert'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_tasklist_numbered: 1
+                                    collections:
+                                        tx_kernux_tasklist_steps:
+                                            -   title: 'Unterlagen zusammenstellen'
+                                                status: 'Erledigt'
+                                                statusVariant: success
+                                                link: '{page:exampleService}'
+                                            -   title: 'Antrag ausfüllen'
+                                                status: 'In Bearbeitung'
+                                                statusVariant: info
+                                                link: '{page:exampleApplication}'
+                                            -   title: 'Termin wahrnehmen'
+                                                status: 'Offen'
+                                                statusVariant: warning
+                                            -   title: 'Ausweis abholen'
+                                                status: 'Noch nicht möglich'
+                                                statusVariant: danger
+                                -   type: kernux_tasklist
+                                    header: 'Ohne Nummerierung'
+                                    header_layout: 2
+                                    fields:
+                                        # Set rather than omitted: this field's TCA default is 1, and the two
+                                        # majors disagree about whether a field left out of a new record gets
+                                        # its default - TYPO3 14 applies it, 13 stores 0. Anything the fixture
+                                        # actually means has to be written down.
+                                        tx_kernux_tasklist_numbered: 0
+                                    collections:
+                                        tx_kernux_tasklist_steps:
+                                            -   title: 'Wohnsitz anmelden'
+                                                status: 'Erledigt'
+                                                statusVariant: success
+                                                link: '{page:exampleService}'
+                                            -   title: 'Rundfunkbeitrag anmelden'
+                                                status: 'Offen'
+                                                statusVariant: warning
+
+                    -   title: 'Dialog'
+                        slug: dialog
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Dialog'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: |
+                                            <p>Der einzige Inhaltstyp, der eigenes JavaScript braucht. Er nutzt das
+                                            native <code>showModal()</code>, sodass Fokusfalle, Inertheit des
+                                            Hintergrunds, Escape und Fokusrückgabe vom Browser kommen.</p>
+                                            <p>Zum Prüfen: mit der Tastatur öffnen, durchtabben, mit Escape schließen -
+                                            der Fokus muss auf der auslösenden Schaltfläche landen.</p>
+                                -   type: kernux_dialog
+                                    header: 'Gebühren im Detail'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_dialog_triggerLabel: 'Gebühren anzeigen'
+                                        tx_kernux_dialog_triggerVariant: secondary
+                                        bodytext: |
+                                            <p>Die Gebühr richtet sich nach dem Alter zum Zeitpunkt der
+                                            Antragstellung.</p>
+                                            <ul>
+                                                <li>ab 24 Jahren: 37,00 Euro</li>
+                                                <li>unter 24 Jahren: 22,80 Euro</li>
+                                                <li>vorläufiger Ausweis: 10,00 Euro</li>
+                                            </ul>
+                                -   type: kernux_dialog
+                                    header: 'Antrag wirklich abbrechen?'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_dialog_triggerLabel: 'Antrag abbrechen'
+                                        tx_kernux_dialog_triggerVariant: tertiary
+                                        bodytext: '<p>Ihre Eingaben werden dabei nicht gespeichert.</p>'
+
+                    -   title: 'Bild'
+                        slug: bild
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Bild'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Die Bildunterschrift ist für alle sichtbar und ersetzt den Alternativtext nicht - der wird an der Datei selbst gepflegt.</p>'
+                                -   type: kernux_image
+                                    header: 'Mit Bildunterschrift'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_image_caption: 'Das Rathaus wurde 1894 errichtet und 2019 barrierefrei umgebaut.'
+                                    files:
+                                        tx_kernux_image_image:
+                                            -   key: rathaus
+                                -   type: kernux_image
+                                    header: 'Ohne Bildunterschrift'
+                                    header_layout: 2
+                                    files:
+                                        tx_kernux_image_image:
+                                            -   key: stadtpark
+
+                    -   title: 'Bildergalerie'
+                        slug: bildergalerie
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Bildergalerie'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Mehrere Bilder in einem Gitter, Spaltenzahl als Obergrenze für breite Bildschirme.</p>'
+                                -   type: kernux_gallery
+                                    header: 'Drei Spalten'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_gallery_columns: 3
+                                    files:
+                                        tx_kernux_gallery_images:
+                                            -   key: rathaus
+                                            -   key: buergerbuero
+                                            -   key: stadtpark
+                                            -   key: baustelle
+                                            -   key: ausweis
+                                -   type: kernux_gallery
+                                    header: 'Zwei Spalten'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_gallery_columns: 2
+                                    files:
+                                        tx_kernux_gallery_images:
+                                            -   key: stadtpark
+                                            -   key: rathaus
+
+                    -   title: 'Video oder Audio'
+                        slug: video-oder-audio
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Video oder Audio'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: |
+                                            <p>Bewusst der native Player mit <code>controls</code>: ein eigener Player
+                                            würde bedeuten, Tastaturbedienung, Fokusverwaltung und Beschriftung für
+                                            jedes Bedienelement neu zu bauen - der Browser liefert das schon richtig.</p>
+                                            <p>Untertitel sind für jede Aufnahme mit Sprache Pflicht (WCAG 1.2.2), ein
+                                            Transkript für rein auditive Inhalte (WCAG 1.2.1).</p>
+                                -   type: kernux_media
+                                    header: 'Audio mit Untertiteln und Transkript'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_media_audio: 1
+                                        tx_kernux_media_transcript: |
+                                            Das Bürgerbüro der Stadt Musterstadt ist montags bis freitags von 8 bis 12 Uhr
+                                            geöffnet, donnerstags zusätzlich von 14 bis 18 Uhr.
+
+                                            Am 24. und 31. Dezember bleibt das Bürgerbüro geschlossen.
+                                    files:
+                                        tx_kernux_media_file:
+                                            -   key: ansage
+                                        tx_kernux_media_captions:
+                                            -   key: ansage-untertitel
+
+                    -   title: 'Downloads'
+                        slug: downloads
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Downloads'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Format und Größe kommen aus der Datei selbst und können deshalb nicht veralten. Ein Titel an der Datei wird als Linktext genutzt.</p>'
+                                -   type: kernux_downloads
+                                    header: 'Unterlagen zum Personalausweis'
+                                    header_layout: 2
+                                    files:
+                                        tx_kernux_downloads_files:
+                                            -   key: antrag
+                                                description: 'Zum Ausfüllen am Rechner vorbereitet.'
+                                            -   key: merkblatt
+                                                description: 'Anforderungen an das Passbild, mit Beispielen.'
+
+                    -   title: 'Inhaltsverzeichnis'
+                        slug: inhaltsverzeichnis
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Inhaltsverzeichnis'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Wird aus den Inhaltselementen der Seite gebaut, kann also nicht auseinanderlaufen. Elemente mit verborgener Überschrift werden übersprungen, weil ein Link dorthin ins Leere führen würde.</p>'
+                                -   type: kernux_toc
+                                    header: 'Auf dieser Seite'
+                                    header_layout: 2
+                                -   type: kernux_text
+                                    header: 'Erster Abschnitt'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Erscheint im Verzeichnis darüber.</p>'
+                                -   type: kernux_text
+                                    header: 'Zweiter Abschnitt'
+                                    header_layout: 2
+                                    fields:
+                                        bodytext: '<p>Erscheint ebenfalls im Verzeichnis.</p>'
+                                -   type: kernux_text
+                                    header: 'Dieser Abschnitt hat eine verborgene Überschrift'
+                                    header_layout: 100
+                                    fields:
+                                        bodytext: '<p>Weil die Überschrift verborgen ist, fehlt dieser Abschnitt im Verzeichnis - genau so soll es sein.</p>'
+
+                    -   title: 'Sitemap'
+                        slug: sitemap
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Sitemap'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Verzeichnis der Unterseiten. Ohne gesetzte Startseite werden die Unterseiten der aktuellen Seite aufgelistet.</p>'
+                                -   type: kernux_sitemap
+                                    header: 'Unterseiten von Beispielseiten'
+                                    header_layout: 2
+                                    refs:
+                                        tx_kernux_sitemap_startPage: examples
+                                -   type: kernux_sitemap
+                                    header: 'Unterseiten von Elemente'
+                                    header_layout: 2
+                                    refs:
+                                        tx_kernux_sitemap_startPage: elements
+
+            # ------------------------------------------------------------- navigations
+            # The three configurable menus stay switched off until a root page is set, so
+            # without these pages the page frame can never be seen complete.
+            -   key: serviceRoot
+                navHide: true
+                title: 'Service'
+                slug: service
+                layout: default
+                children:
+                    -   title: 'Leichte Sprache'
+                        navIcon: easy-language
+                        slug: leichte-sprache
+                    -   title: 'Gebärdensprache'
+                        navIcon: sign-language
+                        slug: gebaerdensprache
+                    -   title: 'Vorlesefunktion'
+                        navIcon: visibility
+                        slug: vorlesefunktion
+
+            -   key: footerRoot
+                navHide: true
+                title: 'Fußbereich'
+                slug: fussbereich
+                layout: default
+                children:
+                    -   title: 'Verwaltung'
+                        slug: verwaltung
+                        children:
+                            -   title: 'Öffnungszeiten'
+                                slug: oeffnungszeiten
+                            -   title: 'Kontakt'
+                                slug: kontakt
+                            -   title: 'Stellenangebote'
+                                slug: stellenangebote
+                    -   title: 'Themen'
+                        slug: themen
+                        children:
+                            -   title: 'Bauen und Wohnen'
+                                slug: bauen-und-wohnen
+                            -   title: 'Umwelt'
+                                slug: umwelt
+                            -   title: 'Verkehr'
+                                slug: verkehr
+                    -   title: 'Beteiligung'
+                        slug: beteiligung
+                        children:
+                            -   title: 'Ratsinformationen'
+                                slug: ratsinformationen
+                            -   title: 'Bürgerhaushalt'
+                                slug: buergerhaushalt
+
+            -   key: legalRoot
+                navHide: true
+                title: 'Rechtliches'
+                slug: rechtliches
+                layout: default
+                children:
+                    -   title: 'Impressum'
+                        slug: impressum
+                    -   title: 'Datenschutz'
+                        slug: datenschutz
+                    -   title: 'Barrierefreiheitserklärung'
+                        slug: barrierefreiheitserklaerung

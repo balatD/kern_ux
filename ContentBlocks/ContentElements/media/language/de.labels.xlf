@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/media">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Video or audio</source>
+                <target>Video oder Audio</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A media file with captions and a transcript.</source>
+                <target>Mediendatei mit Untertiteln und Transkript.</target>
+            </trans-unit>
+            <trans-unit id="file.label">
+                <source>Media file</source>
+                <target>Mediendatei</target>
+            </trans-unit>
+            <trans-unit id="audio.label">
+                <source>Audio only</source>
+                <target>Nur Audio</target>
+            </trans-unit>
+            <trans-unit id="audio.description">
+                <source>Renders an audio player instead of a video frame.</source>
+                <target>Erzeugt einen Audio-Player statt eines Videorahmens.</target>
+            </trans-unit>
+            <trans-unit id="captions.label">
+                <source>Captions (WebVTT)</source>
+                <target>Untertitel (WebVTT)</target>
+            </trans-unit>
+            <trans-unit id="captions.description">
+                <source>Required for any recording with speech (WCAG 1.2.2).</source>
+                <target>Pflicht für jede Aufnahme mit Sprache (WCAG 1.2.2).</target>
+            </trans-unit>
+            <trans-unit id="poster.label">
+                <source>Preview image</source>
+                <target>Vorschaubild</target>
+            </trans-unit>
+            <trans-unit id="transcript.label">
+                <source>Transcript</source>
+                <target>Transkript</target>
+            </trans-unit>
+            <trans-unit id="transcript.description">
+                <source>The full text of what is said. Required for audio-only content (WCAG 1.2.1) and the only form in which the content works without sound or picture.</source>
+                <target>Der vollständige gesprochene Text. Für rein auditive Inhalte Pflicht (WCAG 1.2.1) und die einzige Form, in der der Inhalt ohne Ton oder Bild funktioniert.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,29 @@
+name: kern-ux/media
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: file
+    type: File
+    minitems: 1
+    maxitems: 1
+    allowed: 'mp4,webm,ogg,mp3,m4a,wav'
+  - identifier: audio
+    type: Checkbox
+    default: 0
+  # Captions and transcript are top-level fields, not tucked into a tab: a video with
+  # speech and no captions fails WCAG 1.2.2, and a field nobody sees is a field nobody
+  # fills in.
+  - identifier: captions
+    type: File
+    maxitems: 1
+    allowed: 'vtt'
+  - identifier: poster
+    type: File
+    maxitems: 1
+    allowed: common-image-types
+  - identifier: transcript
+    type: Textarea
+    rows: 8

@@ -1,0 +1,5 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><f:if condition="{data.tx_kernux_buttongroup_buttons}"><div class="kern-btn-wrapper"><f:for each="{data.tx_kernux_buttongroup_buttons}" as="button" iteration="i"><f:variable name="variant" value="{button.variant}" /><f:if condition="!{variant}"><f:variable name="variant" value="{f:if(condition: i.isFirst, then: 'primary', else: 'secondary')}" /></f:if><a class="kern-btn kern-btn--{variant}" href="{f:uri.typolink(parameter: button.link)}"><span class="kern-label">{button.label}</span></a></f:for></div></f:if></k:molecule.section>

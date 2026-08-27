@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/alert">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Notice</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A highlighted notice, success message, warning or error.</source>
+            </trans-unit>
+            <trans-unit id="variant.label">
+                <source>Type</source>
+            </trans-unit>
+            <trans-unit id="variant.description">
+                <source>Sets colour and icon. Choose by what the message means, not by how much attention it should draw.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/text-media">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Text and media</source>
+                <target>Text und Medien</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Body text with images, position selectable.</source>
+                <target>Fließtext mit Bildern, Position wählbar.</target>
+            </trans-unit>
+            <trans-unit id="media_position.label">
+                <source>Media position</source>
+                <target>Position der Medien</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

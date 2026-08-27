@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/task-list">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Task list</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>The steps of an application with their status, following the KERN pattern.</source>
+            </trans-unit>
+            <trans-unit id="numbered.label">
+                <source>Numbered</source>
+            </trans-unit>
+            <trans-unit id="steps.label">
+                <source>Steps</source>
+            </trans-unit>
+            <trans-unit id="steps.title.label">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="steps.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="steps.link.description">
+                <source>Empty renders the step as plain text, which is how a step that cannot be started yet should appear - rather than as a dead link.</source>
+            </trans-unit>
+            <trans-unit id="steps.status.label">
+                <source>Status text</source>
+            </trans-unit>
+            <trans-unit id="steps.status.description">
+                <source>Short, for example "Completed". Shown as a badge beside the title.</source>
+            </trans-unit>
+            <trans-unit id="steps.statusVariant.label">
+                <source>Status colour</source>
+            </trans-unit>
+            <trans-unit id="steps.statusVariant.description">
+                <source>Colour must never be the only signal, so the status text has to carry the meaning on its own (WCAG 1.4.1).</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

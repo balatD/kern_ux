@@ -1,0 +1,29 @@
+<f:argument name="label" type="string" optional="{true}" default="Offizielle Website – Bundesrepublik Deutschland"
+            description="Override only with an explicit Dachmarke permission."
+/><f:argument name="fluid" type="bool" optional="{true}" default="{false}"
+            description="Full-bleed instead of the centred container."
+/><f:comment>
+    The Kopfzeile belongs to the Digitale Dachmarke and is reserved for federal,
+    state and municipal offerings. It is therefore never rendered unless a site
+    explicitly switches it on - see the kernUx.dachmarke.kopfzeileEnable setting.
+
+    The CSS-only variant on purpose: the alternative is a 12.7 kB web component, and
+    a mandated header bar should not depend on JavaScript.
+</f:comment><f:variable name="containerClass" value="kern-container"
+/><f:if condition="{fluid}"><f:variable name="containerClass" value="kern-container-fluid" /></f:if
+><f:spaceless>
+<div class="kern-kopfzeile">
+    <div class="{containerClass}">
+        <div class="kern-kopfzeile__content">
+            <span class="kern-kopfzeile__flagge" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 16">
+                    <path fill="#000" d="M0 .5h24v5.333H0z" />
+                    <path fill="red" d="M0 5.833h24v5.333H0z" />
+                    <path fill="#FACA2C" d="M0 11.167h24V16.5H0z" />
+                </svg>
+            </span>
+            <span class="kern-kopfzeile__label">{label}</span>
+        </div>
+    </div>
+</div>
+</f:spaceless>

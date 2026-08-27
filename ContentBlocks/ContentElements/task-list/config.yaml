@@ -1,0 +1,36 @@
+name: kern-ux/task-list
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: numbered
+    type: Checkbox
+    default: 1
+  - identifier: steps
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 255
+      - identifier: link
+        type: Link
+      - identifier: status
+        type: Text
+        max: 64
+      - identifier: statusVariant
+        type: Select
+        renderType: selectSingle
+        default: info
+        items:
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.info'
+            value: info
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.success'
+            value: success
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.warning'
+            value: warning
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.danger'
+            value: danger

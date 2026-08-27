@@ -1,0 +1,25 @@
+<f:comment>
+    The rendering shell for plugin content elements.
+
+    Extbase's configurePlugin() generates, for every plugin, a TypoScript block of the
+    shape `tt_content.<signature> =< lib.contentElement` with `templateName = Generic`
+    and the actual plugin as its numbered child `20`. lib.contentElement is normally
+    supplied by fluid_styled_content - which this extension replaces, so it has to be
+    supplied here or *every* Extbase plugin, ext:form included, renders silently empty:
+    the CType exists, nothing errors, there is just no output.
+
+    The f:cObject call back into `tt_content.{data.CType}.20` is how the shell reaches
+    the plugin it wraps. It looks indirect because it is: the plugin is configured as a
+    child of the very object being rendered.
+
+    Wrapped in the same section and heading components as every content block, so a
+    plugin on a page behaves like its neighbours.
+</f:comment><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{content}"><f:then><f:format.raw>{content}</f:format.raw></f:then><f:else><f:cObject typoscriptObjectPath="tt_content.{data.CType}.20" data="{data}" table="tt_content" /></f:else></f:if></k:molecule.section>

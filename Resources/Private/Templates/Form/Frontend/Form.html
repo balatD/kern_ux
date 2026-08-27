@@ -1,0 +1,49 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    The error summary comes first, before the form element, so that a keyboard or
+    screen reader user meets it immediately after submitting rather than having to
+    hunt through the fields.
+
+    The progress indicator only appears for multi-page forms - on a single-page form
+    "Schritt 1 von 1" is noise.
+</f:comment>
+<formvh:renderRenderable renderable="{form}">
+    <div class="kernt3-form">
+        <f:render partial="Form/ErrorSummary" arguments="{form: form}" />
+
+        <f:variable name="totalSteps" value="{form.pages -> f:count()}" />
+        <f:if condition="{totalSteps} > 1">
+            <f:variable name="currentStep" value="{form.currentPage.index + 1}" />
+            <f:comment>
+                Tag syntax rather than inline: an inline f:translate carrying an
+                arguments array is output verbatim by Fluid instead of evaluated.
+            </f:comment>
+            <f:variable name="progressLabel"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:progress" arguments="{0: currentStep, 1: totalSteps}" /></f:variable>
+            <k:atom.progress
+                id="{form.identifier}-progress"
+                value="{currentStep}"
+                max="{totalSteps}"
+                label="{progressLabel}"
+            />
+        </f:if>
+
+        <formvh:form
+            object="{form}"
+            action="{form.renderingOptions.controllerAction}"
+            method="{form.renderingOptions.httpMethod}"
+            id="{form.identifier}"
+            section="{form.identifier}"
+            enctype="{form.renderingOptions.httpEnctype}"
+            addQueryString="{form.renderingOptions.addQueryString}"
+            argumentsToBeExcludedFromQueryString="{form.renderingOptions.argumentsToBeExcludedFromQueryString}"
+            additionalParams="{form.renderingOptions.additionalParams}"
+            additionalAttributes="{formvh:translateElementProperty(element: form, property: 'fluidAdditionalAttributes')}"
+        >
+            <f:render partial="{form.currentPage.templateName}" arguments="{page: form.currentPage, form: form}" />
+            <f:render partial="Form/Navigation" arguments="{form: form}" />
+        </formvh:form>
+    </div>
+</formvh:renderRenderable>
+</html>

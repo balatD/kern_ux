@@ -1,0 +1,4 @@
+name: kern-ux/kern-ux
+label: 'KERN UX-Standard'
+optionalDependencies:
+  - typo3/form

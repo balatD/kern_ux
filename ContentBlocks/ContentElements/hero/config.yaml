@@ -1,0 +1,50 @@
+name: kern-ux/hero
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: preline
+    type: Text
+    max: 120
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+  - identifier: note_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.heroNote'
+    fields:
+      - identifier: noteText
+        type: Text
+        max: 200
+      - type: Linebreak
+      - identifier: noteVariant
+        type: Select
+        renderType: selectSingle
+        default: info
+        items:
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.info'
+            value: info
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.success'
+            value: success
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.warning'
+            value: warning
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.danger'
+            value: danger
+  - identifier: image
+    type: File
+    maxitems: 1
+    allowed: common-image-types
+  - identifier: media_position
+    type: Select
+    renderType: selectSingle
+    default: right
+    items:
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.right'
+        value: right
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.left'
+        value: left
+      - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.none'
+        value: none

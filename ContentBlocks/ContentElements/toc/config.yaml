@@ -1,0 +1,10 @@
+name: kern-ux/toc
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Heading
+  - KernUx/Spacing
+fields:
+  - identifier: label
+    type: Text
+    max: 255

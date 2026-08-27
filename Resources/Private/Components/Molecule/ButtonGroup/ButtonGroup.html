@@ -1,0 +1,15 @@
+<f:argument name="items" type="array"
+            description="Each item needs a label and a link; variant and icon are optional."
+/><f:comment>
+    KERN groups buttons in a wrapper so they space and wrap consistently. Rendered as
+    links, not buttons: these navigate, and a button that navigates breaks
+    open-in-new-tab and the browser's own affordances.
+</f:comment><f:spaceless>
+<div class="kern-btn-wrapper">
+    <f:for each="{items}" as="item" iteration="i">
+        <f:variable name="variant" value="{item.variant}" />
+        <f:if condition="!{variant}"><f:variable name="variant" value="{f:if(condition: i.isFirst, then: 'primary', else: 'secondary')}" /></f:if>
+        <a class="kern-btn kern-btn--{variant}" href="{item.link}"><f:if condition="{item.icon}"><span class="kern-icon kern-icon--{item.icon}" aria-hidden="true"></span></f:if><span class="kern-label">{item.label}</span></a>
+    </f:for>
+</div>
+</f:spaceless>

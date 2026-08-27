@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="skipLink.main">
+                <source>Skip to content</source>
+            </trans-unit>
+            <trans-unit id="header.home">
+                <source>To the home page</source>
+            </trans-unit>
+            <trans-unit id="header.mainNavigation">
+                <source>Main navigation</source>
+            </trans-unit>
+            <trans-unit id="header.helpNavigation">
+                <source>Service navigation</source>
+            </trans-unit>
+            <trans-unit id="header.showMenu">
+                <source>Show menu</source>
+            </trans-unit>
+            <trans-unit id="header.showSearch">
+                <source>Show search</source>
+            </trans-unit>
+            <trans-unit id="header.searchTerm">
+                <source>Search term</source>
+            </trans-unit>
+            <trans-unit id="header.submitSearch">
+                <source>Search</source>
+            </trans-unit>
+            <trans-unit id="footer.label">
+                <source>Footer</source>
+            </trans-unit>
+            <trans-unit id="footer.legalNavigation">
+                <source>Legal information</source>
+            </trans-unit>
+            <trans-unit id="breadcrumb.label">
+                <source>Breadcrumb</source>
+            </trans-unit>
+            <trans-unit id="dialog.close">
+                <source>Close dialog</source>
+            </trans-unit>
+            <trans-unit id="summary.edit">
+                <source>Edit</source>
+            </trans-unit>
+            <trans-unit id="label.optional">
+                <source>- Optional</source>
+            </trans-unit>
+            <trans-unit id="toc.label">
+                <source>Table of contents</source>
+            </trans-unit>
+            <trans-unit id="sitemap.label">
+                <source>Sitemap</source>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.transcript">
+                <source>Show transcript</source>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.captionsLanguage">
+                <source>en</source>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.captionsLabel">
+                <source>English</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

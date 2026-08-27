@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/divider">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Divider</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A horizontal rule.</source>
+            </trans-unit>
+            <trans-unit id="semantic.label">
+                <source>Separates two topics</source>
+            </trans-unit>
+            <trans-unit id="semantic.description">
+                <source>Off, the rule is decorative and hidden from screen readers. Switch it on only when the break itself carries meaning.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,60 @@
+# Rich-text preset for the KERN UX-Standard.
+#
+# The toolbar is deliberately narrow: KERN styles almost nothing by element - only
+# `html` and `body` carry element selectors, everything else is class-based. So any
+# element an editor can insert that KERN has no class for renders unstyled.
+#
+# The KERN classes themselves are NOT applied here. They are added server-side by
+# lib.kernUx.rte (see the site set's setup.typoscript), so an editor cannot remove
+# them by accident and existing content picks them up without being re-saved.
+imports:
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Processing.yaml' }
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml' }
+    - { resource: 'EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml' }
+
+editor:
+  config:
+    toolbar:
+      items:
+        - heading
+        - '|'
+        - bold
+        - italic
+        - '|'
+        - bulletedList
+        - numberedList
+        - '|'
+        - link
+        - insertTable
+        - '|'
+        # Long German compounds need manual break opportunities more than most
+        # languages, and it is the editor who knows where they belong.
+        - softhyphen
+        - specialCharacters
+        - '|'
+        - removeFormat
+        - undo
+        - redo
+
+    # h1 belongs to the page, not to a content element, so the editor starts at h2.
+    # Which level is correct depends on where the element sits - that is why blocks
+    # also expose header_layout for their own heading.
+    heading:
+      options:
+        - { model: 'paragraph', title: 'Absatz' }
+        - { model: 'heading2', view: 'h2', title: 'Überschrift 2' }
+        - { model: 'heading3', view: 'h3', title: 'Überschrift 3' }
+        - { model: 'heading4', view: 'h4', title: 'Überschrift 4' }
+
+    table:
+      defaultHeadings: { rows: 1 }
+      contentToolbar:
+        - tableColumn
+        - tableRow
+        - mergeTableCells
+        - toggleTableCaption
+
+    # Shown inside the editor so the editing view is not wildly different from the
+    # rendered result.
+    contentsCss:
+        - 'EXT:kern_ux/Resources/Public/Css/rte.css'

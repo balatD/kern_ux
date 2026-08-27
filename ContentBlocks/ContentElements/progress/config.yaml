@@ -1,0 +1,16 @@
+name: kern-ux/progress
+group: kern
+vendorPrefix: tx_kernux
+basics:
+  - KernUx/Spacing
+fields:
+  - identifier: label
+    type: Text
+    required: true
+    max: 255
+  - identifier: value
+    type: Number
+    default: 1
+  - identifier: max
+    type: Number
+    default: 5

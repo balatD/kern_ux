@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-25" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="optional">
+                <source>- Optional</source>
+                <target>- Optional</target>
+            </trans-unit>
+            <trans-unit id="progress">
+                <source>Step %1$s of %2$s</source>
+                <target>Schritt %1$s von %2$s</target>
+            </trans-unit>
+            <trans-unit id="errorSummary.title">
+                <source>The form could not be submitted</source>
+                <target>Das Formular konnte nicht gesendet werden</target>
+            </trans-unit>
+            <trans-unit id="errorSummary.intro">
+                <source>Please correct the following entries:</source>
+                <target>Bitte korrigieren Sie die folgenden Angaben:</target>
+            </trans-unit>
+            <trans-unit id="date.day">
+                <source>Day</source>
+                <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="date.month">
+                <source>Month</source>
+                <target>Monat</target>
+            </trans-unit>
+            <trans-unit id="date.year">
+                <source>Year</source>
+                <target>Jahr</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.empty">
+                <source>Please enter a date.</source>
+                <target>Bitte geben Sie ein Datum ein.</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.incomplete">
+                <source>Please fill in day, month and year.</source>
+                <target>Bitte füllen Sie Tag, Monat und Jahr aus.</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.notNumeric">
+                <source>Please enter day, month and year as numbers.</source>
+                <target>Bitte geben Sie Tag, Monat und Jahr als Zahlen ein.</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.invalid">
+                <source>That date does not exist.</source>
+                <target>Dieses Datum gibt es nicht.</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.tooEarly">
+                <source>The date is too far in the past.</source>
+                <target>Das Datum liegt zu weit in der Vergangenheit.</target>
+            </trans-unit>
+            <trans-unit id="validation.error.kernDate.tooLate">
+                <source>The date is too far in the future.</source>
+                <target>Das Datum liegt zu weit in der Zukunft.</target>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.KernDate.label">
+                <source>Date (KERN)</source>
+                <target>Datum (KERN)</target>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.KernDate.editor.validators.KernDate.label">
+                <source>Valid date</source>
+                <target>Gültiges Datum</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

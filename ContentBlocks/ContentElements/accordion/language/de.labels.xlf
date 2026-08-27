@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-08-26" product-name="kern-ux/accordion">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Accordion</source>
+                <target>Akkordeon</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Collapsible sections, for example frequently asked questions.</source>
+                <target>Aufklappbare Abschnitte, etwa für häufige Fragen.</target>
+            </trans-unit>
+            <trans-unit id="panels.label">
+                <source>Sections</source>
+                <target>Abschnitte</target>
+            </trans-unit>
+            <trans-unit id="panels.description">
+                <source>Each section carries its own heading and stays closed until a visitor opens it.</source>
+                <target>Jeder Abschnitt hat eine eigene Überschrift und bleibt geschlossen, bis er geöffnet wird.</target>
+            </trans-unit>
+            <trans-unit id="panels.title.label">
+                <source>Heading</source>
+                <target>Überschrift</target>
+            </trans-unit>
+            <trans-unit id="panels.text.label">
+                <source>Content</source>
+                <target>Inhalt</target>
+            </trans-unit>
+            <trans-unit id="panels.expanded.label">
+                <source>Open initially</source>
+                <target>Anfangs geöffnet</target>
+            </trans-unit>
+            <trans-unit id="panels.expanded.description">
+                <source>For one section at most. Several open sections defeat the point of an accordion.</source>
+                <target>Höchstens für einen Abschnitt. Mehrere offene Abschnitte heben den Zweck eines Akkordeons auf.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

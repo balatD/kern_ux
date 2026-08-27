@@ -1,0 +1,22 @@
+<f:comment>
+    Uses hgroup so the kicker and subline are associated with the heading without
+    becoming part of its accessible name.
+
+    Level and appearance are precomputed rather than inlined: a nested inline f:if
+    condition containing variable interpolation is hard to read and easy to get
+    subtly wrong.
+</f:comment><f:variable name="level" value="2"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="level" value="{data.header_layout}" /></f:if
+><f:variable name="appearance" value="large"
+/><f:if condition="{data.tx_kernux_heading_appearance}"><f:variable name="appearance" value="{data.tx_kernux_heading_appearance}" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><f:if condition="{data.header} && {data.header_layout} != 100"><k:molecule.hgroup
+    heading="{data.header}"
+    level="{level}"
+    appearance="{appearance}"
+    preline="{data.tx_kernux_heading_preline}"
+    subline="{data.tx_kernux_heading_subline}"
+/></f:if></k:molecule.section>

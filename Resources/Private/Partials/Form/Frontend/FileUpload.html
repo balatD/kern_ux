@@ -1,0 +1,30 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    A plain file input: KERN styles input[type=file] itself and ships no drag-and-drop
+    JavaScript, so there is nothing to build here beyond the classes.
+
+    The allowed formats belong in the element description, where they end up in
+    aria-describedby - an accept attribute alone is invisible to screen reader users.
+</f:comment>
+<formvh:renderRenderable renderable="{element}">
+    <f:render partial="Field/Field" arguments="{element: element}" contentAs="elementContent">
+        <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <formvh:form.uploadedResource
+                property="{element.identifier}"
+                as="resource"
+                id="{element.uniqueIdentifier}"
+                class="kern-form-input__input"
+                errorClass="kern-form-input__input--error"
+                accept="{element.properties.allowedMimeTypes}"
+                additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription)}"
+            >
+                <f:if condition="{resource}">
+                    <p class="kern-body kern-body--small" id="{element.uniqueIdentifier}-preview">{resource.originalResource.originalFile.name}</p>
+                </f:if>
+            </formvh:form.uploadedResource>
+        </f:form.validationResults>
+    </f:render>
+</formvh:renderRenderable>
+</html>

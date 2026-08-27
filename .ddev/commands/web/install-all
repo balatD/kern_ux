@@ -1,0 +1,9 @@
+#!/bin/bash
+## Description: Install both supported TYPO3 majors (13.4 + 14.3)
+## Usage: install-all
+## Example: ddev install-all
+set -e
+/mnt/ddev_config/scripts/install-typo3.sh v13 '^13.4'
+/mnt/ddev_config/scripts/install-typo3.sh v14 '^14.3'
+echo ""
+echo "Both majors installed. Overview: https://kern-ux.ddev.site/"

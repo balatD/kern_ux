@@ -1,0 +1,21 @@
+<f:argument name="for" type="string" optional="{true}" default=""
+            description="Empty renders a <legend> instead of a <label>, for fieldset captions."
+/><f:argument name="size" type="string" optional="{true}" default=""
+            description="small | large. KERN uses large for a legend that acts as the heading of a whole block."
+/><f:argument name="optional" type="bool" optional="{true}" default="{false}"
+            description="Marks the field as optional. KERN inverts the usual convention: optional fields carry a marker, required fields carry nothing."
+/><f:argument name="optionalText" type="string" optional="{true}" default=""
+            description="Wording of the optional marker. Empty uses the translated default."
+/><f:variable name="optionalLabel" value="{optionalText}"
+/><f:if condition="!{optionalLabel}"><f:variable name="optionalLabel"><f:translate key="label.optional" extensionName="KernUx" /></f:variable></f:if><f:variable name="classes" value="kern-label"
+/><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-label--{size}" /></f:if
+><f:spaceless>
+<f:if condition="{for}">
+    <f:then>
+        <label class="{classes}" for="{for}"><f:slot /><f:if condition="{optional}"> <span class="kern-label__optional">{optionalLabel}</span></f:if></label>
+    </f:then>
+    <f:else>
+        <legend class="{classes}"><f:slot /><f:if condition="{optional}"> <span class="kern-label__optional">{optionalLabel}</span></f:if></legend>
+    </f:else>
+</f:if>
+</f:spaceless>

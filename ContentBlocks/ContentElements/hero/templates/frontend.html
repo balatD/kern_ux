@@ -1,0 +1,25 @@
+<f:comment>
+    A hero is the page's opening block, so the heading defaults to h1 and to KERN's
+    x-large size - the shipped contentHeader default of "medium" would render a page title
+    at the size of a third-level heading.
+
+    header_layout is still honoured, 100 included: an editor who hides the heading gets a
+    hero of lead, note and picture, the same way every other block treats that value.
+</f:comment><f:variable name="level" value="1"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="level" value="{data.header_layout}" /></f:if
+><f:variable name="appearance" value="{data.tx_kernux_heading_appearance}"
+/><f:if condition="!{appearance}"><f:variable name="appearance" value="x-large" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:organism.hero
+    heading="{f:if(condition: '{data.header_layout} != 100', then: data.header)}"
+    level="{level}"
+    appearance="{appearance}"
+    preline="{data.tx_kernux_hero_preline}"
+    image="{data.tx_kernux_hero_image.0}"
+    mediaPosition="{data.tx_kernux_hero_media_position}"
+    noteText="{data.tx_kernux_hero_noteText}"
+    noteVariant="{data.tx_kernux_hero_noteVariant}"
+><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></k:organism.hero></k:molecule.section>

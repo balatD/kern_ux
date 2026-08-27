@@ -1,0 +1,18 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    The page label is an h2: the form itself sits inside page content, so a page step
+    is a section of it, not a document title.
+</f:comment>
+<formvh:renderRenderable renderable="{page}">
+    <div class="kernt3-form__page">
+        <f:if condition="{page.label}">
+            <k:atom.heading level="2" appearance="large">{formvh:translateElementProperty(element: page, property: 'label')}</k:atom.heading>
+        </f:if>
+        <f:for each="{page.elements}" as="element">
+            <f:render partial="{element.templateName}" arguments="{element: element}" />
+        </f:for>
+    </div>
+</formvh:renderRenderable>
+</html>

@@ -1,0 +1,19 @@
+# Vertical spacing for a content block.
+#
+# Reuses core's space_before_class / space_after_class rather than adding own fields:
+# existing content stays migratable, and molecule.section maps the values onto KERN's
+# t-shirt scale. Editors control spacing only - width comes from the backend layout,
+# so a page cannot be pulled out of the grid by accident.
+identifier: KernUx/Spacing
+fields:
+  - identifier: appearance_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.appearance'
+  - identifier: spacing_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.spacing'
+    fields:
+      - identifier: space_before_class
+        useExistingField: true
+      - identifier: space_after_class
+        useExistingField: true

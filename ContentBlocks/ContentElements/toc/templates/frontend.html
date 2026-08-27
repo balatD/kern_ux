@@ -1,0 +1,17 @@
+<f:comment>
+    Built from the page's own content elements rather than from an editable list, so it
+    cannot drift out of sync with the page.
+
+    Only elements that really render a heading are listed - a link to a block whose
+    heading is hidden would lead nowhere. Anchors point at each block's section id,
+    which every content block emits from its record uid.
+</f:comment><f:variable name="headings" value="{kux:contentHeadings(pageUid: data.pid, languageUid: data.sys_language_uid, excludeUid: data.uid)}"
+/><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:variable name="tocLabel" value="{data.tx_kernux_toc_label}" /><f:if condition="!{tocLabel}"><f:variable name="tocLabel"><f:translate key="toc.label" extensionName="KernUx" /></f:variable></f:if><f:if condition="{headings}"><nav aria-label="{tocLabel}"><k:atom.list variant="bullet"><f:for each="{headings}" as="heading"><li><k:atom.link href="#{kux:uniqueId(prefix: 'content', uid: heading.uid)}">{heading.header}</k:atom.link></li></f:for></k:atom.list></nav></f:if></k:molecule.section>

@@ -1,0 +1,44 @@
+<f:argument name="image" type="mixed" optional="{true}"
+            description="A FAL file reference. Processed into a responsive srcset."
+/><f:argument name="src" type="string" optional="{true}" default=""
+            description="A ready-made image path, used when there is no FAL reference - an SVG, or an image a project manages itself. Rendered as-is: there is nothing to scale a vector to, and inventing derivatives of an unmanaged file would be wrong."
+/><f:argument name="alt" type="string" optional="{true}" default=""
+            description="Overrides the file reference's own alternative text. When neither is set the image counts as decorative and gets an empty alt, which is correct for an image that carries no information."
+/><f:argument name="caption" type="string" optional="{true}" default=""
+            description="Falls back to the file reference's own description field."
+/><f:argument name="sizes" type="string" optional="{true}" default="(min-width: 62rem) 66vw, 100vw"
+            description="Tells the browser how wide the image will be rendered. Wrong values here are the usual reason srcset picks a needlessly large file."
+/><f:argument name="lazy" type="bool" optional="{true}" default="{true}"
+            description="Set false for an image above the fold - lazy loading delays those."
+/><f:comment>
+    A fixed srcset ladder rather than a configurable one: a design system that lets
+    every caller pick its own widths ends up generating dozens of near-identical
+    derivatives. 480/768/1024/1440 covers the breakpoints KERN defines.
+
+    alt is always emitted, even empty: an img without alt is announced by its file
+    name, while alt="" correctly marks a decorative image (WCAG 1.1.1).
+</f:comment><f:variable name="effectiveAlt" value="{alt}"
+/><f:if condition="!{effectiveAlt}"><f:variable name="effectiveAlt" value="{image.alternative}" /></f:if
+><f:variable name="effectiveCaption" value="{caption}"
+/><f:if condition="!{effectiveCaption}"><f:variable name="effectiveCaption" value="{image.description}" /></f:if
+><f:comment>
+    Nothing to render without a source. Guarded here rather than at every call site:
+    a collection with an empty row would otherwise take down the whole page.
+</f:comment><f:spaceless>
+<f:if condition="{image} || {src}">
+<figure class="kernt3-figure">
+    <f:if condition="{image}">
+        <f:then>
+            <f:variable name="srcset"><f:uri.image image="{image}" width="480" /> 480w, <f:uri.image image="{image}" width="768" /> 768w, <f:uri.image image="{image}" width="1024" /> 1024w, <f:uri.image image="{image}" width="1440" /> 1440w</f:variable>
+            <img src="{f:uri.image(image: image, width: 1024)}" srcset="{srcset -> f:format.trim()}" sizes="{sizes}" alt="{effectiveAlt}" loading="{f:if(condition: lazy, then: 'lazy', else: 'eager')}" decoding="async" />
+        </f:then>
+        <f:else>
+            <img src="{f:uri.resource(path: src)}" alt="{effectiveAlt}" loading="{f:if(condition: lazy, then: 'lazy', else: 'eager')}" decoding="async" />
+        </f:else>
+    </f:if>
+    <f:if condition="{effectiveCaption}">
+        <figcaption class="kernt3-figure__caption"><k:atom.body variant="small">{effectiveCaption}</k:atom.body></figcaption>
+    </f:if>
+</figure>
+</f:if>
+</f:spaceless>

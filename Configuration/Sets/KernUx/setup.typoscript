@@ -1,0 +1,202 @@
+# Page rendering for the KERN UX-Standard.
+#
+# PAGEVIEW rather than FLUIDTEMPLATE: it is the recommended page object since
+# TYPO3 13.1, and it derives Partials/ and Layouts/ from the same root path, so one
+# `paths` entry configures the whole tree. The template file is picked by backend
+# layout name, first letter uppercased - `subject` resolves Pages/Subject.html.
+# Content columns as lib. objects, called from the page templates with f:cObject.
+#
+# NOT as PAGEVIEW `variables`: a CONTENT object built there renders without a request,
+# and every request-dependent content object then produces an empty string with no
+# error - plugins (including ext:form) and FLUIDTEMPLATE among them. f:cObject passes
+# the request through from the rendering context, so nested objects work.
+#
+# Still CONTENT rather than the `page-content` data processor: that processor's Fluid
+# API diverged across the two majors this extension supports - on TYPO3 14 a column is
+# a ContentArea meant for f:render.contentArea, a ViewHelper that does not exist on 13.
+#
+# colPos is fixed project-wide: 0 main, 1 hero, 2 aside, 3 teaser.
+lib.kernUx.content {
+    main = CONTENT
+    main {
+        table = tt_content
+        select {
+            orderBy = sorting
+            where = {#colPos}=0
+        }
+    }
+    hero < .main
+    hero.select.where = {#colPos}=1
+
+    aside < .main
+    aside.select.where = {#colPos}=2
+
+    teaser < .main
+    teaser.select.where = {#colPos}=3
+}
+
+page = PAGE
+page {
+    # 100 leaves 1..99 free for projects overriding single templates without
+    # replacing the set.
+    10 = PAGEVIEW
+    10 {
+        paths.100 = EXT:kern_ux/Resources/Private/PageView/
+
+        dataProcessing {
+            10 = menu
+            10 {
+                as = mainNavigation
+                # Two levels. Three were tried and rejected: a section with nineteen
+                # pages then pushed the content most of a screen down, and a header is
+                # the wrong place for a list that long. Deeper trees are reached through
+                # the section overview page, which is what the sitemap block is for.
+                #
+                # The template itself has no depth limit - molecule.navigationList
+                # renders itself per level - so a project with a shallow tree can raise
+                # this without touching a template.
+                levels = 2
+                # Every item carries its children, not just the branch the visitor is in.
+                # The second level is a flyout that opens on hover and on keyboard focus,
+                # and it can only open for an item whose children are in the markup - with
+                # expandAll = 0 the panel existed for exactly one item in the bar and
+                # nothing happened on the others, which reads as a broken menu.
+                #
+                # The cost is the second level of the whole tree in every page's HTML.
+                # That is what a flyout menu is: a few kilobytes, cached with the page,
+                # and no JavaScript or request needed to open a panel.
+                expandAll = 1
+            }
+
+            20 = menu
+            20 {
+                special = rootline
+                special.range = 0|-1
+                as = breadcrumb
+            }
+
+            # The three configurable menus stay switched off until a root page is set,
+            # so a fresh install renders a header and footer without empty landmarks.
+            30 = menu
+            30 {
+                special = directory
+                special.value = {$kernUx.navigation.helpRootPage}
+                as = helpNavigation
+                if.isTrue = {$kernUx.navigation.helpRootPage}
+            }
+
+            40 = menu
+            40 {
+                special = directory
+                special.value = {$kernUx.navigation.footerRootPage}
+                levels = 2
+                as = footerColumns
+                if.isTrue = {$kernUx.navigation.footerRootPage}
+            }
+
+            50 = menu
+            50 {
+                special = directory
+                special.value = {$kernUx.navigation.metaRootPage}
+                as = metaNavigation
+                if.isTrue = {$kernUx.navigation.metaRootPage}
+            }
+        }
+    }
+}
+
+# KERN reads the colour scheme from a data attribute. "auto" deliberately sets
+# nothing, so the CSS falls back to prefers-color-scheme.
+["{$kernUx.theme}" == "light"]
+    page.bodyTagAdd = data-kern-theme="light"
+[END]
+
+["{$kernUx.theme}" == "dark"]
+    page.bodyTagAdd = data-kern-theme="dark"
+[END]
+
+# Rich-text processing for KERN content blocks.
+#
+# Core's lib.parseFunc_RTE runs headings through `encapsLines`, because h1-h6 are not
+# in its `externalBlocks` list. With a paragraph followed by a heading that emits a
+# stray empty <p></p> before the content. Passing headings through as external blocks
+# is what removes it.
+#
+# No class injection happens here: KERN's typography is class-based and rich-text
+# output is element-based, and that gap is bridged by the scoped rte.css instead -
+# see Resources/Public/Css/rte.css for why.
+lib.kernUx.rte < lib.parseFunc_RTE
+lib.kernUx.rte {
+    externalBlocks := addToList(h1,h2,h3,h4,h5,h6)
+    externalBlocks {
+        h1.stripNL = 1
+        h2.stripNL = 1
+        h3.stripNL = 1
+        h4.stripNL = 1
+        h5.stripNL = 1
+        h6.stripNL = 1
+    }
+
+    # Tables are the one place where classes ARE injected server-side.
+    #
+    # There is no table content block: the editor can already build tables, and a
+    # two-level collection would be unusable for anything but a tiny grid. But a bare
+    # <table> loses KERN's accessibility affordances - notably the scroll container,
+    # which needs tabindex so keyboard users can reach it, exactly as KERN's own
+    # responsive table does. Scoped CSS cannot add a wrapper, so this does.
+    externalBlocks.table {
+        stripNL = 1
+        stdWrap.wrap = <div class="kern-table-responsive" tabindex="0">|</div>
+        stdWrap.HTMLparser = 1
+        stdWrap.HTMLparser {
+            keepNonMatchedTags = 1
+            tags.table.fixAttrib.class {
+                default = kern-table
+                always = 1
+            }
+        }
+    }
+}
+
+# Sitemap for the sitemap content block.
+#
+# Defined here rather than in the block folder: Content Blocks only reads a per-block
+# setup.typoscript from version 2.3, which is the TYPO3 14 line, so a dual-major
+# extension has no per-block place to put it.
+lib.kernUx.sitemap = HMENU
+lib.kernUx.sitemap {
+    special = directory
+    special.value.data = field:tx_kernux_sitemap_startPage // page:uid
+
+    1 = TMENU
+    1 {
+        expAll = 1
+        wrap = <ul class="kern-list kern-list--bullet">|</ul>
+        NO {
+            wrapItemAndSub = <li>|</li>
+            ATagParams = class="kern-link"
+            stdWrap.htmlSpecialChars = 1
+        }
+        CUR < .NO
+        CUR.ATagParams = class="kern-link" aria-current="page"
+    }
+
+    2 < .1
+    3 < .1
+}
+
+# Rendering shell for plugin content elements.
+#
+# Extbase's configurePlugin() emits `tt_content.<signature> =< lib.contentElement` for
+# every plugin, with the plugin itself as the numbered child 20. lib.contentElement
+# comes from fluid_styled_content, which this extension replaces - so without this
+# every Extbase plugin, ext:form included, renders as an empty string with no error.
+#
+# Defining it here rather than special-casing the form plugin means any third-party
+# plugin dropped onto a KERN page renders correctly too.
+lib.contentElement = FLUIDTEMPLATE
+lib.contentElement {
+    templateName = Generic
+    templateRootPaths.0 = EXT:kern_ux/Resources/Private/Templates/ContentElements/
+}
+

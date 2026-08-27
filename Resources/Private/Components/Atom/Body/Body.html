@@ -1,0 +1,13 @@
+<f:argument name="variant" type="string" optional="{true}" default=""
+            description="small | large | bold | muted. Empty renders KERN's default body text."
+/><f:argument name="tag" type="string" optional="{true}" default="p"
+            description="p | span | div. Use span inside another text flow."
+/><f:variable name="classes" value="kern-body"
+/><f:if condition="{variant}"><f:variable name="classes" value="{classes} kern-body--{variant}" /></f:if
+><f:spaceless>
+<f:switch expression="{tag}">
+    <f:case value="span"><span class="{classes}"><f:slot /></span></f:case>
+    <f:case value="div"><div class="{classes}"><f:slot /></div></f:case>
+    <f:defaultCase><p class="{classes}"><f:slot /></p></f:defaultCase>
+</f:switch>
+</f:spaceless>

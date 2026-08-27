@@ -1,0 +1,13 @@
+<f:argument name="id" type="string"
+/><f:argument name="value" type="int"
+/><f:argument name="max" type="int"
+/><f:argument name="label" type="string" optional="{true}" default=""
+            description="Visible label. KERN's multi-step pattern words it 'Schritt X von Y'; the label is what carries that information, the bar alone does not."
+/><f:spaceless>
+<div class="kern-progress">
+    <f:if condition="{label}">
+        <label class="kern-label" for="{id}">{label}</label>
+    </f:if>
+    <progress id="{id}" value="{value}" max="{max}"></progress>
+</div>
+</f:spaceless>

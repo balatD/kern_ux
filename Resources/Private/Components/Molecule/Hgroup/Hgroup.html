@@ -1,0 +1,17 @@
+<f:argument name="heading" type="string"
+/><f:argument name="level" type="int" optional="{true}" default="2"
+/><f:argument name="appearance" type="string" optional="{true}" default="large"
+/><f:argument name="preline" type="string" optional="{true}" default=""
+            description="Kicker above the heading. Inside an hgroup it stays out of the heading text itself, so screen readers announce the heading without it."
+/><f:argument name="subline" type="string" optional="{true}" default=""
+/><f:comment>
+    KERN groups a heading with its kicker and subline in an hgroup. That is the point
+    of the element: the surrounding lines are associated with the heading without
+    becoming part of its accessible name.
+</f:comment><f:spaceless>
+<hgroup class="kern-hgroup">
+    <f:if condition="{preline}"><k:atom.preline>{preline}</k:atom.preline></f:if>
+    <k:atom.heading level="{level}" appearance="{appearance}">{heading}</k:atom.heading>
+    <f:if condition="{subline}"><k:atom.subline>{subline}</k:atom.subline></f:if>
+</hgroup>
+</f:spaceless>

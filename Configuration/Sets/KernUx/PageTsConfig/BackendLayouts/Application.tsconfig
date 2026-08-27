@@ -1,0 +1,14 @@
+# Antragsstrecke - a single narrow column. Long forms and task lists read badly at
+# full width, and KERN's form components are built for a constrained measure.
+mod.web_layout.BackendLayouts.application {
+    title = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:backendLayout.application
+    config.backend_layout {
+        colCount = 1
+        rowCount = 1
+        rows.1.columns.1 {
+            identifier = main
+            name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.main
+            colPos = 0
+        }
+    }
+}

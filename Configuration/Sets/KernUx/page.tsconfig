@@ -1,0 +1,5 @@
+# Backend layouts are defined in page TSconfig rather than as records: the core docs
+# prefer it because it lives in version control, and the layout name feeds straight
+# into PAGEVIEW's template resolution.
+@import './PageTsConfig/BackendLayouts/'
+@import './PageTsConfig/HideCoreContentElements.tsconfig'

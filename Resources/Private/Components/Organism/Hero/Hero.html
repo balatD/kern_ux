@@ -1,0 +1,71 @@
+<f:argument name="heading" type="string" optional="{true}" default=""
+            description="The page's own heading in almost every case, which is why the level defaults to 1. Empty leaves the hgroup out - core's header_layout = 100 means exactly that, and a hero whose heading is already carried by the page around it is a real case."
+/><f:argument name="level" type="int" optional="{true}" default="1"
+/><f:argument name="appearance" type="string" optional="{true}" default="x-large"
+            description="KERN visual size, independent of the level."
+/><f:argument name="preline" type="string" optional="{true}" default=""
+            description="Names the service or the register the page belongs to. Inside the hgroup it stays out of the heading's accessible name."
+/><f:argument name="image" type="mixed" optional="{true}"
+            description="A FAL file reference for the picture beside the text."
+/><f:argument name="imageSrc" type="string" optional="{true}" default=""
+            description="A ready-made image path, for an illustration a project manages itself."
+/><f:argument name="imageAlt" type="string" optional="{true}" default=""
+            description="Overrides the file reference's own alternative text."
+/><f:argument name="mediaPosition" type="string" optional="{true}" default="right"
+            description="right | left | none. Only the visual side - the reading order is always text before image."
+/><f:argument name="noteText" type="string" optional="{true}" default=""
+            description="One sentence the visitor has to know before starting: a fee, a deadline, a precondition. Rendered as a KERN alert without a heading, so it stays out of the document outline."
+/><f:argument name="noteVariant" type="string" optional="{true}" default="info"
+            description="info | success | warning | danger."
+/><f:comment>
+    KERN has no hero, so this is ours (kernt3-): the opening block of a service page or a
+    start page, carrying the heading, a short lead, one note and a picture.
+
+    The picture is never the message. It gets no caption and it is not a figure: a hero
+    image illustrates, and anything a visitor actually needs is in the text beside it. An
+    image with something to say belongs in the image or text-and-media block instead.
+
+    Text comes before the image in the source whichever side it is shown on - the side is
+    a grid order, so reading order follows the content and not the layout.
+
+    The image loads eagerly: a hero is above the fold by definition, and lazy loading
+    delays exactly the image the page is judged by.
+</f:comment><f:comment>
+    Resolved in steps rather than in one inline f:if: an inline f:if evaluates both
+    branches before it picks one, and interpolating a file reference into a string is not
+    something a FAL object survives.
+</f:comment><f:variable name="side" value="none"
+/><f:if condition="{mediaPosition} == 'left' || {mediaPosition} == 'right'"><f:if condition="{image} || {imageSrc}"><f:variable name="side" value="{mediaPosition}" /></f:if></f:if
+><f:variable name="lead"><f:slot /></f:variable
+><f:spaceless>
+<f:if condition="{heading} || {lead -> f:format.trim()} || {noteText} || {side} != 'none'">
+<div class="kernt3-hero kernt3-hero--media-{side}">
+    <div class="kernt3-hero__text">
+        <f:if condition="{heading}">
+            <k:molecule.hgroup heading="{heading}" level="{level}" appearance="{appearance}" preline="{preline}" />
+        </f:if>
+        <f:if condition="{lead -> f:format.trim()}">
+            <div class="kernt3-hero__lead"><f:format.raw>{lead}</f:format.raw></div>
+        </f:if>
+        <f:if condition="{noteText}">
+            <div class="kernt3-hero__note">
+                <k:molecule.alert variant="{noteVariant}" title="{noteText}" titleAsHeading="{false}" />
+            </div>
+        </f:if>
+    </div>
+    <f:if condition="{side} != 'none'">
+        <div class="kernt3-hero__media">
+            <f:if condition="{image}">
+                <f:then>
+                    <f:variable name="srcset"><f:uri.image image="{image}" width="480" /> 480w, <f:uri.image image="{image}" width="768" /> 768w, <f:uri.image image="{image}" width="1024" /> 1024w, <f:uri.image image="{image}" width="1440" /> 1440w</f:variable>
+                    <img src="{f:uri.image(image: image, width: 1024)}" srcset="{srcset -> f:format.trim()}" sizes="(min-width: 62rem) 50vw, 100vw" alt="{f:if(condition: imageAlt, then: imageAlt, else: image.alternative)}" loading="eager" decoding="async" />
+                </f:then>
+                <f:else>
+                    <img src="{f:uri.resource(path: imageSrc)}" alt="{imageAlt}" loading="eager" decoding="async" />
+                </f:else>
+            </f:if>
+        </div>
+    </f:if>
+</div>
+</f:if>
+</f:spaceless>

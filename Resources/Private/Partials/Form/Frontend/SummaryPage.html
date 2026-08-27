@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:comment>
+    The confirmation step, rendered with KERN's summary component. Each entered value
+    gets its key and value from the element label and the submitted data - a
+    confirmation page that shows raw field identifiers defeats its own purpose.
+</f:comment>
+<formvh:renderRenderable renderable="{page}">
+    <div class="kern-summary">
+        <div class="kern-summary__header">
+            <div class="kern-summary__title-wrapper">
+                <h2 class="kern-title">{formvh:translateElementProperty(element: page, property: 'label')}</h2>
+            </div>
+        </div>
+        <div class="kern-summary__body">
+            <dl class="kern-description-list">
+                <f:for each="{summaryPageElements}" as="element">
+                    <div class="kern-description-list-item">
+                        <dt class="kern-description-list-item__key">{formvh:translateElementProperty(element: element, property: 'label')}</dt>
+                        <dd class="kern-description-list-item__value"><formvh:renderFormValue renderable="{element}" as="formValue"><f:for each="{formValue.processedValue}" as="value">{value}</f:for></formvh:renderFormValue></dd>
+                    </div>
+                </f:for>
+            </dl>
+        </div>
+    </div>
+</formvh:renderRenderable>
+</html>

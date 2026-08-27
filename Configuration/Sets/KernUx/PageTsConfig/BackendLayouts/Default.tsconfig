@@ -1,0 +1,13 @@
+# Standard - one content column. The fallback when a page has no layout set.
+mod.web_layout.BackendLayouts.default {
+    title = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:backendLayout.default
+    config.backend_layout {
+        colCount = 1
+        rowCount = 1
+        rows.1.columns.1 {
+            identifier = main
+            name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.main
+            colPos = 0
+        }
+    }
+}

@@ -1,0 +1,39 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    BalatD\KernUx\:
+        resource: '../Classes/*'
+
+    # Public so functional tests can pull them from the container.
+    BalatD\KernUx\Rendering\FluidSourceRenderer:
+        public: true
+
+    BalatD\KernUx\Styleguide\ComponentCatalog:
+        public: true
+
+    BalatD\KernUx\Command\InstallAssetsCommand:
+        tags:
+            - name: console.command
+              command: 'kern-ux:assets:install'
+              description: 'Download the pinned KERN UX distribution into Resources/Public/Vendor/'
+
+    BalatD\KernUx\Command\DumpStyleguideCommand:
+        tags:
+            - name: console.command
+              command: 'kern-ux:styleguide:dump'
+              description: 'Write the component gallery to a self-contained directory for accessibility testing'
+
+    BalatD\KernUx\Command\InstallDemoCommand:
+        tags:
+            - name: console.command
+              command: 'kern-ux:demo:install'
+              description: 'Install a demo page tree - four example pages plus one page per content block'
+
+    BalatD\KernUx\Command\RenderComponentCommand:
+        tags:
+            - name: console.command
+              command: 'kern-ux:component:render'
+              description: 'Render KERN components to stdout - development helper for markup inspection'

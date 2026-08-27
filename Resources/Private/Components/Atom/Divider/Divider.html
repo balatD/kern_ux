@@ -1,0 +1,8 @@
+<f:argument name="decorative" type="bool" optional="{true}" default="{true}"
+            description="A decorative rule is hidden from assistive technology. Set false only when the rule genuinely separates two sections that screen reader users need to perceive as separate."
+/><f:spaceless>
+<f:if condition="{decorative}">
+    <f:then><hr class="kern-divider kern-divider--decorative" aria-hidden="true" /></f:then>
+    <f:else><hr class="kern-divider" /></f:else>
+</f:if>
+</f:spaceless>

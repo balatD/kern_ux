@@ -1,0 +1,25 @@
+# Startseite - stage, main content, teaser row.
+mod.web_layout.BackendLayouts.startpage {
+    title = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:backendLayout.startpage
+    config.backend_layout {
+        colCount = 1
+        rowCount = 3
+        rows {
+            1.columns.1 {
+                identifier = hero
+                name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.hero
+                colPos = 1
+            }
+            2.columns.1 {
+                identifier = main
+                name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.main
+                colPos = 0
+            }
+            3.columns.1 {
+                identifier = teaser
+                name = LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:column.teaser
+                colPos = 3
+            }
+        }
+    }
+}

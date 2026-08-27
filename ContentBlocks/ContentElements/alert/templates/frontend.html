@@ -1,0 +1,17 @@
+<f:comment>
+    Heading level comes from the core header_layout field, exactly as KERN asks: the
+    alert ships an h2 and the integrator re-levels it to fit the document.
+
+    No role=alert. The alert is part of the page when it loads, and an assertive live
+    region would interrupt the screen reader for something that was never news.
+</f:comment><f:variable name="level" value="2"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="level" value="{data.header_layout}" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.alert
+    variant="{data.tx_kernux_alert_variant}"
+    title="{f:if(condition: '{data.header_layout} != 100', then: data.header)}"
+    level="{level}"
+><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></k:molecule.alert></k:molecule.section>

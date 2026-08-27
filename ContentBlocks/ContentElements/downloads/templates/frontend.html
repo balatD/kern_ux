@@ -1,0 +1,12 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.tx_kernux_downloads_files}"><f:comment>
+    FAL is mapped to the component's plain shape here, so the component itself stays
+    independent of how files are managed.
+</f:comment><ul class="kern-list kernt3-download-list"><f:for each="{data.tx_kernux_downloads_files}" as="file"><li class="kernt3-download-list__item"><a class="kern-link" href="{file.publicUrl}" download><k:atom.icon name="download" /><span>{f:or(content: file.title, alternative: file.name)} ({file.extension -> f:format.case(mode: 'upper')}, {file.size -> f:format.bytes(decimals: 0)})</span></a><f:if condition="{file.description}"><k:atom.body variant="small">{file.description}</k:atom.body></f:if></li></f:for></ul></f:if></k:molecule.section>
