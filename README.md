@@ -67,10 +67,17 @@ Die Teile der Digitalen Dachmarke — Kopfzeile und Notizzeile im Fuß — sind 
 
 ## Installation
 
+Das Paket liegt auf [Packagist](https://packagist.org/packages/balatd/kern-ux).
+Veröffentlicht ist bisher nur eine Vorabversion, deshalb braucht Composer die
+Stabilitätsangabe `@alpha` — ein Projekt mit dem üblichen `minimum-stability: stable`
+findet das Paket sonst nicht:
+
 ```bash
-composer require balatd/kern-ux
+composer require balatd/kern-ux:^1.0@alpha
 vendor/bin/typo3 extension:setup
 ```
+
+Sobald eine stabile Version getaggt ist, genügt `composer require balatd/kern-ux`.
 
 Danach die KERN-Assets holen:
 

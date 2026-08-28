@@ -13,10 +13,10 @@
         "design-system",
         "oeffentliche-verwaltung"
     ],
-    "homepage": "https://github.com/balatD/typo3-kern-ux",
+    "homepage": "https://github.com/balatD/kern_ux",
     "support": {
-        "issues": "https://github.com/balatD/typo3-kern-ux/issues",
-        "source": "https://github.com/balatD/typo3-kern-ux"
+        "issues": "https://github.com/balatD/kern_ux/issues",
+        "source": "https://github.com/balatD/kern_ux"
     },
     "authors": [
         {
@@ -60,7 +60,7 @@
     "extra": {
         "typo3/cms": {
             "extension-key": "kern_ux",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "Package": {
                 "providesPackages": {}
             },
