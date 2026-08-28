@@ -1,10 +1,9 @@
 name: kern-ux/alert
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: variant
     type: Select
     renderType: selectSingle
@@ -22,3 +21,5 @@ fields:
     useExistingField: true
     enableRichtext: true
     richtextConfiguration: kern_ux
+  - identifier: KernUx/Spacing
+    type: Basic

@@ -1,9 +1,9 @@
 name: kern-ux/divider
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Spacing
 fields:
   - identifier: semantic
     type: Checkbox
     default: 0
+  - identifier: KernUx/Spacing
+    type: Basic

@@ -1,10 +1,9 @@
 name: kern-ux/card-grid
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: columns
     type: SelectNumber
     default: 3
@@ -35,3 +34,5 @@ fields:
         type: File
         maxitems: 1
         allowed: common-image-types
+  - identifier: KernUx/Spacing
+    type: Basic

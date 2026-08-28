@@ -1,10 +1,9 @@
 name: kern-ux/gallery
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: images
     type: File
     minitems: 1
@@ -19,3 +18,5 @@ fields:
         value: 3
       - label: '4'
         value: 4
+  - identifier: KernUx/Spacing
+    type: Basic

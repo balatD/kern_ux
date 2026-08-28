@@ -1,11 +1,12 @@
 name: kern-ux/text
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: bodytext
     useExistingField: true
     enableRichtext: true
     richtextConfiguration: kern_ux
+  - identifier: KernUx/Spacing
+    type: Basic

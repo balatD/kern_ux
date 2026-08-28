@@ -1,13 +1,14 @@
 name: kern-ux/heading
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: preline
     type: Text
     max: 255
   - identifier: subline
     type: Text
     max: 255
+  - identifier: KernUx/Spacing
+    type: Basic

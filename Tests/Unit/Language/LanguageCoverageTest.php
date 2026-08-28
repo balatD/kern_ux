@@ -154,6 +154,12 @@ final class LanguageCoverageTest extends UnitTestCase
             if (in_array($type, ['Palette', 'Tab', 'Linebreak'], true)) {
                 continue;
             }
+            // A Basic is a reference, not a field of this block: its identifier is a
+            // path into ContentBlocks/Basics and the fields it pulls in label
+            // themselves there.
+            if ($type === 'Basic') {
+                continue;
+            }
             if ($identifier === '' || ($field['useExistingField'] ?? false) === true) {
                 continue;
             }
