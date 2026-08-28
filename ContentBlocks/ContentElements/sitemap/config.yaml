@@ -1,11 +1,12 @@
 name: kern-ux/sitemap
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: startPage
     type: Relation
     allowed: pages
     maxitems: 1
+  - identifier: KernUx/Spacing
+    type: Basic

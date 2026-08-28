@@ -1,10 +1,9 @@
 name: kern-ux/media
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: file
     type: File
     minitems: 1
@@ -27,3 +26,5 @@ fields:
   - identifier: transcript
     type: Textarea
     rows: 8
+  - identifier: KernUx/Spacing
+    type: Basic

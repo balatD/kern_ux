@@ -1,10 +1,9 @@
 name: kern-ux/hero
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: preline
     type: Text
     max: 120
@@ -48,3 +47,5 @@ fields:
         value: left
       - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.none'
         value: none
+  - identifier: KernUx/Spacing
+    type: Basic

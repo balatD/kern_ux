@@ -1,10 +1,9 @@
 name: kern-ux/image
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: image
     type: File
     minitems: 1
@@ -16,3 +15,5 @@ fields:
   - identifier: aboveTheFold
     type: Checkbox
     default: 0
+  - identifier: KernUx/Spacing
+    type: Basic

@@ -1,10 +1,9 @@
 name: kern-ux/accordion
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: panels
     type: Collection
     labelField: title
@@ -20,3 +19,5 @@ fields:
       - identifier: expanded
         type: Checkbox
         default: 0
+  - identifier: KernUx/Spacing
+    type: Basic

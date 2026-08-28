@@ -1,10 +1,9 @@
 name: kern-ux/list
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: variant
     type: Select
     renderType: selectSingle
@@ -26,3 +25,5 @@ fields:
         max: 500
       - identifier: link
         type: Link
+  - identifier: KernUx/Spacing
+    type: Basic

@@ -1,8 +1,6 @@
 name: kern-ux/button-group
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Spacing
 fields:
   - identifier: buttons
     type: Collection
@@ -28,3 +26,5 @@ fields:
             value: secondary
           - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:button.tertiary'
             value: tertiary
+  - identifier: KernUx/Spacing
+    type: Basic

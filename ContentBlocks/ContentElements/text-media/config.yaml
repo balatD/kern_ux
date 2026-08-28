@@ -1,10 +1,9 @@
 name: kern-ux/text-media
 group: kern
 vendorPrefix: tx_kernux
-basics:
-  - KernUx/Heading
-  - KernUx/Spacing
 fields:
+  - identifier: KernUx/Heading
+    type: Basic
   - identifier: bodytext
     useExistingField: true
     enableRichtext: true
@@ -24,3 +23,5 @@ fields:
         value: left
       - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:mediaPosition.right'
         value: right
+  - identifier: KernUx/Spacing
+    type: Basic
