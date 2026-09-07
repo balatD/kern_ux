@@ -6,6 +6,20 @@
     gets its key and value from the element label and the submitted data - a
     confirmation page that shows raw field identifiers defeats its own purpose.
 
+    formvh:renderAllFormValues is the only way to reach the values: it walks every
+    element of every *previous* page and yields a formValue per element. Iterating a
+    variable of our own would silently render nothing, because Fluid resolves an
+    unknown variable to null and f:for over null is a no-op rather than an error.
+
+    One dl per row, not one dl around all rows. The rows have to be siblings of the
+    section headers - a heading is not a permitted child of dl - and kern-summary__body
+    is itself a flex column, so it lays the sequence out. kernt3.css tightens its gap
+    back down for these lists.
+
+    A Fieldset becomes a section: KERN has kern-summary-group__header for exactly this,
+    including a :first-of-type margin reset, so a form grouped into "Persönliche Daten"
+    and "Anliegen" reads as two blocks rather than one flat list.
+
     The key runs through core's sanitize chain for the same reason the checkbox label
     does: an RTE-edited label reaches here wrapped in <p>, and a <dt> takes phrasing
     content only.
@@ -18,14 +32,71 @@
             </div>
         </div>
         <div class="kern-summary__body">
-            <dl class="kern-description-list">
-                <f:for each="{summaryPageElements}" as="element">
-                    <div class="kern-description-list-item">
-                        <dt class="kern-description-list-item__key">{formvh:translateElementProperty(element: element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags(allowedTags: '<a><br><i><strong>')}</dt>
-                        <dd class="kern-description-list-item__value"><formvh:renderFormValue renderable="{element}" as="formValue"><f:for each="{formValue.processedValue}" as="value">{value}</f:for></formvh:renderFormValue></dd>
-                    </div>
-                </f:for>
-            </dl>
+            <formvh:renderAllFormValues renderable="{page.rootForm}" as="formValue">
+                <f:if condition="{formValue.isSection}">
+                    <f:then>
+                        <div class="kern-summary-group__header">
+                            <h3 class="kern-title kern-title--small">{formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags()}</h3>
+                        </div>
+                    </f:then>
+                    <f:else>
+                        <dl class="kern-description-list">
+                            <div class="kern-description-list-item">
+                                <dt class="kern-description-list-item__key">{formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags(allowedTags: '<a><br><i><strong>')}</dt>
+                                <dd class="kern-description-list-item__value">
+                                    <f:if condition="{formValue.value}">
+                                        <f:then>
+                                            <f:if condition="{0: formValue.element.type} == {0: 'ImageUpload'}">
+                                                <f:then>
+                                                    <f:if condition="{formValue.isMultiValue}">
+                                                        <f:then>
+                                                            <k:atom.list variant="bullet"><f:for each="{formValue.value}" as="value"><li><f:image image="{value}" maxWidth="{formValue.element.properties.imageMaxWidth}" maxHeight="{formValue.element.properties.imageMaxHeight}" alt="{formvh:translateElementProperty(element: formValue.element, property: 'altText')}" /></li></f:for></k:atom.list>
+                                                        </f:then>
+                                                        <f:else>
+                                                            <f:image image="{formValue.value}" maxWidth="{formValue.element.properties.imageMaxWidth}" maxHeight="{formValue.element.properties.imageMaxHeight}" alt="{formvh:translateElementProperty(element: formValue.element, property: 'altText')}" />
+                                                        </f:else>
+                                                    </f:if>
+                                                </f:then>
+                                                <f:else if="{0: formValue.element.type} == {0: 'FileUpload'}">
+                                                    <f:if condition="{formValue.isMultiValue}">
+                                                        <f:then>
+                                                            <k:atom.list variant="bullet"><f:for each="{formValue.value}" as="value"><li>{value.originalResource.originalFile.name}</li></f:for></k:atom.list>
+                                                        </f:then>
+                                                        <f:else>
+                                                            <k:atom.body>{formValue.value.originalResource.originalFile.name}</k:atom.body>
+                                                        </f:else>
+                                                    </f:if>
+                                                </f:else>
+                                                <f:else if="{0: formValue.element.type} == {0: 'KernDate'}">
+                                                    <f:comment>
+                                                        KernDate hands over an array, and isMultiValue is true for
+                                                        anything iterable - so without this branch the three parts
+                                                        would render as a bullet list of digits.
+                                                    </f:comment>
+                                                    <k:atom.body>{kux:formDateValue(value: formValue.processedValue)}</k:atom.body>
+                                                </f:else>
+                                                <f:else>
+                                                    <f:if condition="{formValue.isMultiValue}">
+                                                        <f:then>
+                                                            <k:atom.list variant="bullet"><f:for each="{formValue.processedValue}" as="value"><li>{value}</li></f:for></k:atom.list>
+                                                        </f:then>
+                                                        <f:else>
+                                                            <k:atom.body><f:format.nl2br>{formValue.processedValue}</f:format.nl2br></k:atom.body>
+                                                        </f:else>
+                                                    </f:if>
+                                                </f:else>
+                                            </f:if>
+                                        </f:then>
+                                        <f:else>
+                                            <k:atom.body variant="muted"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:summary.empty" /></k:atom.body>
+                                        </f:else>
+                                    </f:if>
+                                </dd>
+                            </div>
+                        </dl>
+                    </f:else>
+                </f:if>
+            </formvh:renderAllFormValues>
         </div>
     </div>
 </formvh:renderRenderable>

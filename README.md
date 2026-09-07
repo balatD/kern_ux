@@ -294,6 +294,19 @@ Element **`KernDate`**: ein Datum als drei Felder, wie KERN es vorschreibt. Kein
 `<input type="date">` und kein JavaScript-Datepicker — und TYPO3 14 hat sein eigenes
 DatePicker-Element ohnehin deprecated (#109152).
 
+Der eingegebene Wert bleibt ein Array aus Tag, Monat und Jahr, weil Property Mapping
+vor der Validierung läuft: mit `DateTime` als Ziel würde aus „31.02." ein
+Mapping-Fehler, und `KernDateValidator` verlöre seine eigenen, genauen Fehlercodes.
+Angezeigt wird das Datum deshalb über `kux:formDateValue` — `ext:form`s eigener Ausweg
+(`StringableFormElementInterface`) greift hier nicht, weil `RenderFormValueViewHelper`
+ihn nur für *Objekte* aufruft und ein Array unverändert zurückgibt.
+
+Die Zusammenfassungsseite rendert `formvh:renderAllFormValues`; ein `Fieldset` wird
+dabei zu einer Gruppe mit `kern-summary-group__header`. Alles davon hält
+`Tests/Functional/Form/FormMarkupTest.php` fest, indem es ganze Formulare rendert —
+ein Parse-Test kann das nicht: eine Variable, die es nicht gibt, ist gültiges Fluid und
+rendert stillschweigend nichts.
+
 > **Wichtig für Projekte ohne fluid_styled_content:** Diese Extension ersetzt FSC und
 > liefert deshalb `lib.contentElement` selbst mit. Ohne diese Definition rendert
 > *jedes* Extbase-Plugin — auch das Formular-Plugin — als leerer String, ohne Fehler.
