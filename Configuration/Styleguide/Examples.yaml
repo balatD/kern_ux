@@ -250,6 +250,9 @@ components:
     - label: Kopfbereich mit Navigation
       source: "<k:organism.header siteTitle=\"Stadt Musterstadt\" searchUrl=\"#\" mainNavigation=\"{0: {title: 'Leistungen', link: '#', current: 1}, 1: {title: 'Aktuelles', link: '#'}}\" helpNavigation=\"{0: {title: 'Leichte Sprache', link: '#'}}\" />"
       note: 'Folgt dem Grid-Header-Pattern von KERN. Die Umschalter sind erst unterhalb der lg-Breite sichtbar.'
+    - label: Mit Kopfzeile der Dachmarke
+      source: '<k:organism.header siteTitle="Stadt Musterstadt" kopfzeile="{true}" />'
+      note: 'Die Kopfzeile rendert *innerhalb* des header-Elements. Allein stünde ihr Text außerhalb jeder Landmark (axe-Regel region); ein eigenes header oder role="banner" ergäbe stattdessen eine zweite Banner-Landmark. Nur für Angebote von Bund, Ländern und Kommunen.'
 
   organism.footer:
     - label: Fußbereich
