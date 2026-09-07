@@ -6,7 +6,6 @@ namespace BalatD\KernUx\ViewHelpers;
 
 use Doctrine\DBAL\ParameterType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -24,6 +23,12 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 final class ContentHeadingsViewHelper extends AbstractViewHelper
 {
+    // Injected rather than fetched from the container, the way FormFieldAttributes and
+    // FormFieldRequired already do it. ViewHelpers here take constructor arguments, so
+    // reaching for makeInstance() was both inconsistent and the reason this class could
+    // not be tested without a container.
+    public function __construct(private readonly ConnectionPool $connectionPool) {}
+
     public function initializeArguments(): void
     {
         $this->registerArgument('pageUid', 'int', 'Page whose content is scanned.', true);
@@ -42,8 +47,7 @@ final class ContentHeadingsViewHelper extends AbstractViewHelper
             return [];
         }
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
 
         // Default restrictions cover deleted, hidden, start/endtime and access groups,
         // so a table of contents never advertises a block the visitor cannot see.
