@@ -21,8 +21,17 @@ eingecheckt.
 - Festgepinnte Version: **2.7.2** (siehe `KernAssetInstaller::PINNED_VERSION`)
 - Lizenz: **EUPL-1.2**
 - Quelle: <https://gitlab.opencode.de/kern-ux/kern-ux-plain>, npm `@kern-ux/native`
-- Download wird gegen den SHA-512-Integritätswert der Registry geprüft
-- Kopiert werden: `kern.css`, `kern.min.css`, `fonts/**`, `js/kern-kopfzeile.js`
+- Download wird gegen den Integritätswert der Registry geprüft. Der Algorithmus wird
+  dabei nicht der Registry-Antwort entnommen, sondern gegen eine Positivliste
+  (`sha512`, `sha384`, `sha256`) geprüft — sonst könnte eine manipulierte Antwort die
+  Prüfung auf ein gebrochenes Verfahren herabsetzen. Geladen wird ausschließlich von
+  `https://registry.npmjs.org`, Weiterleitungen werden abgelehnt.
+- Kopiert werden: `kern.css`, `kern.min.css` und die Schriftdateien unter `fonts/**`,
+  beschränkt auf `.css`, `.woff2` und `.woff`
+- **Nicht** kopiert: `js/kern-kopfzeile.js` und die SCSS-Quellen der Schriften. Die
+  Kopfzeile wird als CSS-Variante gerendert (siehe `Organism/Kopfzeile`), das Skript
+  würde also nur unbenutzt in einem web-erreichbaren Verzeichnis liegen; SCSS-Quellen
+  gehören ohnehin nicht dorthin.
 
 Die Version ist bewusst festgepinnt: KERN ändert Komponenten-Markup zwischen
 Minor-Versionen, und die Component-Tests dieses Projekts prüfen exaktes Markup.
