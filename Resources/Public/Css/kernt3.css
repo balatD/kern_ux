@@ -643,6 +643,19 @@ body {
     gap: var(--kern-metric-space-small, 8px);
 }
 
+/* KERN's baseline padding on .kern-link--small is 7px above the text and 1px below, so
+ * a link box is 32px tall around a 24px line - deliberate on a page, but it means the
+ * link text sits 3px lower in its box than the unpadded current-page span does in its
+ * 24px one, and the chevron is centred in a third place again. Centring three different
+ * offsets is what turned the trail into a staircase.
+ *
+ * Balanced rather than removed: 4px above and below keeps the box at 32px, so the tap
+ * target stays clear of the 24px minimum in WCAG 2.2 SC 2.5.8. Scoped to our own
+ * breadcrumb, because KERN's baseline grid is right everywhere else it applies. */
+.kernt3-breadcrumb .kern-link--small {
+    padding-block: var(--kern-metric-space-x-small, 4px);
+}
+
 .kernt3-breadcrumb__item + .kernt3-breadcrumb__item::before {
     content: "";
     flex: none;
