@@ -6,7 +6,7 @@
 /><f:argument name="stretched" type="bool" optional="{true}" default="{false}"
             description="Makes the whole positioned ancestor clickable. Used by cards."
 /><f:argument name="noVisitedState" type="bool" optional="{true}" default="{false}"
-            description="Suppresses the visited colour. Only for links whose target changes, e.g. pagination."
+            description="Suppresses the visited colour, via KERN's own kern-link--no-visited-state. For links where 'you have been here' says nothing: one whose target changes, e.g. pagination, and navigation chrome - breadcrumb, menus, footer - which a visitor keeps re-using. Content links keep it; there it is an orientation cue."
 /><f:argument name="external" type="bool" optional="{true}" default="{false}"
             description="Opens in a new tab. Adds rel=noopener and, unless another icon is given, the open-in-new icon - a link that changes context has to announce it (WCAG 3.2.5)."
 /><f:variable name="classes" value="kern-link"

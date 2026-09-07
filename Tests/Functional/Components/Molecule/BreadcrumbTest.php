@@ -72,6 +72,21 @@ final class BreadcrumbTest extends AbstractComponentTestCase
     }
 
     #[Test]
+    public function suppressesTheVisitedColourOnTheTrail(): void
+    {
+        // KERN colours visited links violet, which is useful in body copy and noise in
+        // a breadcrumb: every step is one the visitor keeps re-using, so "you have been
+        // here" says nothing. KERN's own opt-out class rather than a colour override.
+        $rendered = $this->renderSource('<k:molecule.breadcrumb items="{items}" />', self::trail());
+
+        self::assertSame(
+            2,
+            substr_count($rendered, 'kern-link--no-visited-state'),
+            'Every linked step of the trail carries the opt-out.',
+        );
+    }
+
+    #[Test]
     public function acceptsACustomLandmarkLabel(): void
     {
         $rendered = $this->renderSource(

@@ -17,7 +17,7 @@
 <ul class="{listClass}">
     <f:for each="{items}" as="item">
         <li class="kernt3-nav__item">
-            <a class="kern-link {linkClass}<f:if condition="{item.active}"> {linkClass}--active</f:if>" href="{item.link}"<f:if condition="{item.current}"> aria-current="page"</f:if>>{item.title}</a>
+            <a class="kern-link kern-link--no-visited-state {linkClass}<f:if condition="{item.active}"> {linkClass}--active</f:if>" href="{item.link}"<f:if condition="{item.current}"> aria-current="page"</f:if>>{item.title}</a>
             <f:if condition="{item.children}">
                 <k:molecule.navigationList items="{item.children}" level="{level + 1}" />
             </f:if>
