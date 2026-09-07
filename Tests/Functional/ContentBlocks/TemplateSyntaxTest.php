@@ -41,17 +41,31 @@ final class TemplateSyntaxTest extends FunctionalTestCase
         $root = dirname(__DIR__, 3);
         $cases = [];
 
-        $patterns = [
-            '/ContentBlocks/ContentElements/*/templates/*.html',
-            '/Resources/Private/Components/*/*/*.html',
-            '/Resources/Private/PageView/*/*.html',
-            '/Resources/Private/Partials/*/*/*/*.html',
-            '/Resources/Private/Templates/*/*.html',
+        // Walked recursively rather than globbed. Fixed-depth patterns are how this
+        // test came to miss most of what it is for: '/Partials/*/*/*/*.html' is four
+        // levels deep and matched only the four templates under Partials/Form/Frontend/
+        // that live in a subdirectory - every one of the 30 element partials sits one
+        // level higher and was never parsed. A directory walk cannot drift that way.
+        $roots = [
+            '/ContentBlocks/ContentElements',
+            '/Resources/Private',
         ];
 
-        foreach ($patterns as $pattern) {
-            foreach (glob($root . $pattern) ?: [] as $file) {
-                $cases[substr($file, strlen($root) + 1)] = [$file];
+        foreach ($roots as $relative) {
+            $directory = $root . $relative;
+            if (!is_dir($directory)) {
+                continue;
+            }
+
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS),
+            );
+            foreach ($files as $file) {
+                if (!$file instanceof \SplFileInfo || $file->getExtension() !== 'html') {
+                    continue;
+                }
+                $path = $file->getPathname();
+                $cases[substr($path, strlen($root) + 1)] = [$path];
             }
         }
         ksort($cases);
