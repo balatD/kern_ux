@@ -5,6 +5,10 @@
     The confirmation step, rendered with KERN's summary component. Each entered value
     gets its key and value from the element label and the submitted data - a
     confirmation page that shows raw field identifiers defeats its own purpose.
+
+    The key runs through core's sanitize chain for the same reason the checkbox label
+    does: an RTE-edited label reaches here wrapped in <p>, and a <dt> takes phrasing
+    content only.
 </f:comment>
 <formvh:renderRenderable renderable="{page}">
     <div class="kern-summary">
@@ -17,7 +21,7 @@
             <dl class="kern-description-list">
                 <f:for each="{summaryPageElements}" as="element">
                     <div class="kern-description-list-item">
-                        <dt class="kern-description-list-item__key">{formvh:translateElementProperty(element: element, property: 'label')}</dt>
+                        <dt class="kern-description-list-item__key">{formvh:translateElementProperty(element: element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags(allowedTags: '<a><br><i><strong>')}</dt>
                         <dd class="kern-description-list-item__value"><formvh:renderFormValue renderable="{element}" as="formValue"><f:for each="{formValue.processedValue}" as="value">{value}</f:for></formvh:renderFormValue></dd>
                     </div>
                 </f:for>

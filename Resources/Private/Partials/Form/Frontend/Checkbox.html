@@ -8,6 +8,15 @@
 
     No optional marker here: a single consent checkbox is either required or it is not,
     and marking it "optional" reads as if ticking it were pointless.
+
+    The label goes through core's own sanitize chain, character for character, because
+    since TYPO3 14.2 this one property is edited through an RTE - that is what lets a
+    consent checkbox link its privacy policy, and it is also why the stored value
+    arrives wrapped in <p>. stripTags is what drops that wrapper: a <label> may not
+    contain flow content, and an unfiltered <p> would end up on screen as text. The
+    allowlist matches what the form-label RTE preset can produce. On 13.4 the property
+    is still plain text and the chain does nothing, but the partial is shared, so it
+    runs either way.
 </f:comment>
 <formvh:renderRenderable renderable="{element}">
     <f:render partial="Field/Field" arguments="{element: element, doNotShowLabel: 1}" contentAs="elementContent">
@@ -21,7 +30,7 @@
                     value="{element.properties.value}"
                     additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription)}"
                 />
-                <label class="kern-label" for="{element.uniqueIdentifier}">{formvh:translateElementProperty(element: element, property: 'label')}</label>
+                <label class="kern-label" for="{element.uniqueIdentifier}">{formvh:translateElementProperty(element: element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags(allowedTags: '<a><br><i><strong>')}</label>
             </div>
         </f:form.validationResults>
     </f:render>
