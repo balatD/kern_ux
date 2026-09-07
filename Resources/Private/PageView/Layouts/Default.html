@@ -12,13 +12,9 @@
 <f:comment>
     The Kopfzeile belongs to the Digitale Dachmarke and is reserved for federal,
     state and municipal offerings, so it stays off unless a site opts in explicitly.
+    It is passed to the header rather than rendered here, because it has to sit inside
+    the page's one banner landmark - see the comment in Organism/Header.
 </f:comment>
-<f:if condition="{site.settings.kernUx.dachmarke.kopfzeileEnable}">
-    <f:if condition="{site.settings.kernUx.dachmarke.kopfzeileLabel}">
-        <f:then><k:organism.kopfzeile label="{site.settings.kernUx.dachmarke.kopfzeileLabel}" /></f:then>
-        <f:else><k:organism.kopfzeile /></f:else>
-    </f:if>
-</f:if>
 <f:comment>
     Both resolved up front: f:uri.resource does not degrade gracefully on an empty
     path, and a header with neither logo nor title would render an empty link.
@@ -39,6 +35,8 @@
     searchUrl="{site.settings.kernUx.site.searchUrl}"
     mainNavigation="{mainNavigation}"
     helpNavigation="{helpNavigation}"
+    kopfzeile="{site.settings.kernUx.dachmarke.kopfzeileEnable}"
+    kopfzeileLabel="{site.settings.kernUx.dachmarke.kopfzeileLabel}"
 />
 <f:comment>
     A one-item breadcrumb is just the current page and carries no information, so it

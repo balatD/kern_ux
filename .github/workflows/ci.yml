@@ -27,7 +27,7 @@ jobs:
         run: composer update --no-progress --no-interaction
 
       - name: Lint PHP
-        run: find Classes Tests -name '*.php' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
+        run: find Classes Configuration Tests Build ext_emconf.php ext_localconf.php -name '*.php' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
 
       - name: Coding standards
         run: composer cgl:check

@@ -78,7 +78,7 @@ $COMPOSER_BIN dump-autoload --no-interaction
 # and every functional test then dies on a missing container entry.
 rm -rf .Build/public/typo3temp var
 
-run_lint()       { find Classes Tests -name '*.php' -print0 | xargs -0 -n1 -P4 $PHP_BIN -l > /dev/null; echo "lint OK"; }
+run_lint()       { find Classes Configuration Tests Build ext_emconf.php ext_localconf.php -name '*.php' -print0 | xargs -0 -n1 -P4 $PHP_BIN -l > /dev/null; echo "lint OK"; }
 run_cgl()        { $PHP_BIN vendor/bin/php-cs-fixer fix --dry-run --diff; }
 run_cgl_fix()    { $PHP_BIN vendor/bin/php-cs-fixer fix; }
 run_phpstan()    { $PHP_BIN vendor/bin/phpstan analyse --no-progress; }

@@ -145,18 +145,30 @@ final class DemoAssetFactory
 
         $this->stampLabel($canvas, $title);
 
-        ob_start();
-        imagepng($canvas, null, 6);
-        $png = (string)ob_get_clean();
-        imagedestroy($canvas);
+        try {
+            ob_start();
+            try {
+                $written = imagepng($canvas, null, 6);
+                $png = (string)ob_get_clean();
+            } catch (\Throwable $throwable) {
+                // ob_get_clean() has not run, so the buffer is still on the stack.
+                ob_end_clean();
+                throw $throwable;
+            }
+        } finally {
+            imagedestroy($canvas);
+        }
+
+        // An empty string here used to be written to FAL as if it were a PNG, giving
+        // the demo a file that every consumer would treat as a valid image.
+        if ($written === false || $png === '') {
+            throw new \RuntimeException('GD could not encode the demo image.', 1756200005);
+        }
 
         return $png;
     }
 
-    /**
-     * @param \GdImage $canvas
-     */
-    private function stampLabel($canvas, string $title): void
+    private function stampLabel(\GdImage $canvas, string $title): void
     {
         $font = 5;
         $scale = 4;

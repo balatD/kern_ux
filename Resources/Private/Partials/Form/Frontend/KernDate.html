@@ -14,6 +14,14 @@
 
     The parts carry aria-invalid but not aria-describedby: the hint and the error are
     announced once, from the fieldset, rather than three times over.
+
+    Nor do they carry the element's fluidAdditionalAttributes, which every other partial
+    passes on. One date is three inputs here, and those attributes are singular by
+    nature: one autocomplete token, one placeholder, one pattern. Spreading a single
+    autocomplete="bday" across day, month and year would be worse than emitting none,
+    because autofill would target three fields with one token. Doing this properly means
+    mapping the parts onto bday-day, bday-month and bday-year; until then the parts stay
+    as they were.
 </f:comment>
 <formvh:renderRenderable renderable="{element}">
     <f:render partial="Field/Group" arguments="{element: element, horizontal: 1}" contentAs="elementContent">

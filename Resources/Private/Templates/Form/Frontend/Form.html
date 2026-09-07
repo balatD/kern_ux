@@ -8,6 +8,18 @@
 
     The progress indicator only appears for multi-page forms - on a single-page form
     "Schritt 1 von 1" is noise.
+
+    section points at the error summary, not at the form. ext:form puts the value in the
+    form action's fragment, so it decides where the browser lands after a submit - and
+    with id="{form.identifier}" on the form element, which sits *after* the summary, it
+    used to scroll the visitor straight past the one thing they needed to read.
+
+    Aiming it at the summary also lands the focus there, because the summary carries
+    tabindex="-1": fragment navigation focuses its target when the target is focusable.
+    That is the whole reason no form JavaScript is needed here - the same reasoning as
+    the Kopfzeile, where a mandated behaviour should not depend on scripting. On a
+    successful submit the fragment simply matches nothing and the next page opens at the
+    top, which is where a fresh step should start anyway.
 </f:comment>
 <formvh:renderRenderable renderable="{form}">
     <div class="kernt3-form">
@@ -34,7 +46,7 @@
             action="{form.renderingOptions.controllerAction}"
             method="{form.renderingOptions.httpMethod}"
             id="{form.identifier}"
-            section="{form.identifier}"
+            section="{form.identifier}-errors"
             enctype="{form.renderingOptions.httpEnctype}"
             addQueryString="{form.renderingOptions.addQueryString}"
             argumentsToBeExcludedFromQueryString="{form.renderingOptions.argumentsToBeExcludedFromQueryString}"

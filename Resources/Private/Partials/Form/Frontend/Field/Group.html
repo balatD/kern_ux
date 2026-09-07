@@ -9,13 +9,20 @@
     aria-invalid and the error class - KERN is explicit about this, and missing it
     leaves the group with a red bar while the individual controls look untouched,
     which fails WCAG 1.4.1.
+
+    aria-required sits on the fieldset too, and only there. A fieldset maps to
+    role="group", which supports the attribute, and the legend is what carries the
+    group's accessible name. Repeating it on every option would say that each option
+    is required by itself - true for neither a radio group nor a checkbox group that
+    asks for at least one choice. Without this the inverted optional marker is the
+    only signal that a group is required, i.e. a visual one only (WCAG 4.1.2).
 </f:comment>
 <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
     <f:variable name="hint" value="{formvh:translateElementProperty(element: element, property: 'elementDescription')}" />
     <f:variable name="describedBy" value="" />
     <f:if condition="{hint}"><f:variable name="describedBy" value="{element.uniqueIdentifier}-hint" /></f:if>
     <f:if condition="{validationResults.errors}"><f:variable name="describedBy" value="{f:if(condition: describedBy, then: '{describedBy} ', else: '')}{element.uniqueIdentifier}-error" /></f:if>
-    <fieldset class="kern-fieldset{f:if(condition: validationResults.errors, then: ' kern-fieldset--error')}" id="{element.uniqueIdentifier}"<f:if condition="{describedBy}"> aria-describedby="{describedBy}"</f:if>>
+    <fieldset class="kern-fieldset{f:if(condition: validationResults.errors, then: ' kern-fieldset--error')}" id="{element.uniqueIdentifier}"<f:if condition="{describedBy}"> aria-describedby="{describedBy}"</f:if><f:if condition="{validationResults.errors}"> aria-invalid="true"</f:if><f:if condition="{kux:formFieldRequired(element: element)}"> aria-required="true"</f:if>>
         <legend class="kern-label">{formvh:translateElementProperty(element: element, property: 'label')}<f:if condition="!{kux:formFieldRequired(element: element)}"> <span class="kern-label__optional"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:optional" /></span></f:if></legend>
         <f:if condition="{hint}">
             <div class="kern-hint" id="{element.uniqueIdentifier}-hint">{hint}</div>
