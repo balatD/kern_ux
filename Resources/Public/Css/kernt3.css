@@ -121,9 +121,22 @@ body {
 }
 
 /* A checkbox or radio group is one field, so its options stay tighter than the gap
- * between two separate fields - otherwise the group reads as several. */
-.kern-fieldset__body > * + * {
-    margin-top: var(--kern-metric-space-small, 8px);
+ * between two separate fields - otherwise the group reads as several. KERN's fieldset
+ * body already has a gap, so this narrows that gap rather than adding a margin on top
+ * of it - the margin this replaced was additive, which pushed the options 8px further
+ * apart instead of closer, and it also landed on the horizontal date row, where it
+ * dropped Month and Year below Day.
+ *
+ * The horizontal row keeps KERN's own 16px: those are the parts of one date, and the
+ * distance between them is KERN's to decide. */
+.kernt3-form__options:not(.kern-fieldset__body--horizontal) {
+    gap: var(--kern-metric-space-small, 8px);
+}
+
+/* A section fieldset holds whole fields rather than the options of one, so it keeps the
+ * distance the form uses between two fields. */
+.kernt3-form__section {
+    gap: var(--kern-metric-space-large, 24px);
 }
 
 .kernt3-form__navigation {
