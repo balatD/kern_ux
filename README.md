@@ -301,7 +301,9 @@ kernUx:
     enable: true
 ```
 
-Danach unter `/kern-ux-styleguide` erreichbar (Pfad konfigurierbar).
+Danach unter `/kern-ux-styleguide` erreichbar (Pfad konfigurierbar). Der Pfad wird
+gegen die Adresse *innerhalb* der Site verglichen, funktioniert also auch bei einer
+Unterverzeichnis-Installation oder einem Sprachpräfix wie `/de/`.
 
 Die Beispiele stehen in `Configuration/Styleguide/Examples.yaml`. Jede Component
 **muss** dort auftauchen — ein Test vergleicht die Datei mit dem Component-Baum und

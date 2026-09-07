@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Routing\SiteRouteResult;
 use TYPO3\CMS\Core\Site\Entity\Site;
 
 /**
@@ -59,11 +60,25 @@ final readonly class StyleguideMiddleware implements MiddlewareInterface
         return $response;
     }
 
+    /**
+     * Compares against the path *within* the site, which is what the setting documents.
+     *
+     * The raw request path carries the site's own base and the language prefix, so
+     * matching on it meant the gallery was unreachable on any site not based at "/" -
+     * a subdirectory installation, or a language with a base like "/de/". The site
+     * middleware has already worked that out and left the remainder in the routing
+     * result, so this only has to normalise the slashes.
+     */
     private function matches(ServerRequestInterface $request, string $configuredPath): bool
     {
-        $normalise = static fn(string $path): string => '/' . trim($path, '/');
+        $routeResult = $request->getAttribute('routing');
+        $path = $routeResult instanceof SiteRouteResult
+            ? $routeResult->getTail()
+            : $request->getUri()->getPath();
 
-        return $normalise($request->getUri()->getPath()) === $normalise($configuredPath);
+        $normalise = static fn(string $candidate): string => '/' . trim($candidate, '/');
+
+        return $normalise($path) === $normalise($configuredPath);
     }
 
 }
