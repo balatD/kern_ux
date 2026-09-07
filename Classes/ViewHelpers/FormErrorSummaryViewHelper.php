@@ -25,9 +25,30 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Order follows the form definition, not the order errors happened to be recorded:
  * a summary whose entries do not match the visual order of the fields makes the page
  * harder to work through, not easier.
+ *
+ * Each entry links to something that can actually take focus. For a plain field that is
+ * the element's own id, but a grouped field puts that id on the <fieldset> - and a
+ * fieldset is not focusable, so the link would scroll and then drop the focus. Those
+ * elements therefore point at their first control instead. The suffixes are the ones the
+ * partials build (see GROUP_FIRST_CONTROL).
  */
 final class FormErrorSummaryViewHelper extends AbstractViewHelper
 {
+    /**
+     * Element type => id suffix of its first focusable control.
+     *
+     * RadioButton and MultiCheckbox number their options from zero
+     * ("{uniqueIdentifier}-{i.index}"); KernDate names its three parts. Anything absent
+     * from this map carries its id on the control itself.
+     *
+     * @var array<string, string>
+     */
+    private const GROUP_FIRST_CONTROL = [
+        'RadioButton' => '-0',
+        'MultiCheckbox' => '-0',
+        'KernDate' => '-day',
+    ];
+
     public function initializeArguments(): void
     {
         $this->registerArgument('form', FormRuntime::class, 'The form runtime.', true);
@@ -60,7 +81,8 @@ final class FormErrorSummaryViewHelper extends AbstractViewHelper
 
             $label = $element->getLabel();
             $summary[] = [
-                'id' => $element->getUniqueIdentifier(),
+                'id' => $element->getUniqueIdentifier()
+                    . (self::GROUP_FIRST_CONTROL[$element->getType()] ?? ''),
                 'label' => $label !== '' ? $label : $element->getIdentifier(),
                 // The first error is enough: the summary points at the field, and the
                 // field itself shows every message it has.
