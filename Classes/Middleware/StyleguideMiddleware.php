@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Routing\SiteRouteResult;
 use TYPO3\CMS\Core\Site\Entity\Site;
 
@@ -20,8 +22,12 @@ use TYPO3\CMS\Core\Site\Entity\Site;
  * should not depend on a page tree existing, which also makes it usable as an
  * accessibility-test target in a bare installation.
  *
- * Off unless a site opts in. It is a development and audit tool, and a public
- * extension must not quietly expose an extra route on production sites.
+ * Two gates, not one. The site setting is off by default and has to be switched on
+ * deliberately - but on a production site that alone would put an extra public route on
+ * every site whose settings said yes, which is exactly what a public extension must not
+ * do quietly. So in Production the gallery additionally requires a logged-in backend
+ * user, the same shape of gate the admin panel uses. In Development it is simply on,
+ * because that is where it is used.
  */
 final readonly class StyleguideMiddleware implements MiddlewareInterface
 {
@@ -48,16 +54,44 @@ final readonly class StyleguideMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
+        if (!$this->isPermitted($request)) {
+            // Handled as if the route did not exist, rather than answered with a 403:
+            // whether this site has a gallery configured is not something an anonymous
+            // visitor needs to learn.
+            return $handler->handle($request);
+        }
+
         $assetBase = $settings->get('kernUx.assets.basePath');
         $markup = $this->renderer->render(is_string($assetBase) ? $assetBase : '', $request);
 
         $response = $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html; charset=utf-8')
             // Never cached downstream: the gallery reflects the templates on disk.
-            ->withHeader('Cache-Control', 'no-store');
+            ->withHeader('Cache-Control', 'no-store')
+            // The document carries a robots meta tag too, but a header also covers the
+            // crawlers that never parse the body.
+            ->withHeader('X-Robots-Tag', 'noindex, nofollow');
         $response->getBody()->write($markup);
 
         return $response;
+    }
+
+    /**
+     * Development, or a backend user who is already logged in.
+     */
+    private function isPermitted(ServerRequestInterface $request): bool
+    {
+        if (Environment::getContext()->isDevelopment()) {
+            return true;
+        }
+
+        $backendUser = $request->getAttribute('backend.user');
+        if (!$backendUser instanceof AbstractUserAuthentication) {
+            return false;
+        }
+        $uid = $backendUser->user['uid'] ?? null;
+
+        return is_numeric($uid) && (int)$uid > 0;
     }
 
     /**
@@ -80,5 +114,4 @@ final readonly class StyleguideMiddleware implements MiddlewareInterface
 
         return $normalise($path) === $normalise($configuredPath);
     }
-
 }

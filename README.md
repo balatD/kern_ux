@@ -305,6 +305,12 @@ Danach unter `/kern-ux-styleguide` erreichbar (Pfad konfigurierbar). Der Pfad wi
 gegen die Adresse *innerhalb* der Site verglichen, funktioniert also auch bei einer
 Unterverzeichnis-Installation oder einem Sprachpräfix wie `/de/`.
 
+Im Kontext `Production` genügt die Einstellung allein **nicht**: dort wird die Galerie
+nur an eine angemeldete Backend-Sitzung ausgeliefert, sonst antwortet die Seite wie bei
+einem unbekannten Pfad. Ein Schalter in den Site-Settings ist zu wenig, um auf einer
+Produktivseite eine zusätzliche öffentliche Route zu öffnen — im Kontext `Development`
+ist sie ohne Weiteres erreichbar, denn dort wird sie benutzt.
+
 Die Beispiele stehen in `Configuration/Styleguide/Examples.yaml`. Jede Component
 **muss** dort auftauchen — ein Test vergleicht die Datei mit dem Component-Baum und
 schlägt fehl, wenn etwas fehlt. Eine Galerie, die stillschweigend Components
