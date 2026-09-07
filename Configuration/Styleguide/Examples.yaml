@@ -154,11 +154,11 @@ components:
 
   molecule.card:
     - label: Karte mit Stretched Link
-      source: '<k:molecule.card title="Personalausweis beantragen" level="4" preline="Dienstleistung" link="#">Antrag online oder vor Ort.</k:molecule.card>'
-      note: 'Der Link sitzt auf der Überschrift und wird über kern-link--stretched auf die ganze Karte gedehnt - so ist sein zugänglicher Name der Titel und nicht der gesamte Kartentext.'
+      source: '<k:molecule.card title="Personalausweis beantragen" level="4" preline="Dienstleistung" link="#" text="Antrag online oder vor Ort." />'
+      note: 'Der Link sitzt auf der Überschrift und wird über kern-link--stretched auf die ganze Karte gedehnt - so ist sein zugänglicher Name der Titel und nicht der gesamte Kartentext. Reiner Text gehört in text: KERN gestaltet Kartentext über den Nachfahrenselektor .kern-card__body .kern-body, das Argument setzt diesen Wrapper und wandelt Zeilenumbrüche in <br>.'
     - label: Mit Fußbereich
       source: '<k:molecule.card title="Meldung" level="4"><f:fragment name="footer"><k:atom.badge variant="info">Neu</k:atom.badge></f:fragment><f:fragment name="default"><k:atom.body>Kurztext.</k:atom.body></f:fragment></k:molecule.card>'
-      note: 'Sobald ein benannter Slot verwendet wird, muss auch der Standardinhalt in ein f:fragment - Fluid verwirft sonst den Text außerhalb der Fragmente.'
+      note: 'Sobald ein benannter Slot verwendet wird, muss auch der Standardinhalt in ein f:fragment - Fluid verwirft sonst den Text außerhalb der Fragmente. Wer den Slot statt text nutzt, setzt den kern-body-Wrapper selbst.'
 
   organism.cardGrid:
     - label: Kartengitter
