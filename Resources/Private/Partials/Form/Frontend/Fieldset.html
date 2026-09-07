@@ -11,7 +11,7 @@
         <f:if condition="{element.label}">
             <legend class="kern-label kern-label--large">{formvh:translateElementProperty(element: element, property: 'label')}</legend>
         </f:if>
-        <div class="kern-fieldset__body">
+        <div class="kern-fieldset__body kernt3-form__section">
             <f:for each="{element.elements}" as="element">
                 <f:render partial="{element.templateName}" arguments="{element: element}" />
             </f:for>

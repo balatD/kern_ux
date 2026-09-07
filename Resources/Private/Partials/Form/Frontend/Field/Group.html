@@ -20,7 +20,7 @@
         <f:if condition="{hint}">
             <div class="kern-hint" id="{element.uniqueIdentifier}-hint">{hint}</div>
         </f:if>
-        <div class="kern-fieldset__body{f:if(condition: horizontal, then: ' kern-fieldset__body--horizontal')}">
+        <div class="kern-fieldset__body kernt3-form__options{f:if(condition: horizontal, then: ' kern-fieldset__body--horizontal')}">
             <f:format.raw>{elementContent}</f:format.raw>
         </div>
         <f:if condition="{validationResults.errors}">
