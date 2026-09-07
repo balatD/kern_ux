@@ -17,6 +17,7 @@ use TYPO3\CMS\Form\Domain\Configuration\ConfigurationService;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 use TYPO3\CMS\Form\Domain\Model\FormElements\AbstractFormElement;
 use TYPO3\CMS\Form\Domain\Model\FormElements\AbstractSection;
+use TYPO3\CMS\Form\Domain\Model\FormElements\Section;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -25,9 +26,11 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * Renders whole forms and asserts on the markup.
  *
  * The form theme was the one subsystem with no rendering test, and every defect this
- * class pins had survived in it: a required group that announced nothing, and
- * `autocomplete` silently dropped from all 30 element partials. Neither was reachable
- * from a unit test, because the bugs live in the seam between the partials, the
+ * class pins had survived in it: an empty confirmation step, a required group that
+ * announced nothing, and `autocomplete` silently dropped from all 30 element partials.
+ * None of them were reachable from a parse-only test - `{summaryPageElements}` is
+ * perfectly valid Fluid, it just resolves to nothing - and none were reachable from a
+ * unit test either, because the bugs live in the seam between the partials, the
  * ViewHelpers and ext:form's own runtime.
  *
  * The honeypot is off on these fixtures: FormRuntime stores its field name in the
@@ -188,6 +191,78 @@ final class FormMarkupTest extends FunctionalTestCase
         self::assertStringContainsString('aria-describedby="kernform-name-hint"', $html);
     }
 
+    #[Test]
+    public function rendersEveryAnsweredValueOnTheSummaryPage(): void
+    {
+        $form = $this->form();
+        $first = $form->createPage('page1');
+        $this->element($first, 'name', 'Text', 'Name');
+        $this->element($first, 'email', 'Text', 'E-Mail');
+        $form->createPage('confirmation', 'SummaryPage')->setLabel('Check your answers');
+
+        $html = $this->renderSummary($form, [
+            'name' => 'Erika Mustermann',
+            'email' => 'e.mustermann@example.org',
+        ]);
+
+        // The template used to loop a variable that does not exist, so the summary was
+        // the KERN shell around an empty definition list - on every multi-page form.
+        self::assertStringContainsString('kern-summary', $html);
+        self::assertStringContainsString('Erika Mustermann', $html);
+        self::assertStringContainsString('e.mustermann@example.org', $html);
+        self::assertStringContainsString('Name', $html);
+        self::assertStringContainsString('E-Mail', $html);
+        self::assertStringContainsString('kern-description-list-item__key', $html);
+    }
+
+    #[Test]
+    public function formatsAKernDateOnTheSummaryPageInsteadOfConcatenatingItsParts(): void
+    {
+        $form = $this->form();
+        $this->element($form->createPage('page1'), 'birthday', 'KernDate', 'Date of birth');
+        $form->createPage('confirmation', 'SummaryPage')->setLabel('Check your answers');
+
+        $html = $this->renderSummary($form, [
+            'birthday' => ['day' => '12', 'month' => '8', 'year' => '1964'],
+        ]);
+
+        self::assertStringContainsString('12.08.1964', $html);
+        // The parts are an array, and isMultiValue is true for anything iterable, so
+        // without its own branch the date came out as a bullet list of digits.
+        self::assertStringNotContainsString('1281964', $html);
+    }
+
+    #[Test]
+    public function showsAPlaceholderForAnUnansweredFieldOnTheSummaryPage(): void
+    {
+        $form = $this->form();
+        $this->element($form->createPage('page1'), 'nickname', 'Text', 'Nickname');
+        $form->createPage('confirmation', 'SummaryPage')->setLabel('Check your answers');
+
+        $html = $this->renderSummary($form, []);
+        self::assertStringContainsString('Nickname', $html);
+        self::assertStringContainsString('Not provided', $html);
+    }
+
+    #[Test]
+    public function groupsTheSummaryBySectionUsingKernsOwnGroupHeader(): void
+    {
+        $form = $this->form();
+        $section = $form->createPage('page1')->createElement('personal', 'Fieldset');
+        self::assertInstanceOf(Section::class, $section);
+        $section->setLabel('Personal details');
+        $this->element($section, 'name', 'Text', 'Name');
+        $form->createPage('confirmation', 'SummaryPage')->setLabel('Check your answers');
+
+        $html = $this->renderSummary($form, ['name' => 'Erika Mustermann']);
+
+        // A heading is not a permitted child of dl, so the group headers are siblings of
+        // the rows - which is also why KERN ships kern-summary-group__header.
+        self::assertStringContainsString('kern-summary-group__header', $html);
+        self::assertStringContainsString('Personal details', $html);
+        self::assertStringContainsString('Erika Mustermann', $html);
+    }
+
     /**
      * The TypoScript ext:form needs in order to find its prototypes.
      *
@@ -259,6 +334,25 @@ final class FormMarkupTest extends FunctionalTestCase
     private function render(FormDefinition $form): string
     {
         return (string)$this->runtime($form)->render();
+    }
+
+    /**
+     * @param array<string, mixed> $values
+     */
+    private function renderSummary(FormDefinition $form, array $values): string
+    {
+        $runtime = $this->runtime($form);
+
+        $state = $runtime->getFormState();
+        self::assertNotNull($state);
+        foreach ($values as $property => $value) {
+            $state->setFormValue($property, $value);
+        }
+
+        // The summary is the last page; a GET render would otherwise show the first.
+        $runtime->overrideCurrentPage(count($form->getPages()) - 1);
+
+        return (string)$runtime->render();
     }
 
     private function runtime(FormDefinition $form): FormRuntime

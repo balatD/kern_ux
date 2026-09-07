@@ -155,6 +155,24 @@ body {
     margin-bottom: var(--kern-metric-space-2x-large, 40px);
 }
 
+/* The summary renders one description list per row, so that the section headers can be
+ * their siblings - a heading is not a permitted child of dl. KERN sizes the body gap for
+ * whole groups, which reads as double spacing between key/value rows, so the rows close
+ * up and a group header carries the wider distance itself. KERN's own :first-of-type
+ * reset cannot serve here: it matches the first div child, which is a header only when no
+ * row precedes it. */
+.kern-summary__body {
+    gap: var(--kern-metric-space-default, 16px);
+}
+
+.kern-summary__body > .kern-summary-group__header {
+    margin-top: var(--kern-metric-space-default, 16px);
+}
+
+.kern-summary__body > .kern-summary-group__header:first-child {
+    margin-top: var(--kern-metric-space-none, 0px);
+}
+
 /* --- Skip link -----------------------------------------------------------
  * BITV requires a way to bypass repeated blocks; KERN provides none.
  * Positioned off-screen rather than display:none, which would remove it from the
