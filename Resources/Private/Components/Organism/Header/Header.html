@@ -11,6 +11,10 @@
             description="Service links - sign language, easy language, language switch. Each may carry tx_kernux_nav_icon in its data."
 /><f:argument name="searchUrl" type="string" optional="{true}" default=""
             description="Empty hides the search entirely, including its mobile toggle."
+/><f:argument name="kopfzeile" type="bool" optional="{true}" default="{false}"
+            description="Renders the Digitale Dachmarke Kopfzeile as the first band. Reserved for federal, state and municipal offerings."
+/><f:argument name="kopfzeileLabel" type="string" optional="{true}" default=""
+            description="Overrides the Kopfzeile wording. Empty keeps the official one."
 /><f:comment>
     KERN ships no header component, only a grid pattern, so this is ours (kernt3-).
 
@@ -31,6 +35,19 @@
     those in sync with the class that hides the panel.
 </f:comment><f:spaceless>
 <header class="kernt3-header">
+    <f:comment>
+        The Kopfzeile renders inside this header rather than above it, and that is an
+        accessibility requirement rather than a layout choice. On its own it was page
+        content outside every landmark, which axe reports as `region`; giving it a
+        <header> or role="banner" of its own would instead make a second banner landmark
+        on the page. It belongs to the page banner, so it lives in the one that exists.
+    </f:comment>
+    <f:if condition="{kopfzeile}">
+        <f:if condition="{kopfzeileLabel}">
+            <f:then><k:organism.kopfzeile label="{kopfzeileLabel}" /></f:then>
+            <f:else><k:organism.kopfzeile /></f:else>
+        </f:if>
+    </f:if>
     <f:comment>
         One container for the whole header, so every band lines up on the same edges and
         the desktop grid can place the bands as areas of it.
