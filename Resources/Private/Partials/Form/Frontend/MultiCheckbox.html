@@ -10,6 +10,7 @@
 <formvh:renderRenderable renderable="{element}">
     <f:render partial="Field/Group" arguments="{element: element}" contentAs="elementContent">
         <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <f:variable name="extraAttributes" value="{formvh:translateElementProperty(element: element, property: 'fluidAdditionalAttributes')}" />
             <f:for each="{element.properties.options}" as="label" key="value" iteration="i">
                 <div class="kern-form-check{f:if(condition: validationResults.errors, then: ' kern-form-check--error')}">
                     <f:form.checkbox
@@ -18,7 +19,7 @@
                         class="kern-form-check__checkbox"
                         errorClass="kern-form-check__checkbox--error"
                         value="{value}"
-                        additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, scope: 'child')}"
+                        additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, scope: 'child', additional: extraAttributes)}"
                     />
                     <label class="kern-label" for="{element.uniqueIdentifier}-{i.index}">{formvh:translateElementProperty(element: element, property: '{0: \'options\', 1: value}')}</label>
                 </div>

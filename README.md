@@ -262,7 +262,7 @@ automatisch gefunden; auf 13 gibt es noch keine Form Sets, dort registriert
 `ext_localconf.php` dieselbe Datei über `yamlConfigurations` — versionsgeschützt,
 weil 14.2 diese API deprecated hat.
 
-Die KERN-Formularregeln sitzen in **zwei** Partials, nicht in den 33 Element-Partials:
+Die KERN-Formularregeln sitzen in **zwei** Partials, nicht in den 30 Element-Partials:
 `Field/Field.html` für die `kern-form-input`-Familie und `Field/Group.html` für
 Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
 
@@ -275,6 +275,13 @@ Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
   Plain-Kit. Das React-Kit macht es umgekehrt; wir folgen dem Plain-Kit.
 - **Bei Gruppen** trägt das `fieldset` das `aria-describedby`, aber **jeder**
   Kind-Input zusätzlich `aria-invalid` und die Fehlerklasse.
+- **`fluidAdditionalAttributes` des Elements werden durchgereicht**, mit den
+  ARIA-Attributen darüber. Ohne das fiele alles weg, was der Formular-Editor in diese
+  Eigenschaft schreibt — vor allem `autocomplete`, ohne das WCAG 1.3.5 überhaupt nicht
+  erfüllbar ist, dazu `placeholder`, `minlength`/`maxlength`, `min`/`max`, `step` und
+  `pattern`. Was die Attribute des Kontrakts selbst überschreiben würde
+  (`aria-describedby`, `aria-invalid`, `aria-required`) wird verworfen: kein Redakteur
+  soll die Zusagen von Hand aushängen können.
 
 Dazu kommen eine Fehlerübersicht mit Sprungmarken (`kern-alert--danger` mit
 `role="alert"` — hier korrekt, weil das Markup erst nach einem fehlgeschlagenen

@@ -8,6 +8,7 @@
 <formvh:renderRenderable renderable="{element}">
     <f:render partial="Field/Field" arguments="{element: element}" contentAs="elementContent">
         <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <f:variable name="extraAttributes" value="{formvh:translateElementProperty(element: element, property: 'fluidAdditionalAttributes')}" />
             <div class="kern-form-input__select-wrapper">
                 <f:form.select
                     property="{element.identifier}"
@@ -18,7 +19,7 @@
                     prependOptionLabel="{formvh:translateElementProperty(element: element, property: 'prependOptionLabel')}"
                     prependOptionValue="{formvh:translateElementProperty(element: element, property: 'prependOptionValue')}"
                     multiple="multiple"
-                    additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription)}"
+                    additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription, additional: extraAttributes)}"
                 />
             </div>
         </f:form.validationResults>
