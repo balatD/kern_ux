@@ -10,7 +10,7 @@ vendor/bin/typo3 kern-ux:demo:install --configure-navigation
 Die Screenshots zeigen den **Auslieferungszustand**: helles Thema, Kopfzeile der
 Digitalen Dachmarke aus. Die Kopfzeile („Offizielle Website – Bundesrepublik
 Deutschland") ist Angeboten von Bund, Ländern und Kommunen vorbehalten und daher
-standardmäßig abgeschaltet — siehe [Digitale Dachmarke](../README.md#digitale-dachmarke).
+standardmäßig abgeschaltet — siehe [Digitale Dachmarke](Configuration.md#digitale-dachmarke).
 
 ---
 
@@ -73,4 +73,4 @@ eine eigene Vorschau, die den Inhalt zeigt statt nur den Typnamen.
 
 ---
 
-Weiter zur [Installation](../README.md#installation).
+Weiter zur [Installation](Installation.md) oder zurück zur [Dokumentation](README.md).
