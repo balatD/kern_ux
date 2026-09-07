@@ -9,4 +9,4 @@
 /><f:if condition="{data.tx_kernux_list_items}"><k:atom.list
     tag="{f:if(condition: data.tx_kernux_list_variant == 'number', then: 'ol', else: 'ul')}"
     variant="{data.tx_kernux_list_variant}"
-><f:for each="{data.tx_kernux_list_items}" as="item"><li><f:if condition="{item.link.url}"><f:then><k:atom.link href="{f:uri.typolink(parameter: item.link)}">{item.text}</k:atom.link></f:then><f:else>{item.text}</f:else></f:if></li></f:for></k:atom.list></f:if></k:molecule.section>
+><f:for each="{data.tx_kernux_list_items}" as="item"><li><f:if condition="{item.link}"><f:then><k:atom.link href="{f:uri.typolink(parameter: item.link)}">{item.text}</k:atom.link></f:then><f:else>{item.text}</f:else></f:if></li></f:for></k:atom.list></f:if></k:molecule.section>
