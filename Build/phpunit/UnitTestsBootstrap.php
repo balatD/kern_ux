@@ -50,14 +50,12 @@
     // This should be always true except for TYPO3 mono repository.
     $composerMode = defined('TYPO3_COMPOSER_MODE') && TYPO3_COMPOSER_MODE === true;
 
-    // @todo: Remove else branch when dropping support for v12
-    $hasConsolidatedHttpEntryPoint = class_exists(CoreHttpApplication::class);
-    if ($hasConsolidatedHttpEntryPoint) {
-        \TYPO3\TestingFramework\Core\SystemEnvironmentBuilder::run(0, \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI, $composerMode);
-    } else {
-        $requestType = \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_BE | \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI;
-        \TYPO3\TestingFramework\Core\SystemEnvironmentBuilder::run(0, $requestType, $composerMode);
-    }
+    // Both supported majors have the consolidated HTTP entry point
+    // (TYPO3\CMS\Core\Http\Application), so the CLI request type is the only case.
+    // What stood here was a class_exists() guard against an unimported class name,
+    // which meant it always resolved to the global namespace, was always false, and
+    // always took the v12 branch - a major this extension never supported.
+    \TYPO3\TestingFramework\Core\SystemEnvironmentBuilder::run(0, \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI, $composerMode);
 
     $testbase->createDirectory(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext');
     $testbase->createDirectory(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3temp/assets');
