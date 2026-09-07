@@ -21,6 +21,7 @@
 <formvh:renderRenderable renderable="{element}">
     <f:render partial="Field/Field" arguments="{element: element, doNotShowLabel: 1}" contentAs="elementContent">
         <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
+            <f:variable name="extraAttributes" value="{formvh:translateElementProperty(element: element, property: 'fluidAdditionalAttributes')}" />
             <div class="kern-form-check{f:if(condition: validationResults.errors, then: ' kern-form-check--error')}">
                 <f:form.checkbox
                     property="{element.identifier}"
@@ -28,7 +29,7 @@
                     class="kern-form-check__checkbox"
                     errorClass="kern-form-check__checkbox--error"
                     value="{element.properties.value}"
-                    additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription)}"
+                    additionalAttributes="{kux:formFieldAttributes(element: element, hasErrors: validationResults.errors.0, hasHint: element.properties.elementDescription, additional: extraAttributes)}"
                 />
                 <label class="kern-label" for="{element.uniqueIdentifier}">{formvh:translateElementProperty(element: element, property: 'label') -> f:sanitize.html() -> f:transform.html() -> f:format.stripTags(allowedTags: '<a><br><i><strong>')}</label>
             </div>

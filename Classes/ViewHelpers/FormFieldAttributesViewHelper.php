@@ -25,6 +25,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * The ids are derived from the element's unique identifier, so this and the field
  * wrapper agree on them without passing anything around.
+ *
+ * It also carries the element's own `fluidAdditionalAttributes` through. Overriding
+ * `additionalAttributes` outright - which is what a partial does by calling this - would
+ * otherwise drop them, and with them everything the form editor writes into that
+ * property: `autocomplete` above all, without which WCAG 1.3.5 cannot be satisfied at
+ * all, plus `placeholder`, `minlength`/`maxlength`, `min`/`max`, `step` and `pattern`.
+ * An editor fills those in and would never learn they were discarded.
  */
 final class FormFieldAttributesViewHelper extends AbstractViewHelper
 {
@@ -42,6 +49,10 @@ final class FormFieldAttributesViewHelper extends AbstractViewHelper
         // on the fieldset, so repeating it on every option would make a screen reader
         // read the hint and the error once per option.
         $this->registerArgument('scope', 'string', 'control (the labelled control itself) or child (one option inside a group).', false, 'control');
+        // Passed in rather than read off the element, so the values arrive already
+        // translated: ext:form resolves a property like `placeholder` through the form's
+        // own translation file, and only formvh:translateElementProperty knows how.
+        $this->registerArgument('additional', 'mixed', "The element's translated fluidAdditionalAttributes.", false, null);
     }
 
     /**
@@ -55,13 +66,17 @@ final class FormFieldAttributesViewHelper extends AbstractViewHelper
         }
 
         $id = $element->getUniqueIdentifier();
-        $attributes = [];
+        $attributes = $this->additional();
 
         if ($this->arguments['scope'] === 'child') {
             // Every option still needs its own invalid state: the fieldset's error
             // alone leaves the individual controls looking untouched, which conveys
             // the state by colour only (WCAG 1.4.1).
-            return $this->flag('hasErrors') ? ['aria-invalid' => 'true'] : [];
+            if ($this->flag('hasErrors')) {
+                $attributes['aria-invalid'] = 'true';
+            }
+
+            return $attributes;
         }
 
         $describedBy = [];
@@ -81,6 +96,45 @@ final class FormFieldAttributesViewHelper extends AbstractViewHelper
 
         if ($this->detector->isRequired($element)) {
             $attributes['aria-required'] = 'true';
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * The element's own attributes, as the floor the ARIA map is laid on top of.
+     *
+     * Three attributes are dropped rather than merged: aria-describedby, aria-invalid
+     * and aria-required are this ViewHelper's own output, and an editor who set them by
+     * hand would silently unhook the hint and error wiring the field wrapper builds.
+     * class and id go too - the partial passes those as their own arguments, so keeping
+     * them here would emit the attribute twice.
+     *
+     * @return array<string, string>
+     */
+    private function additional(): array
+    {
+        $additional = $this->arguments['additional'] ?? null;
+        if (!is_array($additional)) {
+            return [];
+        }
+
+        $owned = ['aria-describedby', 'aria-invalid', 'aria-required', 'class', 'id'];
+        $attributes = [];
+        foreach ($additional as $name => $value) {
+            if (!is_string($name) || $name === '' || in_array(strtolower($name), $owned, true)) {
+                continue;
+            }
+            // Scalars only. An array would be a nested property the form editor never
+            // writes, and stringifying it would put "Array" into the markup.
+            if (!is_scalar($value)) {
+                continue;
+            }
+            $value = (string)$value;
+            if ($value === '') {
+                continue;
+            }
+            $attributes[$name] = $value;
         }
 
         return $attributes;
