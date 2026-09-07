@@ -89,11 +89,20 @@ final class DemoContentInstaller
         $this->newIdCounter = 0;
 
         $fixture = $this->fixture();
-        $this->initializeBackendUser();
+        $previousBackendUser = $this->initializeBackendUser();
 
-        $this->fileUids = $this->assetFactory->create($this->mapOfMaps($this->definitions($fixture, 'files')));
-        $pages = $this->createPages($this->pageList($fixture), $rootPageId);
-        $records = $this->createContent();
+        // $GLOBALS['BE_USER'] is global state, and this class is a shared service, so
+        // whatever it puts there has to come back off again - otherwise one call to
+        // install() silently changes who every later DataHandler run in the same process
+        // acts as. Harmless for the one-shot CLI command this was written for, wrong for
+        // anything else that calls it.
+        try {
+            $this->fileUids = $this->assetFactory->create($this->mapOfMaps($this->definitions($fixture, 'files')));
+            $pages = $this->createPages($this->pageList($fixture), $rootPageId);
+            $records = $this->createContent();
+        } finally {
+            $this->restoreBackendUser($previousBackendUser);
+        }
 
         return [
             'pages' => $pages,
@@ -389,19 +398,42 @@ final class DemoContentInstaller
      * "_cli_" user, creating it once if it does not exist yet, and resolves its
      * permissions properly.
      */
-    private function initializeBackendUser(): void
+    /**
+     * @return array{replaced: bool, previous: mixed} what restoreBackendUser() needs
+     */
+    private function initializeBackendUser(): array
     {
         $existing = $GLOBALS['BE_USER'] ?? null;
         // Merely being a BackendUserAuthentication is not enough: the CLI bootstrap
         // leaves an unauthenticated one in place, and DataHandler then refuses every
         // write because the resolved permissions are empty.
         if ($existing instanceof BackendUserAuthentication && ($existing->user['uid'] ?? 0) > 0) {
-            return;
+            return ['replaced' => false, 'previous' => $existing];
         }
 
         $backendUser = GeneralUtility::makeInstance(CommandLineUserAuthentication::class);
         $backendUser->authenticate();
         $GLOBALS['BE_USER'] = $backendUser;
+
+        return ['replaced' => true, 'previous' => $existing];
+    }
+
+    /**
+     * @param array{replaced: bool, previous: mixed} $state
+     */
+    private function restoreBackendUser(array $state): void
+    {
+        if (!$state['replaced']) {
+            return;
+        }
+
+        if ($state['previous'] === null) {
+            unset($GLOBALS['BE_USER']);
+
+            return;
+        }
+
+        $GLOBALS['BE_USER'] = $state['previous'];
     }
 
     private function rootSlug(): string
