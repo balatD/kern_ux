@@ -10,6 +10,10 @@
 
     Each entry links to the field it belongs to, which is what turns the summary from
     a list of complaints into a way of fixing them.
+
+    The label is stripped bare rather than sanitized down to an allowlist the way the
+    checkbox's own label is: an RTE-edited label can carry an <a>, and this one is
+    already inside a link.
 </f:comment>
 <f:variable name="errors" value="{kux:formErrorSummary(form: form)}" />
 <f:if condition="{errors}">
@@ -22,7 +26,7 @@
             <k:atom.body><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:errorSummary.intro" /></k:atom.body>
             <ul class="kern-list">
                 <f:for each="{errors}" as="error">
-                    <li><k:atom.link href="#{error.id}" icon="arrow-forward">{error.label}: {error.message}</k:atom.link></li>
+                    <li><k:atom.link href="#{error.id}" icon="arrow-forward" noVisitedState="{true}">{error.label -> f:format.stripTags()}: {error.message}</k:atom.link></li>
                 </f:for>
             </ul>
         </div>
