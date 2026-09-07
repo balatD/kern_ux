@@ -1,7 +1,29 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
       data-namespace-typo3-fluid="true">
-<formvh:renderRenderable renderable="{element}">
-    <f:form.hidden property="{element.identifier}" id="{element.uniqueIdentifier}" />
-</formvh:renderRenderable>
+<f:comment>
+    The honeypot, in KERN's clothing but with core's two shapes intact.
+
+    renderAsHiddenField defaults to false, and that default is the point: a bot fills a
+    visible text field far more readily than a type="hidden" one, so the off-screen text
+    input catches more than the hidden input does. Rendering only the hidden variant -
+    which this partial used to do - quietly traded that away on every form.
+
+    The visible variant has to stay unreachable for anyone using the form for real:
+    off-screen via the style ext:form supplies, out of the tab order, and hidden from
+    assistive technology. A honeypot a screen reader reads out is a trap for the wrong
+    visitor.
+
+    No kern- classes and no field wrapper: this element is not a field. It carries no
+    label, must not be announced, and giving it KERN's input styling would only make it
+    visible in the layout.
+</f:comment>
+<f:if condition="{element.properties.renderAsHiddenField}">
+    <f:then>
+        <f:form.hidden property="{element.identifier}" id="{element.uniqueIdentifier}" data="{id: element.identifier}" />
+    </f:then>
+    <f:else>
+        <f:form.textfield property="{element.identifier}" id="{element.uniqueIdentifier}" class="{element.properties.elementClassAttribute}" data="{id: element.identifier}" additionalAttributes="{aria-hidden: 'true', autocomplete: 'off'}" tabindex="-1" style="{element.properties.styleAttribute}" />
+    </f:else>
+</f:if>
 </html>
