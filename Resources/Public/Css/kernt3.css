@@ -568,6 +568,38 @@ body {
     }
 }
 
+/* --- Alert --------------------------------------------------------------
+ * Two gaps in KERN's alert rules, both from assumptions its own examples satisfy and
+ * an editorial integration does not.
+ */
+
+/* KERN pads the alert body 8px above the text and 16px below, which reads as even only
+ * because its examples fill the body with .kern-body, whose baseline padding adds the
+ * missing 6px on top and 2px at the bottom. What goes in here instead is either a bare
+ * text node or the .kernt3-rte block from the content element, neither of which carries
+ * that padding, so the text sat hard against the coloured header. Skipped where a
+ * .kern-body is genuinely present - the form error summary - so it is not paid twice.
+ *
+ * Written as KERN's two values added together rather than as the 14px/18px result, so a
+ * change to either side of KERN's scale is still inherited. */
+.kern-alert__body:not(:has(> .kern-body)) {
+    padding-top: calc(
+        var(--kern-metric-space-small, 8px) +
+        var(--kern-metric-baseline-body-default-padding-top, 6px)
+    );
+    padding-bottom: calc(
+        var(--kern-metric-space-default, 16px) +
+        var(--kern-metric-baseline-body-default-padding-bottom, 2px)
+    );
+}
+
+/* KERN rounds only the bottom two corners of the body, because in its examples the
+ * coloured header always supplies the top two. An alert without a title is a shape KERN
+ * allows, and there the body is the whole box. */
+.kern-alert__body:first-child {
+    border-radius: var(--kern-metric-border-radius-default, 4px);
+}
+
 /* --- Figure -------------------------------------------------------------
  * KERN has no figure component; images appear only inside its card. This is the
  * standalone case, kept deliberately plain so it inherits the surrounding measure.
