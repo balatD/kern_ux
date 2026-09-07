@@ -17,7 +17,7 @@
             <k:atom.heading level="{level}" appearance="title">{title}</k:atom.heading>
         </div>
         <f:if condition="{editLink}">
-            <k:atom.link href="{editLink}" small="{true}">{editLabelText}<span class="kern-sr-only"> – {title}</span></k:atom.link>
+            <k:atom.link href="{editLink}" small="{true}" noVisitedState="{true}">{editLabelText}<span class="kern-sr-only"> – {title}</span></k:atom.link>
         </f:if>
     </div>
     <div class="kern-summary__body"><f:slot /></div>

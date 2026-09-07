@@ -35,7 +35,7 @@
                         <k:atom.heading level="2" appearance="title-small">{column.title}</k:atom.heading>
                         <ul class="kern-list kern-gap-y-xs">
                             <f:for each="{column.children}" as="item">
-                                <li><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></li>
+                                <li><k:atom.link href="{item.link}" small="{true}" noVisitedState="{true}">{item.title}</k:atom.link></li>
                             </f:for>
                         </ul>
                     </nav>
@@ -47,7 +47,7 @@
             <nav class="kernt3-footer__meta" aria-label="{f:translate(key: 'footer.legalNavigation', extensionName: 'KernUx')}">
                 <ul class="kern-list kern-list--horizontal kern-gap-x-lg">
                     <f:for each="{metaNavigation}" as="item">
-                        <li><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></li>
+                        <li><k:atom.link href="{item.link}" small="{true}" noVisitedState="{true}">{item.title}</k:atom.link></li>
                     </f:for>
                 </ul>
             </nav>

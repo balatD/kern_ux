@@ -14,7 +14,7 @@
             <li class="kernt3-breadcrumb__item">
                 <f:if condition="{i.isLast}">
                     <f:then><span class="kernt3-breadcrumb__current" aria-current="page">{item.title}</span></f:then>
-                    <f:else><k:atom.link href="{item.link}" small="{true}">{item.title}</k:atom.link></f:else>
+                    <f:else><k:atom.link href="{item.link}" small="{true}" noVisitedState="{true}">{item.title}</k:atom.link></f:else>
                 </f:if>
             </li>
         </f:for>

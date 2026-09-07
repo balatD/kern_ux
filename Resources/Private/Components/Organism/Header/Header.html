@@ -109,7 +109,7 @@
                         <ul class="kernt3-service">
                             <f:for each="{helpNavigation}" as="item">
                                 <li>
-                                    <a class="kern-link kernt3-service__link" href="{item.link}"<f:if condition="{item.current}"> aria-current="page"</f:if>><f:if condition="{item.data.tx_kernux_nav_icon}"><k:atom.icon name="{item.data.tx_kernux_nav_icon}" /></f:if><span>{item.title}</span></a>
+                                    <a class="kern-link kern-link--no-visited-state kernt3-service__link" href="{item.link}"<f:if condition="{item.current}"> aria-current="page"</f:if>><f:if condition="{item.data.tx_kernux_nav_icon}"><k:atom.icon name="{item.data.tx_kernux_nav_icon}" /></f:if><span>{item.title}</span></a>
                                 </li>
                             </f:for>
                         </ul>
