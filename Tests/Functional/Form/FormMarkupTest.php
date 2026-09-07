@@ -24,10 +24,11 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 /**
  * Renders whole forms and asserts on the markup.
  *
- * The form theme was the one subsystem with no rendering test, and that is how
- * `autocomplete` came to be dropped from all 30 element partials without anything
- * noticing. A unit test could not have caught it either: the defect lives in the seam
- * between the partials, the ViewHelpers and ext:form's own runtime.
+ * The form theme was the one subsystem with no rendering test, and every defect this
+ * class pins had survived in it: a required group that announced nothing, and
+ * `autocomplete` silently dropped from all 30 element partials. Neither was reachable
+ * from a unit test, because the bugs live in the seam between the partials, the
+ * ViewHelpers and ext:form's own runtime.
  *
  * The honeypot is off on these fixtures: FormRuntime stores its field name in the
  * frontend user session, and standing one up here would buy nothing this test is about.
@@ -153,6 +154,23 @@ final class FormMarkupTest extends FunctionalTestCase
         $html = $this->render($form);
         self::assertStringContainsString('kern-label__optional', $html);
         self::assertStringNotContainsString('aria-required', $html);
+    }
+
+    #[Test]
+    public function announcesARequiredRadioGroupAsRequiredOnTheFieldset(): void
+    {
+        $form = $this->form();
+        $element = $this->element($form->createPage('page1'), 'salutation', 'RadioButton', 'Salutation');
+        $element->setProperty('options', ['mr' => 'Mr', 'mrs' => 'Mrs']);
+        $element->createValidator('NotEmpty');
+
+        $html = $this->render($form);
+
+        // The fieldset is what carries the group's accessible name, and it maps to
+        // role="group", which supports the attribute. Before this the group was
+        // required visually and silent to assistive technology.
+        self::assertMatchesRegularExpression('/<fieldset[^>]*aria-required="true"/', $html);
+        self::assertStringNotContainsString('kern-label__optional', $html);
     }
 
     #[Test]

@@ -273,8 +273,12 @@ Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
   `aria-invalid`. Nur eines davon wäre Zustand allein durch Farbe (WCAG 1.4.1).
 - **`aria-describedby` in der Reihenfolge Hinweis, dann Fehler** — so macht es KERNs
   Plain-Kit. Das React-Kit macht es umgekehrt; wir folgen dem Plain-Kit.
-- **Bei Gruppen** trägt das `fieldset` das `aria-describedby`, aber **jeder**
-  Kind-Input zusätzlich `aria-invalid` und die Fehlerklasse.
+- **Bei Gruppen** trägt das `fieldset` das `aria-describedby` *und* das
+  `aria-required` — es bildet `role="group"` ab, und die `legend` ist der zugängliche
+  Name. An jedem einzelnen Kind zu wiederholen hieße, jede Option sei für sich
+  erforderlich; das stimmt weder für eine Radio-Gruppe noch für eine Checkbox-Gruppe,
+  die mindestens eine Auswahl verlangt. Jeder Kind-Input trägt aber zusätzlich
+  `aria-invalid` und die Fehlerklasse.
 - **`fluidAdditionalAttributes` des Elements werden durchgereicht**, mit den
   ARIA-Attributen darüber. Ohne das fiele alles weg, was der Formular-Editor in diese
   Eigenschaft schreibt — vor allem `autocomplete`, ohne das WCAG 1.3.5 überhaupt nicht
