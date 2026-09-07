@@ -19,6 +19,10 @@
                 <source>Please correct the following entries:</source>
                 <target>Bitte korrigieren Sie die folgenden Angaben:</target>
             </trans-unit>
+            <trans-unit id="summary.empty">
+                <source>Not provided</source>
+                <target>Keine Angabe</target>
+            </trans-unit>
             <trans-unit id="date.day">
                 <source>Day</source>
                 <target>Tag</target>

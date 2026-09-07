@@ -1,8 +1,16 @@
 parameters:
     level: max
+    # Every PHP file the package ships or runs, not just the two obvious directories.
+    # Leaving Configuration and Build out is how a dead branch in the unit-test
+    # bootstrap survived: it referenced a class through a missing import, so the guard
+    # was always false, and nothing looked at the file.
     paths:
         - Classes
+        - Configuration
         - Tests
+        - Build/phpunit
+        - ext_emconf.php
+        - ext_localconf.php
 
     # The same code is analysed against two TYPO3 majors whose Fluid versions differ in
     # type declarations, so a check that is required on one is redundant on the other.
@@ -11,6 +19,55 @@ parameters:
     reportUnmatchedIgnoredErrors: false
 
     ignoreErrors:
+        # The registration files and the phpunit bootstraps are in scope mainly for
+        # class and function resolution: an unknown class silently resolving to the
+        # global namespace is reported here now, and it was not while these files went
+        # unanalysed.
+        #
+        # Worth knowing where that stops: PHPStan deliberately permits `Foo::class`
+        # inside class_exists(), because that is how existence is probed - so the exact
+        # shape of the bug UnitTestsBootstrap.php carried would still pass. Analysing
+        # these files is what catches the neighbouring shapes; the fix for that one was
+        # to delete the guard.
+        #
+        # What is suppressed below is only the part that cannot be typed without a
+        # PHPStan extension: TYPO3's superglobals ($GLOBALS['TCA'],
+        # $GLOBALS['TYPO3_CONF_VARS']), $_EXTKEY, which the extension manager defines at
+        # include time, and ORIGINAL_ROOT, which the testing framework defines at
+        # runtime. Nothing in Classes/ is exempted.
+        -
+            identifier: offsetAccess.nonOffsetAccessible
+            paths:
+                - Configuration/TCA/Overrides/pages.php
+                - ext_emconf.php
+                - ext_localconf.php
+        -
+            identifier: variable.undefined
+            path: ext_emconf.php
+        # LF is defined by SystemEnvironmentBuilder, ORIGINAL_ROOT by the testing
+        # framework - neither exists while a single file is being analysed.
+        -
+            identifier: constant.notFound
+            paths:
+                - Build/phpunit/FunctionalTestsBootstrap.php
+                - ext_localconf.php
+        -
+            identifier: binaryOp.invalid
+            paths:
+                - Build/phpunit/FunctionalTestsBootstrap.php
+                - ext_localconf.php
+        # Boilerplate this project copied from the testing framework and keeps in sync
+        # with it, rather than rewrites.
+        -
+            identifier: argument.type
+            path: Build/phpunit/UnitTestsBootstrap.php
+        -
+            identifier: new.noConstructor
+            path: Build/phpunit/UnitTestsBootstrap.php
+        -
+            identifier: identical.alwaysTrue
+            path: Build/phpunit/UnitTestsBootstrap.php
+
         # RenderingContext::$renderingContext is nullable in Fluid 5 (TYPO3 14) and
         # non-nullable in Fluid 4 (TYPO3 13). Guarding for null is correct on 14 and
         # reported as always-false on 13; dropping the guard would fail analysis on 14.

@@ -5,6 +5,8 @@
             description="Makes the whole card clickable via KERN stretched link. The link stays on the title, so its accessible name is the title rather than the whole card."
 /><f:argument name="preline" type="string" optional="{true}" default=""
 /><f:argument name="subline" type="string" optional="{true}" default=""
+/><f:argument name="text" type="string" optional="{true}" default=""
+            description="Body copy as plain text. KERN styles card text through .kern-card__body .kern-body, so it has to carry that wrapper - pass rich markup through the slot instead."
 /><f:argument name="size" type="string" optional="{true}" default=""
             description="small | large."
 /><f:argument name="surface" type="bool" optional="{true}" default="{false}"
@@ -28,7 +30,7 @@
                 <f:if condition="{subline}"><k:atom.subline>{subline}</k:atom.subline></f:if>
             </hgroup>
         </header>
-        <section class="kern-card__body"><f:slot /></section>
+        <section class="kern-card__body"><f:if condition="{text}"><f:then><k:atom.body><f:format.nl2br>{text}</f:format.nl2br></k:atom.body></f:then><f:else><f:slot /></f:else></f:if></section>
         <f:if condition="{f:slot(name: 'footer')}">
             <footer class="kern-card__footer"><f:slot name="footer" /></footer>
         </f:if>

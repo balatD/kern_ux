@@ -262,7 +262,7 @@ automatisch gefunden; auf 13 gibt es noch keine Form Sets, dort registriert
 `ext_localconf.php` dieselbe Datei über `yamlConfigurations` — versionsgeschützt,
 weil 14.2 diese API deprecated hat.
 
-Die KERN-Formularregeln sitzen in **zwei** Partials, nicht in den 33 Element-Partials:
+Die KERN-Formularregeln sitzen in **zwei** Partials, nicht in den 30 Element-Partials:
 `Field/Field.html` für die `kern-form-input`-Familie und `Field/Group.html` für
 Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
 
@@ -273,8 +273,19 @@ Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
   `aria-invalid`. Nur eines davon wäre Zustand allein durch Farbe (WCAG 1.4.1).
 - **`aria-describedby` in der Reihenfolge Hinweis, dann Fehler** — so macht es KERNs
   Plain-Kit. Das React-Kit macht es umgekehrt; wir folgen dem Plain-Kit.
-- **Bei Gruppen** trägt das `fieldset` das `aria-describedby`, aber **jeder**
-  Kind-Input zusätzlich `aria-invalid` und die Fehlerklasse.
+- **Bei Gruppen** trägt das `fieldset` das `aria-describedby` *und* das
+  `aria-required` — es bildet `role="group"` ab, und die `legend` ist der zugängliche
+  Name. An jedem einzelnen Kind zu wiederholen hieße, jede Option sei für sich
+  erforderlich; das stimmt weder für eine Radio-Gruppe noch für eine Checkbox-Gruppe,
+  die mindestens eine Auswahl verlangt. Jeder Kind-Input trägt aber zusätzlich
+  `aria-invalid` und die Fehlerklasse.
+- **`fluidAdditionalAttributes` des Elements werden durchgereicht**, mit den
+  ARIA-Attributen darüber. Ohne das fiele alles weg, was der Formular-Editor in diese
+  Eigenschaft schreibt — vor allem `autocomplete`, ohne das WCAG 1.3.5 überhaupt nicht
+  erfüllbar ist, dazu `placeholder`, `minlength`/`maxlength`, `min`/`max`, `step` und
+  `pattern`. Was die Attribute des Kontrakts selbst überschreiben würde
+  (`aria-describedby`, `aria-invalid`, `aria-required`) wird verworfen: kein Redakteur
+  soll die Zusagen von Hand aushängen können.
 
 Dazu kommen eine Fehlerübersicht mit Sprungmarken (`kern-alert--danger` mit
 `role="alert"` — hier korrekt, weil das Markup erst nach einem fehlgeschlagenen
@@ -282,6 +293,19 @@ Absenden existiert), eine Fortschrittsanzeige für mehrseitige Formulare und das
 Element **`KernDate`**: ein Datum als drei Felder, wie KERN es vorschreibt. Kein
 `<input type="date">` und kein JavaScript-Datepicker — und TYPO3 14 hat sein eigenes
 DatePicker-Element ohnehin deprecated (#109152).
+
+Der eingegebene Wert bleibt ein Array aus Tag, Monat und Jahr, weil Property Mapping
+vor der Validierung läuft: mit `DateTime` als Ziel würde aus „31.02." ein
+Mapping-Fehler, und `KernDateValidator` verlöre seine eigenen, genauen Fehlercodes.
+Angezeigt wird das Datum deshalb über `kux:formDateValue` — `ext:form`s eigener Ausweg
+(`StringableFormElementInterface`) greift hier nicht, weil `RenderFormValueViewHelper`
+ihn nur für *Objekte* aufruft und ein Array unverändert zurückgibt.
+
+Die Zusammenfassungsseite rendert `formvh:renderAllFormValues`; ein `Fieldset` wird
+dabei zu einer Gruppe mit `kern-summary-group__header`. Alles davon hält
+`Tests/Functional/Form/FormMarkupTest.php` fest, indem es ganze Formulare rendert —
+ein Parse-Test kann das nicht: eine Variable, die es nicht gibt, ist gültiges Fluid und
+rendert stillschweigend nichts.
 
 > **Wichtig für Projekte ohne fluid_styled_content:** Diese Extension ersetzt FSC und
 > liefert deshalb `lib.contentElement` selbst mit. Ohne diese Definition rendert
@@ -301,7 +325,15 @@ kernUx:
     enable: true
 ```
 
-Danach unter `/kern-ux-styleguide` erreichbar (Pfad konfigurierbar).
+Danach unter `/kern-ux-styleguide` erreichbar (Pfad konfigurierbar). Der Pfad wird
+gegen die Adresse *innerhalb* der Site verglichen, funktioniert also auch bei einer
+Unterverzeichnis-Installation oder einem Sprachpräfix wie `/de/`.
+
+Im Kontext `Production` genügt die Einstellung allein **nicht**: dort wird die Galerie
+nur an eine angemeldete Backend-Sitzung ausgeliefert, sonst antwortet die Seite wie bei
+einem unbekannten Pfad. Ein Schalter in den Site-Settings ist zu wenig, um auf einer
+Produktivseite eine zusätzliche öffentliche Route zu öffnen — im Kontext `Development`
+ist sie ohne Weiteres erreichbar, denn dort wird sie benutzt.
 
 Die Beispiele stehen in `Configuration/Styleguide/Examples.yaml`. Jede Component
 **muss** dort auftauchen — ein Test vergleicht die Datei mit dem Component-Baum und
@@ -320,7 +352,18 @@ cd Tests/A11y && npm install && npx playwright install chromium && npm test
 
 Geprüft wird gegen `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa` — die
 Mengen, die KERNs eigener Anspruch (BITV 2.0 AA über EN 301 549, zusätzlich gegen
-WCAG 2.2 getestet) aufspannt. Der Lauf bricht auch ab, wenn das KERN-Stylesheet nicht
+WCAG 2.2 getestet) aufspannt — und zusätzlich gegen `best-practice`. Letzteres ist
+keine Kür: `heading-order`, `region`, `landmark-unique`, `landmark-one-main`,
+`page-has-heading-one` und `skip-link` tragen in axe-core **keinen** `wcag`-Tag,
+sondern nur diesen. Genau diese sechs sind aber der Grund, aus dem ganze Seiten geprüft
+werden; ohne den Tag beantwortete der Lauf eine andere Frage als die behauptete.
+
+Jede Seite läuft in drei Durchgängen: helles Thema auf 1280px, dunkles Thema auf
+1280px, helles Thema auf 390px. Kontrast hängt am Thema, `target-size` und `reflow`
+hängen an der Breite — ein einzelner Desktop-Durchgang lässt das dunkle Thema und das
+gesamte Mobil-Layout samt Navigationspanel ungeprüft.
+
+Der Lauf bricht auch ab, wenn das KERN-Stylesheet nicht
 geladen wurde: ohne CSS überspringt axe still alle Kontrastregeln und der Test wäre
 aus dem falschen Grund grün.
 
