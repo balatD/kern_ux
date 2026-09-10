@@ -21,6 +21,15 @@ Zeile TypoScript nötig.
 Die Farben sind KERNs eigene Tokens, keine zweite Palette. Wie das dunkle Thema
 aussieht, zeigen die [Screenshots](Screenshots.md#dunkles-thema).
 
+## Seitenkopf
+
+Das Site-Set setzt `page.meta.viewport` auf `width=device-width, initial-scale=1`.
+Erst damit erreicht KERNs 992px-Breakpoint ein Telefon überhaupt: ohne die Zeile
+bleibt der Layout-Viewport beim Desktop-Standard von ~980px, die Seite wird nur
+verkleinert statt umgebrochen — WCAG 1.4.10 (Reflow) verlangt das Umbrechen.
+Wer `page.meta` im eigenen TypoScript überschreibt, muss die Zeile mitnehmen und darf
+weder `maximum-scale` noch `user-scalable=no` ergänzen — beides verletzt WCAG 1.4.4.
+
 ## Assets
 
 | Setting | Bedeutung | Default |
