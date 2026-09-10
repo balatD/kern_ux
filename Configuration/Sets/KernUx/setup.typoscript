@@ -37,6 +37,13 @@ lib.kernUx.content {
 
 page = PAGE
 page {
+    # Without this the layout viewport stays at the ~980px desktop default on a phone,
+    # which is just below KERN's own 992px breakpoint: the small layout is rendered
+    # 980px wide and then scaled down, so the page can only be zoomed and panned,
+    # never reflowed. No maximum-scale and no user-scalable=no - those would
+    # themselves fail WCAG 1.4.4.
+    meta.viewport = width=device-width, initial-scale=1
+
     # 100 leaves 1..99 free for projects overriding single templates without
     # replacing the set.
     10 = PAGEVIEW
