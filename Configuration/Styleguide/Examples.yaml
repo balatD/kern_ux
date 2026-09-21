@@ -133,6 +133,11 @@ components:
     - label: Spaltenvariante
       source: "<k:molecule.descriptionList columns=\"{true}\" items=\"{0: {key: 'Montag', value: '8-16 Uhr'}, 1: {key: 'Dienstag', value: '8-18 Uhr'}}\" />"
 
+  molecule.openingHours:
+    - label: Öffnungszeiten
+      source: "<k:molecule.openingHours days=\"{0: {day: 'Montag', opens: '08:00', closes: '16:00'}, 1: {day: 'Dienstag', opens: '08:00', closes: '18:00', note: 'nur mit Termin'}, 2: {day: 'Mittwoch', closed: 1}}\" />"
+      note: 'Jede Zeit ist ein <time datetime>, damit die Angabe maschinenlesbar bleibt. Bewusst ohne --col: der Modifier klingt nach Spalten, bewirkt aber das Gegenteil - er zwingt Tag und Zeit auf volle Breite und damit untereinander, während die Grundform ab 768px die 30/70-Zeile ergibt, die eine Tabelle von Öffnungszeiten braucht.'
+
   molecule.buttonGroup:
     - label: Schaltflächengruppe
       source: "<k:molecule.buttonGroup items=\"{0: {label: 'Antrag starten', link: '#'}, 1: {label: 'Merkblatt', link: '#', icon: 'download'}}\" />"
@@ -159,6 +164,13 @@ components:
     - label: Mit Fußbereich
       source: '<k:molecule.card title="Meldung" level="4"><f:fragment name="footer"><k:atom.badge variant="info">Neu</k:atom.badge></f:fragment><f:fragment name="default"><k:atom.body>Kurztext.</k:atom.body></f:fragment></k:molecule.card>'
       note: 'Sobald ein benannter Slot verwendet wird, muss auch der Standardinhalt in ein f:fragment - Fluid verwirft sonst den Text außerhalb der Fragmente. Wer den Slot statt text nutzt, setzt den kern-body-Wrapper selbst.'
+
+    - label: Meldung mit Datum
+      source: '<k:molecule.card title="Ringstraße wird saniert" level="4" link="#" text="Ab Montag ist die Ringstraße zwischen Markt und Bahnhof gesperrt."><f:fragment name="footer"><k:atom.body variant="small" tag="span"><time datetime="2026-03-14">14.03.2026</time></k:atom.body></f:fragment></k:molecule.card>'
+      note: 'Das Datum steht im Fußbereich, weil preline ein String-Argument ist und ein <time> darin escaped würde - der Slot ist die einzige Öffnung der Signatur, die Markup annimmt. Der kern-body--small-Span ist keine Dekoration: kern-card__footer setzt nur Layout, ein blankes <time> fiele auf die Browserschrift zurück.'
+    - label: Kachel mit Icon
+      source: '<k:organism.cardGrid columns="4"><k:molecule.card icon="calendar-today" title="Termin buchen" level="4" link="#" /><k:molecule.card icon="download" title="Formulare" level="4" link="#" /><k:molecule.card icon="search" title="Dienstleistung finden" level="4" link="#" /><k:molecule.card icon="mail" title="Kontakt" level="4" link="#" /></k:organism.cardGrid>'
+      note: 'Das Icon ist dekorativ (aria-hidden) - die Überschrift trägt die Bedeutung. Es steht als erstes Kind im kern-card__container, dessen 16px-Gap den Abstand liefert; in kern-card__header (gap: 0) klebte es an der Überschrift, in kern-card__media zöge .kern-card__media * es auf volle Breite.'
 
   organism.cardGrid:
     - label: Kartengitter
