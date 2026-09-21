@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace BalatD\KernUx\Tests\Unit\Configuration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
- * Pins how the two rich-text stylesheets may be scoped and coloured.
+ * Pins how the two rich-text stylesheets may be scoped, coloured and sized.
  *
  * CKEditor 5 does not load a `contentsCss` file as written. TYPO3's
  * CKEditor5Element.prefixContentsCss() fetches it and runs every selector through
@@ -24,8 +25,8 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  * whose contents.css follows the backend colour scheme, that is near-black text on the
  * dark editing surface. Colour is core's to set and this file may not take it back.
  *
- * Both failures are silent, which is what makes this a contract. Nothing else in the
- * suite would notice rich text going unstyled or unreadable in the backend.
+ * All three failures are silent, which is what makes this a contract. Nothing else in
+ * the suite would notice rich text going unstyled, unreadable or off-scale.
  *
  * A unit test on purpose: it reads the files straight from disk, so it needs neither a
  * database nor a TYPO3 bootstrap and runs the same way under both supported majors.
@@ -119,6 +120,43 @@ final class RteStylesheetTest extends UnitTestCase
     }
 
     /**
+     * An editor can write a heading two ways - the Heading element or the rich-text
+     * dropdown - and the two have to land on the same size, or the choice becomes a
+     * visual one. So rich text borrows KERN's heading scale rather than owning a second
+     * one: h2 is the Heading element's default appearance, h3 and h4 the steps below it.
+     */
+    #[Test]
+    #[DataProvider('headingScale')]
+    public function richTextHeadingsUseTheHeadingElementsSizeScale(string $level, string $token): void
+    {
+        foreach ([self::FRONTEND_STYLESHEET => '.kernt3-rte ', self::EDITOR_STYLESHEET => 'body '] as $sheet => $scope) {
+            self::assertSame(
+                $token,
+                self::fontSizeTokenOf($sheet, $scope . $level),
+                "{$sheet} sizes {$level} off a token other than KERN's heading scale",
+            );
+        }
+    }
+
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public static function headingScale(): array
+    {
+        return [
+            'h2 matches kern-heading-large, the Heading element default' => [
+                'h2', '--kern-typography-font-size-large-adaptive',
+            ],
+            'h3 matches kern-heading-medium' => [
+                'h3', '--kern-typography-font-size-medium-adaptive',
+            ],
+            'h4 matches kern-heading-small' => [
+                'h4', '--kern-typography-font-size-medium-static',
+            ],
+        ];
+    }
+
+    /**
      * The two files carry the same rules under two scopes, so a size or spacing token
      * added to one and forgotten in the other makes the editing view stop matching the
      * page. Colour tokens are excluded because only the frontend may have them.
@@ -167,6 +205,22 @@ final class RteStylesheetTest extends UnitTestCase
         sort($tokens);
 
         return $tokens;
+    }
+
+    /**
+     * The KERN token a single-selector rule sizes its text with.
+     */
+    private static function fontSizeTokenOf(string $stylesheet, string $selector): string
+    {
+        $pattern = '/(?:^|\})\s*' . preg_quote($selector, '/') . '\s*\{([^}]*)\}/';
+        if (preg_match($pattern, self::rulesOf($stylesheet), $rule) !== 1) {
+            self::fail("{$stylesheet} has no rule for the single selector \"{$selector}\"");
+        }
+        if (preg_match('/font-size:\s*var\(\s*(--kern-[a-z0-9-]+)/', $rule[1], $declaration) === 1) {
+            return $declaration[1];
+        }
+
+        self::fail("\"{$selector}\" in {$stylesheet} sizes its text without a KERN token");
     }
 
     /**

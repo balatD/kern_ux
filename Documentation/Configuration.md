@@ -109,6 +109,10 @@ Bearbeitungsansicht. Getrennt, weil CKEditor jeder Regel aus `contentsCss` selbs
 `#<id> .ck-content` voranstellt — ein Selektor, der `.ck-content` schon nennt, greift
 danach nie. Wer die Typografie überschreibt, fasst also beide Dateien an.
 
+Überschriften im Rich Text nutzen KERNs eigene Überschriften-Skala, damit derselbe
+Rang zweimal gleich aussieht: `h2` entspricht `large` — der Default des
+Überschriften-Elements —, `h3` entspricht `medium`, `h4` entspricht `small`.
+
 `rte-editor.css` setzt bewusst **keine Farben**. kern.css ist im Backend nicht geladen,
 jeder KERN-Farbwert fiele dort auf seinen hellen Literalwert zurück — im dunklen
 Backend-Schema also dunkle Schrift auf dunklem Grund. Die Farben kommen aus dem
