@@ -6,12 +6,12 @@ auf und bilden nur Daten darauf ab. Die Barrierefreiheits-Zusagen von KERN häng
 konkreten Klassen und ARIA-Attributen — deshalb existiert dieses Markup genau einmal
 und wird durch Tests festgenagelt, die unter *beiden* TYPO3-Majors laufen.
 
-40 Components, gebaut gegen KERN 2.7.2:
+41 Components, gebaut gegen KERN 2.7.2:
 
 | Ebene | |
 |---|---|
 | **Atome** (15) | Badge, Body, Button, Divider, Error, Heading, Hint, Icon, Label, Link, List, Loader, Preline, Progress, Subline |
-| **Moleküle** (16) | AccordionItem, Alert, Breadcrumb, ButtonGroup, Card, ContentHeader, DescriptionList, DownloadList, Figure, Hgroup, MediaPlayer, NavigationList, Section, SkipLink, SummaryItem, TaskListItem |
+| **Moleküle** (17) | AccordionItem, Alert, Breadcrumb, ButtonGroup, Card, ContentHeader, DescriptionList, DownloadList, Figure, Hgroup, MediaPlayer, NavigationList, OpeningHours, Section, SkipLink, SummaryItem, TaskListItem |
 | **Organismen** (9) | CardGrid, Dialog, Footer, Gallery, Header, Hero, Kopfzeile, TaskList, TaskListGroup |
 
 Components liegen unter `Resources/Private/Components/` mit einem Ordner pro
@@ -61,6 +61,38 @@ Als statisches HTML, etwa für den [axe-Lauf](Accessibility.md):
 ```bash
 vendor/bin/typo3 kern-ux:styleguide:dump --target=var/styleguide
 ```
+
+## Was KERN nicht abdeckt
+
+Diese Schicht erfindet keine `kern-*`-Klasse. Als Beleg gilt allein ein Selektor in der
+geladenen `Resources/Public/Vendor/KernUx/kern.css` — nicht die KERN-Dokumentation, nicht
+ein Beispiel, nicht ein Figma-Frame. KERNs eigenes Badge-Beispiel schreibt
+`kern-icon--sm`, eine Klasse, die 2.7.2 überhaupt nicht definiert.
+
+Für diese Muster liefert KERN 2.7.2 **null** Klassen. Sie zu bauen hieße, öffentliche
+Gestaltungsfläche zu erfinden, und das tut diese Extension nicht:
+
+Pagination · Tabs · Tag · Tooltip · Toggle · Stepper · Seitennavigation ·
+Sprachumschalter · Avatar · Chip · Teaser
+
+Wo ein Bedarf trotzdem besteht, wird er anders beantwortet — und zwar so:
+
+| Bedarf | Antwort hier |
+|---|---|
+| Tabelle | Rich-Text-Editor; `lib.kernUx.rte` hängt `kern-table` an und legt den Scroll-Container darum. Bewusst **kein** Content Block, siehe [Content Blocks](ContentBlocks.md#tabellen). |
+| Meldungs-Teaser | `molecule.card` mit Datum im Fußbereich-Slot |
+| Kachel im Schnellzugriff | `molecule.card` mit `icon` in `organism.cardGrid` |
+| Öffnungszeiten | `molecule.openingHours` — KERNs Definitionsliste plus `<time datetime>` |
+| Brotkrumen, Header, Footer, Bühne, Figure, Downloadliste, Mediaplayer, Skip-Link, Navigation | eigene Komponenten auf der `kernt3-`-Schicht |
+
+Klassen, die KERN nicht liefert, leben in `Resources/Public/Css/kernt3.css` unter dem
+Präfix `kernt3-`, jeweils mit einem Kommentar, der die Lücke benennt. Sie sehen privat
+aus, sind es aber nicht: Projekte überschreiben sie, deshalb stehen sie auf der Liste
+der Breaking Changes.
+
+KERN selbst dokumentiert unter *Patterns* bisher nur **Formulare** und **Templates**,
+und unter Templates nur *Header* und *Frageseite*. Seitenvorlagen für kommunale Auftritte
+sind also nicht KERNs Lücke, sondern die Aufgabe dieser Schicht.
 
 ## Eigene Components schreiben
 
