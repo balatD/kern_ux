@@ -47,6 +47,22 @@
                 <source>Image</source>
                 <target>Bild</target>
             </trans-unit>
+            <trans-unit id="cards.subline.label">
+                <source>Subline</source>
+                <target>Unterzeile</target>
+            </trans-unit>
+            <trans-unit id="cards.subline.description">
+                <source>Sits below the title, for example a place or a short qualifier.</source>
+                <target>Steht unter dem Titel, etwa ein Ort oder eine kurze Einordnung.</target>
+            </trans-unit>
+            <trans-unit id="cards.date.label">
+                <source>Date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="cards.date.description">
+                <source>Rendered in the card footer as a machine-readable time element. Leave empty for cards that are not news.</source>
+                <target>Wird im Fußbereich der Karte als maschinenlesbares time-Element ausgegeben. Für Karten, die keine Meldung sind, leer lassen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

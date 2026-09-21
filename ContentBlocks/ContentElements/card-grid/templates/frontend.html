@@ -1,7 +1,14 @@
 <f:comment>
     Card headings sit one level below the block heading, so the outline stays intact
     whether or not the block itself has a heading.
-</f:comment><f:variable name="cardLevel" value="3"
+
+    The footer fragment is unconditional and guards its own body from the inside. A
+    fragment wrapped in f:if is not collected as a slot at all, and a newline inside
+    one makes the slot whitespace-truthy - which would give every dateless card an
+    empty footer. Card only emits kern-card__footer when the slot renders something,
+    so a card without a date stays byte for byte what it was.
+</f:comment><f:variable name="dateFormat"><f:translate key="date.format" extensionName="KernUx" /></f:variable
+><f:variable name="cardLevel" value="3"
 /><f:if condition="!{data.header} || {data.header_layout} == 100"><f:variable name="cardLevel" value="2" /></f:if
 ><k:molecule.section
     spaceBefore="{data.space_before_class}"
@@ -15,7 +22,8 @@
     title="{card.title}"
     level="{cardLevel}"
     preline="{card.preline}"
+    subline="{card.subline}"
     link="{f:uri.typolink(parameter: card.link)}"
     media="{card.image.0}"
     text="{card.text}"
-/></f:for></k:organism.cardGrid></f:if></k:molecule.section>
+><f:fragment name="footer"><f:if condition="{card.date}"><k:atom.body variant="small" tag="span"><time datetime="{card.date -> f:format.date(format: 'Y-m-d')}">{card.date -> f:format.date(format: dateFormat)}</time></k:atom.body></f:if></f:fragment></k:molecule.card></f:for></k:organism.cardGrid></f:if></k:molecule.section>

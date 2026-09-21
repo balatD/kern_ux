@@ -25,6 +25,16 @@ fields:
       - identifier: preline
         type: Text
         max: 255
+      - identifier: subline
+        type: Text
+        max: 255
+      # nullable is load-bearing: without it an unset date comes back as the epoch and
+      # every dateless card grows a 01.01.1970 footer.
+      - identifier: date
+        type: DateTime
+        dbType: date
+        format: date
+        nullable: true
       - identifier: text
         type: Textarea
         rows: 4
