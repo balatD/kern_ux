@@ -103,6 +103,18 @@ gestaltet. Die KERN-Klassen setzt `lib.kernUx.rte` serverseitig — kein Redakte
 sie versehentlich entfernen. Ohne `typo3/cms-rte-ckeditor` fallen RTE-Felder auf ein
 schlichtes Textarea zurück.
 
+Die Typografie liegt in zwei Dateien mit denselben Regeln: `rte.css` für die
+gerenderte Seite, gebunden an den Wrapper `.kernt3-rte`, und `rte-editor.css` für die
+Bearbeitungsansicht. Getrennt, weil CKEditor jeder Regel aus `contentsCss` selbst
+`#<id> .ck-content` voranstellt — ein Selektor, der `.ck-content` schon nennt, greift
+danach nie. Wer die Typografie überschreibt, fasst also beide Dateien an.
+
+`rte-editor.css` setzt bewusst **keine Farben**. kern.css ist im Backend nicht geladen,
+jeder KERN-Farbwert fiele dort auf seinen hellen Literalwert zurück — im dunklen
+Backend-Schema also dunkle Schrift auf dunklem Grund. Die Farben kommen aus dem
+Backend selbst: `contents.css` des Cores setzt sie in TYPO3 14 nach Farbschema und
+hält die Fläche in TYPO3 13 hell.
+
 ## Component-Galerie
 
 `kernUx.styleguide.enable` und `kernUx.styleguide.path` steuern die Galerie. Weil dort
