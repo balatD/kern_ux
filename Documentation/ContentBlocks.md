@@ -1,28 +1,41 @@
 # Content Blocks und Seiten
 
-## Die 20 Blöcke
+## Die 23 Blöcke
 
 Jeder mit Backend-Vorschau, jeder auf denselben
 [Components](Components.md) aufgebaut:
 
 Text · Text und Medien · Bild · Bildergalerie · Video oder Audio · Bühne · Karten ·
-Akkordeon · Hinweis · Dialog · Downloads · Aufgabenübersicht · Fortschritt ·
-Definitionsliste · Liste · Überschrift · Schaltflächen · Trenner ·
-Inhaltsverzeichnis · Sitemap
+Schnellzugriff · Dienstleistung · Standort · Akkordeon · Hinweis · Dialog · Downloads ·
+Aufgabenübersicht · Fortschritt · Definitionsliste · Liste · Überschrift ·
+Schaltflächen · Trenner · Inhaltsverzeichnis · Sitemap
 
 Wie das im Seitenmodul aussieht, zeigen die
 [Screenshots](Screenshots.md#backend-das-sehen-redakteure).
 
 ## Seiten-Templates
 
-Vier Templates mit je einem passenden Backend-Layout:
+Fünf Templates mit je einem passenden Backend-Layout:
 
-| Template | Wofür |
-|---|---|
-| Standard | einspaltige Inhaltsseite |
-| Startseite | Einstieg mit Bühne und Kartengittern |
-| Thema | zweispaltig mit Seitenleiste, etwa für eine Dienstleistung |
-| Antrag | Formularstrecke mit Fortschrittsanzeige |
+| Template | Wofür | Spalten |
+|---|---|---|
+| Standard | einspaltige Inhaltsseite | main |
+| Startseite | Einstieg mit Bühne und Kartengittern | hero, main, teaser |
+| Thema | zweispaltig mit Seitenleiste, etwa für eine Dienstleistung | main, aside |
+| Themenseite | Bühne, Inhalt mit Seitenspalte, Teaser-Reihe | hero, main, aside, teaser |
+| Antrag | Formularstrecke mit Fortschrittsanzeige | main |
+
+**Themenseite** ist die einzige Anordnung der vier festen `colPos`-Werte, die weder
+Startseite (keine Seitenspalte) noch Thema (keine Bühne, keine Teaser-Reihe) ausdrücken
+kann. Für eine Dienstleistungsseite gibt es bewusst *kein* eigenes Layout: das wäre
+Thema unter zweitem Namen, und zwei ununterscheidbare Einträge in der Layout-Auswahl
+sind für Redakteure eine Verschlechterung. Der Dienstleistungs-Block steht in `main`,
+der Standort-Block in `aside`.
+
+`Themenseite` löst ihre vier Spalten je einmal in eine Variable auf und gibt sie dann
+aus. Die ältere Wächter-Form in `Startpage.html` und `Subject.html` — ein `f:if` über
+einen `f:cObject`-Inline-Aufruf, gefolgt von demselben `f:cObject` — rendert die Spalte
+zweimal pro Aufruf.
 
 Die Templates liegen unter `Resources/Private/PageView/Pages/`, die Backend-Layouts
 unter `Configuration/Sets/KernUx/PageTsConfig/BackendLayouts/`. Beide gehören
@@ -44,6 +57,59 @@ Bild daneben. Er hat drei Eigenheiten, die keine Einstellung sind:
 - Der Hinweis ist eine KERN-Hinweiszeile **ohne Überschrift** (`<p class="kern-title">`
   statt `<h2>`). Ein Satz wie „Neue Registrierungen kosten 30 Euro" ist eine Aussage,
   kein Abschnitt, und hätte in der Dokumentgliederung nichts zu suchen.
+
+## Dienstleistung, Standort und Schnellzugriff
+
+Drei Blöcke bilden die Muster ab, die auf jedem kommunalen Portal wiederkehren.
+
+**Dienstleistung** folgt der Feldfolge des FIM-Bausteins Leistungen: Kurzbeschreibung,
+Volltext, Online-Dienst, Voraussetzungen, Erforderliche Unterlagen, Formulare,
+Gebühren, Fristen, Bearbeitungsdauer, Rechtsgrundlagen, Rechtsbehelf, Weiterführende
+Informationen, Hinweise zur Zuständigkeit. Die Abschnittsüberschriften sind fest und
+übersetzt, nicht editierbar — genau das ist der Sinn der Standardisierung: wer von
+einer Kommune zur nächsten wechselt, findet dieselben Wörter in derselben Reihenfolge.
+
+Die langen Abschnitte sind **offene Abschnitte, keine Akkordeons**. Eine
+Dienstleistungsbeschreibung ist ein Rechtstext, den Menschen mit Strg+F durchsuchen,
+und `details`/`summary` versteckt seinen Inhalt vor der Seitensuche. Das
+Inhaltsverzeichnis kann ohnehin nicht in einen einzelnen Block hineingreifen.
+
+**Gebühren** ist ein Rich-Text-Feld, damit ein Gebührenverzeichnis eine Tabelle sein
+kann — und zwar dieselbe RTE-Tabelle wie überall sonst, siehe *Tabellen* unten.
+
+**Standort** hält Anschrift, Öffnungszeiten, Barrierefreiheitsmerkmale,
+Verkehrsanbindungen und Zahlungsmöglichkeiten. Drei Entscheidungen sind bewusst:
+
+- Die Barrierefreiheitsmerkmale sind **Text, keine Piktogramme**. Eine reine
+  Symbolangabe ist für genau die Menschen unlesbar, an die sie sich richtet. KERN
+  liefert für Aufzug, Rampe oder barrierefreies WC auch gar kein Symbol.
+- Die Karte ist ein **Link, keine Einbettung**. Eine eingebettete Karte wäre bei jedem
+  Seitenaufruf eine Anfrage an Dritte — dieselbe Zusage, aus der heraus der
+  Asset-Installer kein CDN benutzt.
+- Kein `schema.org`-JSON-LD. `OpeningHoursSpecification` erwartet den Wochentag als
+  Aufzählung, das Feld ist aber Freitext, weil Kommunen „Montag bis Freitag" und
+  „Sa, 1. im Monat" schreiben. Korrekte strukturierte Daten hießen also, Redakteuren
+  eine Wochentagsliste aufzuzwingen — und falsche Öffnungszeiten im Suchergebnis sind
+  schlimmer als gar keine. `<time>` und `<address>` tragen den maschinenlesbaren Teil.
+
+**Schnellzugriff** ist das Kachelgitter, mit dem jedes Portal aufmacht. Es gibt dafür
+keine eigene Komponente: eine Kachel ist `molecule.card` mit Symbol und gedehntem Link
+in `organism.cardGrid`. Für **Meldungen** trägt das Kartengitter ein Datumsfeld, das im
+Fußbereich der Karte als `<time datetime>` erscheint.
+
+## Tabellen
+
+Es gibt **keinen Tabellen-Block**, und das ist eine Entscheidung, keine Lücke.
+Redakteure bauen Tabellen im Rich-Text-Editor; `lib.kernUx.rte` hängt dort
+serverseitig `class="kern-table"` an und legt einen
+`<div class="kern-table-responsive" tabindex="0">` darum, damit die Scrollfläche mit
+der Tastatur erreichbar ist — genau so, wie KERNs eigene responsive Tabelle es
+vorsieht. Eine zweistufige Collection wäre für alles jenseits eines winzigen Rasters
+unbedienbar, und ein bloßes `<table>` verlöre den Scroll-Container.
+
+Die Klasse wird zur Laufzeit gesetzt und steht deshalb in keinem Template. Wer nur
+`Resources/Private/` und `ContentBlocks/` durchsucht, hält das für eine Lücke; siehe
+`Configuration/Sets/KernUx/setup.typoscript`.
 
 ## Backend-Vorschauen
 

@@ -14,8 +14,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/Lizenz-GPL--2.0--or--later-blue" alt="Lizenz GPL-2.0-or-later"></a>
 </p>
 
-Bringt den [KERN UX-Standard](https://www.kern-ux.de/) nach TYPO3 13.4 und 14.3: 40
-barrierefreie **Fluid Components**, 20 **Content Blocks** für Redakteure, ein
+Bringt den [KERN UX-Standard](https://www.kern-ux.de/) nach TYPO3 13.4 und 14.3: 41
+barrierefreie **Fluid Components**, 23 **Content Blocks** für Redakteure, ein
 **`ext:form`-Theme** und vier Seiten-Templates mit passenden Backend-Layouts.
 
 Die Components sind die einzige Quelle für KERN-Markup — Content Blocks, Formulare und
@@ -78,7 +78,7 @@ Backend-Layouts und Settings bereit. Einen Demo-Seitenbaum zum Ansehen legt
 | [Installation](Documentation/Installation.md) | Setup, KERN-Assets, Demo-Seitenbaum, Stolperfallen |
 | [Konfiguration](Documentation/Configuration.md) | Site-Settings, Thema, Navigation, Digitale Dachmarke, RTE |
 | [Components](Documentation/Components.md) | Component-Schicht, Galerie, eigene Components schreiben |
-| [Content Blocks](Documentation/ContentBlocks.md) | Die 20 Blöcke, Seiten-Templates, Backend-Vorschauen |
+| [Content Blocks](Documentation/ContentBlocks.md) | Die 23 Blöcke, Seiten-Templates, Backend-Vorschauen |
 | [Formulare](Documentation/Forms.md) | `ext:form`-Theme, Fehlerbehandlung, `KernDate` |
 | [Barrierefreiheit](Documentation/Accessibility.md) | axe-Läufe, Prüfumfang, was von Hand bleibt |
 | [Entwicklung](Documentation/Development.md) | DDEV-Harness für beide Majors, Tests, Sprachen |

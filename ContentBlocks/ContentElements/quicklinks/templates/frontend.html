@@ -1,0 +1,28 @@
+<f:comment>
+    The Schnellzugriff every municipal portal opens with - "Wie können wir helfen?" on
+    stadt-koeln.de, the four-tile row on berlin.de.
+
+    It emits no markup of its own: a tile is molecule.card with an icon and a stretched
+    link, laid out by organism.cardGrid. KERN ships no tile classes, so building a
+    component for it would mean inventing public design surface for a pattern that
+    composes out of what is already there.
+
+    Tile headings sit one level below the block heading, so the outline stays intact
+    whether or not the block itself has a heading.
+</f:comment><f:variable name="tileLevel" value="3"
+/><f:if condition="!{data.header} || {data.header_layout} == 100"><f:variable name="tileLevel" value="2" /></f:if
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:if condition="{data.tx_kernux_quicklinks_tiles}"><k:organism.cardGrid columns="{data.tx_kernux_quicklinks_columns}"><f:for each="{data.tx_kernux_quicklinks_tiles}" as="tile"><k:molecule.card
+    title="{tile.title}"
+    level="{tileLevel}"
+    icon="{tile.icon}"
+    link="{f:uri.typolink(parameter: tile.link)}"
+    text="{tile.text}"
+/></f:for></k:organism.cardGrid></f:if></k:molecule.section>

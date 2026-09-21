@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-10" product-name="kern-ux/location">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Location</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Address, opening hours and accessibility of an office.</source>
+            </trans-unit>
+            <trans-unit id="noticeTitle.label">
+                <source>Notice</source>
+            </trans-unit>
+            <trans-unit id="noticeTitle.description">
+                <source>A current disruption, for example a lift out of order. Leave empty to hide the notice.</source>
+            </trans-unit>
+            <trans-unit id="noticeVariant.label">
+                <source>Urgency</source>
+            </trans-unit>
+            <trans-unit id="bodytext.label">
+                <source>Notice text</source>
+            </trans-unit>
+            <trans-unit id="authority.label">
+                <source>Authority</source>
+            </trans-unit>
+            <trans-unit id="authority.description">
+                <source>The body the office belongs to, for example "Bezirksamt Mitte".</source>
+            </trans-unit>
+            <trans-unit id="street.label">
+                <source>Street and number</source>
+            </trans-unit>
+            <trans-unit id="postalCode.label">
+                <source>Postcode</source>
+            </trans-unit>
+            <trans-unit id="city.label">
+                <source>City</source>
+            </trans-unit>
+            <trans-unit id="phone.label">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="fax.label">
+                <source>Fax</source>
+            </trans-unit>
+            <trans-unit id="email.label">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="homepage.label">
+                <source>Website</source>
+            </trans-unit>
+            <trans-unit id="mapLink.label">
+                <source>Map link</source>
+            </trans-unit>
+            <trans-unit id="mapLink.description">
+                <source>Opens a map in a new tab. No map is embedded: an embed would be a third-party request on every page hit.</source>
+            </trans-unit>
+            <trans-unit id="accessibility.label">
+                <source>Accessibility features</source>
+            </trans-unit>
+            <trans-unit id="accessibility.description">
+                <source>Written out, not as pictograms: an icon-only claim is unreadable to exactly the people it addresses.</source>
+            </trans-unit>
+            <trans-unit id="accessibility.label.label">
+                <source>Feature</source>
+            </trans-unit>
+            <trans-unit id="openingHours.label">
+                <source>Opening hours</source>
+            </trans-unit>
+            <trans-unit id="openingHours.day.label">
+                <source>Day</source>
+            </trans-unit>
+            <trans-unit id="openingHours.day.description">
+                <source>One line of the table, for example "Montag" or "Montag bis Freitag".</source>
+            </trans-unit>
+            <trans-unit id="openingHours.closed.label">
+                <source>Closed</source>
+            </trans-unit>
+            <trans-unit id="openingHours.opens.label">
+                <source>From</source>
+            </trans-unit>
+            <trans-unit id="openingHours.opens.description">
+                <source>24-hour clock, for example 08:00.</source>
+            </trans-unit>
+            <trans-unit id="openingHours.closes.label">
+                <source>To</source>
+            </trans-unit>
+            <trans-unit id="openingHours.note.label">
+                <source>Qualifier</source>
+            </trans-unit>
+            <trans-unit id="openingHours.note.description">
+                <source>Applies to this day only, for example "nur mit Termin".</source>
+            </trans-unit>
+            <trans-unit id="transport.label">
+                <source>Getting there</source>
+            </trans-unit>
+            <trans-unit id="transport.mode.label">
+                <source>Mode</source>
+            </trans-unit>
+            <trans-unit id="transport.mode.description">
+                <source>Free text, because the modes differ per city: S-Bahn, Stadtbahn, Bus, Fähre.</source>
+            </trans-unit>
+            <trans-unit id="transport.lines.label">
+                <source>Lines and stop</source>
+            </trans-unit>
+            <trans-unit id="payment.label">
+                <source>Payment methods</source>
+            </trans-unit>
+            <trans-unit id="payment.label.label">
+                <source>Method</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

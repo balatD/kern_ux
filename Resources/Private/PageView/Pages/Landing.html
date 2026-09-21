@@ -1,0 +1,42 @@
+<f:layout name="Default" />
+<f:section name="Main">
+    <f:comment>
+        Themenseite: stage, then content with a side column, then a teaser row.
+
+        Each column is resolved once into a variable and then printed. The guard form
+        used by Startpage.html and Subject.html - f:if on an f:cObject inline call,
+        followed by the same f:cObject again - renders the column twice per request,
+        which for a non-cacheable plugin in the aside means it executes twice. The
+        idiom here is the one Layouts/Default.html uses: resolve, test, f:format.raw.
+
+        Top padding only on the stage, bottom only on the teaser row: the gap towards
+        the middle band comes from that band's own padding, and two of them would
+        double it.
+    </f:comment>
+    <f:variable name="heroContent"><f:cObject typoscriptObjectPath="lib.kernUx.content.hero" /></f:variable>
+    <f:variable name="mainContent"><f:cObject typoscriptObjectPath="lib.kernUx.content.main" /></f:variable>
+    <f:variable name="asideContent"><f:cObject typoscriptObjectPath="lib.kernUx.content.aside" /></f:variable>
+    <f:variable name="teaserContent"><f:cObject typoscriptObjectPath="lib.kernUx.content.teaser" /></f:variable>
+    <f:if condition="{heroContent -> f:format.trim()}">
+        <div class="kern-container kernt3-content-area kernt3-content-area--top">
+            <f:format.raw>{heroContent}</f:format.raw>
+        </div>
+    </f:if>
+    <div class="kern-container kernt3-content-area">
+        <div class="kern-grid kern-grid-cols-1 kern-grid-cols-12-lg kern-gap-lg">
+            <div class="kern-col-12 kern-col-8-lg">
+                <f:format.raw>{mainContent}</f:format.raw>
+            </div>
+            <f:if condition="{asideContent -> f:format.trim()}">
+                <aside class="kern-col-12 kern-col-4-lg">
+                    <f:format.raw>{asideContent}</f:format.raw>
+                </aside>
+            </f:if>
+        </div>
+    </div>
+    <f:if condition="{teaserContent -> f:format.trim()}">
+        <div class="kern-container kernt3-content-area kernt3-content-area--bottom">
+            <f:format.raw>{teaserContent}</f:format.raw>
+        </div>
+    </f:if>
+</f:section>

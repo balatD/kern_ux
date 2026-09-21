@@ -79,7 +79,7 @@ pages:
                                 text: 'Startseite, Dienstleistung, Antragsstrecke und eine Meldung.'
                                 link: '{page:examples}'
                             -   title: 'Elemente'
-                                preline: '21 Seiten'
+                                preline: '24 Seiten'
                                 text: 'Jeder Inhaltstyp einzeln, zum Prüfen von Markup und Bedienung.'
                                 link: '{page:elements}'
 
@@ -1143,6 +1143,130 @@ pages:
                                     refs:
                                         tx_kernux_sitemap_startPage: elements
 
+                    -   title: 'Schnellzugriff'
+                        slug: schnellzugriff
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Schnellzugriff'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Das Kachelgitter, mit dem ein Portal aufmacht. Eine Kachel ist eine Karte mit Symbol und gedehntem Link - eine eigene Komponente gibt es dafür nicht.</p>'
+                                -   type: kernux_quicklinks
+                                    header: 'Wie können wir helfen?'
+                                    header_layout: 2
+                                    fields:
+                                        tx_kernux_quicklinks_columns: 4
+                                    collections:
+                                        tx_kernux_quicklinks_tiles:
+                                            -   title: 'Termin vereinbaren'
+                                                icon: calendar-today
+                                                link: '{page:examples}'
+                                                text: 'Im Bürgerbüro und in den Außenstellen.'
+                                            -   title: 'Dienstleistung finden'
+                                                icon: search
+                                                link: '{page:examples}'
+                                                text: 'Alle Leistungen von A bis Z.'
+                                            -   title: 'Formulare'
+                                                icon: download
+                                                link: '{page:examples}'
+                                                text: 'Anträge zum Herunterladen.'
+                                            -   title: 'Kontakt'
+                                                icon: mail
+                                                link: '{page:examples}'
+                                                text: 'Behördennummer, Anschrift und Öffnungszeiten.'
+
+                    -   title: 'Dienstleistung'
+                        slug: dienstleistung
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_service
+                                    header: 'Hund anmelden'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        tx_kernux_service_teaser: 'Wer in Musterstadt einen Hund hält, muss ihn innerhalb von zwei Wochen anmelden.'
+                                        bodytext: '<p>Die Anmeldung begründet die Hundesteuerpflicht. Sie erhalten eine Steuermarke, die der Hund im Freien sichtbar tragen muss.</p>'
+                                        tx_kernux_service_onlineLink: '{page:examples}'
+                                        tx_kernux_service_onlineHint: 'Für den Online-Dienst brauchen Sie ein BundID-Konto.'
+                                        tx_kernux_service_fees: '<p>30,00 Euro im Jahr für den ersten Hund, 50,00 Euro für jeden weiteren.</p>'
+                                        tx_kernux_service_deadlines: 'Innerhalb von zwei Wochen nach der Aufnahme des Hundes.'
+                                        tx_kernux_service_processingTime: 'sofort'
+                                        tx_kernux_service_legalRemedy: '<p>Gegen den Steuerbescheid können Sie innerhalb eines Monats Widerspruch einlegen.</p>'
+                                        tx_kernux_service_responsibility: '<p>Zuständig ist das Steueramt der Stadt Musterstadt.</p>'
+                                    collections:
+                                        tx_kernux_service_requirements:
+                                            -   text: 'Sie haben Ihren Wohnsitz in Musterstadt.'
+                                            -   text: 'Der Hund ist älter als drei Monate.'
+                                        tx_kernux_service_documents:
+                                            -   text: 'Personalausweis oder Reisepass'
+                                            -   text: 'Nachweis über die Haftpflichtversicherung'
+                                        tx_kernux_service_forms:
+                                            -   title: 'Anmeldeformular Hundesteuer (PDF)'
+                                                link: '{page:examples}'
+                                        tx_kernux_service_legalBases:
+                                            -   title: 'Hundesteuersatzung der Stadt Musterstadt'
+                                                link: '{page:examples}'
+                                            -   title: 'Kommunalabgabengesetz'
+                                        tx_kernux_service_furtherInformation:
+                                            -   title: 'Hundesteuer abmelden'
+                                                link: '{page:examples}'
+
+                    -   title: 'Standort'
+                        slug: standort
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_location
+                                    header: 'Bürgerbüro Mitte'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        tx_kernux_location_noticeTitle: 'Der Aufzug ist außer Betrieb'
+                                        tx_kernux_location_noticeVariant: warning
+                                        bodytext: '<p>Das Bürgerbüro ist bis zur Reparatur nur über die Treppe erreichbar. Termine im Erdgeschoss sind auf Anfrage möglich.</p>'
+                                        tx_kernux_location_authority: 'Stadt Musterstadt'
+                                        tx_kernux_location_street: 'Rathausplatz 1'
+                                        tx_kernux_location_postalCode: '12345'
+                                        tx_kernux_location_city: 'Musterstadt'
+                                        tx_kernux_location_phone: '01234 567-0'
+                                        tx_kernux_location_fax: '01234 567-99'
+                                        tx_kernux_location_email: 'buergerbuero@musterstadt.example'
+                                        tx_kernux_location_homepage: '{page:examples}'
+                                        tx_kernux_location_mapLink: 'https://www.openstreetmap.org/search?query=Rathausplatz%201'
+                                    collections:
+                                        tx_kernux_location_accessibility:
+                                            -   label: 'Stufenloser Zugang über den Hintereingang'
+                                            -   label: 'Behindertenparkplatz vor dem Gebäude'
+                                            -   label: 'Barrierefreies WC im Erdgeschoss'
+                                        tx_kernux_location_openingHours:
+                                            -   day: 'Montag'
+                                                opens: '08:00'
+                                                closes: '15:00'
+                                            -   day: 'Dienstag'
+                                                opens: '08:00'
+                                                closes: '18:00'
+                                                note: 'nur mit Termin'
+                                            -   day: 'Mittwoch'
+                                                closed: 1
+                                            -   day: 'Donnerstag'
+                                                opens: '08:00'
+                                                closes: '18:00'
+                                            -   day: 'Freitag'
+                                                opens: '08:00'
+                                                closes: '12:00'
+                                        tx_kernux_location_transport:
+                                            -   mode: 'Bus'
+                                                lines: 'Linien 1, 5 und 12, Haltestelle Rathaus'
+                                            -   mode: 'Stadtbahn'
+                                                lines: 'Linie S3, Haltestelle Marktplatz (400 m)'
+                                        tx_kernux_location_payment:
+                                            -   label: 'Girocard'
+                                            -   label: 'Barzahlung'
+
             # ------------------------------------------------------------- navigations
             # The three configurable menus stay switched off until a root page is set, so
             # without these pages the page frame can never be seen complete.
@@ -1206,3 +1330,203 @@ pages:
                         slug: datenschutz
                     -   title: 'Barrierefreiheitserklärung'
                         slug: barrierefreiheitserklaerung
+
+    -   key: buergerservice
+        title: 'Bürgerservice'
+        slug: buergerservice
+        layout: landing
+        content:
+            hero:
+                -   type: kernux_hero
+                    header: 'Bürgerservice'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_hero_preline: 'Stadt Musterstadt'
+                        tx_kernux_hero_noteText: 'Das Bürgerbüro ist mittwochs geschlossen.'
+                        tx_kernux_hero_noteVariant: info
+                        bodytext: '<p>Termine, Anträge und Formulare an einer Stelle.</p>'
+            aside:
+                -   type: kernux_location
+                    header: 'Bürgerbüro Mitte'
+                    header_layout: 2
+                    fields:
+                        tx_kernux_location_street: 'Rathausplatz 1'
+                        tx_kernux_location_postalCode: '12345'
+                        tx_kernux_location_city: 'Musterstadt'
+                        tx_kernux_location_phone: '01234 567-0'
+                    collections:
+                        tx_kernux_location_openingHours:
+                            -   day: 'Montag bis Freitag'
+                                opens: '08:00'
+                                closes: '15:00'
+                            -   day: 'Mittwoch'
+                                closed: 1
+            teaser:
+                -   type: kernux_quicklinks
+                    header: 'Häufig gebraucht'
+                    header_layout: 2
+                    fields:
+                        tx_kernux_quicklinks_columns: 4
+                    collections:
+                        tx_kernux_quicklinks_tiles:
+                            -   title: 'Termin vereinbaren'
+                                icon: calendar-today
+                                link: '{page:examples}'
+                            -   title: 'Formulare'
+                                icon: download
+                                link: '{page:examples}'
+                            -   title: 'Dienstleistungen A-Z'
+                                icon: search
+                                link: '{page:examples}'
+                            -   title: 'Kontakt'
+                                icon: mail
+                                link: '{page:examples}'
+            main:
+                -   type: kernux_text
+                    header: 'Bürgerservice'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: '<p>Alle Leistungen der Stadtverwaltung, von der Anmeldung bis zur Urkunde.</p>'
+                -   type: kernux_sitemap
+                    header: 'Seiten in diesem Bereich'
+                    header_layout: 2
+        children:
+            -   title: 'Dienstleistungen A-Z'
+                slug: dienstleistungen-a-z
+            -   title: 'Termin vereinbaren'
+                slug: termin-vereinbaren
+            -   title: 'Formulare und Anträge'
+                slug: formulare-und-antraege
+            -   title: 'Online-Dienste'
+                slug: online-dienste
+            -   title: 'Behördennummer 115'
+                slug: behoerdennummer-115
+            -   title: 'Bürgerbüro Mitte'
+                slug: buergerbuero-mitte
+    -   key: rathaus
+        title: 'Rathaus und Politik'
+        slug: rathaus
+        layout: default
+        content:
+            main:
+                -   type: kernux_text
+                    header: 'Rathaus und Politik'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: '<p>Wer die Stadt verwaltet, wer sie beschließt und wo die Unterlagen dazu liegen.</p>'
+                -   type: kernux_sitemap
+                    header: 'Seiten in diesem Bereich'
+                    header_layout: 2
+        children:
+            -   title: 'Oberbürgermeisterin'
+                slug: oberbuergermeisterin
+            -   title: 'Stadtrat'
+                slug: stadtrat
+            -   title: 'Ratsinformationssystem'
+                slug: ratsinformationssystem
+            -   title: 'Ämter und Fachbereiche'
+                slug: aemter-und-fachbereiche
+            -   title: 'Amtliche Bekanntmachungen'
+                slug: amtliche-bekanntmachungen
+            -   title: 'Stellenangebote'
+                slug: stellenangebote
+            -   title: 'Haushalt und Finanzen'
+                slug: haushalt-und-finanzen
+    -   key: bauen
+        title: 'Bauen, Wohnen und Umwelt'
+        slug: bauen-wohnen-umwelt
+        layout: default
+        content:
+            main:
+                -   type: kernux_text
+                    header: 'Bauen, Wohnen und Umwelt'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: '<p>Bauleitplanung, Wohnraum, Abfall und Grünflächen.</p>'
+                -   type: kernux_sitemap
+                    header: 'Seiten in diesem Bereich'
+                    header_layout: 2
+        children:
+            -   title: 'Bauleitplanung'
+                slug: bauleitplanung
+            -   title: 'Baugenehmigung'
+                slug: baugenehmigung
+            -   title: 'Wohnberechtigungsschein'
+                slug: wohnberechtigungsschein
+            -   title: 'Abfall und Wertstoffe'
+                slug: abfall-und-wertstoffe
+            -   title: 'Grünflächen und Bäume'
+                slug: gruenflaechen-und-baeume
+    -   key: familie
+        title: 'Bildung und Soziales'
+        slug: bildung-und-soziales
+        layout: default
+        content:
+            main:
+                -   type: kernux_text
+                    header: 'Bildung und Soziales'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: '<p>Kita, Schule, Pflege und Beratung.</p>'
+                -   type: kernux_sitemap
+                    header: 'Seiten in diesem Bereich'
+                    header_layout: 2
+        children:
+            -   title: 'Kindertagesbetreuung'
+                slug: kindertagesbetreuung
+            -   title: 'Kita-Platz beantragen'
+                slug: kita-platz-beantragen
+            -   title: 'Schulen'
+                slug: schulen
+            -   title: 'Schulanmeldung'
+                slug: schulanmeldung
+            -   title: 'Schülerbeförderung'
+                slug: schuelerbefoerderung
+            -   title: 'Volkshochschule'
+                slug: volkshochschule
+            -   title: 'Stadtbibliothek'
+                slug: stadtbibliothek
+            -   title: 'Jugendtreffs'
+                slug: jugendtreffs
+            -   title: 'Pflegeberatung'
+                slug: pflegeberatung
+            -   title: 'Wohngeld'
+                slug: wohngeld
+            -   title: 'Grundsicherung'
+                slug: grundsicherung
+            -   title: 'Schwerbehindertenausweis'
+                slug: schwerbehindertenausweis
+            -   title: 'Familienpass'
+                slug: familienpass
+            -   title: 'Beratungsstellen'
+                slug: beratungsstellen
+    -   key: kultur
+        title: 'Kultur und Freizeit'
+        slug: kultur-und-freizeit
+        layout: default
+        content:
+            main:
+                -   type: kernux_text
+                    header: 'Kultur und Freizeit'
+                    header_layout: 1
+                    fields:
+                        tx_kernux_heading_appearance: x-large
+                        bodytext: '<p>Museen, Bäder, Veranstaltungen und Vereine.</p>'
+                -   type: kernux_sitemap
+                    header: 'Seiten in diesem Bereich'
+                    header_layout: 2
+        children:
+            -   title: 'Museen'
+                slug: museen
+            -   title: 'Stadttheater'
+                slug: stadttheater
+            -   title: 'Bäder'
+                slug: baeder
+            -   title: 'Veranstaltungskalender'
+                slug: veranstaltungskalender
+            -   title: 'Vereine'
+                slug: vereine

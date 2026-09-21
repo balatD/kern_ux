@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-09-10" product-name="kern-ux/location">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Location</source>
+                <target>Standort</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Address, opening hours and accessibility of an office.</source>
+                <target>Anschrift, Öffnungszeiten und Erreichbarkeit einer Dienststelle.</target>
+            </trans-unit>
+            <trans-unit id="noticeTitle.label">
+                <source>Notice</source>
+                <target>Hinweis</target>
+            </trans-unit>
+            <trans-unit id="noticeTitle.description">
+                <source>A current disruption, for example a lift out of order. Leave empty to hide the notice.</source>
+                <target>Eine aktuelle Störung, etwa ein defekter Aufzug. Leer lassen blendet den Hinweis aus.</target>
+            </trans-unit>
+            <trans-unit id="noticeVariant.label">
+                <source>Urgency</source>
+                <target>Dringlichkeit</target>
+            </trans-unit>
+            <trans-unit id="bodytext.label">
+                <source>Notice text</source>
+                <target>Hinweistext</target>
+            </trans-unit>
+            <trans-unit id="authority.label">
+                <source>Authority</source>
+                <target>Behörde</target>
+            </trans-unit>
+            <trans-unit id="authority.description">
+                <source>The body the office belongs to, for example "Bezirksamt Mitte".</source>
+                <target>Der Träger der Dienststelle, etwa "Bezirksamt Mitte".</target>
+            </trans-unit>
+            <trans-unit id="street.label">
+                <source>Street and number</source>
+                <target>Straße und Hausnummer</target>
+            </trans-unit>
+            <trans-unit id="postalCode.label">
+                <source>Postcode</source>
+                <target>PLZ</target>
+            </trans-unit>
+            <trans-unit id="city.label">
+                <source>City</source>
+                <target>Ort</target>
+            </trans-unit>
+            <trans-unit id="phone.label">
+                <source>Phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="fax.label">
+                <source>Fax</source>
+                <target>Fax</target>
+            </trans-unit>
+            <trans-unit id="email.label">
+                <source>Email</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="homepage.label">
+                <source>Website</source>
+                <target>Internet</target>
+            </trans-unit>
+            <trans-unit id="mapLink.label">
+                <source>Map link</source>
+                <target>Kartenlink</target>
+            </trans-unit>
+            <trans-unit id="mapLink.description">
+                <source>Opens a map in a new tab. No map is embedded: an embed would be a third-party request on every page hit.</source>
+                <target>Öffnet eine Karte in einem neuen Tab. Es wird keine Karte eingebettet - eine Einbettung wäre bei jedem Seitenaufruf eine Anfrage an Dritte.</target>
+            </trans-unit>
+            <trans-unit id="accessibility.label">
+                <source>Accessibility features</source>
+                <target>Barrierefreiheitsmerkmale</target>
+            </trans-unit>
+            <trans-unit id="accessibility.description">
+                <source>Written out, not as pictograms: an icon-only claim is unreadable to exactly the people it addresses.</source>
+                <target>Ausgeschrieben, nicht als Piktogramm: eine reine Symbolangabe ist für genau die Menschen unlesbar, an die sie sich richtet.</target>
+            </trans-unit>
+            <trans-unit id="accessibility.label.label">
+                <source>Feature</source>
+                <target>Merkmal</target>
+            </trans-unit>
+            <trans-unit id="openingHours.label">
+                <source>Opening hours</source>
+                <target>Öffnungszeiten</target>
+            </trans-unit>
+            <trans-unit id="openingHours.day.label">
+                <source>Day</source>
+                <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="openingHours.day.description">
+                <source>One line of the table, for example "Montag" or "Montag bis Freitag".</source>
+                <target>Eine Zeile der Tabelle, etwa "Montag" oder "Montag bis Freitag".</target>
+            </trans-unit>
+            <trans-unit id="openingHours.closed.label">
+                <source>Closed</source>
+                <target>Geschlossen</target>
+            </trans-unit>
+            <trans-unit id="openingHours.opens.label">
+                <source>From</source>
+                <target>Von</target>
+            </trans-unit>
+            <trans-unit id="openingHours.opens.description">
+                <source>24-hour clock, for example 08:00.</source>
+                <target>24-Stunden-Format, etwa 08:00.</target>
+            </trans-unit>
+            <trans-unit id="openingHours.closes.label">
+                <source>To</source>
+                <target>Bis</target>
+            </trans-unit>
+            <trans-unit id="openingHours.note.label">
+                <source>Qualifier</source>
+                <target>Zusatz</target>
+            </trans-unit>
+            <trans-unit id="openingHours.note.description">
+                <source>Applies to this day only, for example "nur mit Termin".</source>
+                <target>Gilt nur für diesen Tag, etwa "nur mit Termin".</target>
+            </trans-unit>
+            <trans-unit id="transport.label">
+                <source>Getting there</source>
+                <target>Verkehrsanbindungen</target>
+            </trans-unit>
+            <trans-unit id="transport.mode.label">
+                <source>Mode</source>
+                <target>Verkehrsmittel</target>
+            </trans-unit>
+            <trans-unit id="transport.mode.description">
+                <source>Free text, because the modes differ per city: S-Bahn, Stadtbahn, Bus, Faehre.</source>
+                <target>Freitext, weil sich die Verkehrsmittel je Stadt unterscheiden: S-Bahn, Stadtbahn, Bus, Fähre.</target>
+            </trans-unit>
+            <trans-unit id="transport.lines.label">
+                <source>Lines and stop</source>
+                <target>Linien und Haltestelle</target>
+            </trans-unit>
+            <trans-unit id="payment.label">
+                <source>Payment methods</source>
+                <target>Zahlungsmöglichkeiten</target>
+            </trans-unit>
+            <trans-unit id="payment.label.label">
+                <source>Method</source>
+                <target>Zahlungsart</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
