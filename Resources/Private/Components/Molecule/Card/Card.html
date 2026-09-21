@@ -13,6 +13,8 @@
             description="Renders the card on a raised surface."
 /><f:argument name="media" type="mixed" optional="{true}"
             description="A FAL file reference shown above the card body."
+/><f:argument name="icon" type="string" optional="{true}" default=""
+            description="KERN icon name shown above the header, for an icon-led quick-access tile. Decorative on purpose: the title carries the meaning, so announcing the icon too would just repeat it."
 /><f:variable name="classes" value="kern-card"
 /><f:if condition="{link}"><f:variable name="classes" value="{classes} kern-card--interactive" /></f:if
 ><f:if condition="{size}"><f:variable name="classes" value="{classes} kern-card--{size}" /></f:if
@@ -23,6 +25,14 @@
         <div class="kern-card__media"><k:molecule.figure image="{media}" sizes="(min-width: 62rem) 33vw, 100vw" /></div>
     </f:if>
     <div class="kern-card__container">
+        <f:comment>
+            First child of the container, not of the header: the header is gap: 0, so an
+            icon placed inside it sits flush against the preline, while the container
+            carries KERN's own 16px gap. kern-card__media is wrong for the same job -
+            `.kern-card__media *` forces width: 100% and would stretch the icon across
+            the whole card.
+        </f:comment>
+        <f:if condition="{icon}"><k:atom.icon name="{icon}" size="x-large" /></f:if>
         <header class="kern-card__header">
             <hgroup class="kern-hgroup">
                 <f:if condition="{preline}"><k:atom.preline>{preline}</k:atom.preline></f:if>
