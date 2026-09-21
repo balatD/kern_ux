@@ -79,6 +79,98 @@
                 <source>English</source>
                 <target>Deutsch</target>
             </trans-unit>
+            <trans-unit id="openingHours.closed">
+                <source>closed</source>
+                <target>geschlossen</target>
+            </trans-unit>
+            <trans-unit id="location.contact">
+                <source>Contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="location.accessibility">
+                <source>Accessibility</source>
+                <target>Barrierefreiheit</target>
+            </trans-unit>
+            <trans-unit id="location.openingHours">
+                <source>Opening hours</source>
+                <target>Öffnungszeiten</target>
+            </trans-unit>
+            <trans-unit id="location.transport">
+                <source>Getting there</source>
+                <target>Verkehrsanbindungen</target>
+            </trans-unit>
+            <trans-unit id="location.payment">
+                <source>Payment methods</source>
+                <target>Zahlungsmöglichkeiten</target>
+            </trans-unit>
+            <trans-unit id="location.phone">
+                <source>Phone</source>
+                <target>Telefon</target>
+            </trans-unit>
+            <trans-unit id="location.fax">
+                <source>Fax</source>
+                <target>Fax</target>
+            </trans-unit>
+            <trans-unit id="location.email">
+                <source>Email</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="location.homepage">
+                <source>Website</source>
+                <target>Internet</target>
+            </trans-unit>
+            <trans-unit id="location.map">
+                <source>Show the location on a map</source>
+                <target>Standort auf der Karte anzeigen</target>
+            </trans-unit>
+            <trans-unit id="service.onlineService">
+                <source>Start online service</source>
+                <target>Online-Dienst starten</target>
+            </trans-unit>
+            <trans-unit id="service.requirements">
+                <source>Requirements</source>
+                <target>Voraussetzungen</target>
+            </trans-unit>
+            <trans-unit id="service.documents">
+                <source>Required documents</source>
+                <target>Erforderliche Unterlagen</target>
+            </trans-unit>
+            <trans-unit id="service.forms">
+                <source>Forms</source>
+                <target>Formulare</target>
+            </trans-unit>
+            <trans-unit id="service.fees">
+                <source>Fees</source>
+                <target>Gebühren</target>
+            </trans-unit>
+            <trans-unit id="service.deadlines">
+                <source>Deadlines</source>
+                <target>Fristen</target>
+            </trans-unit>
+            <trans-unit id="service.processingTime">
+                <source>Average processing time</source>
+                <target>Durchschnittliche Bearbeitungsdauer</target>
+            </trans-unit>
+            <trans-unit id="service.legalBases">
+                <source>Legal basis</source>
+                <target>Rechtsgrundlagen</target>
+            </trans-unit>
+            <trans-unit id="service.legalRemedy">
+                <source>Legal remedy</source>
+                <target>Rechtsbehelf</target>
+            </trans-unit>
+            <trans-unit id="service.furtherInformation">
+                <source>Further information</source>
+                <target>Weiterführende Informationen</target>
+            </trans-unit>
+            <trans-unit id="service.responsibility">
+                <source>Notes on responsibility</source>
+                <target>Hinweise zur Zuständigkeit</target>
+            </trans-unit>
+            <trans-unit id="date.format">
+                <source>m/d/Y</source>
+                <target>d.m.Y</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

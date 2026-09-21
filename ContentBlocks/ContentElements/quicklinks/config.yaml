@@ -1,0 +1,68 @@
+name: kern-ux/quicklinks
+group: kern
+vendorPrefix: tx_kernux
+fields:
+  - identifier: KernUx/Heading
+    type: Basic
+  - identifier: columns
+    type: SelectNumber
+    default: 4
+    items:
+      - label: '2'
+        value: 2
+      - label: '3'
+        value: 3
+      - label: '4'
+        value: 4
+  - identifier: tiles
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 120
+      # Required, unlike a card: a quick-access tile that goes nowhere is not a tile.
+      # It also means every tile gets kern-card--interactive and a stretched link.
+      - identifier: link
+        type: Link
+        required: true
+      # Restricted to icons KERN actually ships, for the same reason as
+      # pages.tx_kernux_nav_icon: a free text field lets an editor type a class that
+      # does not exist, and the result is an empty box rather than an error.
+      - identifier: icon
+        type: Select
+        renderType: selectSingle
+        default: ''
+        items:
+          - label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.none'
+            value: ''
+          - label: 'search'
+            value: search
+          - label: 'calendar-today'
+            value: calendar-today
+          - label: 'mail'
+            value: mail
+          - label: 'download'
+            value: download
+          - label: 'edit'
+            value: edit
+          - label: 'checklist'
+            value: checklist
+          - label: 'draft'
+            value: draft
+          - label: 'account-circle'
+            value: account-circle
+          - label: 'help'
+            value: help
+          - label: 'info'
+            value: info
+          - label: 'home'
+            value: home
+          - label: 'language'
+            value: language
+      - identifier: text
+        type: Textarea
+        rows: 3
+  - identifier: KernUx/Spacing
+    type: Basic

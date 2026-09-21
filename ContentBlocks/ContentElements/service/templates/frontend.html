@@ -1,0 +1,118 @@
+<f:comment>
+    Dienstleistung - the commonest public-sector page type, and the one every
+    municipality currently re-solves locally. Section order and wording follow the FIM
+    Baustein Leistungen, which is what makes two authorities describe the same service
+    the same way; the same order is what service.berlin.de renders.
+
+    Composed entirely from existing components. The section labels are fixed and
+    translated rather than editable: a visitor moving between two municipalities should
+    meet the same words in the same order, which is the whole point of standardising
+    them.
+
+    Short facts are headed statements, not a description list. That is how Berlin
+    renders them ("Gebühren: keine"), and it avoids a fourth hand-written copy of the
+    kern-description-list markup - molecule.descriptionList takes its items as an
+    array, and Fluid cannot omit a key from an array literal conditionally, so
+    composing it would print an empty <dd> for every fact left blank.
+
+    The long parts are open headed sections, not accordions. A Dienstleistung is a
+    legal text people search with Ctrl+F, and details/summary hides its body from
+    find-in-page; the toc block cannot reach inside a single block either, so folding
+    them away would remove them from the only in-page navigation there is.
+
+    Link fields are resolved to a URI first and every guard tests that string. A
+    Content Blocks Link field is a TypolinkParameter object, and an object is truthy in
+    Fluid even when the editor left it empty - guarding on the field would render the
+    call-to-action button with an empty href.
+
+    Every section is wrapped in its own f:if so an unfilled field emits no wrapper at
+    all, the rule molecule.alert records for its body.
+</f:comment><f:variable name="blockLevel" value="2"
+/><f:if condition="{data.header_layout} > 0 && {data.header_layout} < 6"><f:variable name="blockLevel" value="{data.header_layout}" /></f:if
+><f:variable name="sectionLevel" value="{blockLevel + 1}"
+/><f:if condition="!{data.header} || {data.header_layout} == 100"><f:variable name="sectionLevel" value="{blockLevel}" /></f:if
+><f:variable name="ctaLabel" value="{data.tx_kernux_service_onlineLabel}"
+/><f:if condition="!{ctaLabel}"><f:variable name="ctaLabel"><f:translate key="service.onlineService" extensionName="KernUx" /></f:variable></f:if
+><f:variable name="ctaUri"><f:uri.typolink parameter="{data.tx_kernux_service_onlineLink}" /></f:variable
+><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><div class="kern-stack-lg">
+    <f:if condition="{data.tx_kernux_service_teaser}">
+        <k:atom.body variant="large">{data.tx_kernux_service_teaser}</k:atom.body>
+    </f:if>
+    <f:if condition="{data.bodytext}">
+        <div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div>
+    </f:if>
+    <f:if condition="{ctaUri}">
+        <div>
+            <k:molecule.buttonGroup items="{0: {label: ctaLabel, link: ctaUri, icon: 'arrow-forward'}}" />
+            <f:if condition="{data.tx_kernux_service_onlineHint}"><k:atom.body variant="small">{data.tx_kernux_service_onlineHint}</k:atom.body></f:if>
+        </div>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_requirements}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.requirements" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_service_requirements}" as="item"><li>{item.text}</li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_documents}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.documents" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_service_documents}" as="item"><li>{item.text}</li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_forms}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.forms" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list><f:for each="{data.tx_kernux_service_forms}" as="form"><li><k:atom.link href="{f:uri.typolink(parameter: form.link)}" icon="download">{form.title}</k:atom.link></li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_fees}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.fees" extensionName="KernUx" /></k:atom.heading>
+            <div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.tx_kernux_service_fees}</f:format.html></div>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_deadlines}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.deadlines" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.body><f:format.nl2br>{data.tx_kernux_service_deadlines}</f:format.nl2br></k:atom.body>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_processingTime}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.processingTime" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.body>{data.tx_kernux_service_processingTime}</k:atom.body>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_legalBases}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.legalBases" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_service_legalBases}" as="item"><li><f:variable name="baseUri"><f:uri.typolink parameter="{item.link}" /></f:variable><f:if condition="{baseUri}"><f:then><k:atom.link href="{baseUri}">{item.title}</k:atom.link></f:then><f:else>{item.title}</f:else></f:if></li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_legalRemedy}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.legalRemedy" extensionName="KernUx" /></k:atom.heading>
+            <div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.tx_kernux_service_legalRemedy}</f:format.html></div>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_furtherInformation}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.furtherInformation" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_service_furtherInformation}" as="item"><li><k:atom.link href="{f:uri.typolink(parameter: item.link)}">{item.title}</k:atom.link></li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_service_responsibility}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="service.responsibility" extensionName="KernUx" /></k:atom.heading>
+            <div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.tx_kernux_service_responsibility}</f:format.html></div>
+        </section>
+    </f:if>
+</div></k:molecule.section>

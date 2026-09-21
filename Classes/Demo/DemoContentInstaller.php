@@ -57,8 +57,16 @@ final class DemoContentInstaller
 
     /**
      * Removes a previously installed demo tree, so the command can be run again.
-     * Recognised by the root page's slug rather than by a marker field: the fixture owns
-     * that slug, and nothing else in a site should be using it.
+     * Recognised by the slugs of the fixture's top-level pages rather than by a marker
+     * field: the fixture owns those slugs, and nothing else in a site should be using
+     * them.
+     *
+     * Every top-level page is looked up, not just the first. The fixture declares
+     * several sections so the header navigation has the breadth a municipal site
+     * actually has - the menu processor renders the site root's children as the bar, so
+     * one root page would mean one entry and no way to see how the bar behaves. A
+     * cleanup that knew only the first slug would leave the other sections behind and
+     * quietly add a second set on the next run.
      *
      * @return int Number of page trees removed.
      */
@@ -66,16 +74,17 @@ final class DemoContentInstaller
     {
         $this->initializeBackendUser();
 
-        $slug = '/' . trim($this->rootSlug(), '/');
-        $uids = $this->findPagesBySlug($rootPageId, $slug);
-
-        foreach ($uids as $uid) {
-            $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-            $dataHandler->start([], ['pages' => [$uid => ['delete' => 1]]]);
-            $dataHandler->process_cmdmap();
+        $removed = 0;
+        foreach ($this->rootSlugs() as $slug) {
+            foreach ($this->findPagesBySlug($rootPageId, $slug) as $uid) {
+                $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+                $dataHandler->start([], ['pages' => [$uid => ['delete' => 1]]]);
+                $dataHandler->process_cmdmap();
+                ++$removed;
+            }
         }
 
-        return count($uids);
+        return $removed;
     }
 
     /**
@@ -436,12 +445,20 @@ final class DemoContentInstaller
         $GLOBALS['BE_USER'] = $state['previous'];
     }
 
-    private function rootSlug(): string
+    /**
+     * @return list<string>
+     */
+    private function rootSlugs(): array
     {
-        $pages = $this->pageList($this->fixture());
-        $first = $pages[0] ?? [];
+        $slugs = [];
+        foreach ($this->pageList($this->fixture()) as $page) {
+            $slug = '/' . trim($this->string($page, 'slug'), '/');
+            if ($slug !== '/') {
+                $slugs[] = $slug;
+            }
+        }
 
-        return $this->string($first, 'slug');
+        return array_values(array_unique($slugs));
     }
 
     /**

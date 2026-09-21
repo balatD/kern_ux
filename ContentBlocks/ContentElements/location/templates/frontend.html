@@ -1,0 +1,98 @@
+<f:comment>
+    Anschrift, Öffnungszeiten und Erreichbarkeit einer Dienststelle - the second page
+    type every municipal portal has, modelled on service.berlin.de/standort and the
+    equivalent pages on hamburg.de, stadt-koeln.de and kiel.de.
+
+    Composed from existing components; it emits no class KERN does not already ship.
+    The <address> carries none at all, which is why it needs none: KERN never styles
+    the element, so the browser's own `address { font-style: italic }` applies - and
+    kern-body and kern-link both declare font-style: normal. That holds only as long
+    as every text node inside sits in one of them, labels included. A bare "Telefon: "
+    beside the component would render italic. That is a markup rule, not a CSS one,
+    and the test is what keeps it.
+
+    The heading sits outside the <address>: HTML's content model forbids heading and
+    sectioning content in there.
+
+    No schema.org JSON-LD, deliberately. OpeningHoursSpecification wants dayOfWeek as
+    an enum, but the day is free text because cities write "Montag bis Freitag" and
+    "Sa, 1. im Monat" - so correct structured data would mean forcing a weekday enum
+    on editors for a machine-only benefit, and wrong opening hours in a search result
+    are worse than none. <time> and <address> already carry the machine-readable part.
+
+    Both link fields are resolved to a URI once, up front, and every guard below tests
+    that string - never the field. A Content Blocks Link field is a TypolinkParameter
+    object, and an object is truthy in Fluid even when the editor left the link empty,
+    so guarding on the field emitted <a href=""> with an aria-hidden icon as its only
+    content: a focusable link with no accessible name at all.
+
+    The hasAddress guard is a boolean OR, never a concatenation of the field values.
+    Content Blocks hands a Link field over as a TypolinkParameter object, so building
+    a string out of them throws "Object of class TypolinkParameter could not be
+    converted to string" - and only on a real page, where those fields are filled.
+
+    Accessibility features are text, never pictograms. Berlin renders four bare icons
+    and that is the one thing on the page worth not copying: an icon-only accessibility
+    claim is unreadable to exactly the people it addresses. KERN ships no icon for a
+    lift, a ramp or an accessible WC either.
+</f:comment><f:variable name="sectionLevel" value="3"
+/><f:if condition="!{data.header} || {data.header_layout} == 100"><f:variable name="sectionLevel" value="2" /></f:if
+><f:variable name="phoneUri"><f:replace value="{data.tx_kernux_location_phone}" search="{0: ' ', 1: '/', 2: '(', 3: ')', 4: '-'}" replace="{0: '', 1: '', 2: '', 3: '', 4: ''}" /></f:variable
+><f:variable name="homepageUri"><f:uri.typolink parameter="{data.tx_kernux_location_homepage}" /></f:variable
+><f:variable name="mapUri"><f:uri.typolink parameter="{data.tx_kernux_location_mapLink}" /></f:variable
+><f:variable name="hasAddress" value="{f:if(condition: '{data.tx_kernux_location_authority} || {data.tx_kernux_location_street} || {data.tx_kernux_location_postalCode} || {data.tx_kernux_location_city} || {data.tx_kernux_location_phone} || {data.tx_kernux_location_fax} || {data.tx_kernux_location_email} || {homepageUri} || {mapUri}', then: 1, else: 0)}"
+/><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><div class="kern-stack-lg">
+    <f:if condition="{data.tx_kernux_location_noticeTitle} || {data.bodytext}">
+        <k:molecule.alert
+            variant="{data.tx_kernux_location_noticeVariant}"
+            title="{data.tx_kernux_location_noticeTitle}"
+            level="{sectionLevel}"
+        ><f:if condition="{data.bodytext}"><div class="kernt3-rte"><f:format.html parseFuncTSPath="lib.kernUx.rte">{data.bodytext}</f:format.html></div></f:if></k:molecule.alert>
+    </f:if>
+    <f:if condition="{hasAddress}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="location.contact" extensionName="KernUx" /></k:atom.heading>
+            <address>
+                <f:if condition="{data.tx_kernux_location_authority}"><k:atom.body>{data.tx_kernux_location_authority}</k:atom.body></f:if>
+                <f:if condition="{data.tx_kernux_location_street}"><k:atom.body>{data.tx_kernux_location_street}<f:if condition="{data.tx_kernux_location_postalCode} || {data.tx_kernux_location_city}"><br />{data.tx_kernux_location_postalCode} {data.tx_kernux_location_city}</f:if></k:atom.body></f:if>
+                <f:if condition="{data.tx_kernux_location_phone}"><k:atom.body><f:translate key="location.phone" extensionName="KernUx" />: <k:atom.link href="tel:{phoneUri}">{data.tx_kernux_location_phone}</k:atom.link></k:atom.body></f:if>
+                <f:if condition="{data.tx_kernux_location_fax}"><k:atom.body><f:translate key="location.fax" extensionName="KernUx" />: {data.tx_kernux_location_fax}</k:atom.body></f:if>
+                <f:if condition="{data.tx_kernux_location_email}"><k:atom.body><f:translate key="location.email" extensionName="KernUx" />: <k:atom.link href="mailto:{data.tx_kernux_location_email}">{data.tx_kernux_location_email}</k:atom.link></k:atom.body></f:if>
+                <f:if condition="{homepageUri}"><k:atom.body><f:translate key="location.homepage" extensionName="KernUx" />: <k:atom.link href="{homepageUri}" external="{true}">{homepageUri}</k:atom.link></k:atom.body></f:if>
+                <f:if condition="{mapUri}"><k:atom.body><k:atom.link href="{mapUri}" external="{true}"><f:translate key="location.map" extensionName="KernUx" /></k:atom.link></k:atom.body></f:if>
+            </address>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_location_accessibility}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="location.accessibility" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_location_accessibility}" as="feature"><li>{feature.label}</li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_location_openingHours}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="location.openingHours" extensionName="KernUx" /></k:atom.heading>
+            <k:molecule.openingHours days="{data.tx_kernux_location_openingHours}" />
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_location_transport}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="location.transport" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_location_transport}" as="line"><li><k:atom.body variant="bold" tag="span">{line.mode}</k:atom.body>: {line.lines}</li></f:for></k:atom.list>
+        </section>
+    </f:if>
+    <f:if condition="{data.tx_kernux_location_payment}">
+        <section>
+            <k:atom.heading level="{sectionLevel}" appearance="title"><f:translate key="location.payment" extensionName="KernUx" /></k:atom.heading>
+            <k:atom.list variant="bullet"><f:for each="{data.tx_kernux_location_payment}" as="method"><li>{method.label}</li></f:for></k:atom.list>
+        </section>
+    </f:if>
+</div></k:molecule.section>

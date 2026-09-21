@@ -224,12 +224,27 @@ body {
         var(--kern-color-decorative-border-contextual, #e5e5e5);
 }
 
+/* The header band carries its own vertical padding.
+ *
+ * It used to sit on __bar instead, which from the navigation breakpoint up is a single
+ * cell of the grid (grid-area: brand). The space above the header then existed only for
+ * as long as the brand cell happened to be the tallest thing in the first row - and the
+ * brand is empty whenever neither kernUx.site.logo nor kernUx.site.title is configured
+ * and the site has no websiteTitle. The service links were then the tallest cell, and
+ * align-items: center put them flush against the top edge of the viewport.
+ *
+ * On the container the padding is independent of what any cell contains. Two classes so
+ * it ties KERN's `.kern-container:has(.kern-grid){padding:0}` on specificity and wins on
+ * source order - the same shape kernt3-content-area and kernt3-footer__inner use. */
+.kern-container.kernt3-header__inner {
+    padding-block: var(--kern-metric-space-default, 16px);
+}
+
 .kernt3-header__bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--kern-metric-space-large, 24px);
-    padding-block: var(--kern-metric-space-default, 16px);
 }
 
 .kernt3-header__brand {
@@ -255,7 +270,7 @@ body {
 }
 
 .kernt3-header__main {
-    padding-bottom: var(--kern-metric-space-small, 8px);
+    padding-bottom: var(--kern-metric-space-default, 16px);
 }
 
 /* --- Service navigation --------------------------------------------------
@@ -270,7 +285,7 @@ body {
 .kernt3-service {
     display: flex;
     flex-direction: column;
-    gap: var(--kern-metric-space-small, 8px);
+    gap: var(--kern-metric-space-default, 16px);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -300,7 +315,7 @@ body {
 .kernt3-nav {
     display: flex;
     flex-direction: column;
-    gap: var(--kern-metric-space-default, 16px);
+    gap: var(--kern-metric-space-large, 24px);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -308,7 +323,7 @@ body {
 
 .kernt3-nav__link {
     display: inline-block;
-    padding-bottom: var(--kern-metric-space-x-small, 4px);
+    padding-bottom: var(--kern-metric-space-small, 8px);
     font-weight: var(--kern-typography-font-weight-medium, 500);
     /* Reserved so switching to the active weight and border does not move the row. */
     border-bottom: var(--kern-metric-border-width-bold, 4px) solid transparent;
@@ -329,8 +344,8 @@ body {
 .kernt3-nav__sub {
     display: flex;
     flex-direction: column;
-    margin: var(--kern-metric-space-small, 8px) 0 0;
-    padding: 0;
+    margin: var(--kern-metric-space-default, 16px) 0 0;
+    padding: var(--kern-metric-space-small, 8px) 0;
     list-style: none;
 }
 
@@ -338,7 +353,7 @@ body {
  * shifts when it appears. */
 .kernt3-nav__sublink {
     display: block;
-    padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
+    padding: var(--kern-metric-space-default, 16px) var(--kern-metric-space-large, 24px);
     border-left: var(--kern-metric-border-width-bold, 4px) solid transparent;
     font-size: var(--kern-typography-font-size-small-static, 16px);
     text-decoration: none;
@@ -429,6 +444,9 @@ body {
             "search  search"
             "main    main";
         align-items: center;
+        /* Without a row gap the three bands touch: the service links ended up directly
+         * above the main navigation with nothing between them. */
+        row-gap: var(--kern-metric-space-default, 16px);
     }
 
     .kernt3-header__panel {
@@ -454,7 +472,7 @@ body {
 
     .kernt3-service {
         flex-direction: row;
-        gap: var(--kern-metric-space-x-large, 32px);
+        gap: var(--kern-metric-space-2x-large, 40px);
     }
 
     .kernt3-header__toggles {

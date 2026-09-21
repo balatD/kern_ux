@@ -1,0 +1,118 @@
+name: kern-ux/service
+group: kern
+vendorPrefix: tx_kernux
+fields:
+  # The block heading is the Leistungsbezeichnung.
+  - identifier: KernUx/Heading
+    type: Basic
+  - identifier: teaser
+    type: Textarea
+    rows: 3
+  # Reuses core's bodytext rather than adding a column, so an existing text element
+  # placed above a service can be merged into it without data loss.
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+  # Two fields, not a collection: a service has exactly one online path, and a list
+  # would invite three competing primary buttons.
+  - identifier: online_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.serviceOnline'
+    fields:
+      - identifier: onlineLabel
+        type: Text
+        max: 120
+      - type: Linebreak
+      - identifier: onlineLink
+        type: Link
+      - type: Linebreak
+      - identifier: onlineHint
+        type: Text
+        max: 255
+
+  - identifier: requirements_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.serviceRequirements'
+  - identifier: requirements
+    type: Collection
+    labelField: text
+    fields:
+      - identifier: text
+        type: Text
+        required: true
+        max: 500
+  - identifier: documents
+    type: Collection
+    labelField: text
+    fields:
+      - identifier: text
+        type: Text
+        required: true
+        max: 500
+  # A Link, not a File: an FIM "Formular" is as often a form server as a stored PDF,
+  # and a link field still takes t3://file?uid= for the PDF case.
+  - identifier: forms
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 255
+      - identifier: link
+        type: Link
+        required: true
+
+  - identifier: costs_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.serviceCosts'
+  # Rich text, because a fee schedule is a table - and an RTE table is how this
+  # extension has decided tables are authored, so it picks up kern-table and the
+  # scroll wrapper from lib.kernUx.rte with no second mechanism.
+  - identifier: fees
+    type: Textarea
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+  - identifier: deadlines
+    type: Textarea
+    rows: 3
+  - identifier: processingTime
+    type: Text
+    max: 255
+
+  - identifier: legal_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.serviceLegal'
+  - identifier: legalBases
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 255
+      - identifier: link
+        type: Link
+  - identifier: legalRemedy
+    type: Textarea
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+  - identifier: furtherInformation
+    type: Collection
+    labelField: title
+    fields:
+      - identifier: title
+        type: Text
+        required: true
+        max: 255
+      - identifier: link
+        type: Link
+        required: true
+  - identifier: responsibility
+    type: Textarea
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+
+  - identifier: KernUx/Spacing
+    type: Basic

@@ -36,6 +36,18 @@
             <trans-unit id="cards.image.label">
                 <source>Image</source>
             </trans-unit>
+            <trans-unit id="cards.subline.label">
+                <source>Subline</source>
+            </trans-unit>
+            <trans-unit id="cards.subline.description">
+                <source>Sits below the title, for example a place or a short qualifier.</source>
+            </trans-unit>
+            <trans-unit id="cards.date.label">
+                <source>Date</source>
+            </trans-unit>
+            <trans-unit id="cards.date.description">
+                <source>Rendered in the card footer as a machine-readable time element. Leave empty for cards that are not news.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
