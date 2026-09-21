@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 32" role="img" aria-hidden="true" focusable="false">
+    <!--
+        Placeholder mark for the demo page tree, deliberately generic: a gate and two
+        towers, the shape most German municipal arms reduce to at 32px. It is not any
+        real municipality's coat of arms, and it is not the Bildwortmarke of the
+        Digitale Dachmarke - that one is reserved and must never be shipped here.
+    -->
+    <path fill="#131525" d="M4 30V13l7-5V4h3v2l6-4 6 4V4h3v4l7 5v17H23v-8a3 3 0 0 0-6 0v8z"/>
+    <path fill="#fff" d="M18 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+    <path fill="#0b3b8f" d="M7 30V15l3-2v17zM30 30V13l3 2v15z"/>
+</svg>
