@@ -1,5 +1,5 @@
 /*
- * Typography for rich-text output.
+ * Typography for rich-text output on the rendered page.
  *
  * KERN is class-based: only `html` and `body` carry element selectors, everything
  * else needs a kern-* class. A rich-text editor produces bare <p>, <ul>, <a> and
@@ -12,103 +12,107 @@
  *   - Having CKEditor write the classes. Editors can then delete them, and existing
  *     content would only pick them up on re-save.
  *
- * So the bridge is a stylesheet, scoped twice: `.kernt3-rte` for the frontend and
- * `.ck-content` for the editing view. One rule set, so the editor shows what the
- * page will show. Values come from KERN's own tokens, so a change to KERN's scale is
- * inherited rather than re-typed.
+ * So the bridge is a stylesheet, scoped to the `.kernt3-rte` wrapper every block puts
+ * around a parsed field. The editing view needs the same rules under a scope that
+ * cannot be spelled here, so it has its own file - see rte-editor.css. Values come
+ * from KERN's own tokens, so a change to KERN's scale is inherited rather than
+ * re-typed.
  */
-.kernt3-rte,
-.ck-content {
+.kernt3-rte {
     font-family: var(--kern-typography-font-family-default, "Fira Sans"), system-ui, sans-serif;
     color: var(--kern-color-layout-text-default, #1a1a1a);
 }
 
-.kernt3-rte > :first-child,
-.ck-content > :first-child {
+.kernt3-rte > :first-child {
     margin-top: 0;
 }
 
-.kernt3-rte > :last-child,
-.ck-content > :last-child {
+.kernt3-rte > :last-child {
     margin-bottom: 0;
 }
 
-.kernt3-rte p,
-.ck-content p {
+.kernt3-rte p {
     margin-block: var(--kern-metric-space-default, 16px);
     font-size: var(--kern-typography-font-size-medium-static, 18px);
     line-height: var(--kern-typography-line-height-medium-static, 24px);
 }
 
+/* Sizes are KERN's own heading scale, not a second one: an h2 typed in rich text is
+ * the size the Heading element renders at its default appearance (large), an h3
+ * matches medium and an h4 matches small. Without that an editor cannot reach the
+ * same result two ways. font-family is spelled out because KERN's kern-heading-*
+ * classes do - the editing view has a heading font of its own that would win. */
 .kernt3-rte h2,
 .kernt3-rte h3,
-.kernt3-rte h4,
-.ck-content h2,
-.ck-content h3,
-.ck-content h4 {
+.kernt3-rte h4 {
     margin-block: var(--kern-metric-space-large, 24px) var(--kern-metric-space-small, 8px);
-    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
-    line-height: 1.2;
+    font-family: var(--kern-typography-font-family-default, "Fira Sans"), system-ui, sans-serif;
+    font-weight: var(--kern-typography-font-weight-heading-default, 600);
 }
 
-.kernt3-rte h2, .ck-content h2 { font-size: 1.75rem; }
-.kernt3-rte h3, .ck-content h3 { font-size: 1.375rem; }
-.kernt3-rte h4, .ck-content h4 { font-size: 1.125rem; }
+/* The fallbacks are each adaptive token's desktop step. They apply only where kern.css
+ * is absent, which is the editing view - a text field, never a narrow viewport. */
+.kernt3-rte h2 {
+    font-size: var(--kern-typography-font-size-large-adaptive, 32px);
+    line-height: var(--kern-typography-line-height-large-adaptive, 40px);
+}
+
+.kernt3-rte h3 {
+    font-size: var(--kern-typography-font-size-medium-adaptive, 24px);
+    line-height: var(--kern-typography-line-height-medium-adaptive, 32px);
+}
+
+.kernt3-rte h4 {
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
 
 .kernt3-rte ul,
-.kernt3-rte ol,
-.ck-content ul,
-.ck-content ol {
+.kernt3-rte ol {
     margin-block: var(--kern-metric-space-default, 16px);
     padding-left: var(--kern-metric-space-large, 24px);
     font-size: var(--kern-typography-font-size-medium-static, 18px);
     line-height: var(--kern-typography-line-height-medium-static, 24px);
 }
 
-.kernt3-rte li,
-.ck-content li {
+.kernt3-rte li {
     margin-block: var(--kern-metric-space-x-small, 4px);
 }
 
-.kernt3-rte a,
-.ck-content a {
+.kernt3-rte a {
     color: var(--kern-color-action-default, #0b4f9e);
     text-decoration: underline;
 }
 
 /* Same focus ring KERN applies everywhere, so rich-text links do not become the one
  * place on the page where focus looks different. */
-.kernt3-rte a:focus-visible,
-.ck-content a:focus-visible {
+.kernt3-rte a:focus-visible {
     outline: 4px solid var(--kern-color-action-focus-default-contextual, #454b6b);
     outline-offset: 0;
 }
 
 /* Wide tables scroll inside their own box; the wrapper carries tabindex so keyboard
- * users can reach the scroll area, the same rule KERN applies to its own tables. */
-.kernt3-rte .kern-table-responsive,
-.ck-content table {
+ * users can reach the scroll area, the same rule KERN applies to its own tables.
+ * lib.kernUx.rte adds that wrapper server-side, so it exists only here - the editing
+ * view scrolls the table itself. */
+.kernt3-rte .kern-table-responsive {
     overflow-x: auto;
 }
 
-.kernt3-rte table,
-.ck-content table {
+.kernt3-rte table {
     width: 100%;
     border-collapse: collapse;
     font-size: var(--kern-typography-font-size-medium-static, 18px);
 }
 
-.kernt3-rte caption,
-.ck-content caption {
+.kernt3-rte caption {
     text-align: left;
     font-weight: var(--kern-typography-font-weight-semi-bold, 600);
     padding-block-end: var(--kern-metric-space-small, 8px);
 }
 
 .kernt3-rte th,
-.kernt3-rte td,
-.ck-content th,
-.ck-content td {
+.kernt3-rte td {
     padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
     border-bottom: var(--kern-metric-border-width-light, 1px) solid
         var(--kern-color-layout-border, #e5e5e5);
@@ -116,8 +120,7 @@
     vertical-align: top;
 }
 
-.kernt3-rte th,
-.ck-content th {
+.kernt3-rte th {
     font-weight: var(--kern-typography-font-weight-semi-bold, 600);
 }
 
