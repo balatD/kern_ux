@@ -1,0 +1,121 @@
+/*
+ * The rte.css rules again, for the CKEditor 5 editing view.
+ *
+ * A separate file because the two scopes cannot be spelled at once. CKEditor 5 does
+ * not load a `contentsCss` file as written: CKEditor5Element.prefixContentsCss() runs
+ * every selector through prefixAndRebaseCss() and prepends `#<id> .ck-content`. A
+ * selector that already names `.ck-content` therefore arrives as
+ * `#<id> .ck-content .ck-content p` and matches nothing - which is how these rules
+ * were silently dead while they lived in rte.css.
+ *
+ * `body` is the one scope that survives, because the prefixer REPLACES an `html` or
+ * `body` type selector with its prefix instead of prepending to it. So `body p`
+ * arrives as `#<id> .ck-content p`. Core's own contents.css is written the same way.
+ *
+ * Typography only - NO colours. kern.css is not loaded into the editing view, so every
+ * var(--kern-color-*) here would fall back to its literal, and those literals are all
+ * light-theme values: on TYPO3 14, whose contents.css follows the backend colour
+ * scheme, that painted near-black text onto the dark editing surface. Colour belongs
+ * to whichever theme the backend is in, which only core knows, so core keeps it: its
+ * contents.css sets text and link colour from --typo3-* on 14 and pins the surface to
+ * light on 13. Anything here that needs a colour derives it from currentColor.
+ *
+ * Loaded only by Configuration/RTE/KernUx.yaml. It must never reach the frontend,
+ * where a bare `body p` would style the whole page.
+ */
+body {
+    font-family: var(--kern-typography-font-family-default, "Fira Sans"), system-ui, sans-serif;
+}
+
+body > :first-child {
+    margin-top: 0;
+}
+
+body > :last-child {
+    margin-bottom: 0;
+}
+
+body p {
+    margin-block: var(--kern-metric-space-default, 16px);
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
+
+/* Sizes are KERN's own heading scale, not a second one: an h2 typed in rich text is
+ * the size the Heading element renders at its default appearance (large), an h3
+ * matches medium and an h4 matches small. Without that an editor cannot reach the
+ * same result two ways. font-family is spelled out because KERN's kern-heading-*
+ * classes do - and here it is load-bearing: the backend's own heading font wins
+ * otherwise, so headings alone would not be Fira Sans. */
+body h2,
+body h3,
+body h4 {
+    margin-block: var(--kern-metric-space-large, 24px) var(--kern-metric-space-small, 8px);
+    font-family: var(--kern-typography-font-family-default, "Fira Sans"), system-ui, sans-serif;
+    font-weight: var(--kern-typography-font-weight-heading-default, 600);
+}
+
+/* The fallbacks are each adaptive token's desktop step, and here they are what renders:
+ * kern.css defines none of these in the backend. */
+body h2 {
+    font-size: var(--kern-typography-font-size-large-adaptive, 32px);
+    line-height: var(--kern-typography-line-height-large-adaptive, 40px);
+}
+
+body h3 {
+    font-size: var(--kern-typography-font-size-medium-adaptive, 24px);
+    line-height: var(--kern-typography-line-height-medium-adaptive, 32px);
+}
+
+body h4 {
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
+
+body ul,
+body ol {
+    margin-block: var(--kern-metric-space-default, 16px);
+    padding-left: var(--kern-metric-space-large, 24px);
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+    line-height: var(--kern-typography-line-height-medium-static, 24px);
+}
+
+body li {
+    margin-block: var(--kern-metric-space-x-small, 4px);
+}
+
+/* lib.kernUx.rte adds the scroll wrapper server-side, so the editing view has no
+ * .kern-table-responsive to scroll - the table itself takes the rule. The rule colour
+ * is mixed out of currentColor, which core has already set for the backend's theme. */
+body table {
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--kern-typography-font-size-medium-static, 18px);
+}
+
+body caption {
+    text-align: left;
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+    padding-block-end: var(--kern-metric-space-small, 8px);
+}
+
+body th,
+body td {
+    padding: var(--kern-metric-space-small, 8px) var(--kern-metric-space-default, 16px);
+    border-bottom: var(--kern-metric-border-width-light, 1px) solid
+        color-mix(in srgb, currentColor, transparent 75%);
+    text-align: left;
+    vertical-align: top;
+}
+
+body th {
+    font-weight: var(--kern-typography-font-weight-semi-bold, 600);
+}
+
+@media (forced-colors: active) {
+    body th,
+    body td {
+        border-bottom: 1px solid CanvasText;
+    }
+}

@@ -55,6 +55,7 @@ editor:
         - toggleTableCaption
 
     # Shown inside the editor so the editing view is not wildly different from the
-    # rendered result.
+    # rendered result. Deliberately NOT rte.css: CKEditor prefixes every selector in a
+    # contentsCss file with `#<id> .ck-content`, so only the body-scoped twin lands.
     contentsCss:
-        - 'EXT:kern_ux/Resources/Public/Css/rte.css'
+        - 'EXT:kern_ux/Resources/Public/Css/rte-editor.css'

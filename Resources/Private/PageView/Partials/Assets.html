@@ -14,9 +14,9 @@
 </f:if>
 <f:asset.css identifier="kern-ux-kernt3" href="EXT:kern_ux/Resources/Public/Css/kernt3.css" />
 <f:comment>
-    rte.css is scoped to .kernt3-rte for the frontend and .ck-content for the editing
-    view, so both show the same thing. It was previously wired into the CKEditor
-    preset only, which left every rich-text block unstyled on the rendered page.
+    rte.css carries KERN's typography for rich text, scoped to the .kernt3-rte wrapper
+    every block puts around a parsed field. The editing view gets the same rules from
+    rte-editor.css, which only the RTE preset loads.
 </f:comment>
 <f:asset.css identifier="kern-ux-rte" href="EXT:kern_ux/Resources/Public/Css/rte.css" />
 <f:asset.script identifier="kern-ux-navigation" src="EXT:kern_ux/Resources/Public/JavaScript/navigation.js" />
