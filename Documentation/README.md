@@ -8,7 +8,7 @@ Haupt-README. Hier steht das Detail.
 | [Installation](Installation.md) | Setup, KERN-Assets, Demo-Seitenbaum, Stolperfallen |
 | [Konfiguration](Configuration.md) | Site-Settings, Thema, Navigation, Digitale Dachmarke, RTE |
 | [Components](Components.md) | Component-Schicht, Galerie, eigene Components schreiben |
-| [Content Blocks](ContentBlocks.md) | Die 20 Blöcke, Seiten-Templates, Backend-Vorschauen |
+| [Content Blocks](ContentBlocks.md) | Die 23 Blöcke, Seiten-Templates, Backend-Vorschauen |
 | [Formulare](Forms.md) | `ext:form`-Theme, Fehlerbehandlung, `KernDate` |
 | [Barrierefreiheit](Accessibility.md) | axe-Läufe, Prüfumfang, was von Hand bleibt |
 | [Entwicklung](Development.md) | DDEV-Harness für beide Majors, Tests, Sprachen |
@@ -19,10 +19,10 @@ Alles gegen KERN **2.7.2** gebaut. Zu den Lizenzen der Fremdkomponenten siehe
 
 ## Was die Extension mitbringt
 
-- **40 Fluid Components** — 15 Atome, 16 Moleküle, 9 Organismen: Header mit
+- **41 Fluid Components** — 15 Atome, 17 Moleküle, 9 Organismen: Header mit
   Flyout-Navigation, Footer, Kopfzeile, Bühne, Dialog, Galerie, Kartengitter,
   Aufgabenliste, Akkordeon, Breadcrumb, Medienplayer, Zusammenfassung.
-- **20 Content Blocks** für Redakteure, jeder mit Backend-Vorschau.
+- **23 Content Blocks** für Redakteure, jeder mit Backend-Vorschau.
 - **`ext:form`-Theme** — 30 Element-Partials, Fehlerübersicht mit Sprungmarken,
   Fortschrittsanzeige für mehrseitige Formulare, `KernDate` (Datum als drei Felder
   statt `input type="date"`).
