@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-10" product-name="kern-ux/service">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Service</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>An administrative service in the standard FIM field order: requirements, documents, fees, deadlines, legal basis.</source>
+            </trans-unit>
+            <trans-unit id="teaser.label">
+                <source>Short description</source>
+            </trans-unit>
+            <trans-unit id="teaser.description">
+                <source>One or two sentences saying what the service is. Shown above the full text.</source>
+            </trans-unit>
+            <trans-unit id="bodytext.label">
+                <source>Full text</source>
+            </trans-unit>
+            <trans-unit id="onlineLabel.label">
+                <source>Button label</source>
+            </trans-unit>
+            <trans-unit id="onlineLabel.description">
+                <source>Leave empty to use the standard wording.</source>
+            </trans-unit>
+            <trans-unit id="onlineLink.label">
+                <source>Online service</source>
+            </trans-unit>
+            <trans-unit id="onlineLink.description">
+                <source>The link that starts the service. Without it no button is rendered.</source>
+            </trans-unit>
+            <trans-unit id="onlineHint.label">
+                <source>Note on the online service</source>
+            </trans-unit>
+            <trans-unit id="onlineHint.description">
+                <source>For example which account is required.</source>
+            </trans-unit>
+            <trans-unit id="requirements.label">
+                <source>Requirements</source>
+            </trans-unit>
+            <trans-unit id="requirements.text.label">
+                <source>Requirement</source>
+            </trans-unit>
+            <trans-unit id="documents.label">
+                <source>Required documents</source>
+            </trans-unit>
+            <trans-unit id="documents.text.label">
+                <source>Document</source>
+            </trans-unit>
+            <trans-unit id="forms.label">
+                <source>Forms</source>
+            </trans-unit>
+            <trans-unit id="forms.description">
+                <source>Put the file format in the title, for example "Antragsformular (PDF)": a link has to be understandable from its text alone.</source>
+            </trans-unit>
+            <trans-unit id="forms.title.label">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="forms.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="fees.label">
+                <source>Fees</source>
+            </trans-unit>
+            <trans-unit id="fees.description">
+                <source>Rich text, so a fee schedule can be a table.</source>
+            </trans-unit>
+            <trans-unit id="deadlines.label">
+                <source>Deadlines</source>
+            </trans-unit>
+            <trans-unit id="processingTime.label">
+                <source>Average processing time</source>
+            </trans-unit>
+            <trans-unit id="processingTime.description">
+                <source>For example "sofort" or "2 bis 3 Wochen".</source>
+            </trans-unit>
+            <trans-unit id="legalBases.label">
+                <source>Legal basis</source>
+            </trans-unit>
+            <trans-unit id="legalBases.title.label">
+                <source>Provision</source>
+            </trans-unit>
+            <trans-unit id="legalBases.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="legalBases.link.description">
+                <source>Optional.</source>
+            </trans-unit>
+            <trans-unit id="legalRemedy.label">
+                <source>Legal remedy</source>
+            </trans-unit>
+            <trans-unit id="furtherInformation.label">
+                <source>Further information</source>
+            </trans-unit>
+            <trans-unit id="furtherInformation.title.label">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="furtherInformation.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="responsibility.label">
+                <source>Notes on responsibility</source>
+            </trans-unit>
+            <trans-unit id="responsibility.description">
+                <source>Which office handles this, when several could.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

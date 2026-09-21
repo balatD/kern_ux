@@ -275,6 +275,70 @@
                 <source>Note</source>
                 <target>Hinweis</target>
             </trans-unit>
+            <trans-unit id="preview.tiles">
+                <source>%s tiles</source>
+                <target>%s Kacheln</target>
+            </trans-unit>
+            <trans-unit id="preview.openingHours">
+                <source>%s days</source>
+                <target>%s Tage</target>
+            </trans-unit>
+            <trans-unit id="preview.accessibilityFeatures">
+                <source>%s accessibility features</source>
+                <target>%s Barrierefreiheitsmerkmale</target>
+            </trans-unit>
+            <trans-unit id="preview.onlineService">
+                <source>Online service linked</source>
+                <target>Online-Dienst verlinkt</target>
+            </trans-unit>
+            <trans-unit id="tab.locationContact">
+                <source>Contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="tab.locationAccessibility">
+                <source>Accessibility</source>
+                <target>Barrierefreiheit</target>
+            </trans-unit>
+            <trans-unit id="tab.locationHours">
+                <source>Opening hours</source>
+                <target>Öffnungszeiten</target>
+            </trans-unit>
+            <trans-unit id="tab.locationServices">
+                <source>Getting there and payment</source>
+                <target>Anfahrt und Bezahlung</target>
+            </trans-unit>
+            <trans-unit id="palette.locationNotice">
+                <source>Current notice</source>
+                <target>Aktueller Hinweis</target>
+            </trans-unit>
+            <trans-unit id="palette.locationCity">
+                <source>Postcode and city</source>
+                <target>PLZ und Ort</target>
+            </trans-unit>
+            <trans-unit id="tab.serviceRequirements">
+                <source>Requirements</source>
+                <target>Voraussetzungen</target>
+            </trans-unit>
+            <trans-unit id="tab.serviceCosts">
+                <source>Fees and deadlines</source>
+                <target>Gebühren und Fristen</target>
+            </trans-unit>
+            <trans-unit id="tab.serviceLegal">
+                <source>Legal</source>
+                <target>Rechtliches</target>
+            </trans-unit>
+            <trans-unit id="tab.serviceFurther">
+                <source>Further information</source>
+                <target>Weiterführendes</target>
+            </trans-unit>
+            <trans-unit id="backendLayout.landing">
+                <source>Topic page with stage and side column</source>
+                <target>Themenseite mit Bühne und Seitenspalte</target>
+            </trans-unit>
+            <trans-unit id="palette.serviceOnline">
+                <source>Online service</source>
+                <target>Online-Dienst</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

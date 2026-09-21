@@ -60,6 +60,75 @@
             <trans-unit id="mediaPlayer.captionsLabel">
                 <source>English</source>
             </trans-unit>
+            <trans-unit id="openingHours.closed">
+                <source>closed</source>
+            </trans-unit>
+            <trans-unit id="location.contact">
+                <source>Contact</source>
+            </trans-unit>
+            <trans-unit id="location.accessibility">
+                <source>Accessibility</source>
+            </trans-unit>
+            <trans-unit id="location.openingHours">
+                <source>Opening hours</source>
+            </trans-unit>
+            <trans-unit id="location.transport">
+                <source>Getting there</source>
+            </trans-unit>
+            <trans-unit id="location.payment">
+                <source>Payment methods</source>
+            </trans-unit>
+            <trans-unit id="location.phone">
+                <source>Phone</source>
+            </trans-unit>
+            <trans-unit id="location.fax">
+                <source>Fax</source>
+            </trans-unit>
+            <trans-unit id="location.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="location.homepage">
+                <source>Website</source>
+            </trans-unit>
+            <trans-unit id="location.map">
+                <source>Show the location on a map</source>
+            </trans-unit>
+            <trans-unit id="service.onlineService">
+                <source>Start online service</source>
+            </trans-unit>
+            <trans-unit id="service.requirements">
+                <source>Requirements</source>
+            </trans-unit>
+            <trans-unit id="service.documents">
+                <source>Required documents</source>
+            </trans-unit>
+            <trans-unit id="service.forms">
+                <source>Forms</source>
+            </trans-unit>
+            <trans-unit id="service.fees">
+                <source>Fees</source>
+            </trans-unit>
+            <trans-unit id="service.deadlines">
+                <source>Deadlines</source>
+            </trans-unit>
+            <trans-unit id="service.processingTime">
+                <source>Average processing time</source>
+            </trans-unit>
+            <trans-unit id="service.legalBases">
+                <source>Legal basis</source>
+            </trans-unit>
+            <trans-unit id="service.legalRemedy">
+                <source>Legal remedy</source>
+            </trans-unit>
+            <trans-unit id="service.furtherInformation">
+                <source>Further information</source>
+            </trans-unit>
+            <trans-unit id="service.responsibility">
+                <source>Notes on responsibility</source>
+            </trans-unit>
+            <trans-unit id="date.format">
+                <source>m/d/Y</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
