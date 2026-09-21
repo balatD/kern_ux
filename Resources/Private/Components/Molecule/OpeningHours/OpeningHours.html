@@ -1,0 +1,34 @@
+<f:argument name="days" type="array"
+            description="One row per line of the table. Each row needs a day; a row with closed set needs nothing else, any other row needs opens and closes. An optional note qualifies the day, e.g. 'nur mit Termin'."
+/><f:argument name="closedLabel" type="string" optional="{true}" default=""
+            description="Wording for a day without hours. Empty uses the translated default."
+/><f:variable name="closedText" value="{closedLabel}"
+/><f:if condition="!{closedText}"><f:variable name="closedText"><f:translate key="openingHours.closed" extensionName="KernUx" /></f:variable></f:if
+><f:comment>
+    KERN has no opening-hours component, but it needs none: this is its description
+    list, and every class here is KERN's own.
+
+    It exists as a component rather than as markup in the content block because
+    molecule.descriptionList takes its values as strings and escapes them, so a
+    <time> element cannot pass through it - and the machine-readable time is the
+    whole point of the pattern.
+
+    Deliberately without kern-description-list--col. The modifier reads as if it
+    made columns; it does the opposite. The base item is flex-direction: column and
+    turns into a 30/70 row at 768px, while --col forces both halves back to
+    width: 100% and so keeps them stacked. Day beside hours is the reading a table
+    of opening times needs, so the modifier stays off.
+
+    No "Uhr" suffix. A range between two <time> elements is unambiguous in every
+    language, and a translated unit would put a stray space in the markup on the
+    locales that do not use one.
+</f:comment><f:spaceless>
+<dl class="kern-description-list">
+    <f:for each="{days}" as="row">
+        <div class="kern-description-list-item">
+            <dt class="kern-description-list-item__key">{row.day}</dt>
+            <dd class="kern-description-list-item__value"><f:if condition="{row.closed}"><f:then>{closedText}</f:then><f:else><time datetime="{row.opens}">{row.opens}</time>&#8211;<time datetime="{row.closes}">{row.closes}</time></f:else></f:if><f:if condition="{row.note}"><k:atom.body variant="small">{row.note}</k:atom.body></f:if></dd>
+        </div>
+    </f:for>
+</dl>
+</f:spaceless>
