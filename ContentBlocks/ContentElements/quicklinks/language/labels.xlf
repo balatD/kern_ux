@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-10" product-name="kern-ux/quicklinks">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Quick access</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A grid of icon-led tiles for the services people look for most.</source>
+            </trans-unit>
+            <trans-unit id="columns.label">
+                <source>Columns</source>
+            </trans-unit>
+            <trans-unit id="columns.description">
+                <source>Upper limit on a wide screen. A narrow screen always shows one tile per row.</source>
+            </trans-unit>
+            <trans-unit id="tiles.label">
+                <source>Tiles</source>
+            </trans-unit>
+            <trans-unit id="tiles.title.label">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tiles.link.label">
+                <source>Target</source>
+            </trans-unit>
+            <trans-unit id="tiles.icon.label">
+                <source>Icon</source>
+            </trans-unit>
+            <trans-unit id="tiles.icon.description">
+                <source>Decorative: the title carries the meaning, so the icon is hidden from screen readers.</source>
+            </trans-unit>
+            <trans-unit id="tiles.text.label">
+                <source>Text</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

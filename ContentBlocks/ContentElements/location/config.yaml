@@ -1,0 +1,142 @@
+name: kern-ux/location
+group: kern
+vendorPrefix: tx_kernux
+fields:
+  # The block heading is the name of the place ("Bürgerbüro Mitte").
+  - identifier: KernUx/Heading
+    type: Basic
+
+  # Aktuelle Hinweise - a lift out of order, a counter closed today. Same shape as the
+  # alert block, because it is the same component underneath.
+  - identifier: notice_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.locationNotice'
+    fields:
+      - identifier: noticeTitle
+        type: Text
+        max: 120
+      - type: Linebreak
+      - identifier: noticeVariant
+        type: Select
+        renderType: selectSingle
+        default: warning
+        items:
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.info'
+            value: info
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.success'
+            value: success
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.warning'
+            value: warning
+          - label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:alert.danger'
+            value: danger
+  - identifier: bodytext
+    useExistingField: true
+    enableRichtext: true
+    richtextConfiguration: kern_ux
+
+  - identifier: contact_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.locationContact'
+  - identifier: authority
+    type: Text
+    max: 255
+  - identifier: street
+    type: Text
+    max: 255
+  - identifier: city_palette
+    type: Palette
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:palette.locationCity'
+    fields:
+      - identifier: postalCode
+        type: Text
+        max: 12
+      - identifier: city
+        type: Text
+        max: 255
+  - identifier: phone
+    type: Text
+    max: 60
+  - identifier: fax
+    type: Text
+    max: 60
+  - identifier: email
+    type: Email
+  - identifier: homepage
+    type: Link
+  # A link, never an embed. A map iframe is a third-party request on every page hit,
+  # which this extension does not make anywhere - the same reason the asset installer
+  # refuses a CDN.
+  - identifier: mapLink
+    type: Link
+
+  - identifier: accessibility_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.locationAccessibility'
+  # Free text and nothing else. There is deliberately no icon field: an icon-only
+  # accessibility claim is unreadable to exactly the people it addresses, and KERN
+  # ships no icon for a lift, a ramp or an accessible WC anyway.
+  - identifier: accessibility
+    type: Collection
+    labelField: label
+    fields:
+      - identifier: label
+        type: Text
+        required: true
+        max: 255
+
+  - identifier: hours_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.locationHours'
+  - identifier: openingHours
+    type: Collection
+    labelField: day
+    fields:
+      - identifier: day
+        type: Text
+        required: true
+        max: 60
+      - identifier: closed
+        type: Checkbox
+        default: 0
+      # Plain text rather than a time field: the value goes straight into the datetime
+      # attribute, and a malformed entry then costs a machine-readable attribute while
+      # the visible text stays exactly what the editor typed. A time field would also
+      # differ in PHP type between Content Blocks 1.6 and 2.4.
+      - identifier: opens
+        type: Text
+        max: 5
+      - identifier: closes
+        type: Text
+        max: 5
+      - identifier: note
+        type: Text
+        max: 120
+
+  - identifier: services_tab
+    type: Tab
+    label: 'LLL:EXT:kern_ux/Resources/Private/Language/locallang_be.xlf:tab.locationServices'
+  # Free text for the mode: Kiel has no U-Bahn, Köln runs a Stadtbahn, and a fixed
+  # list would be wrong in most cities and untranslatable in all of them.
+  - identifier: transport
+    type: Collection
+    labelField: mode
+    fields:
+      - identifier: mode
+        type: Text
+        required: true
+        max: 60
+      - identifier: lines
+        type: Text
+        required: true
+        max: 255
+  - identifier: payment
+    type: Collection
+    labelField: label
+    fields:
+      - identifier: label
+        type: Text
+        required: true
+        max: 120
+
+  - identifier: KernUx/Spacing
+    type: Basic
