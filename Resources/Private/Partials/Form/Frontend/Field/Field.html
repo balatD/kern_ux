@@ -14,9 +14,15 @@
     leaves required fields unmarked, the opposite of ext:form's own convention. The
     field is still announced as required, via aria-required on the control itself
     (see kux:formFieldAttributes).
+
+    kernUxPrefix and kernUxSuffix put a unit next to the control ("EUR", "km"). Text
+    only, and always announced: an addon is a string somebody typed into the form
+    definition, so if it should not reach a screen reader the answer is not to type it.
+    That is why there is no "decorative" flag and no aria-hidden branch here -
+    kux:formFieldAttributes points aria-describedby at these spans unconditionally.
 </f:comment>
 <f:form.validationResults for="{element.rootForm.identifier}.{element.identifier}">
-    <f:variable name="hint" value="{formvh:translateElementProperty(element: element, property: 'elementDescription')}" />
+    <f:variable name="hint" value="{formvh:translateElementProperty(element: element, property: 'elementDescription')}" /><f:variable name="prefix" value="{formvh:translateElementProperty(element: element, property: 'kernUxPrefix')}" /><f:variable name="suffix" value="{formvh:translateElementProperty(element: element, property: 'kernUxSuffix')}" />
     <div class="kern-form-input{f:if(condition: validationResults.errors, then: ' kern-form-input--error')}">
         <f:if condition="{doNotShowLabel} != 1">
             <label class="kern-label" for="{element.uniqueIdentifier}">{formvh:translateElementProperty(element: element, property: 'label')}<f:if condition="!{kux:formFieldRequired(element: element)}"> <span class="kern-label__optional"><f:translate key="LLL:EXT:kern_ux/Resources/Private/Language/locallang_form.xlf:optional" /></span></f:if></label>
@@ -24,7 +30,7 @@
         <f:if condition="{hint}">
             <div class="kern-hint" id="{element.uniqueIdentifier}-hint">{hint}</div>
         </f:if>
-        <f:format.raw>{elementContent}</f:format.raw>
+        <f:if condition="{prefix} || {suffix}"><f:then><div class="kern-input-group"><f:if condition="{prefix}"><span class="kern-input-group-text" id="{element.uniqueIdentifier}-prefix">{prefix}</span></f:if><f:format.raw>{elementContent}</f:format.raw><f:if condition="{suffix}"><span class="kern-input-group-text" id="{element.uniqueIdentifier}-suffix">{suffix}</span></f:if></div></f:then><f:else><f:format.raw>{elementContent}</f:format.raw></f:else></f:if>
         <f:if condition="{validationResults.errors}">
             <p class="kern-error" id="{element.uniqueIdentifier}-error"><span class="kern-icon kern-icon--danger" aria-hidden="true"></span><span class="kern-body"><f:for each="{validationResults.errors}" as="error"><f:format.htmlspecialchars>{formvh:translateElementError(element: element, error: error)}</f:format.htmlspecialchars> </f:for></span></p>
         </f:if>
