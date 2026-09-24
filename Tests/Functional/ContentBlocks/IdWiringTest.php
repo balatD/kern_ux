@@ -31,16 +31,14 @@ final class IdWiringTest extends AbstractContentBlockTestCase
             'tx_kernux_dialog_triggerVariant' => 'secondary',
         ]);
 
-        self::assertSame(
-            1,
-            preg_match('/data-kernt3-dialog="([^"]+)"/', $rendered, $trigger),
+        $trigger = self::captureOf(
+            '/data-kernt3-dialog="([^"]+)"/',
+            $rendered,
             'The trigger carries no dialog reference, so dialog.js has nothing to open.',
         );
-        self::assertSame(
-            1,
-            preg_match('/<dialog id="([^"]+)"/', $rendered, $dialog),
-        );
-        self::assertSame($trigger[1], $dialog[1]);
+        $dialog = self::captureOf('/<dialog id="([^"]+)"/', $rendered, 'No dialog element was rendered.');
+
+        self::assertSame($trigger, $dialog);
     }
 
     #[Test]
@@ -54,13 +52,15 @@ final class IdWiringTest extends AbstractContentBlockTestCase
             'tx_kernux_dialog_triggerVariant' => 'secondary',
         ]);
 
-        self::assertSame(
-            1,
-            preg_match('/<dialog [^>]*aria-labelledby="([^"]+)"/', $rendered, $labelledBy),
+        $labelledBy = self::captureOf(
+            '/<dialog [^>]*aria-labelledby="([^"]+)"/',
+            $rendered,
+            'The dialog names nothing as its label.',
         );
+
         // A dialog whose aria-labelledby points at nothing is announced as just
         // "dialog", with no indication of what it is about.
-        self::assertStringContainsString('id="' . $labelledBy[1] . '"', $rendered);
+        self::assertStringContainsString('id="' . $labelledBy . '"', $rendered);
     }
 
     /**
@@ -95,6 +95,17 @@ final class IdWiringTest extends AbstractContentBlockTestCase
         foreach ($statuses[1] as $id) {
             self::assertSame(1, substr_count($rendered, 'id="' . $id . '"'));
         }
+    }
+
+    /**
+     * The one captured group, or a failure naming what was looked for.
+     */
+    private static function captureOf(string $pattern, string $subject, string $message): string
+    {
+        self::assertSame(1, preg_match($pattern, $subject, $matches), $message);
+        self::assertArrayHasKey(1, $matches);
+
+        return $matches[1];
     }
 
     #[Test]

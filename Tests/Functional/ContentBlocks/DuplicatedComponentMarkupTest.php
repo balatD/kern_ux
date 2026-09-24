@@ -65,7 +65,7 @@ final class DuplicatedComponentMarkupTest extends AbstractContentBlockTestCase
                         'size' => 1024,
                     ]],
                 ],
-                '<k:molecule.downloadList items="{0: {href: \'/fileadmin/merkblatt.pdf\', title: \'Merkblatt\','
+                '<k:molecule.downloadList items="{0: {url: \'/fileadmin/merkblatt.pdf\', title: \'Merkblatt\','
                 . ' format: \'PDF\', size: \'1 KB\'}}" />',
             ],
         ];
