@@ -49,6 +49,30 @@
         </div>
     </f:if>
 
+    <f:if condition="{uncoveredKern}">
+        <f:comment>
+            The other direction of the same honesty: not "which of our components lack an
+            example", but "what does KERN ship that we never implemented". Empty when the
+            fetched distribution is absent, because then the question is unanswerable.
+        </f:comment>
+        <div class="kern-alert kern-alert--warning" role="alert">
+            <div class="kern-alert__header">
+                <k:atom.icon name="warning" />
+                <k:atom.heading level="2" appearance="title">Ohne Umsetzung</k:atom.heading>
+            </div>
+            <div class="kern-alert__body">
+                <k:atom.body>
+                    Diese KERN-Komponenten bringt die Distribution mit, erreicht wird hier
+                    aber keine davon &ndash; weder durch eine Component noch durch das
+                    Formular-Theme oder TypoScript:
+                </k:atom.body>
+                <k:atom.list variant="bullet">
+                    <f:for each="{uncoveredKern}" as="family"><li><code>{family}</code></li></f:for>
+                </k:atom.list>
+            </div>
+        </div>
+    </f:if>
+
     <nav class="kernt3-styleguide__toc" aria-label="Componentübersicht">
         <k:atom.heading level="2" appearance="title">Components</k:atom.heading>
         <k:atom.list variant="bullet">

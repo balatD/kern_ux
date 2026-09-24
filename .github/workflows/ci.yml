@@ -132,3 +132,32 @@ jobs:
       - name: Run axe against the gallery
         working-directory: Tests/A11y
         run: npm test
+
+  coverage:
+    name: KERN coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-progress --no-interaction
+
+      # A job of its own rather than a step in the test matrix: this is the only check
+      # that needs the fetched distribution, and a flaky npm registry should not be able
+      # to redden all eight matrix legs.
+      - name: Fetch the pinned KERN distribution
+        run: vendor/bin/typo3 kern-ux:assets:install
+
+      # One class name, never an alternation - a --filter alternation silently
+      # half-applies here and runs a fraction of the suite while reporting success.
+      - name: Check every KERN component family is reachable
+        env:
+          typo3DatabaseDriver: pdo_sqlite
+        run: vendor/bin/phpunit -c Build/phpunit/FunctionalTests.xml --filter ComponentCatalogTest
