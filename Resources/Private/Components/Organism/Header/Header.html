@@ -2,7 +2,7 @@
 /><f:argument name="logoSrc" type="string" optional="{true}" default=""
             description="Organisation logo. The Bildwortmarke of the Digitale Dachmarke must not be used here without permission."
 /><f:argument name="logoAlt" type="string" optional="{true}" default=""
-            description="Names the organisation, not the image, e.g. 'Logo der Stadt Musterstadt'."
+            description="Names the organisation, not the image, e.g. 'Logo der Stadt Musterstadt'. Ignored when siteTitle is set, because the title already says it beside the logo."
 /><f:argument name="siteTitle" type="string" optional="{true}" default=""
             description="Rendered as text beside or instead of the logo, so the header is never empty and the organisation is always named."
 /><f:argument name="mainNavigation" type="array" optional="{true}"
@@ -16,6 +16,16 @@
 /><f:argument name="kopfzeileLabel" type="string" optional="{true}" default=""
             description="Overrides the Kopfzeile wording. Empty keeps the official one."
 /><f:comment>
+    The logo is decorative whenever the site title is rendered beside it.
+
+    The brand link already carries its own aria-label, so neither the logo nor the title
+    contributes to its accessible name - but the alt text is still read as content next
+    to a visible span saying the same words, which is a screen reader announcing the
+    organisation twice in a row (axe: image-redundant-alt). With no title the logo is the
+    only thing naming the organisation, so it keeps its alt there.
+</f:comment><f:variable name="effectiveLogoAlt" value="{logoAlt}"
+/><f:if condition="{siteTitle}"><f:variable name="effectiveLogoAlt" value="" /></f:if
+><f:comment>
     KERN ships no header component, only a grid pattern, so this is ours (kernt3-).
 
     Two bands from the navigation breakpoint up, which is what KERN's own example and the
@@ -56,7 +66,7 @@
         <div class="kernt3-header__bar">
             <a class="kernt3-header__brand" href="{homeUrl}" aria-label="{f:translate(key: 'header.home', extensionName: 'KernUx')}">
                 <f:if condition="{logoSrc}">
-                    <img src="{logoSrc}" alt="{logoAlt}" class="kernt3-header__logo" />
+                    <img src="{logoSrc}" alt="{effectiveLogoAlt}" class="kernt3-header__logo" />
                 </f:if>
                 <f:if condition="{siteTitle}">
                     <span class="kern-heading-small">{siteTitle}</span>
