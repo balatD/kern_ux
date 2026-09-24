@@ -18,6 +18,26 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 final class ComponentCatalogTest extends FunctionalTestCase
 {
+    /**
+     * KERN component families this extension knowingly does not reach.
+     *
+     * Asserted in both directions, like rendersNothing below: a family that becomes
+     * covered has to leave this list, or the list quietly turns into somewhere to hide
+     * a regression instead of a record of decisions.
+     */
+    private const KNOWN_GAPS = [
+        // KERN's own stylesheet says so, in a banner above the region: "Dropdown ist
+        // noch in der Entwicklungsphase und nicht teil des Desingn System
+        // CSS-Frameworks!!!". Implementing it would freeze a k: tag name and its
+        // arguments against markup upstream has not frozen.
+        'kern-dropdown',
+        // A label that collapses to icon-only below 576px. That is an argument on
+        // atom.button, not a component of its own, and nothing has asked for it yet.
+        'kern-sr-only-mobile',
+        // No form field can carry a unit yet. Being closed as a form affordance.
+        'kern-input-group-text',
+    ];
+
     protected array $coreExtensionsToLoad = ['form'];
 
     protected array $testExtensionsToLoad = [
@@ -68,6 +88,38 @@ final class ComponentCatalogTest extends FunctionalTestCase
         foreach ($this->catalog()->discoverComponents() as $name) {
             self::assertMatchesRegularExpression('/^[a-z][A-Za-z0-9]*(\.[a-z][A-Za-z0-9]*)+$/', $name);
         }
+    }
+
+    #[Test]
+    public function everyKernComponentFamilyIsReachable(): void
+    {
+        $catalog = $this->catalog();
+
+        if (!$catalog->kernStylesheetAvailable()) {
+            // The distribution is fetched, not committed, and the test matrix never
+            // fetches it. Failing here would redden every leg for a file that is
+            // absent by design, and the only fix would be to weaken the assertion.
+            self::markTestSkipped(
+                'The KERN distribution is not installed - run kern-ux:assets:install.',
+            );
+        }
+
+        $uncovered = $catalog->uncoveredKernFamilies();
+
+        $unexpected = array_values(array_diff($uncovered, self::KNOWN_GAPS));
+        self::assertSame(
+            [],
+            $unexpected,
+            'KERN ships these component families and nothing here reaches them: '
+            . implode(', ', $unexpected),
+        );
+
+        $closed = array_values(array_diff(self::KNOWN_GAPS, $uncovered));
+        self::assertSame(
+            [],
+            $closed,
+            'These families are covered now and must leave KNOWN_GAPS: ' . implode(', ', $closed),
+        );
     }
 
     #[Test]

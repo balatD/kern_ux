@@ -38,6 +38,7 @@ final readonly class StyleguideRenderer
             'assetBase' => $assetBase !== '' ? $assetBase : self::DEFAULT_ASSET_BASE,
             'groups' => $this->groupByComponent(),
             'undocumented' => $this->catalog->undocumentedComponents(),
+            'uncoveredKern' => $this->catalog->uncoveredKernFamilies(),
         ]);
 
         return $view->render();
