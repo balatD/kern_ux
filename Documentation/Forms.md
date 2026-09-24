@@ -33,6 +33,32 @@ Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
   (`aria-describedby`, `aria-invalid`, `aria-required`) wird verworfen: kein Redakteur
   soll die Zusagen von Hand aushängen können.
 
+## Einheit an einem Feld
+
+Ein Feld kann eine Einheit tragen — „EUR", „km", „%". Zwei Eigenschaften in der
+Formulardefinition, beide optional und beide reiner Text:
+
+```yaml
+-
+  identifier: amount
+  type: Text
+  label: 'Betrag'
+  properties:
+    kernUxSuffix: 'EUR'
+```
+
+Damit wandert das Control in ein `kern-input-group` und die Einheit in ein
+`kern-input-group-text` daneben; `kernUxPrefix` setzt sie davor. Feldern ohne eine der
+beiden Eigenschaften ändert sich nichts.
+
+Die Einheit wird **immer** angesagt: `aria-describedby` zeigt auf sie, vor Hinweis und
+Fehler. Sie qualifiziert den Wert selbst, gehört also zum Feld und nicht zu den
+Hinweisen darüber. Deshalb gibt es auch kein „dekorativ"-Flag — eine Einheit, die
+niemand hören soll, schreibt man gar nicht erst hin.
+
+Der Formular-Editor kennt die beiden Eigenschaften noch nicht; sie stehen bisher nur in
+der YAML-Definition.
+
 ## Strecke und Zusammenfassung
 
 Dazu kommen eine Fehlerübersicht mit Sprungmarken (`kern-alert--danger` mit

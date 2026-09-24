@@ -34,8 +34,6 @@ final class ComponentCatalogTest extends FunctionalTestCase
         // A label that collapses to icon-only below 576px. That is an argument on
         // atom.button, not a component of its own, and nothing has asked for it yet.
         'kern-sr-only-mobile',
-        // No form field can carry a unit yet. Being closed as a form affordance.
-        'kern-input-group-text',
     ];
 
     protected array $coreExtensionsToLoad = ['form'];

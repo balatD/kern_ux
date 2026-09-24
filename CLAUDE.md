@@ -134,7 +134,9 @@ worst — no error, different output everywhere); the `Group/Name/Name.html` pat
 `lib.kernUx.*` and `lib.contentElement`; **`colPos` 0=main, 1=hero, 2=aside, 3=teaser**;
 backend layout names; the 19 `kernUx.*` setting keys; `tx_kernux_*` columns; the
 `kern-ux/<name>` CTypes; the 57 `kernt3-*` classes (they look private, but projects
-override them); XLIFF trans-unit ids; and the `data-kernt3-*` JS hooks.
+override them); XLIFF trans-unit ids; the `data-kernt3-*` JS hooks; and the
+`kernUxPrefix` / `kernUxSuffix` form-element properties (they live in the integrator's
+form definition).
 
 `lib.contentElement` deserves its own warning: this extension replaces
 `fluid_styled_content`, so without it **every** Extbase plugin — the form plugin included
