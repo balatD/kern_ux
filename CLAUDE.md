@@ -47,7 +47,7 @@ SHA-512 verified, no CDN — public-sector sites generally cannot accept externa
 ## Components
 
 Live at `Resources/Private/Components/<Group>/<Name>/<Name>.html` and resolve as
-`<k:group.name>`. 41 today: 15 Atom, 17 Molecule, 9 Organism. The `k` and `kux` namespaces
+`<k:group.name>`. 42 today: 15 Atom, 18 Molecule, 9 Organism. The `k` and `kux` namespaces
 are registered globally.
 
 Four authoring conventions. **Only the first two are enforced by tests** — the others are
@@ -134,9 +134,9 @@ worst — no error, different output everywhere); the `Group/Name/Name.html` pat
 `lib.kernUx.*` and `lib.contentElement`; **`colPos` 0=main, 1=hero, 2=aside, 3=teaser**;
 backend layout names; the 19 `kernUx.*` setting keys; `tx_kernux_*` columns; the
 `kern-ux/<name>` CTypes; the 57 `kernt3-*` classes (they look private, but projects
-override them); XLIFF trans-unit ids; the `data-kernt3-*` JS hooks; and the
+override them); XLIFF trans-unit ids; the `data-kernt3-*` JS hooks; the
 `kernUxPrefix` / `kernUxSuffix` form-element properties (they live in the integrator's
-form definition).
+form definition); and the `kux:` ViewHelper names, `kux:tableData` included.
 
 `lib.contentElement` deserves its own warning: this extension replaces
 `fluid_styled_content`, so without it **every** Extbase plugin — the form plugin included

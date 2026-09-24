@@ -123,6 +123,9 @@
             <trans-unit id="preview.entries">
                 <source>%s entries</source>
             </trans-unit>
+            <trans-unit id="preview.tableSize">
+                <source>%s rows, %s columns</source>
+            </trans-unit>
             <trans-unit id="preview.files">
                 <source>%s files</source>
             </trans-unit>

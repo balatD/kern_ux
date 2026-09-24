@@ -133,6 +133,14 @@ components:
     - label: Spaltenvariante
       source: "<k:molecule.descriptionList columns=\"{true}\" items=\"{0: {key: 'Montag', value: '8-16 Uhr'}, 1: {key: 'Dienstag', value: '8-18 Uhr'}}\" />"
 
+  molecule.table:
+    - label: Tabelle mit Spaltenköpfen
+      source: "<k:molecule.table caption=\"Gebühren\" head=\"{0: 'Leistung', 1: 'Gebühr'}\" rows=\"{0: {0: 'Personalausweis', 1: '37,00 €'}, 1: {0: 'Reisepass', 1: '70,00 €'}}\" />"
+      note: 'Der Wrapper trägt tabindex="0", damit eine überlaufende Tabelle auch per Tastatur scrollbar ist - dieselbe Hülle, die lib.kernUx.rte um eine im Editor gezeichnete Tabelle legt.'
+    - label: Mit Zeilen- und Spaltenköpfen
+      source: "<k:molecule.table caption=\"Öffnungszeiten\" captionHidden=\"{true}\" rowHeaders=\"{true}\" head=\"{0: 'Tag', 1: 'Vormittag', 2: 'Nachmittag'}\" rows=\"{0: {0: 'Montag', 1: '8-12 Uhr', 2: '13-16 Uhr'}, 1: {0: 'Dienstag', 1: '8-12 Uhr', 2: 'geschlossen'}}\" foot=\"{0: 'Samstag', 1: 'geschlossen', 2: 'geschlossen'}\" />"
+      note: 'Bei zwei Achsen braucht jede Zelle ihren Bezug: scope="col" am Spaltenkopf, scope="row" an der ersten Zelle jeder Zeile. Die Beschriftung ist hier nur für Screenreader da, weil die Überschrift darüber schon dasselbe sagt.'
+
   molecule.openingHours:
     - label: Öffnungszeiten
       source: "<k:molecule.openingHours days=\"{0: {day: 'Montag', opens: '08:00', closes: '16:00'}, 1: {day: 'Dienstag', opens: '08:00', closes: '18:00', note: 'nur mit Termin'}, 2: {day: 'Mittwoch', closed: 1}}\" />"

@@ -1,13 +1,13 @@
 # Content Blocks und Seiten
 
-## Die 23 Blöcke
+## Die 24 Blöcke
 
 Jeder mit Backend-Vorschau, jeder auf denselben
 [Components](Components.md) aufgebaut:
 
 Text · Text und Medien · Bild · Bildergalerie · Video oder Audio · Bühne · Karten ·
 Schnellzugriff · Dienstleistung · Standort · Akkordeon · Hinweis · Dialog · Downloads ·
-Aufgabenübersicht · Fortschritt · Definitionsliste · Liste · Überschrift ·
+Aufgabenübersicht · Fortschritt · Definitionsliste · Tabelle · Liste · Überschrift ·
 Schaltflächen · Trenner · Inhaltsverzeichnis · Sitemap
 
 Wie das im Seitenmodul aussieht, zeigen die
@@ -99,17 +99,30 @@ Fußbereich der Karte als `<time datetime>` erscheint.
 
 ## Tabellen
 
-Es gibt **keinen Tabellen-Block**, und das ist eine Entscheidung, keine Lücke.
-Redakteure bauen Tabellen im Rich-Text-Editor; `lib.kernUx.rte` hängt dort
-serverseitig `class="kern-table"` an und legt einen
-`<div class="kern-table-responsive" tabindex="0">` darum, damit die Scrollfläche mit
-der Tastatur erreichbar ist — genau so, wie KERNs eigene responsive Tabelle es
-vorsieht. Eine zweistufige Collection wäre für alles jenseits eines winzigen Rasters
-unbedienbar, und ein bloßes `<table>` verlöre den Scroll-Container.
+Tabellen gibt es auf **zwei** Wegen, und die Trennung ist gewollt.
 
-Die Klasse wird zur Laufzeit gesetzt und steht deshalb in keinem Template. Wer nur
-`Resources/Private/` und `ContentBlocks/` durchsucht, hält das für eine Lücke; siehe
+Eine Tabelle **innerhalb** eines Fließtextes zeichnet der Redakteur im
+Rich-Text-Editor. `lib.kernUx.rte` hängt dort serverseitig `class="kern-table"` an und
+legt einen `<div class="kern-table-responsive" tabindex="0">` darum, damit die
+Scrollfläche mit der Tastatur erreichbar ist. Diese Klasse wird zur Laufzeit gesetzt
+und steht deshalb in keinem Template — wer nur `Resources/Private/` und
+`ContentBlocks/` durchsucht, hält das für eine Lücke; siehe
 `Configuration/Sets/KernUx/setup.typoscript`.
+
+Weiter reicht dieser Weg aber nicht: CKEditor schreibt weder `kern-table__cell` noch
+`scope`, die Zellen werden in `rte.css` nur mit Elementselektoren nachgebildet. Ohne
+`scope` kann ein Screenreader zu keinem Wert die zugehörige Überschrift nennen.
+
+Für eine **eigenständige** Tabelle gibt es deshalb den Block **Tabelle**. Er benutzt
+den Tabellen-Assistenten des Cores (`renderType: textTable`) — ein echtes Raster im
+Backend statt einer zweistufigen Collection — und rendert `molecule.table`, das
+`scope="col"`, `scope="row"`, `<tbody>`/`<tfoot>` und eine `<caption>` setzt. Drei
+Schalter entscheiden über Kopfzeile, Kopfspalte und Summenzeile; die Beschriftung
+übernimmt die Überschrift des Blocks und wird nur für Screenreader ausgegeben, weil
+die sichtbare Überschrift direkt darüber schon dasselbe sagt.
+
+Nicht umgesetzt sind `kern-table--small` und `kern-table--striped`. Beide sind je eine
+Zeile, aber ein Aussehensschalter, nach dem niemand gefragt hat.
 
 ## Backend-Vorschauen
 
