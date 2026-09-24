@@ -1,0 +1,13 @@
+"tt_content",,,,,,,,,,
+,"uid","pid","sorting","colPos","sys_language_uid","header","header_layout","CType","hidden","deleted"
+,1,10,10,0,0,"Voraussetzungen",0,"kern-ux/text",0,0
+,2,10,20,0,0,"Gebühren",3,"kern-ux/text",0,0
+,3,10,30,0,0,"Seitentitel",1,"kern-ux/heading",0,0
+,4,10,40,0,0,"Verstecktes",100,"kern-ux/text",0,0
+,5,10,50,0,0,"",0,"kern-ux/divider",0,0
+,6,10,60,0,0,"Inhalt",0,"kern-ux/toc",0,0
+,7,10,70,0,0,"Nur Redaktion",0,"kern-ux/text",1,0
+,8,10,80,0,0,"Gelöscht",0,"kern-ux/text",0,1
+,9,10,90,1,0,"In der Seitenspalte",0,"kern-ux/text",0,0
+,10,10,100,0,1,"Andere Sprache",0,"kern-ux/text",0,0
+,11,11,10,0,0,"Andere Seite",0,"kern-ux/text",0,0
