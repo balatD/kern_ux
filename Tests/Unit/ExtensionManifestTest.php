@@ -91,7 +91,7 @@ final class ExtensionManifestTest extends UnitTestCase
     {
         self::assertSame(
             self::extensionKeysOf(self::section(self::composer(), 'require')),
-            array_keys(self::section(self::constraints(), 'depends')),
+            self::sortedKeys(self::section(self::constraints(), 'depends')),
             'composer.json and ext_emconf.php require a different set of packages.',
         );
     }
@@ -101,7 +101,7 @@ final class ExtensionManifestTest extends UnitTestCase
     {
         self::assertSame(
             self::extensionKeysOf(self::section(self::composer(), 'suggest')),
-            array_keys(self::section(self::constraints(), 'suggests')),
+            self::sortedKeys(self::section(self::constraints(), 'suggests')),
             'composer.json and ext_emconf.php suggest a different set of packages. A '
             . 'non-Composer install is then never told what an optional feature needs.',
         );
@@ -182,6 +182,19 @@ final class ExtensionManifestTest extends UnitTestCase
     }
 
     /**
+     * @param array<string, mixed> $map
+     *
+     * @return list<string>
+     */
+    private static function sortedKeys(array $map): array
+    {
+        $keys = array_keys($map);
+        sort($keys);
+
+        return $keys;
+    }
+
+    /**
      * @param array<string, mixed> $packages
      *
      * @return list<string>
@@ -195,6 +208,11 @@ final class ExtensionManifestTest extends UnitTestCase
                 $keys[] = $key;
             }
         }
+
+        // Sorted, because the two files list their packages in different orders and
+        // "sort-packages" may reorder one of them at any time. What has to match is the
+        // set; the order is nobody's contract.
+        sort($keys);
 
         return $keys;
     }
@@ -283,7 +301,16 @@ final class ExtensionManifestTest extends UnitTestCase
      */
     private static function composer(): array
     {
-        $raw = file_get_contents(self::EXT_ROOT . '/composer.json');
+        // Build/Scripts/runTests.sh pins typo3/cms-core to one major for the duration of
+        // a run and keeps the untouched file beside it. Reading the original means this
+        // test judges the committed manifest rather than the runner's scratch copy,
+        // which is pinned to something ext_emconf.php is deliberately wider than.
+        $path = self::EXT_ROOT . '/composer.json.orig';
+        if (!is_file($path)) {
+            $path = self::EXT_ROOT . '/composer.json';
+        }
+
+        $raw = file_get_contents($path);
         self::assertIsString($raw, 'composer.json is unreadable.');
 
         $decoded = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);

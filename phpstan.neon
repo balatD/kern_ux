@@ -74,3 +74,11 @@ parameters:
         -
             identifier: identical.alwaysFalse
             path: Classes/ViewHelpers/FormErrorSummaryViewHelper.php
+
+        # AbstractViewHelper::render() is declared string in Fluid 4 (TYPO3 13) and mixed
+        # in Fluid 5 (TYPO3 14). Asserting the rendered value is therefore redundant on 13
+        # and load-bearing on 14. Only runTests.sh -t 13 sees this: CI's static job
+        # resolves highest, so it only ever analyses against Fluid 5.
+        -
+            identifier: staticMethod.alreadyNarrowedType
+            path: Tests/Unit/ViewHelpers/UniqueIdViewHelperTest.php

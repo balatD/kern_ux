@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-09-24" product-name="kern-ux/table">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Table</source>
+                <target>Tabelle</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A data table with proper row and column headers, for figures, fees or opening hours.</source>
+                <target>Eine Datentabelle mit richtigen Zeilen- und Spaltenköpfen, für Zahlen, Gebühren oder Öffnungszeiten.</target>
+            </trans-unit>
+            <trans-unit id="rows.label">
+                <source>Table</source>
+                <target>Tabelle</target>
+            </trans-unit>
+            <trans-unit id="rows.description">
+                <source>One row per line. Use the table wizard rather than typing the pipes by hand.</source>
+                <target>Eine Zeile pro Tabellenzeile. Am besten den Tabellen-Assistenten benutzen, statt die Striche von Hand zu setzen.</target>
+            </trans-unit>
+            <trans-unit id="headerRow.label">
+                <source>First row is a header</source>
+                <target>Erste Zeile ist eine Kopfzeile</target>
+            </trans-unit>
+            <trans-unit id="headerRow.description">
+                <source>Marks the top row as the heading for its column, so a screen reader can name the column a value belongs to.</source>
+                <target>Markiert die oberste Zeile als Überschrift ihrer Spalte, damit ein Screenreader zu jedem Wert die Spalte nennen kann.</target>
+            </trans-unit>
+            <trans-unit id="headerColumn.label">
+                <source>First column is a header</source>
+                <target>Erste Spalte ist eine Kopfspalte</target>
+            </trans-unit>
+            <trans-unit id="headerColumn.description">
+                <source>Switch on when the leftmost cell names its row - as in a timetable, where every row is a day.</source>
+                <target>Einschalten, wenn die linke Zelle ihre Zeile benennt - wie in einem Fahrplan, in dem jede Zeile ein Tag ist.</target>
+            </trans-unit>
+            <trans-unit id="footerRow.label">
+                <source>Last row is a total</source>
+                <target>Letzte Zeile ist eine Summe</target>
+            </trans-unit>
+            <trans-unit id="footerRow.description">
+                <source>Sets the bottom row apart, for a sum or a closing remark.</source>
+                <target>Hebt die unterste Zeile ab, etwa für eine Summe oder einen Schlusshinweis.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

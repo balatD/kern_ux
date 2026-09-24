@@ -163,6 +163,10 @@
                 <source>%s entries</source>
                 <target>%s Einträge</target>
             </trans-unit>
+            <trans-unit id="preview.tableSize">
+                <source>%s rows, %s columns</source>
+                <target>%s Zeilen, %s Spalten</target>
+            </trans-unit>
             <trans-unit id="preview.files">
                 <source>%s files</source>
                 <target>%s Dateien</target>

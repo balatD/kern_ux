@@ -146,11 +146,15 @@ lib.kernUx.rte {
 
     # Tables are the one place where classes ARE injected server-side.
     #
-    # There is no table content block: the editor can already build tables, and a
-    # two-level collection would be unusable for anything but a tiny grid. But a bare
-    # <table> loses KERN's accessibility affordances - notably the scroll container,
-    # which needs tabindex so keyboard users can reach it, exactly as KERN's own
-    # responsive table does. Scoped CSS cannot add a wrapper, so this does.
+    # This covers tables drawn *inside* rich text, which the editor can already do. A
+    # bare <table> loses KERN's accessibility affordances - notably the scroll
+    # container, which needs tabindex so keyboard users can reach it, exactly as KERN's
+    # own responsive table does. Scoped CSS cannot add a wrapper, so this does.
+    #
+    # It can only reach the table element, though: CKEditor writes no kern-table__cell
+    # and no scope, so an RTE table is approximated by rte.css rather than being KERN
+    # conformant. A standalone table therefore belongs in the kern-ux/table content
+    # block, which renders k:molecule.table and does carry both.
     externalBlocks.table {
         stripNL = 1
         stdWrap.wrap = <div class="kern-table-responsive" tabindex="0">|</div>

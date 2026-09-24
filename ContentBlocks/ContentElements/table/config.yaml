@@ -1,0 +1,33 @@
+name: kern-ux/table
+group: kern
+vendorPrefix: tx_kernux
+fields:
+  - identifier: KernUx/Heading
+    type: Basic
+  # The core table wizard, reached through renderType. It stores one row per line with
+  # a pipe between cells, and writes an in-cell newline as <br>. table_delimiter and
+  # table_enclosure are deliberately not exposed: left alone, both majors default to
+  # the pipe and no enclosure, so the stored format is identical on 13 and 14.
+  #
+  # renderType reaches the TCA on both Content Blocks majors - WithCommonProperties
+  # writes it and TextareaFieldType's array_replace keeps it, in 1.6.5 as in 2.4.9. It
+  # cannot be asserted in a test: Content Blocks only builds the full column TCA when
+  # the real backend boots, so a functional test sees a bare ['type' => 'text'] for
+  # every block alike.
+  - identifier: rows
+    type: Textarea
+    renderType: textTable
+    required: true
+  # Three checkboxes rather than core's table_header_position select, which cannot say
+  # "header row AND header column" - the shape any table with two axes needs.
+  - identifier: headerRow
+    type: Checkbox
+    default: 1
+  - identifier: headerColumn
+    type: Checkbox
+    default: 0
+  - identifier: footerRow
+    type: Checkbox
+    default: 0
+  - identifier: KernUx/Spacing
+    type: Basic
