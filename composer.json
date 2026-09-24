@@ -37,6 +37,7 @@
         "typo3/testing-framework": "^9.6"
     },
     "suggest": {
+        "ext-gd": "Required by kern-ux:demo:install, which draws the demo images rather than shipping licensed binaries.",
         "typo3/cms-form": "Required for the KERN-compliant ext:form templates and the KernDate form element.",
         "typo3/cms-rte-ckeditor": "Required for the KERN rich-text preset; without it RTE fields fall back to a plain textarea."
     },

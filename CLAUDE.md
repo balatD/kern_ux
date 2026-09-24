@@ -47,7 +47,7 @@ SHA-512 verified, no CDN — public-sector sites generally cannot accept externa
 ## Components
 
 Live at `Resources/Private/Components/<Group>/<Name>/<Name>.html` and resolve as
-`<k:group.name>`. 40 today: 15 Atom, 16 Molecule, 9 Organism. The `k` and `kux` namespaces
+`<k:group.name>`. 41 today: 15 Atom, 17 Molecule, 9 Organism. The `k` and `kux` namespaces
 are registered globally.
 
 Four authoring conventions. **Only the first two are enforced by tests** — the others are
