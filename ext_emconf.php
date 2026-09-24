@@ -9,7 +9,7 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'KERN UX-Standard for TYPO3: accessible Fluid components, Content Blocks and ext:form templates for German public sector websites. Independent community integration, not an official KERN project.',
     'category' => 'templates',
     'author' => 'Dragan Balatinac',
-    'state' => 'alpha',
+    'state' => 'beta',
     'version' => '1.0.0',
     // Every range below is the outer hull of the matching composer.json constraint, and
     // ExtensionManifestTest derives it from there rather than reading it here. A dash

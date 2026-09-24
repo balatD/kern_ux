@@ -6,7 +6,7 @@ theme and the page templates all map data onto those same components, because KE
 accessibility guarantees hang off concrete classes and ARIA attributes rather than off
 anything a renderer could infer.
 
-State: **alpha**. Public interfaces may change — but see *Breaking changes* below, because
+State: **beta**. The interfaces under *Breaking changes* below are expected to hold, because
 much of the surface is stored in databases and project files this extension does not own.
 
 ## Toolchain: everything runs in DDEV

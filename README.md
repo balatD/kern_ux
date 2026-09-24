@@ -24,9 +24,11 @@ Barrierefreiheits-Zusagen von KERN an konkreten Klassen und ARIA-Attributen hän
 existiert dieses Markup genau einmal und wird von Tests festgenagelt, die unter
 *beiden* TYPO3-Majors laufen.
 
-> [!WARNING]
-> **Status: alpha.** In aktiver Entwicklung, noch nicht für Produktivbetrieb geeignet.
-> Öffentliche Schnittstellen können sich ohne Vorwarnung ändern.
+> [!IMPORTANT]
+> **Status: beta.** Die öffentliche Schnittstelle gilt als eingefroren: was unter
+> *Breaking changes* in `CLAUDE.md` steht, ändert sich nicht mehr ohne Eintrag im
+> [Changelog](CHANGELOG.md), und Tests halten es fest. Für einen Produktiveinsatz lohnt
+> ein eigener Blick — die Extension ist in dieser Form noch nicht lange im Feld.
 
 > [!NOTE]
 > **Unabhängige Community-Integration.** Dieses Projekt gehört nicht zum KERN-Team und
@@ -51,11 +53,11 @@ aus dem mitgelieferten Demo-Seitenbaum.
 
 Das Paket liegt auf [Packagist](https://packagist.org/packages/balatd/kern-ux).
 Veröffentlicht ist bisher nur eine Vorabversion, deshalb braucht Composer die
-Stabilitätsangabe `@alpha` — ein Projekt mit dem üblichen `minimum-stability: stable`
+Stabilitätsangabe `@beta` — ein Projekt mit dem üblichen `minimum-stability: stable`
 findet das Paket sonst nicht:
 
 ```bash
-composer require balatd/kern-ux:^1.0@alpha
+composer require balatd/kern-ux:^1.0@beta
 vendor/bin/typo3 extension:setup
 vendor/bin/typo3 kern-ux:assets:install
 ```

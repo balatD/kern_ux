@@ -4,11 +4,11 @@
 
 Das Paket liegt auf [Packagist](https://packagist.org/packages/balatd/kern-ux).
 Veröffentlicht ist bisher nur eine Vorabversion, deshalb braucht Composer die
-Stabilitätsangabe `@alpha` — ein Projekt mit dem üblichen `minimum-stability: stable`
+Stabilitätsangabe `@beta` — ein Projekt mit dem üblichen `minimum-stability: stable`
 findet das Paket sonst nicht:
 
 ```bash
-composer require balatd/kern-ux:^1.0@alpha
+composer require balatd/kern-ux:^1.0@beta
 vendor/bin/typo3 extension:setup
 ```
 
