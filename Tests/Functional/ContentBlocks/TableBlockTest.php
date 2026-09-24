@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace BalatD\KernUx\Tests\Functional\ContentBlocks;
 
-use BalatD\KernUx\Rendering\FluidSourceRenderer;
 use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * The Tabelle block, rendered rather than only parsed.
@@ -18,15 +16,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * The second is that the block registers at all and hands the editor its fields in the
  * order KERN's field groups expect.
  */
-final class TableBlockTest extends FunctionalTestCase
+final class TableBlockTest extends AbstractContentBlockTestCase
 {
-    protected array $coreExtensionsToLoad = ['form'];
-
-    protected array $testExtensionsToLoad = [
-        'friendsoftypo3/content-blocks',
-        'balatd/kern-ux',
-    ];
-
     /**
      * @param array<string, mixed> $overrides
      *
@@ -50,13 +41,7 @@ final class TableBlockTest extends FunctionalTestCase
      */
     private function render(array $overrides = []): string
     {
-        $template = dirname(__DIR__, 3) . '/ContentBlocks/ContentElements/table/templates/frontend.html';
-        self::assertFileExists($template);
-
-        $renderer = $this->get(FluidSourceRenderer::class);
-        self::assertInstanceOf(FluidSourceRenderer::class, $renderer);
-
-        return $renderer->render((string)file_get_contents($template), ['data' => self::data($overrides)]);
+        return $this->renderBlock('table', self::data($overrides));
     }
 
     /**
