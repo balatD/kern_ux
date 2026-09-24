@@ -23,6 +23,11 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      # Before the install, while no composer.lock exists: the lock is gitignored, so
+      # --strict would otherwise report it stale against a fresh resolve.
+      - name: Validate composer.json
+        run: composer validate --strict
+
       - name: Install dependencies
         run: composer update --no-progress --no-interaction
 

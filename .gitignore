@@ -11,6 +11,8 @@
 # Tooling caches
 /.php-cs-fixer.cache
 /.phpunit.result.cache
+# Written next to each phpunit config, so it is not anchored to the root.
+.phpunit.cache/
 /.phpstan.cache
 /Build/testing-docker/
 
