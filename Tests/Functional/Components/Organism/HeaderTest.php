@@ -137,6 +137,33 @@ final class HeaderTest extends AbstractComponentTestCase
     }
 
     #[Test]
+    public function treatsTheLogoAsDecorativeWhenTheTitleAlreadyNamesTheOrganisation(): void
+    {
+        $rendered = $this->renderSource(
+            '<k:organism.header siteTitle="Stadt Musterstadt" logoSrc="/logo.svg" logoAlt="Logo der Stadt Musterstadt" />',
+        );
+
+        // The brand link carries its own aria-label, so the alt text is not part of any
+        // accessible name - it is only read as content, right beside a visible span
+        // saying the same thing. A screen reader then announces the organisation twice.
+        self::assertStringContainsString('<img src="/logo.svg" alt="" class="kernt3-header__logo" />', $rendered);
+        self::assertNoStrayWhitespace($rendered);
+    }
+
+    #[Test]
+    public function keepsTheLogoAltWhenNothingElseNamesTheOrganisation(): void
+    {
+        $rendered = $this->renderSource(
+            '<k:organism.header logoSrc="/logo.svg" logoAlt="Logo der Stadt Musterstadt" />',
+        );
+
+        // Without a visible title the logo is the only thing identifying whose site this
+        // is, so here the alt text has to stay.
+        self::assertStringContainsString('alt="Logo der Stadt Musterstadt"', $rendered);
+        self::assertNoStrayWhitespace($rendered);
+    }
+
+    #[Test]
     public function homeLinkHasAnAccessibleName(): void
     {
         $rendered = $this->renderSource('<k:organism.header siteTitle="Musterstadt" />');

@@ -161,3 +161,50 @@ jobs:
         env:
           typo3DatabaseDriver: pdo_sqlite
         run: vendor/bin/phpunit -c Build/phpunit/FunctionalTests.xml --filter ComponentCatalogTest
+
+  a11y-pages:
+    name: Accessibility (axe, whole pages)
+    # Not on pull requests: this job installs a whole TYPO3 and takes minutes, while the
+    # question it answers - whether elements are still accessible *together* - only
+    # changes when something lands. The gallery run above stays on every PR.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - uses: ddev/github-action-setup-ddev@v1
+
+      # The DDEV harness is reused rather than reimplemented. install-typo3.sh already
+      # knows the things a CI-only installer would have to rediscover and then drift
+      # from: removing the `typo3 setup` welcome page, which overrides the site set
+      # differently on each major; creating the default file storage, which `typo3 setup`
+      # does not; and activating the site set.
+      - name: Install TYPO3 14 with the demo page tree
+        run: |
+          ddev install-v14
+          ddev exec -d /var/www/html/v14 vendor/bin/typo3 kern-ux:demo:install --configure-navigation --force
+          ddev exec -d /var/www/html/v14 vendor/bin/typo3 cache:flush
+
+      - name: Install axe and Chromium
+        working-directory: Tests/A11y
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      # One page per page template, because composition is a property of a whole page
+      # and the five templates are the five compositions that exist. Each is checked in
+      # three passes - desktop light, desktop dark and mobile - since contrast depends on
+      # the theme and reflow on the viewport.
+      - name: Run axe against the demo pages
+        working-directory: Tests/A11y
+        run: |
+          node axe.mjs --sitemap https://v14.kern-ux.ddev.site \
+            kern-ux-demo/beispiele/kommunale-startseite \
+            kern-ux-demo/beispiele/personalausweis \
+            kern-ux-demo/beispiele/termin-vereinbaren \
+            kern-ux-demo/beispiele/ringstrasse-wird-saniert \
+            buergerservice

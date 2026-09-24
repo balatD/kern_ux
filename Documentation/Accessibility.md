@@ -43,7 +43,16 @@ node axe.mjs --sitemap https://v14.kern-ux.ddev.site kern-ux-demo kern-ux-demo/e
 ```
 
 Fünf der Fehler in dieser Extension sind genau so gefunden worden und nicht von den
-Unit- oder Markup-Tests: sie lagen alle *zwischen* den geprüften Einheiten.
+Unit- oder Markup-Tests: sie lagen alle *zwischen* den geprüften Einheiten. Der sechste
+war das `alt` des Logos, das den daneben sichtbaren Titel wiederholte — der Screenreader
+las den Namen der Stadt zweimal. Einzeln betrachtet ist an dem Bild nichts falsch.
+
+Seit der Beta läuft dieser Durchgang **in CI**, bei jedem Push auf `main` und auf
+Zuruf (`workflow_dispatch`), gegen TYPO3 14: je eine Seite pro Seiten-Template, jede in
+drei Durchgängen. Die Liste der Seiten steht im Workflow
+(`.github/workflows/ci.yml`, Job `a11y-pages`) und nicht hier, damit es nur eine gibt.
+Auf Pull Requests läuft er nicht — eine vollständige TYPO3-Installation dauert Minuten,
+und die Frage, die er beantwortet, ändert sich erst, wenn etwas zusammenkommt.
 
 ## Was von Hand bleibt
 
