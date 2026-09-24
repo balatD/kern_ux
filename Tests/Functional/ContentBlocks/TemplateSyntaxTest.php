@@ -113,6 +113,32 @@ final class TemplateSyntaxTest extends FunctionalTestCase
     }
 
     /**
+     * A block's frontend template follows the same rule, for the same reason.
+     *
+     * The trailing newline is a root-level text node, so it lands in the page between
+     * one content element and the next. Harmless to look at and invisible in a diff,
+     * which is how the hero block carried one while the other 23 did not.
+     *
+     * Frontend templates only. A backend preview is rendered into the page module, not
+     * into the document, and all 24 of those end in a newline already.
+     */
+    #[Test]
+    public function contentBlockTemplatesDoNotEndInANewline(): void
+    {
+        $root = dirname(__DIR__, 3) . '/ContentBlocks/ContentElements';
+        $offenders = [];
+
+        foreach (glob($root . '/*/templates/frontend.html') ?: [] as $file) {
+            $source = (string)file_get_contents($file);
+            if ($source !== rtrim($source, "\r\n")) {
+                $offenders[] = substr($file, strlen($root) + 1);
+            }
+        }
+
+        self::assertSame([], $offenders, 'These block templates end in a newline: ' . implode(', ', $offenders));
+    }
+
+    /**
      * Every backend preview has to declare the Preview layout and a Content section.
      *
      * TYPO3's page module asks a preview renderer for three parts - header, content and
