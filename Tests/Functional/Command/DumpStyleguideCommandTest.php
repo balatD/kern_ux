@@ -9,7 +9,6 @@ use BalatD\KernUx\Styleguide\StyleguideRenderer;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * The guards on --target, and deliberately nothing else.
@@ -29,7 +28,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * developer machine that has run the installer, which is worse than no test. The dump
  * is exercised for real by the accessibility job, which installs the assets first.
  */
-final class DumpStyleguideCommandTest extends FunctionalTestCase
+final class DumpStyleguideCommandTest extends AbstractCommandTestCase
 {
     protected array $coreExtensionsToLoad = ['form'];
 
@@ -53,7 +52,7 @@ final class DumpStyleguideCommandTest extends FunctionalTestCase
         $tester->execute(['--target' => '/tmp/kern-ux-somewhere-else']);
 
         self::assertSame(1, $tester->getStatusCode());
-        self::assertStringContainsString('must be a directory inside', $tester->getDisplay());
+        self::assertDisplayContains('must be a directory inside', $tester);
     }
 
     #[Test]
@@ -64,7 +63,7 @@ final class DumpStyleguideCommandTest extends FunctionalTestCase
 
         // Without this the command would delete the whole project.
         self::assertSame(1, $tester->getStatusCode());
-        self::assertStringContainsString('must be a directory inside', $tester->getDisplay());
+        self::assertDisplayContains('must be a directory inside', $tester);
     }
 
     #[Test]
@@ -80,7 +79,7 @@ final class DumpStyleguideCommandTest extends FunctionalTestCase
             // The marker file is the only thing separating "our scratch directory" from
             // somebody's source tree, so an unmarked directory is never deleted.
             self::assertSame(1, $tester->getStatusCode());
-            self::assertStringContainsString('was not created by this command', $tester->getDisplay());
+            self::assertDisplayContains('was not created by this command', $tester);
         } finally {
             rmdir($existing);
         }
@@ -97,7 +96,7 @@ final class DumpStyleguideCommandTest extends FunctionalTestCase
             $tester->execute(['--target' => $file]);
 
             self::assertSame(1, $tester->getStatusCode());
-            self::assertStringContainsString('not a directory', $tester->getDisplay());
+            self::assertDisplayContains('not a directory', $tester);
         } finally {
             unlink($file);
         }

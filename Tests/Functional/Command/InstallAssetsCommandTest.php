@@ -11,7 +11,6 @@ use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * What the command adds on top of the installer: the two things an integrator sees.
@@ -26,7 +25,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * No network: the installer is constructed with a stubbed RequestFactory and an
  * isolated target under the test instance, never the extension's own public directory.
  */
-final class InstallAssetsCommandTest extends FunctionalTestCase
+final class InstallAssetsCommandTest extends AbstractCommandTestCase
 {
     protected array $coreExtensionsToLoad = ['form'];
 
@@ -59,7 +58,7 @@ final class InstallAssetsCommandTest extends FunctionalTestCase
         // This is what an integrator behind a proxy sees on first run, and it has to be
         // a non-zero exit or a deployment carries on without any KERN CSS at all.
         self::assertSame(1, $tester->getStatusCode());
-        self::assertStringContainsString('Could not resolve host', $tester->getDisplay());
+        self::assertDisplayContains('Could not resolve host', $tester);
     }
 
     #[Test]
@@ -89,13 +88,13 @@ final class InstallAssetsCommandTest extends FunctionalTestCase
         $first = new CommandTester($command);
         $first->execute([]);
         self::assertSame(0, $first->getStatusCode());
-        self::assertStringContainsString('Installed KERN', $first->getDisplay());
+        self::assertDisplayContains('Installed KERN', $first);
 
         $second = new CommandTester($command);
         $second->execute([]);
         self::assertSame(0, $second->getStatusCode());
         // Re-running must be cheap and must say so; a deployment runs this every time.
-        self::assertStringContainsString('already installed', $second->getDisplay());
+        self::assertDisplayContains('already installed', $second);
     }
 
     private function tarball(): string
