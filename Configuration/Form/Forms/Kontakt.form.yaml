@@ -1,0 +1,68 @@
+# Template: general contact form.
+#
+# Ships for the same reason as the barrier report: it is rebuilt on every project, and
+# each rebuild is another chance to lose the field contract - a label pointing at
+# nothing, a required field marked with an asterisk KERN does not use.
+#
+# Read-only, and without an email finisher, for the reasons given in
+# BarriereMelden.form.yaml.
+type: Form
+identifier: kern-ux-kontakt
+label: 'KERN: Contact'
+prototypeName: standard
+
+renderingOptions:
+  translation:
+    translationFiles:
+      10: 'EXT:kern_ux/Resources/Private/Language/locallang_formtemplates.xlf'
+
+finishers:
+  -
+    identifier: Confirmation
+    options:
+      contentElementUid: 0
+      message: ''
+
+renderables:
+  -
+    type: Page
+    identifier: page-1
+    label: 'Kontakt'
+    renderables:
+      -
+        type: Text
+        identifier: name
+        label: 'Name'
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        type: Email
+        identifier: email
+        label: 'Email address'
+        validators:
+          -
+            identifier: NotEmpty
+          -
+            identifier: EmailAddress
+      -
+        type: Text
+        identifier: subject
+        label: 'Subject'
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        type: Textarea
+        identifier: message
+        label: 'Your message'
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        type: Checkbox
+        identifier: privacy
+        label: 'Privacy notice'
+        validators:
+          -
+            identifier: NotEmpty

@@ -33,7 +33,7 @@ final class LanguageCoverageTest extends UnitTestCase
     public static function translationPairs(): array
     {
         $pairs = [];
-        foreach (['locallang', 'locallang_be', 'locallang_form'] as $name) {
+        foreach (['locallang', 'locallang_be', 'locallang_form', 'locallang_formtemplates'] as $name) {
             $pairs[$name] = [
                 self::EXT_ROOT . "/Resources/Private/Language/{$name}.xlf",
                 self::EXT_ROOT . "/Resources/Private/Language/de.{$name}.xlf",
