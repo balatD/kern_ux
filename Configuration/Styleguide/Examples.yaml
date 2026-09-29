@@ -285,10 +285,8 @@ components:
 
   organism.footer:
     - label: Fußbereich
-      source: "<k:organism.footer columns=\"{0: {title: 'Verwaltung', children: {0: {title: 'Öffnungszeiten', link: '#'}, 1: {title: 'Standorte', link: '#'}}}}\" metaNavigation=\"{0: {title: 'Impressum', link: '#'}, 1: {title: 'Datenschutz', link: '#'}, 2: {title: 'Barrierefreiheit', link: '#'}}\" />"
-    - label: Mit Copyright-Zeile
-      source: "<k:organism.footer metaNavigation=\"{0: {title: 'Impressum', link: '#'}}\" copyright=\"© 2026 Stadt Musterstadt\" />"
-      note: 'Steht als Letztes und außerhalb jeder Navigation: eine Copyright-Zeile sagt etwas über die Seite aus, sie führt nirgendwohin.'
+      source: "<k:organism.footer columns=\"{0: {title: 'Verwaltung', children: {0: {title: 'Öffnungszeiten', link: '#'}, 1: {title: 'Standorte', link: '#'}}}}\" metaNavigation=\"{0: {title: 'Impressum', link: '#'}, 1: {title: 'Datenschutz', link: '#'}, 2: {title: 'Barrierefreiheit', link: '#'}}\" copyright=\"© 2026 Stadt Musterstadt\" />"
+      note: 'Die Copyright-Zeile steht als Letztes und außerhalb jeder Navigation: sie sagt etwas über die Seite aus, sie führt nirgendwohin. Bewusst nur ein Fußbereich-Beispiel - zwei auf einer Seite hieße zwei Landmarks mit gleicher Rolle und gleichem Namen, was die Galerie selbst zu einem Barrierefreiheitsfehler machen würde.'
 
   organism.hero:
     - label: Bühne mit Bild und Hinweis
