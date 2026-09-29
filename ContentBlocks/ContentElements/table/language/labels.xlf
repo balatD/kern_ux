@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-24" product-name="kern-ux/table">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>Table</source>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>A data table with proper row and column headers, for figures, fees or opening hours.</source>
+            </trans-unit>
+            <trans-unit id="rows.label">
+                <source>Table</source>
+            </trans-unit>
+            <trans-unit id="rows.description">
+                <source>One row per line. Use the table wizard rather than typing the pipes by hand.</source>
+            </trans-unit>
+            <trans-unit id="headerRow.label">
+                <source>First row is a header</source>
+            </trans-unit>
+            <trans-unit id="headerRow.description">
+                <source>Marks the top row as the heading for its column, so a screen reader can name the column a value belongs to.</source>
+            </trans-unit>
+            <trans-unit id="headerColumn.label">
+                <source>First column is a header</source>
+            </trans-unit>
+            <trans-unit id="headerColumn.description">
+                <source>Switch on when the leftmost cell names its row - as in a timetable, where every row is a day.</source>
+            </trans-unit>
+            <trans-unit id="footerRow.label">
+                <source>Last row is a total</source>
+            </trans-unit>
+            <trans-unit id="footerRow.description">
+                <source>Sets the bottom row apart, for a sum or a closing remark.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

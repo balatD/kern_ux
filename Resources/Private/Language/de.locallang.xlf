@@ -67,6 +67,18 @@
                 <source>Sitemap</source>
                 <target>Sitemap</target>
             </trans-unit>
+            <trans-unit id="menu.label">
+                <source>Menu</source>
+                <target>Menü</target>
+            </trans-unit>
+            <trans-unit id="file.notAccessible">
+                <source>not accessible</source>
+                <target>nicht barrierefrei</target>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.audioDescribed">
+                <source>Watch the version with audio description</source>
+                <target>Fassung mit Audiodeskription ansehen</target>
+            </trans-unit>
             <trans-unit id="mediaPlayer.transcript">
                 <source>Show transcript</source>
                 <target>Transkript anzeigen</target>

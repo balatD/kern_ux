@@ -21,6 +21,37 @@ final readonly class ComponentCatalog
 
     private const EXAMPLES = 'EXT:kern_ux/Configuration/Styleguide/Examples.yaml';
 
+    private const KERN_STYLESHEET = 'EXT:kern_ux/Resources/Public/Vendor/KernUx/kern.css';
+
+    /**
+     * Every place this extension may spell a KERN class.
+     *
+     * Wider than the component tree on purpose: some KERN families are reached by the
+     * ext:form theme or by TypoScript rather than by a component, and those count as
+     * covered. Resources/Public/Vendor is not listed, so KERN's own files never answer
+     * the question about themselves.
+     */
+    private const SOURCE_ROOTS = [
+        'EXT:kern_ux/Resources/Private/',
+        'EXT:kern_ux/Resources/Public/Css/',
+        'EXT:kern_ux/Resources/Public/JavaScript/',
+        'EXT:kern_ux/ContentBlocks/',
+        'EXT:kern_ux/Configuration/',
+    ];
+
+    /**
+     * kern.css regions that define no component.
+     *
+     * Hand-maintained, and the only such list here: KERN ships colours, sizes, the icon
+     * font, the grid and the spacing utilities from the same stylesheet as its
+     * components, and a utility class is not something this extension could "implement".
+     * Note `icons` (the icon font) and `icon` (the component) are different regions.
+     */
+    private const FOUNDATION_REGIONS = [
+        'mixins', 'icons', 'colors', 'font', 'sizes', 'spacing',
+        'variables', 'themes', 'layers', 'grid', 'flex-grid-system',
+    ];
+
     public function __construct(private FluidSourceRenderer $renderer) {}
 
     /**
@@ -106,6 +137,142 @@ final readonly class ComponentCatalog
         $documented = array_keys($this->exampleDefinitions());
 
         return array_values(array_diff($this->discoverComponents(), $documented));
+    }
+
+    /**
+     * Whether the fetched KERN distribution is on disk.
+     *
+     * It is deliberately not committed (EUPL-1.2, and it ships fonts without their OFL
+     * texts), so anything reading it has to cope with its absence.
+     */
+    public function kernStylesheetAvailable(): bool
+    {
+        $path = GeneralUtility::getFileAbsFileName(self::KERN_STYLESHEET);
+
+        return $path !== '' && is_file($path);
+    }
+
+    /**
+     * KERN component families that nothing in this extension reaches.
+     *
+     * The gallery answers "which of our components are undocumented"; this answers the
+     * other direction - "what does KERN ship that we never implemented" - which was
+     * previously only answerable by reading the stylesheet by hand.
+     *
+     * Empty when the distribution is absent, so a caller can distinguish "nothing is
+     * missing" from "could not tell" via kernStylesheetAvailable().
+     *
+     * @return list<string>
+     */
+    public function uncoveredKernFamilies(): array
+    {
+        if (!$this->kernStylesheetAvailable()) {
+            return [];
+        }
+
+        $haystack = $this->sourceHaystack();
+
+        // Classes built by interpolation never appear whole in a template:
+        // atom.heading writes `kern-heading-{appearance}`, so the families
+        // kern-heading-large, -medium and -x-large exist only at render time. Without
+        // this, seven families read as uncovered.
+        preg_match_all('/kern-[a-z0-9-]*-(?=\{)/', $haystack, $matches);
+        $interpolated = array_unique($matches[0]);
+
+        $uncovered = [];
+        foreach ($this->kernComponentFamilies() as $family) {
+            // The trailing guard is what keeps kern-table from being "found" inside
+            // kern-table-responsive; the optional group is what lets a reference to
+            // kern-summary-group__header cover the kern-summary-group family.
+            $pattern = '/' . preg_quote($family, '/') . '(?:(?:__|--)[A-Za-z0-9-]+)?(?![A-Za-z0-9_-])/';
+            if (preg_match($pattern, $haystack) === 1) {
+                continue;
+            }
+
+            foreach ($interpolated as $prefix) {
+                if (str_starts_with($family, $prefix)) {
+                    continue 2;
+                }
+            }
+
+            $uncovered[] = $family;
+        }
+
+        return $uncovered;
+    }
+
+    /**
+     * Every `kern-*` block family KERN defines in a component region.
+     *
+     * kern.css embeds its SCSS source headers, so the regions are authoritative rather
+     * than guessed. A family is everything before the first `__` or `--`, which is how
+     * KERN spells element and modifier.
+     *
+     * @return list<string>
+     */
+    private function kernComponentFamilies(): array
+    {
+        $path = GeneralUtility::getFileAbsFileName(self::KERN_STYLESHEET);
+        $css = $path === '' ? false : file_get_contents($path);
+        if ($css === false) {
+            return [];
+        }
+
+        $regions = preg_split('/@file _([a-z0-9-]+)\.scss/', $css, -1, PREG_SPLIT_DELIM_CAPTURE);
+        if ($regions === false) {
+            return [];
+        }
+
+        $families = [];
+        for ($i = 1; $i < count($regions); $i += 2) {
+            if (in_array($regions[$i], self::FOUNDATION_REGIONS, true)) {
+                continue;
+            }
+
+            preg_match_all('/\.(kern-[A-Za-z0-9_-]+)/', $regions[$i + 1] ?? '', $matches);
+            foreach ($matches[1] as $class) {
+                $family = preg_split('/__|--/', $class);
+                if ($family !== false && $family[0] !== '') {
+                    $families[$family[0]] = true;
+                }
+            }
+        }
+
+        $found = array_keys($families);
+        sort($found);
+
+        return $found;
+    }
+
+    /**
+     * Every source file that could name a KERN class, concatenated.
+     */
+    private function sourceHaystack(): string
+    {
+        $haystack = '';
+        foreach (self::SOURCE_ROOTS as $root) {
+            $absolute = GeneralUtility::getFileAbsFileName($root);
+            if ($absolute === '' || !is_dir($absolute)) {
+                continue;
+            }
+
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($absolute, \FilesystemIterator::SKIP_DOTS),
+            );
+
+            /** @var \SplFileInfo $file */
+            foreach ($iterator as $file) {
+                if (!$file->isFile()) {
+                    continue;
+                }
+                $contents = file_get_contents($file->getPathname());
+                if ($contents !== false) {
+                    $haystack .= $contents . "\n";
+                }
+            }
+        }
+
+        return $haystack;
     }
 
     /**

@@ -6,7 +6,9 @@
 # graphs are mutually exclusive (Content Blocks 1.x is v13-only, 2.x is v14-only).
 # So "run the tests" always means "pin a major, resolve, run" - never just phpunit.
 #
-# Runs inside DDEV when available, otherwise on the host.
+# Runs wherever it is invoked - it does no DDEV detection of its own. There is no PHP on
+# the host, so in practice that means:
+#   ddev exec -d /var/www/kern_ux Build/Scripts/runTests.sh -t 13 -s all
 set -euo pipefail
 
 cd "$(dirname "$(readlink -f "$0")")/../.."

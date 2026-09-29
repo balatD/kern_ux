@@ -1,4 +1,5 @@
 name: kern-ux/kern-ux
 label: 'KERN UX-Standard'
 optionalDependencies:
+  - typo3/felogin
   - typo3/form

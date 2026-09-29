@@ -1,13 +1,13 @@
 # Content Blocks und Seiten
 
-## Die 23 Blöcke
+## Die 24 Blöcke
 
 Jeder mit Backend-Vorschau, jeder auf denselben
 [Components](Components.md) aufgebaut:
 
 Text · Text und Medien · Bild · Bildergalerie · Video oder Audio · Bühne · Karten ·
 Schnellzugriff · Dienstleistung · Standort · Akkordeon · Hinweis · Dialog · Downloads ·
-Aufgabenübersicht · Fortschritt · Definitionsliste · Liste · Überschrift ·
+Aufgabenübersicht · Fortschritt · Definitionsliste · Tabelle · Liste · Überschrift ·
 Schaltflächen · Trenner · Inhaltsverzeichnis · Sitemap
 
 Wie das im Seitenmodul aussieht, zeigen die
@@ -99,17 +99,61 @@ Fußbereich der Karte als `<time datetime>` erscheint.
 
 ## Tabellen
 
-Es gibt **keinen Tabellen-Block**, und das ist eine Entscheidung, keine Lücke.
-Redakteure bauen Tabellen im Rich-Text-Editor; `lib.kernUx.rte` hängt dort
-serverseitig `class="kern-table"` an und legt einen
-`<div class="kern-table-responsive" tabindex="0">` darum, damit die Scrollfläche mit
-der Tastatur erreichbar ist — genau so, wie KERNs eigene responsive Tabelle es
-vorsieht. Eine zweistufige Collection wäre für alles jenseits eines winzigen Rasters
-unbedienbar, und ein bloßes `<table>` verlöre den Scroll-Container.
+Tabellen gibt es auf **zwei** Wegen, und die Trennung ist gewollt.
 
-Die Klasse wird zur Laufzeit gesetzt und steht deshalb in keinem Template. Wer nur
-`Resources/Private/` und `ContentBlocks/` durchsucht, hält das für eine Lücke; siehe
+Eine Tabelle **innerhalb** eines Fließtextes zeichnet der Redakteur im
+Rich-Text-Editor. `lib.kernUx.rte` hängt dort serverseitig `class="kern-table"` an und
+legt einen `<div class="kern-table-responsive" tabindex="0">` darum, damit die
+Scrollfläche mit der Tastatur erreichbar ist. Diese Klasse wird zur Laufzeit gesetzt
+und steht deshalb in keinem Template — wer nur `Resources/Private/` und
+`ContentBlocks/` durchsucht, hält das für eine Lücke; siehe
 `Configuration/Sets/KernUx/setup.typoscript`.
+
+Weiter reicht dieser Weg aber nicht: CKEditor schreibt weder `kern-table__cell` noch
+`scope`, die Zellen werden in `rte.css` nur mit Elementselektoren nachgebildet. Ohne
+`scope` kann ein Screenreader zu keinem Wert die zugehörige Überschrift nennen.
+
+Für eine **eigenständige** Tabelle gibt es deshalb den Block **Tabelle**. Er benutzt
+den Tabellen-Assistenten des Cores (`renderType: textTable`) — ein echtes Raster im
+Backend statt einer zweistufigen Collection — und rendert `molecule.table`, das
+`scope="col"`, `scope="row"`, `<tbody>`/`<tfoot>` und eine `<caption>` setzt. Drei
+Schalter entscheiden über Kopfzeile, Kopfspalte und Summenzeile; die Beschriftung
+übernimmt die Überschrift des Blocks und wird nur für Screenreader ausgegeben, weil
+die sichtbare Überschrift direkt darüber schon dasselbe sagt.
+
+Nicht umgesetzt sind `kern-table--small` und `kern-table--striped`. Beide sind je eine
+Zeile, aber ein Aussehensschalter, nach dem niemand gefragt hat.
+
+## Die Core-Elemente
+
+Diese Extension ersetzt `fluid_styled_content`. Die klassischen Inhaltselemente
+registriert aber `EXT:frontend` selbst, nicht FSC — sie stehen also im Assistenten,
+ob FSC installiert ist oder nicht, während das Rendering immer FSC-Sache war. Ohne
+Zutun heißt das: Element einfügen, speichern, leerer Seitenbereich. Keine Ausnahme,
+kein Logeintrag.
+
+Das Set löst das in zwei Richtungen:
+
+**Gerendert** werden `menu_pages`, `menu_subpages`, `menu_sitemap`,
+`menu_sitemap_pages` und `shortcut`. Die Menüs laufen über `lib.kernUx.menu` und geben
+dieselbe `kern-list`-Liste aus wie der Sitemap-Block — beide holen sie aus
+`lib.kernUx.menuLevels`, damit das Markup einmal existiert. Ohne ausgewählte Seite
+nimmt „Unterseiten" die aktuelle Seite; der Core rendert dort nichts, was wieder
+dieselbe stille Leere wäre.
+
+**Ausgeblendet** werden die Varianten, die hier niemand füllen kann:
+`menu_abstract`, `menu_recently_updated` und `menu_related_pages` brauchen
+Seitenabstracts und Schlüsselwörter, `menu_categorized_pages` und
+`menu_categorized_content` brauchen `sys_category`. Dazu `menu_section` und
+`menu_section_pages`: der Section-Index des Cores verlinkt auf `#c<uid>`, während
+jeder KERN-Block `id="kern-content-<uid>"` ausgibt — die Links gingen ins Leere, ohne
+Fehlermeldung. Das KERN-eigene Gegenstück ist der `toc`-Block.
+
+> [!NOTE]
+> `shortcut` gibt das referenzierte Element ein zweites Mal aus, mitsamt seiner `id`.
+> Steht das Original auf derselben Seite, ist die `id` doppelt vergeben — und ein
+> Eintrag im Inhaltsverzeichnis springt dann zum ersten Vorkommen. Gedacht ist das
+> Element für Inhalte aus einem Ablageordner; dort tritt der Fall nicht auf.
 
 ## Backend-Vorschauen
 

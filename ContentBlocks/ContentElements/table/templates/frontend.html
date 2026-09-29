@@ -1,0 +1,16 @@
+<k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:variable name="table" value="{kux:tableData(value: data.tx_kernux_table_rows, headerRow: data.tx_kernux_table_headerRow, footerRow: data.tx_kernux_table_footerRow)}" /><f:if condition="{table.rows}"><k:molecule.table
+    rows="{table.rows}"
+    head="{table.head}"
+    foot="{table.foot}"
+    rowHeaders="{data.tx_kernux_table_headerColumn}"
+    caption="{data.header}"
+    captionHidden="{true}"
+/></f:if></k:molecule.section>

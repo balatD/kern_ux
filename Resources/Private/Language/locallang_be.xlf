@@ -123,6 +123,9 @@
             <trans-unit id="preview.entries">
                 <source>%s entries</source>
             </trans-unit>
+            <trans-unit id="preview.tableSize">
+                <source>%s rows, %s columns</source>
+            </trans-unit>
             <trans-unit id="preview.files">
                 <source>%s files</source>
             </trans-unit>
@@ -158,6 +161,18 @@
             </trans-unit>
             <trans-unit id="page.navIcon.description">
                 <source>Shown before the link text where this page appears in the header service navigation. Only used there, and only if the page is part of that menu.</source>
+            </trans-unit>
+            <trans-unit id="file.isAccessible">
+                <source>Document is accessible</source>
+            </trans-unit>
+            <trans-unit id="file.isAccessible.description">
+                <source>Tick only if the document itself meets BITV 2.0: tagged structure, reading order, text alternatives. Download links say so when it does not, so a visitor can ask for an alternative instead of opening it and finding out.</source>
+            </trans-unit>
+            <trans-unit id="file.longdesc">
+                <source>Long description</source>
+            </trans-unit>
+            <trans-unit id="file.longdesc.description">
+                <source>For an image whose content the alternative text cannot carry: a chart, a process diagram, an organisation chart. Rendered as text below the image and associated with it, because the obsolete longdesc attribute reaches nobody.</source>
             </trans-unit>
             <trans-unit id="preview.media.audio">
                 <source>Audio</source>

@@ -49,6 +49,13 @@ settings:
     type: bool
     default: false
 
+  kernUx.assets.projectCss:
+    label: 'Project stylesheet'
+    description: 'EXT: or absolute path to the project''s own stylesheet. Loaded after kernt3.css, so it can override without the project having to replace the set.'
+    category: kernUx.assets
+    type: string
+    default: ''
+
   kernUx.theme:
     label: 'Colour scheme'
     description: '"auto" follows the visitor''s system preference via prefers-color-scheme.'
@@ -102,6 +109,13 @@ settings:
     type: string
     default: ''
 
+  kernUx.footer.copyright:
+    label: 'Copyright notice'
+    description: 'Shown as the last line of the footer. Empty leaves the line out. Written in full - a bare year beside a symbol says nothing about who holds the right.'
+    category: kernUx.footer
+    type: string
+    default: ''
+
   kernUx.site.title:
     label: 'Organisation name'
     description: 'Shown in the header when no logo is configured, so the header is never empty.'
@@ -112,6 +126,34 @@ settings:
   kernUx.site.logo:
     label: 'Logo path'
     description: 'EXT: or absolute path to the organisation logo. Must not be the Bildwortmarke of the Digitale Dachmarke unless permission was granted.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.faviconIco:
+    label: 'Favicon (ICO)'
+    description: 'EXT: or absolute path. Still worth setting: a browser that finds no icon asks for /favicon.ico anyway, and a 404 per page view is the result.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.faviconSvg:
+    label: 'Favicon (SVG)'
+    description: 'EXT: or absolute path. Preferred where supported - one file at every size, and it can carry a dark-mode variant.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.appleTouchIcon:
+    label: 'Apple touch icon'
+    description: 'EXT: or absolute path to a 180x180 PNG, used when the site is saved to an iOS home screen.'
+    category: kernUx.site
+    type: string
+    default: ''
+
+  kernUx.site.webmanifest:
+    label: 'Web app manifest'
+    description: 'EXT: or absolute path to a site.webmanifest. Needed only if the site should be installable.'
     category: kernUx.site
     type: string
     default: ''

@@ -1,0 +1,24 @@
+<f:comment>
+    Rendering shell for the core menu content elements.
+
+    One template for all four: the HMENU that differs per element is configured as the
+    numbered child 20 of its own tt_content object, exactly as lib.contentElement does
+    for plugins, so f:cObject on tt_content.<CType>.20 reaches whichever one is being
+    rendered. The list markup itself comes from lib.kernUx.menuLevels and is the same
+    kern-list the sitemap block emits.
+
+    The nav landmark is named after the element heading. A page can hold several menus,
+    and unnamed nav landmarks are indistinguishable to anyone navigating by landmark
+    (WCAG 1.3.1). header_layout = 100 hides the heading visually but the text is still
+    the best name for the region, so the label does not depend on it.
+</f:comment><k:molecule.section
+    spaceBefore="{data.space_before_class}"
+    spaceAfter="{data.space_after_class}"
+    id="{kux:uniqueId(prefix: 'content', uid: data.uid)}"
+><k:molecule.contentHeader
+    header="{data.header}"
+    layout="{data.header_layout}"
+    appearance="{data.tx_kernux_heading_appearance}"
+/><f:variable name="menuLabel" value="{data.header}"
+/><f:if condition="!{menuLabel}"><f:variable name="menuLabel"><f:translate key="menu.label" extensionName="KernUx" /></f:variable></f:if
+><nav aria-label="{menuLabel}"><f:cObject typoscriptObjectPath="tt_content.{data.CType}.20" data="{data}" table="tt_content" /></nav></k:molecule.section>

@@ -126,12 +126,23 @@ components:
     - label: Bild mit Bildunterschrift
       source: '<k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" alt="" caption="Beispielbild mit Bildunterschrift" />'
       note: 'alt wird immer ausgegeben, auch leer: ein img ohne alt wird mit dem Dateinamen vorgelesen, alt="" kennzeichnet korrekt ein dekoratives Bild. Bei FAL-Referenzen entsteht zusätzlich ein srcset über 480/768/1024/1440.'
+    - label: Komplexes Bild mit Langbeschreibung
+      source: '<k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" alt="Balkendiagramm der Bearbeitungsdauer" id="beispiel-diagramm" caption="Bearbeitungsdauer je Antragsart" longDescription="Personalausweis 10 Werktage, Reisepass 21 Werktage, Führungszeugnis 3 Werktage." />'
+      note: 'Für ein Diagramm reicht der Alternativtext nicht: er wird in einem Zug vorgelesen, ohne Pause und ohne Rücksprung. Die Langbeschreibung steht deshalb als sichtbarer Text in der figcaption und ist über aria-describedby mit dem Bild verknüpft - nicht im longdesc-Attribut, das aus HTML5 entfernt wurde und niemanden erreicht.'
 
   molecule.descriptionList:
     - label: Schlüssel-Wert-Paare
       source: "<k:molecule.descriptionList items=\"{0: {key: 'Gebühr', value: '37,00 €'}, 1: {key: 'Gültigkeit', value: '10 Jahre'}}\" />"
     - label: Spaltenvariante
       source: "<k:molecule.descriptionList columns=\"{true}\" items=\"{0: {key: 'Montag', value: '8-16 Uhr'}, 1: {key: 'Dienstag', value: '8-18 Uhr'}}\" />"
+
+  molecule.table:
+    - label: Tabelle mit Spaltenköpfen
+      source: "<k:molecule.table caption=\"Gebühren\" head=\"{0: 'Leistung', 1: 'Gebühr'}\" rows=\"{0: {0: 'Personalausweis', 1: '37,00 €'}, 1: {0: 'Reisepass', 1: '70,00 €'}}\" />"
+      note: 'Der Wrapper trägt tabindex="0", damit eine überlaufende Tabelle auch per Tastatur scrollbar ist - dieselbe Hülle, die lib.kernUx.rte um eine im Editor gezeichnete Tabelle legt.'
+    - label: Mit Zeilen- und Spaltenköpfen
+      source: "<k:molecule.table caption=\"Öffnungszeiten\" captionHidden=\"{true}\" rowHeaders=\"{true}\" head=\"{0: 'Tag', 1: 'Vormittag', 2: 'Nachmittag'}\" rows=\"{0: {0: 'Montag', 1: '8-12 Uhr', 2: '13-16 Uhr'}, 1: {0: 'Dienstag', 1: '8-12 Uhr', 2: 'geschlossen'}}\" foot=\"{0: 'Samstag', 1: 'geschlossen', 2: 'geschlossen'}\" />"
+      note: 'Bei zwei Achsen braucht jede Zelle ihren Bezug: scope="col" am Spaltenkopf, scope="row" an der ersten Zelle jeder Zeile. Die Beschriftung ist hier nur für Screenreader da, weil die Überschrift darüber schon dasselbe sagt.'
 
   molecule.openingHours:
     - label: Öffnungszeiten
@@ -217,11 +228,17 @@ components:
       note: 'Die Quellpfade sind Beispiele und zeigen hier kein Video - geprüft wird das Markup: natives Element mit controls, Untertitel-Track und Transkript. WCAG 1.2.2 verlangt Untertitel, 1.2.1 das Transkript.'
     - label: Audio
       source: '<k:molecule.mediaPlayer src="/beispiel.mp3" audio="{true}" transcript="Sprecher: Die Öffnungszeiten haben sich geändert." />'
+    - label: Video mit Audiodeskription
+      source: '<k:molecule.mediaPlayer src="/beispiel.mp4" captionsSrc="/beispiel.vtt" descriptionsSrc="/beispiel-ad.vtt" audioDescribedUrl="/beispiel-ad.mp4" />'
+      note: 'Zwei Wege, und das ist keine Doppelung: die descriptions-Spur wird von Browsern zwar geparst, aber nicht wiedergegeben. Was WCAG 1.2.3 und 1.2.5 heute tatsächlich erfüllt, ist die verlinkte Fassung, deren Tonspur das Bild beschreibt.'
 
   molecule.downloadList:
     - label: Dateiliste
-      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Merkblatt Personalausweis', format: 'PDF', size: '240 KB'}, 1: {url: '#', title: 'Antragsformular', format: 'PDF', size: '1,2 MB', description: 'Bitte vollständig ausfüllen.'}}\" />"
+      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Merkblatt Personalausweis', format: 'PDF', size: '240 KB', accessible: true}, 1: {url: '#', title: 'Antragsformular', format: 'PDF', size: '1,2 MB', description: 'Bitte vollständig ausfüllen.', accessible: true}}\" />"
       note: 'Format und Größe stehen im Linktext, nicht in einer eigenen Spalte: ein Link muss aus sich heraus verständlich sein (WCAG 2.4.4).'
+    - label: Nicht barrierefreies Dokument
+      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Bebauungsplan Ringstraße', format: 'PDF', size: '8,4 MB'}}\" />"
+      note: 'Ohne gesetztes Flag in den Dateimetadaten steht der Hinweis im Linktext - wer eine barrierefreie Fassung braucht, erfährt das vor dem Öffnen und nicht danach.'
 
   molecule.section:
     - label: Abstand vor und nach dem Block
@@ -268,7 +285,8 @@ components:
 
   organism.footer:
     - label: Fußbereich
-      source: "<k:organism.footer columns=\"{0: {title: 'Verwaltung', children: {0: {title: 'Öffnungszeiten', link: '#'}, 1: {title: 'Standorte', link: '#'}}}}\" metaNavigation=\"{0: {title: 'Impressum', link: '#'}, 1: {title: 'Datenschutz', link: '#'}, 2: {title: 'Barrierefreiheit', link: '#'}}\" />"
+      source: "<k:organism.footer columns=\"{0: {title: 'Verwaltung', children: {0: {title: 'Öffnungszeiten', link: '#'}, 1: {title: 'Standorte', link: '#'}}}}\" metaNavigation=\"{0: {title: 'Impressum', link: '#'}, 1: {title: 'Datenschutz', link: '#'}, 2: {title: 'Barrierefreiheit', link: '#'}}\" copyright=\"© 2026 Stadt Musterstadt\" />"
+      note: 'Die Copyright-Zeile steht als Letztes und außerhalb jeder Navigation: sie sagt etwas über die Seite aus, sie führt nirgendwohin. Bewusst nur ein Fußbereich-Beispiel - zwei auf einer Seite hieße zwei Landmarks mit gleicher Rolle und gleichem Namen, was die Galerie selbst zu einem Barrierefreiheitsfehler machen würde.'
 
   organism.hero:
     - label: Bühne mit Bild und Hinweis

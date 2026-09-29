@@ -82,18 +82,32 @@ const failures = [];
 const incompletes = [];
 const pageErrors = [];
 const unstyled = [];
+const notFound = [];
 
 for (const pass of PASSES) {
     // A context per pass, and a page per URL: one shared page would carry
     // localStorage, focus and the theme attribute from the previous document.
-    const context = await browser.newContext({ viewport: pass.viewport });
+    // ignoreHTTPSErrors because a live run points at DDEV, which serves a mkcert
+    // certificate that neither a CI runner nor a machine without `mkcert -install`
+    // trusts. Plain http would sidestep it, but the site base is https and the assets
+    // would then load as mixed content, which is exactly what the styling check below
+    // would trip over.
+    const context = await browser.newContext({ viewport: pass.viewport, ignoreHTTPSErrors: true });
 
     for (const url of urls) {
         const page = await context.newPage();
         const errors = [];
         page.on('pageerror', (error) => errors.push(error.message));
 
-        await page.goto(url, { waitUntil: 'load' });
+        const response = await page.goto(url, { waitUntil: 'load' });
+
+        // A renamed demo slug otherwise yields a 404 page that axe may well pass, and
+        // the run goes green having tested nothing. There is accidental cover for this
+        // today - a TYPO3 404 carries no KERN stylesheet, so the check below fires - but
+        // that is luck rather than a guard.
+        if (response !== null && !response.ok()) {
+            notFound.push(`${url} (${pass.name}) returned ${response.status()}`);
+        }
 
         if (pass.theme !== null) {
             await page.evaluate((theme) => document.body.setAttribute('data-kern-theme', theme), pass.theme);
@@ -170,6 +184,12 @@ for (const entry of failures) {
 // defect that is cheap to fix and invisible in review.
 for (const entry of incompletes) {
     report(entry, 'incomplete');
+}
+
+if (notFound.length > 0) {
+    console.error(`\nNot served:\n  ${notFound.join('\n  ')}`);
+    console.error('An error page tests nothing, so this counts as a failure.');
+    process.exit(1);
 }
 
 if (unstyled.length > 0) {

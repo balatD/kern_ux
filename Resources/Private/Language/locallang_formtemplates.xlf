@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-09-24" product-name="kern_ux">
+        <header/>
+        <body>
+            <trans-unit id="kern-ux-barriere-melden.element.page-1.properties.label">
+                <source>Report a barrier</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.location.properties.label">
+                <source>Where did you find the barrier?</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.location.properties.elementDescription">
+                <source>The web address of the page, or its title if the address is not to hand.</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.barrier.properties.label">
+                <source>What could you not do?</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.barrier.properties.elementDescription">
+                <source>Describe it in your own words. Which part of the page, and what happened when you tried to use it.</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.label">
+                <source>How should we reply?</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.elementDescription">
+                <source>Pick the form you can read or hear most easily.</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.options.email">
+                <source>By email</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.options.phone">
+                <source>By telephone</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.options.post">
+                <source>By post</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.reply-format.properties.options.none">
+                <source>No reply needed</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.name.properties.label">
+                <source>Your name</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.email.properties.label">
+                <source>Your email address</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.phone.properties.label">
+                <source>Your telephone number</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-barriere-melden.element.privacy.properties.label">
+                <source>I agree that my details may be used to answer this report.</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.page-1.properties.label">
+                <source>Contact</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.name.properties.label">
+                <source>Your name</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.email.properties.label">
+                <source>Your email address</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.subject.properties.label">
+                <source>Subject</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.message.properties.label">
+                <source>Your message</source>
+            </trans-unit>
+            <trans-unit id="kern-ux-kontakt.element.privacy.properties.label">
+                <source>I agree that my details may be used to answer this enquiry.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

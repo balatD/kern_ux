@@ -6,7 +6,7 @@ theme and the page templates all map data onto those same components, because KE
 accessibility guarantees hang off concrete classes and ARIA attributes rather than off
 anything a renderer could infer.
 
-State: **alpha**. Public interfaces may change — but see *Breaking changes* below, because
+State: **beta**. The interfaces under *Breaking changes* below are expected to hold, because
 much of the surface is stored in databases and project files this extension does not own.
 
 ## Toolchain: everything runs in DDEV
@@ -47,7 +47,7 @@ SHA-512 verified, no CDN — public-sector sites generally cannot accept externa
 ## Components
 
 Live at `Resources/Private/Components/<Group>/<Name>/<Name>.html` and resolve as
-`<k:group.name>`. 40 today: 15 Atom, 16 Molecule, 9 Organism. The `k` and `kux` namespaces
+`<k:group.name>`. 42 today: 15 Atom, 18 Molecule, 9 Organism. The `k` and `kux` namespaces
 are registered globally.
 
 Four authoring conventions. **Only the first two are enforced by tests** — the others are
@@ -88,6 +88,16 @@ gap.
 Every `backend-preview.html` needs `<f:layout name="Preview" />` and exactly one
 `<f:section name="Content">`. Otherwise the editor sees each preview three times — with no
 error and no log entry.
+
+**Core content elements come from `EXT:frontend`, not from `fluid_styled_content`.** So
+`shortcut`, the `menu_*` family, `bullets`, `table` and `uploads` exist in the wizard on
+every KERN site whether or not FSC is installed, while nothing renders them — an editor
+places one and gets an empty region, with no error. Either give the CType a
+`tt_content.<CType>` object in the site set, or take it out of the wizard. `removeItems`
+only reaches the **group the item is actually in** (`default`, `lists`, `menu`, `special`,
+…), and getting that wrong fails silently: `bullets`, `table` and `uploads` sat under
+`default` for a while and were never hidden at all. `CoreContentTypeRenderingTest` reads
+each item's group from TCA and fails on either mistake.
 
 ## Tests
 
@@ -132,9 +142,11 @@ database or project config, not here: `k:` tag and argument names (a changed *de
 worst — no error, different output everywhere); the `Group/Name/Name.html` path shape
 (integrator overrides via `EXTCONF.kern_ux.componentRootPaths` resolve by path);
 `lib.kernUx.*` and `lib.contentElement`; **`colPos` 0=main, 1=hero, 2=aside, 3=teaser**;
-backend layout names; the 19 `kernUx.*` setting keys; `tx_kernux_*` columns; the
-`kern-ux/<name>` CTypes; the 57 `kernt3-*` classes (they look private, but projects
-override them); XLIFF trans-unit ids; and the `data-kernt3-*` JS hooks.
+backend layout names; the 25 `kernUx.*` setting keys; `tx_kernux_*` columns; the
+`kern-ux/<name>` CTypes; the 58 `kernt3-*` classes (they look private, but projects
+override them); XLIFF trans-unit ids; the `data-kernt3-*` JS hooks; the
+`kernUxPrefix` / `kernUxSuffix` form-element properties (they live in the integrator's
+form definition); and the `kux:` ViewHelper names, `kux:tableData` included.
 
 `lib.contentElement` deserves its own warning: this extension replaces
 `fluid_styled_content`, so without it **every** Extbase plugin — the form plugin included

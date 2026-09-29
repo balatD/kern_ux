@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace BalatD\KernUx\Tests\Functional\ContentBlocks;
 
-use BalatD\KernUx\Rendering\FluidSourceRenderer;
 use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * The Standort block, rendered rather than only parsed.
@@ -24,15 +22,8 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * functional test. Do not "complete" the fixture - it would trade this coverage for
  * none.
  */
-final class LocationBlockTest extends FunctionalTestCase
+final class LocationBlockTest extends AbstractContentBlockTestCase
 {
-    protected array $coreExtensionsToLoad = ['form'];
-
-    protected array $testExtensionsToLoad = [
-        'friendsoftypo3/content-blocks',
-        'balatd/kern-ux',
-    ];
-
     /**
      * @return array<string, mixed>
      */
@@ -67,13 +58,7 @@ final class LocationBlockTest extends FunctionalTestCase
 
     private function render(): string
     {
-        $template = dirname(__DIR__, 3) . '/ContentBlocks/ContentElements/location/templates/frontend.html';
-        self::assertFileExists($template);
-
-        $renderer = $this->get(FluidSourceRenderer::class);
-        self::assertInstanceOf(FluidSourceRenderer::class, $renderer);
-
-        return $renderer->render((string)file_get_contents($template), ['data' => self::data()]);
+        return $this->renderBlock('location', self::data());
     }
 
     #[Test]
@@ -156,14 +141,7 @@ final class LocationBlockTest extends FunctionalTestCase
     #[Test]
     public function omitsEverySectionWhoseFieldsAreEmpty(): void
     {
-        $renderer = $this->get(FluidSourceRenderer::class);
-        self::assertInstanceOf(FluidSourceRenderer::class, $renderer);
-        $template = dirname(__DIR__, 3) . '/ContentBlocks/ContentElements/location/templates/frontend.html';
-
-        $rendered = $renderer->render(
-            (string)file_get_contents($template),
-            ['data' => ['uid' => 1, 'header' => 'Leer', 'header_layout' => 2]],
-        );
+        $rendered = $this->renderBlock('location', ['uid' => 1, 'header' => 'Leer', 'header_layout' => 2]);
 
         self::assertStringNotContainsString('<address>', $rendered);
         self::assertStringNotContainsString('<dl', $rendered);

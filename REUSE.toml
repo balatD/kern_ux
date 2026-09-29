@@ -1,0 +1,33 @@
+# REUSE licensing declaration (https://reuse.software/spec/).
+#
+# Public-sector catalogues - OpenCoDE among them - expect a package to state its
+# copyright and licence in a machine-readable way, and REUSE is how that is done.
+#
+# One declaration for the whole tree rather than a header in every file, which is the
+# other way the specification allows. Two reasons, and the second is the load-bearing one:
+#
+#   - Every file here has the same owner and the same licence, so 200-odd headers would
+#     restate one fact 200 times and drift the first time somebody forgets one.
+#
+#   - A header in a Fluid component would be a bug. The component templates under
+#     Resources/Private/Components chain their root-level tags (`/><f:argument …`) and end
+#     without a newline precisely because anything else becomes a root-level text node and
+#     lands in the rendered output - an inline component would start emitting a stray space,
+#     turning "Status: X." into "Status: X .". A licence comment at the top of those files
+#     is exactly that kind of text node.
+#
+# The fetched KERN distribution under Resources/Public/Vendor is not covered here and must
+# not be: it is somebody else's code, it is gitignored rather than committed, and its
+# licensing is set out in THIRD-PARTY.md.
+
+version = 1
+
+SPDX-PackageName = "kern_ux"
+SPDX-PackageSupplier = "Dragan Balatinac"
+SPDX-PackageDownloadLocation = "https://github.com/balatD/kern_ux"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Dragan Balatinac"
+SPDX-License-Identifier = "GPL-2.0-or-later"
