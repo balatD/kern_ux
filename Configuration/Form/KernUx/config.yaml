@@ -12,6 +12,14 @@ name: kern-ux/form
 label: 'KERN UX-Standard'
 priority: 200
 
+# The form templates this extension ships, offered in the form editor as a starting
+# point. An extension path is read-only to ext:form, so an integrator duplicates a
+# template into their own storage rather than editing ours - which is what keeps an
+# update from overwriting their form.
+persistenceManager:
+  allowedExtensionPaths:
+    1756140001: 'EXT:kern_ux/Configuration/Form/Forms/'
+
 prototypes:
   standard:
     # A date as three separate fields, which is what KERN prescribes: no
