@@ -78,22 +78,25 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Pin TYPO3 ${{ matrix.typo3 }}
+      # `composer update --with` rather than `composer require --no-update`: require
+      # REWRITES composer.json, and ExtensionManifestTest reads that file to derive the
+      # range ext_emconf.php must carry. A manifest pinned to one major makes the derived
+      # hull wrong, so that test failed on every matrix leg while passing locally - and it
+      # had never run in CI before, because it was added after the last green build.
+      #
+      # Only cms-core is constrained. The other TYPO3 packages each require it, so they
+      # follow the pinned major on their own; naming them again would be a second place
+      # to forget one.
+      - name: Install dependencies (TYPO3 ${{ matrix.typo3 }}, ${{ matrix.dependencies }})
         run: |
           CONSTRAINT="^${{ matrix.typo3 }}.4"
           if [ "${{ matrix.typo3 }}" = "14" ]; then CONSTRAINT="^14.3"; fi
-          composer require --no-update --no-interaction "typo3/cms-core:${CONSTRAINT}"
-          composer require --no-update --no-interaction --dev "typo3/cms-form:${CONSTRAINT}" "typo3/cms-rte-ckeditor:${CONSTRAINT}"
-
-      - name: Install dependencies (${{ matrix.dependencies }})
-        run: |
+          LOWEST=""
+          if [ "${{ matrix.dependencies }}" = "lowest" ]; then LOWEST="--prefer-lowest --prefer-stable"; fi
           # Two steps: typo3/class-alias-loader is a Composer plugin whose major
           # differs per TYPO3 version, so the autoload dump needs a fresh process.
-          if [ "${{ matrix.dependencies }}" = "lowest" ]; then
-            composer update --no-progress --no-interaction --no-autoloader --prefer-lowest --prefer-stable
-          else
-            composer update --no-progress --no-interaction --no-autoloader
-          fi
+          composer update --no-progress --no-interaction --no-autoloader ${LOWEST} \
+            --with "typo3/cms-core:${CONSTRAINT}"
           composer dump-autoload --no-interaction
 
       - name: Unit tests
