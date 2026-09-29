@@ -73,6 +73,9 @@ final class ContentBlockContractTest extends AbstractContentBlockTestCase
             'divider, decorative' => ['divider', ['uid' => 42, 'tx_kernux_divider_semantic' => 0],
                 ['kern-divider--decorative', 'aria-hidden="true"']],
 
+            // No tx_kernux_is_accessible on the file, which is the default state: the
+            // note belongs in the link text beside format and size, because a link has
+            // to be understandable from its text alone.
             'downloads' => ['downloads', $base + [
                 'tx_kernux_downloads_files' => [[
                     'publicUrl' => '/fileadmin/merkblatt.pdf',
@@ -81,7 +84,18 @@ final class ContentBlockContractTest extends AbstractContentBlockTestCase
                     'extension' => 'pdf',
                     'size' => 1024,
                 ]],
-            ], ['kernt3-download-list', 'download', '(PDF, 1 KB)']],
+            ], ['kernt3-download-list', 'download', '(PDF, 1 KB, not accessible)']],
+
+            'downloads, document marked accessible' => ['downloads', $base + [
+                'tx_kernux_downloads_files' => [[
+                    'publicUrl' => '/fileadmin/merkblatt.pdf',
+                    'name' => 'merkblatt.pdf',
+                    'title' => 'Merkblatt',
+                    'extension' => 'pdf',
+                    'size' => 1024,
+                    'properties' => ['tx_kernux_is_accessible' => 1],
+                ]],
+            ], ['kernt3-download-list', '(PDF, 1 KB)']],
 
             'gallery' => ['gallery', $base + ['tx_kernux_gallery_columns' => 3], ['kern-heading-medium']],
 

@@ -126,6 +126,9 @@ components:
     - label: Bild mit Bildunterschrift
       source: '<k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" alt="" caption="Beispielbild mit Bildunterschrift" />'
       note: 'alt wird immer ausgegeben, auch leer: ein img ohne alt wird mit dem Dateinamen vorgelesen, alt="" kennzeichnet korrekt ein dekoratives Bild. Bei FAL-Referenzen entsteht zusätzlich ein srcset über 480/768/1024/1440.'
+    - label: Komplexes Bild mit Langbeschreibung
+      source: '<k:molecule.figure src="EXT:kern_ux/Resources/Public/Images/styleguide-placeholder.svg" alt="Balkendiagramm der Bearbeitungsdauer" id="beispiel-diagramm" caption="Bearbeitungsdauer je Antragsart" longDescription="Personalausweis 10 Werktage, Reisepass 21 Werktage, Führungszeugnis 3 Werktage." />'
+      note: 'Für ein Diagramm reicht der Alternativtext nicht: er wird in einem Zug vorgelesen, ohne Pause und ohne Rücksprung. Die Langbeschreibung steht deshalb als sichtbarer Text in der figcaption und ist über aria-describedby mit dem Bild verknüpft - nicht im longdesc-Attribut, das aus HTML5 entfernt wurde und niemanden erreicht.'
 
   molecule.descriptionList:
     - label: Schlüssel-Wert-Paare
@@ -225,11 +228,17 @@ components:
       note: 'Die Quellpfade sind Beispiele und zeigen hier kein Video - geprüft wird das Markup: natives Element mit controls, Untertitel-Track und Transkript. WCAG 1.2.2 verlangt Untertitel, 1.2.1 das Transkript.'
     - label: Audio
       source: '<k:molecule.mediaPlayer src="/beispiel.mp3" audio="{true}" transcript="Sprecher: Die Öffnungszeiten haben sich geändert." />'
+    - label: Video mit Audiodeskription
+      source: '<k:molecule.mediaPlayer src="/beispiel.mp4" captionsSrc="/beispiel.vtt" descriptionsSrc="/beispiel-ad.vtt" audioDescribedUrl="/beispiel-ad.mp4" />'
+      note: 'Zwei Wege, und das ist keine Doppelung: die descriptions-Spur wird von Browsern zwar geparst, aber nicht wiedergegeben. Was WCAG 1.2.3 und 1.2.5 heute tatsächlich erfüllt, ist die verlinkte Fassung, deren Tonspur das Bild beschreibt.'
 
   molecule.downloadList:
     - label: Dateiliste
-      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Merkblatt Personalausweis', format: 'PDF', size: '240 KB'}, 1: {url: '#', title: 'Antragsformular', format: 'PDF', size: '1,2 MB', description: 'Bitte vollständig ausfüllen.'}}\" />"
+      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Merkblatt Personalausweis', format: 'PDF', size: '240 KB', accessible: true}, 1: {url: '#', title: 'Antragsformular', format: 'PDF', size: '1,2 MB', description: 'Bitte vollständig ausfüllen.', accessible: true}}\" />"
       note: 'Format und Größe stehen im Linktext, nicht in einer eigenen Spalte: ein Link muss aus sich heraus verständlich sein (WCAG 2.4.4).'
+    - label: Nicht barrierefreies Dokument
+      source: "<k:molecule.downloadList items=\"{0: {url: '#', title: 'Bebauungsplan Ringstraße', format: 'PDF', size: '8,4 MB'}}\" />"
+      note: 'Ohne gesetztes Flag in den Dateimetadaten steht der Hinweis im Linktext - wer eine barrierefreie Fassung braucht, erfährt das vor dem Öffnen und nicht danach.'
 
   molecule.section:
     - label: Abstand vor und nach dem Block
