@@ -67,6 +67,10 @@
                 <source>Sitemap</source>
                 <target>Sitemap</target>
             </trans-unit>
+            <trans-unit id="menu.label">
+                <source>Menu</source>
+                <target>Menü</target>
+            </trans-unit>
             <trans-unit id="mediaPlayer.transcript">
                 <source>Show transcript</source>
                 <target>Transkript anzeigen</target>

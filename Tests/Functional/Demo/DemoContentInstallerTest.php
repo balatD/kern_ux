@@ -81,13 +81,34 @@ final class DemoContentInstallerTest extends FunctionalTestCase
         $types = $connection
             ->executeQuery('SELECT DISTINCT CType FROM tt_content WHERE deleted = 0')
             ->fetchFirstColumn();
+
+        // The demo also places a few core content elements, because the site set renders
+        // those itself and nothing else on a demo page would show that. Each one still
+        // has to be a type the set actually defines: a demo element with no rendering is
+        // the exact defect CoreContentTypeRenderingTest exists to prevent, and putting one
+        // in the demo would ship an empty region as an example.
+        $setup = (string)file_get_contents(
+            dirname(__DIR__, 3) . '/Configuration/Sets/KernUx/setup.typoscript',
+        );
+
+        $kernBlocks = [];
         foreach ($types as $type) {
             self::assertIsString($type);
-            self::assertStringStartsWith('kernux_', $type);
+            if (str_starts_with($type, 'kernux_')) {
+                $kernBlocks[] = $type;
+                continue;
+            }
+            self::assertStringContainsString(
+                'tt_content.' . $type,
+                $setup,
+                "The demo places a {$type} element, but the site set does not render it - so "
+                . 'the demo page shows an empty region where an example should be.',
+            );
         }
+
         self::assertGreaterThanOrEqual(
             20,
-            count($types),
+            count($kernBlocks),
             'The demo used to place one element of nearly every block; it now covers far fewer.',
         );
 
