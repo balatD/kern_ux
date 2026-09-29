@@ -199,6 +199,10 @@ jobs:
       # and the five templates are the five compositions that exist. Each is checked in
       # three passes - desktop light, desktop dark and mobile - since contrast depends on
       # the theme and reflow on the viewport.
+      #
+      # core-elemente is the exception to "one per template": it is the only page that
+      # carries the core content elements the site set renders itself, and their markup
+      # comes from TypoScript rather than from a component, so nothing else covers it.
       - name: Run axe against the demo pages
         working-directory: Tests/A11y
         run: |
@@ -207,4 +211,5 @@ jobs:
             kern-ux-demo/beispiele/personalausweis \
             kern-ux-demo/beispiele/termin-vereinbaren \
             kern-ux-demo/beispiele/ringstrasse-wird-saniert \
+            kern-ux-demo/elemente/core-elemente \
             buergerservice
