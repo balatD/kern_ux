@@ -1,0 +1,103 @@
+# publiccode.yml makes public-sector software discoverable in catalogues such as
+# OpenCoDE. More at https://yml.publiccode.tools/
+#
+# Kept by hand and deliberately short: everything here is either a fact about the
+# repository or a statement this project can actually stand behind.
+
+publiccodeYmlVersion: '0.4'
+
+name: kern_ux
+url: 'https://github.com/balatD/kern_ux'
+landingURL: 'https://github.com/balatD/kern_ux'
+softwareVersion: 1.0.0-beta.1
+releaseDate: '2026-09-24'
+developmentStatus: beta
+softwareType: addon
+platforms:
+  - web
+categories:
+  - content-management
+  - website-builder
+
+maintenance:
+  type: community
+  contacts:
+    - name: Dragan Balatinac
+
+legal:
+  license: GPL-2.0-or-later
+  mainCopyrightOwner: Dragan Balatinac
+
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - de
+    - en
+
+dependsOn:
+  open:
+    - name: TYPO3
+      versionMin: '13.4'
+      versionMax: '14.3'
+    - name: PHP
+      versionMin: '8.2'
+
+description:
+  en:
+    genericName: content-management-system
+    shortDescription: KERN UX-Standard design system for TYPO3
+    longDescription: >
+      Brings the KERN UX-Standard to TYPO3 13.4 and 14.3: accessible Fluid Components,
+      Content Blocks for editors, an ext:form theme and page templates with matching
+      backend layouts.
+
+
+      The component layer is the single source of KERN markup. Content Blocks, forms and
+      pages all call the same components and only map data onto them, because KERN's
+      accessibility guarantees hang off concrete classes and ARIA attributes rather than
+      off anything a renderer could infer. That markup is pinned by tests which run under
+      both supported TYPO3 majors, and whole demo pages are checked with axe against
+      WCAG 2.2 AA on every push.
+
+
+      This is an independent community integration. It is not an official KERN kit, and
+      it is not endorsed or reviewed by the KERN team. "KERN" and the Digitale Dachmarke
+      für Deutschland are marks of their respective owners; no rights to them are claimed
+      here, and nothing belonging to them is shipped in this package.
+    features:
+      - Accessible Fluid Components covering the KERN component families
+      - Content Blocks for editors, with KERN-conformant frontend output
+      - ext:form theme following KERN's field contract
+      - Ready-made accessibility feedback and contact form templates
+      - Page templates and backend layouts
+      - Accessibility tested with axe against WCAG 2.2 AA in CI
+    documentation: 'https://github.com/balatD/kern_ux/tree/main/Documentation'
+  de:
+    genericName: content-management-system
+    shortDescription: KERN UX-Standard als Design-System für TYPO3
+    longDescription: >
+      Bringt den KERN UX-Standard nach TYPO3 13.4 und 14.3: barrierefreie Fluid
+      Components, Content Blocks für Redakteurinnen und Redakteure, ein Theme für
+      ext:form und Seiten-Templates mit passenden Backend-Layouts.
+
+
+      Die Component-Schicht ist die einzige Quelle für KERN-Markup. Content Blocks,
+      Formulare und Seiten rufen dieselben Components auf und bilden nur Daten darauf ab,
+      denn die Barrierefreiheits-Zusagen von KERN hängen an konkreten Klassen und
+      ARIA-Attributen und nicht an etwas, das ein Renderer erschließen könnte. Dieses
+      Markup ist durch Tests festgenagelt, die unter beiden unterstützten TYPO3-Majors
+      laufen; ganze Demoseiten werden bei jedem Push mit axe gegen WCAG 2.2 AA geprüft.
+
+
+      Dies ist eine unabhängige Community-Integration. Sie gehört nicht zum KERN-Team und
+      ist kein offizielles KERN-Kit. „KERN" und die Digitale Dachmarke für Deutschland
+      sind Kennzeichen ihrer jeweiligen Inhaber; dieses Projekt beansprucht keine Rechte
+      daran und liefert nichts mit, was ihnen gehört.
+    features:
+      - Barrierefreie Fluid Components für die KERN-Komponentenfamilien
+      - Content Blocks für die Redaktion mit KERN-konformer Ausgabe
+      - ext:form-Theme nach KERNs Feldkontrakt
+      - Formularvorlagen für Barrieremeldung und Kontakt
+      - Seiten-Templates und Backend-Layouts
+      - Barrierefreiheit in der CI mit axe gegen WCAG 2.2 AA geprüft
+    documentation: 'https://github.com/balatD/kern_ux/tree/main/Documentation'

@@ -37,6 +37,15 @@ jobs:
       - name: Coding standards
         run: composer cgl:check
 
+      # REUSE is how a package states its copyright and licence machine-readably, and
+      # public-sector catalogues expect it. Checked in CI because REUSE.toml covers the
+      # tree with one declaration: a new top-level path that the glob does not reach
+      # would otherwise go unnoticed until somebody else's compliance scan found it.
+      - name: Licensing (REUSE)
+        run: |
+          pipx install reuse
+          reuse lint
+
       - name: PHPStan
         run: composer phpstan
 
