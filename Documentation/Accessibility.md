@@ -54,6 +54,33 @@ drei Durchgängen. Die Liste der Seiten steht im Workflow
 Auf Pull Requests läuft er nicht — eine vollständige TYPO3-Installation dauert Minuten,
 und die Frage, die er beantwortet, ändert sich erst, wenn etwas zusammenkommt.
 
+## Was in der Redaktion entschieden wird
+
+Drei Dinge kann kein Testwerkzeug beantworten, weil sie nicht im Markup stehen,
+sondern in dem, was jemand über eine Datei weiß. Sie sind deshalb Felder:
+
+**Ist das Dokument barrierefrei?** `tx_kernux_is_accessible` in den Dateimetadaten,
+gleich neben dem Alternativtext. Ist es nicht gesetzt, schreibt eine Downloadliste
+„nicht barrierefrei" in den Linktext — neben Format und Größe, aus demselben Grund:
+ein Link muss aus sich heraus verständlich sein. Die BITV 2.0 gilt auch für
+veröffentlichte Dokumente, und ein aus einem Layoutprogramm exportiertes PDF ist so
+gut wie nie barrierefrei. Der Standardwert ist „nicht bekannt", nicht „ja": jemandem
+zu sagen, ein Dokument sei benutzbar, obwohl es nie jemand geprüft hat, ist der eine
+Fehler, der sich hier wirklich rächt.
+
+**Was zeigt dieses Diagramm?** `tx_kernux_longdesc` an der Dateireferenz. Der
+Alternativtext wird in einem Zug vorgelesen, ohne Pause und ohne Rücksprung — für ein
+Balkendiagramm ist das der falsche Ort. Die Langbeschreibung steht als sichtbarer Text
+in der `figcaption` und ist über `aria-describedby` mit dem Bild verknüpft.
+Ausdrücklich **nicht** im `longdesc`-Attribut, nach dem das Feld benannt ist: das
+wurde aus HTML5 entfernt und erreicht niemanden.
+
+**Trägt das Bild Information, die der Ton nicht trägt?** Dann braucht das Video eine
+Audiodeskription. Der `media`-Block nimmt beides: eine `descriptions`-Spur, die ein
+Player lesen würde, und eine zweite Fassung der Aufnahme, deren Tonspur das Bild
+beschreibt. Die zweite ist die, die WCAG 1.2.3 und 1.2.5 heute tatsächlich erfüllt —
+Browser parsen `kind="descriptions"` und tun damit nichts.
+
 ## Was von Hand bleibt
 
 Das ersetzt keine manuelle Prüfung. Was Automatisierung nicht fängt und deshalb von

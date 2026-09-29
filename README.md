@@ -16,7 +16,8 @@
 
 Bringt den [KERN UX-Standard](https://www.kern-ux.de/) nach TYPO3 13.4 und 14.3: 42
 barrierefreie **Fluid Components**, 24 **Content Blocks** für Redakteure, ein
-**`ext:form`-Theme** und vier Seiten-Templates mit passenden Backend-Layouts.
+**`ext:form`-Theme** samt Formularvorlagen und fünf Seiten-Templates mit passenden
+Backend-Layouts.
 
 Die Components sind die einzige Quelle für KERN-Markup — Content Blocks, Formulare und
 Seiten rufen dieselben Components auf und bilden nur Daten darauf ab. Weil die
