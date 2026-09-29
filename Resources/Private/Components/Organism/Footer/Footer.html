@@ -2,6 +2,8 @@
             description="Link columns in the shape TYPO3's menu data processor produces: each entry has a title and its sub-pages under `children`. Not `items` - that was the original guess here, and it left every column rendered as a heading with nothing under it while the tests passed on made-up data."
 /><f:argument name="metaNavigation" type="array" optional="{true}"
             description="Impressum, Datenschutz, Barrierefreiheitserklärung - legally required on public sector sites."
+/><f:argument name="copyright" type="string" optional="{true}" default=""
+            description="Copyright line, shown last. Empty leaves it out."
 /><f:argument name="label" type="string" optional="{true}" default=""
             description="Accessible name of the footer landmark. Empty uses the translated default."
 /><f:argument name="noteText" type="string" optional="{true}" default=""
@@ -19,7 +21,7 @@
 
     KERN has no footer component, so this is ours (kernt3-), assembled from KERN
     utilities and tokens so it stays visually consistent.
-</f:comment><f:if condition="{columns} || {metaNavigation} || {noteText}"><f:spaceless>
+</f:comment><f:if condition="{columns} || {metaNavigation} || {noteText} || {copyright}"><f:spaceless>
 <footer class="kernt3-footer" aria-label="{labelText}">
     <f:comment>
         kernt3-footer__inner is not decoration: KERN zeroes a kern-container's padding
@@ -75,6 +77,14 @@
                     <img src="{fundingLogoSrc}" alt="{fundingLabel}" class="kernt3-footer__funding-logo" />
                 </f:if>
             </div>
+        </f:if>
+        <f:comment>
+            Last, and outside every nav: a copyright line is a statement about the site,
+            not a way to get anywhere in it.
+        </f:comment>
+        <f:if condition="{copyright}">
+            <k:atom.divider />
+            <k:atom.body variant="small">{copyright}</k:atom.body>
         </f:if>
     </div>
 </footer>
