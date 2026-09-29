@@ -57,15 +57,28 @@ final class SimpleMoleculesTest extends AbstractComponentTestCase
             // does not say what is about to be downloaded.
             'download list names the format and size in the link' => [
                 '<k:molecule.downloadList items="{0: {url: \'/a.pdf\', title: \'Merkblatt\','
-                . ' format: \'PDF\', size: \'1 KB\'}}" />',
+                . ' format: \'PDF\', size: \'1 KB\', accessible: true}}" />',
                 '<ul class="kern-list kernt3-download-list"><li class="kernt3-download-list__item">'
                 . '<a class="kern-link" href="/a.pdf" download>'
                 . '<span class="kern-icon kern-icon--download" aria-hidden="true"></span>'
                 . '<span>Merkblatt (PDF, 1 KB)</span></a></li></ul>',
             ],
+            // The same reasoning carries the accessibility note: whether a document can
+            // be used at all belongs in the link text, not in a badge beside it. Shown
+            // whenever the flag is absent, because the file metadata field defaults to
+            // "not known to be accessible" - claiming conformance nobody checked is the
+            // one failure mode worth avoiding here.
+            'download list says when a document is not accessible' => [
+                '<k:molecule.downloadList items="{0: {url: \'/a.pdf\', title: \'Merkblatt\','
+                . ' format: \'PDF\', size: \'1 KB\'}}" />',
+                '<ul class="kern-list kernt3-download-list"><li class="kernt3-download-list__item">'
+                . '<a class="kern-link" href="/a.pdf" download>'
+                . '<span class="kern-icon kern-icon--download" aria-hidden="true"></span>'
+                . '<span>Merkblatt (PDF, 1 KB, not accessible)</span></a></li></ul>',
+            ],
             'download list adds an optional description' => [
                 '<k:molecule.downloadList items="{0: {url: \'/a.pdf\', title: \'Merkblatt\','
-                . ' format: \'PDF\', size: \'1 KB\', description: \'Stand 2026\'}}" />',
+                . ' format: \'PDF\', size: \'1 KB\', description: \'Stand 2026\', accessible: true}}" />',
                 '<ul class="kern-list kernt3-download-list"><li class="kernt3-download-list__item">'
                 . '<a class="kern-link" href="/a.pdf" download>'
                 . '<span class="kern-icon kern-icon--download" aria-hidden="true"></span>'

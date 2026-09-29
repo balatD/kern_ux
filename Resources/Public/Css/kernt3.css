@@ -656,6 +656,14 @@ body {
     color: var(--kern-color-layout-text-muted-contextual, #595959);
 }
 
+/* The long description of a complex image. KERN has no pattern for one, so this is
+ * ours. Not muted like the caption and not visually hidden: for a chart it carries the
+ * content itself, and hiding it would leave the information only to screen readers -
+ * the people who need a diagram described are not only the people who cannot see it. */
+.kernt3-figure__description {
+    margin-top: var(--kern-metric-space-default, 16px);
+}
+
 /* --- Breadcrumb ---------------------------------------------------------
  * Separators are drawn here rather than placed in the DOM: a chevron character
  * between items gets announced by some screen readers on every step.

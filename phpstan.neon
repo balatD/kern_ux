@@ -39,6 +39,8 @@ parameters:
             identifier: offsetAccess.nonOffsetAccessible
             paths:
                 - Configuration/TCA/Overrides/pages.php
+                - Configuration/TCA/Overrides/sys_file_metadata.php
+                - Configuration/TCA/Overrides/sys_file_reference.php
                 - ext_emconf.php
                 - ext_localconf.php
         -
