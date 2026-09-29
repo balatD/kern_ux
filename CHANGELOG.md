@@ -9,6 +9,69 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+### Added
+- **Rendering for the core content elements this extension keeps.** `shortcut` and the
+  `menu_*` family are registered by `EXT:frontend` itself, not by `fluid_styled_content`,
+  so they sat in the wizard on every KERN site while nothing rendered them: an editor
+  placed one, saved, and the page region was empty - no exception, no log entry. Four menu
+  variants and `shortcut` now render, through `lib.kernUx.menu` and the shared
+  `lib.kernUx.menuLevels`. `CoreContentTypeRenderingTest` derives the question from TCA, so
+  the next element core adds cannot re-open it quietly.
+- **KERN templates for `felogin`.** Login, logout, overview and both password-recovery
+  views, built from the same atoms as the rest, with each field's hint and error wired to
+  its control through `aria-describedby`. `typo3/cms-felogin` is an optional dependency
+  and a set dependency; without it nothing changes.
+- **An accessibility flag on documents.** `sys_file_metadata.tx_kernux_is_accessible`,
+  next to the alternative text. A download link whose file is not flagged says so in its
+  link text, beside format and size - BITV 2.0 covers published documents, and somebody
+  who needs an accessible one has to know before they open it.
+- **A long description for complex images.** `sys_file_reference.tx_kernux_longdesc`,
+  rendered by `molecule.figure` as visible text inside the `figcaption` and associated
+  through `aria-describedby`. Deliberately not the `longdesc` attribute the field is named
+  after: that was removed from HTML5 and reaches nobody.
+- **Audio description on `molecule.mediaPlayer`** - a `descriptions` track plus a link to
+  an audio-described cut of the same recording, with fields for both on the media block.
+  The track is what a player would read; the second file is what satisfies WCAG 1.2.3 and
+  1.2.5 today.
+- **Two form templates**, `BarriereMelden` and `Kontakt`. The barrier report is the
+  feedback mechanism the EU Web Accessibility Directive and BITV 2.0 require every public
+  body to offer. Both are read-only starting points an integrator duplicates, and neither
+  ships an email finisher: the recipient is the one thing this extension cannot know, and
+  a finisher pointing at a placeholder fails silently at the worst moment.
+- **Favicon, project stylesheet and copyright settings** - `kernUx.site.faviconIco`,
+  `faviconSvg`, `appleTouchIcon`, `webmanifest`, `kernUx.assets.projectCss` and
+  `kernUx.footer.copyright`. There was no way to set a favicon at all, and no documented
+  place for a project's own stylesheet.
+- **`Configuration/ContentSecurityPolicies.php`**, declaring what this extension's own
+  assets need and nothing more. TYPO3 builds the frontend policy from an empty one, so a
+  site enabling the CSP feature toggle previously had to rediscover each blocked request
+  by hand. Extend-only: an extension that narrowed an integrator's policy would be a bug.
+- **REUSE compliance** via `REUSE.toml` and `LICENSES/`, checked by `reuse lint` in CI.
+  One declaration rather than a header per file - a licence comment at the top of a Fluid
+  component would be a root-level text node and would land in the rendered output.
+- **`publiccode.yml`** and **`SECURITY.md`**.
+
+### Fixed
+- **`bullets`, `table` and `uploads` were never actually hidden.** They sit in the `lists`
+  wizard group and were listed under `default`, and `removeItems` only reaches the group
+  the item is in - so all three stayed on offer while nothing rendered them. Found by the
+  new coverage test, which reads each item's group from TCA rather than assuming one.
+- **Menus did not invalidate the pages that show them.** The site set builds five menus per
+  page, three of them pointing outside the rendered page's rootline, and neither
+  `MenuProcessor` nor `AbstractMenuContentObject` registers a cache tag (checked against
+  13.4.35). Renaming a footer page changed nothing anywhere until each page happened to be
+  flushed for some other reason. `CacheTaggedMenuProcessor` now tags every page a menu
+  read.
+
+### Changed
+- `menu_section` and `menu_section_pages` are hidden from the wizard along with the four
+  variants that need abstracts or `sys_category`. Core's section index links to `#c<uid>`
+  while every KERN block emits `id="kern-content-<uid>"`, so those links would have
+  resolved to nothing. The `kern-ux/toc` block is the KERN-native equivalent and its anchor
+  contract is pinned by `TocBlockTest`.
+- `lib.kernUx.sitemap` now takes its list rendering from the shared `lib.kernUx.menuLevels`.
+  The output is unchanged; the markup simply exists once instead of per menu.
+
 ## [1.0.0-beta.1] - 2026-09-24
 
 First beta. The public surface listed under *Breaking changes* in `CLAUDE.md` is now

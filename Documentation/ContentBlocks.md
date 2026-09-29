@@ -124,6 +124,37 @@ die sichtbare Überschrift direkt darüber schon dasselbe sagt.
 Nicht umgesetzt sind `kern-table--small` und `kern-table--striped`. Beide sind je eine
 Zeile, aber ein Aussehensschalter, nach dem niemand gefragt hat.
 
+## Die Core-Elemente
+
+Diese Extension ersetzt `fluid_styled_content`. Die klassischen Inhaltselemente
+registriert aber `EXT:frontend` selbst, nicht FSC — sie stehen also im Assistenten,
+ob FSC installiert ist oder nicht, während das Rendering immer FSC-Sache war. Ohne
+Zutun heißt das: Element einfügen, speichern, leerer Seitenbereich. Keine Ausnahme,
+kein Logeintrag.
+
+Das Set löst das in zwei Richtungen:
+
+**Gerendert** werden `menu_pages`, `menu_subpages`, `menu_sitemap`,
+`menu_sitemap_pages` und `shortcut`. Die Menüs laufen über `lib.kernUx.menu` und geben
+dieselbe `kern-list`-Liste aus wie der Sitemap-Block — beide holen sie aus
+`lib.kernUx.menuLevels`, damit das Markup einmal existiert. Ohne ausgewählte Seite
+nimmt „Unterseiten" die aktuelle Seite; der Core rendert dort nichts, was wieder
+dieselbe stille Leere wäre.
+
+**Ausgeblendet** werden die Varianten, die hier niemand füllen kann:
+`menu_abstract`, `menu_recently_updated` und `menu_related_pages` brauchen
+Seitenabstracts und Schlüsselwörter, `menu_categorized_pages` und
+`menu_categorized_content` brauchen `sys_category`. Dazu `menu_section` und
+`menu_section_pages`: der Section-Index des Cores verlinkt auf `#c<uid>`, während
+jeder KERN-Block `id="kern-content-<uid>"` ausgibt — die Links gingen ins Leere, ohne
+Fehlermeldung. Das KERN-eigene Gegenstück ist der `toc`-Block.
+
+> [!NOTE]
+> `shortcut` gibt das referenzierte Element ein zweites Mal aus, mitsamt seiner `id`.
+> Steht das Original auf derselben Seite, ist die `id` doppelt vergeben — und ein
+> Eintrag im Inhaltsverzeichnis springt dann zum ersten Vorkommen. Gedacht ist das
+> Element für Inhalte aus einem Ablageordner; dort tritt der Fall nicht auf.
+
 ## Backend-Vorschauen
 
 Jede `backend-preview.html` deklariert `<f:layout name="Preview" />` und genau einen

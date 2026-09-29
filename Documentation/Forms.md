@@ -71,6 +71,29 @@ dabei zu einer Gruppe mit `kern-summary-group__header`. Alles davon hält
 ein Parse-Test kann das nicht: eine Variable, die es nicht gibt, ist gültiges Fluid und
 rendert stillschweigend nichts.
 
+## Mitgelieferte Vorlagen
+
+Zwei Formulardefinitionen liegen unter `Configuration/Form/Forms/` und stehen im
+Formular-Editor als Ausgangspunkt bereit:
+
+- **Barriere melden** — der Rückmeldemechanismus, den die EU-Richtlinie über den
+  barrierefreien Zugang und die BITV 2.0 von jeder öffentlichen Stelle verlangen. Die
+  Seitenadresse ist ein Feld zum Ausfüllen und kein verstecktes, das JavaScript setzt:
+  wer meldet, dass eine Seite unbenutzbar ist, sitzt womöglich ohne JavaScript davor
+  oder meldet von ganz woanders. Ein Feld fragt außerdem, in welcher Form geantwortet
+  werden soll.
+- **Kontakt** — das übliche Kontaktformular.
+
+Beide liegen in einem Extension-Pfad und sind damit für `ext:form` schreibgeschützt.
+Wer sie anpassen will, dupliziert sie im Editor in den eigenen Speicher; ein Update
+überschreibt dann nichts.
+
+Keine der beiden bringt einen E-Mail-Finisher mit. Die Empfängeradresse ist genau das,
+was diese Extension nicht wissen kann, und ein Finisher auf einer Platzhalter-Adresse
+scheitert lautlos im ungünstigsten Moment. Stattdessen bestätigen sie den Versand —
+was beim ersten Testversand auffällt, und das ist die Stelle, an der ein fehlender
+Empfänger auffallen soll.
+
 ## `KernDate`
 
 Ein Datum als drei Felder, wie KERN es vorschreibt. Kein `<input type="date">` und kein

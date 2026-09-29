@@ -89,6 +89,16 @@ Every `backend-preview.html` needs `<f:layout name="Preview" />` and exactly one
 `<f:section name="Content">`. Otherwise the editor sees each preview three times — with no
 error and no log entry.
 
+**Core content elements come from `EXT:frontend`, not from `fluid_styled_content`.** So
+`shortcut`, the `menu_*` family, `bullets`, `table` and `uploads` exist in the wizard on
+every KERN site whether or not FSC is installed, while nothing renders them — an editor
+places one and gets an empty region, with no error. Either give the CType a
+`tt_content.<CType>` object in the site set, or take it out of the wizard. `removeItems`
+only reaches the **group the item is actually in** (`default`, `lists`, `menu`, `special`,
+…), and getting that wrong fails silently: `bullets`, `table` and `uploads` sat under
+`default` for a while and were never hidden at all. `CoreContentTypeRenderingTest` reads
+each item's group from TCA and fails on either mistake.
+
 ## Tests
 
 `AbstractComponentTestCase` is the base for markup tests. They are the KERN-conformance
@@ -132,8 +142,8 @@ database or project config, not here: `k:` tag and argument names (a changed *de
 worst — no error, different output everywhere); the `Group/Name/Name.html` path shape
 (integrator overrides via `EXTCONF.kern_ux.componentRootPaths` resolve by path);
 `lib.kernUx.*` and `lib.contentElement`; **`colPos` 0=main, 1=hero, 2=aside, 3=teaser**;
-backend layout names; the 19 `kernUx.*` setting keys; `tx_kernux_*` columns; the
-`kern-ux/<name>` CTypes; the 57 `kernt3-*` classes (they look private, but projects
+backend layout names; the 25 `kernUx.*` setting keys; `tx_kernux_*` columns; the
+`kern-ux/<name>` CTypes; the 58 `kernt3-*` classes (they look private, but projects
 override them); XLIFF trans-unit ids; the `data-kernt3-*` JS hooks; the
 `kernUxPrefix` / `kernUxSuffix` form-element properties (they live in the integrator's
 form definition); and the `kux:` ViewHelper names, `kux:tableData` included.
