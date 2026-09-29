@@ -8,7 +8,6 @@ use BalatD\KernUx\Command\RenderComponentCommand;
 use BalatD\KernUx\Rendering\FluidSourceRenderer;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Tester\CommandTester;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * The markup-inspection command.
@@ -19,7 +18,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * way on both. Its --xmlns option exists for exactly that comparison, so it is asserted
  * rather than assumed to still work.
  */
-final class RenderComponentCommandTest extends FunctionalTestCase
+final class RenderComponentCommandTest extends AbstractCommandTestCase
 {
     protected array $coreExtensionsToLoad = ['form'];
 
@@ -43,9 +42,9 @@ final class RenderComponentCommandTest extends FunctionalTestCase
         $tester->execute(['source' => '<k:atom.badge variant="success">Erledigt</k:atom.badge>']);
 
         self::assertSame(0, $tester->getStatusCode());
-        self::assertStringContainsString(
+        self::assertDisplayContains(
             '<span class="kern-badge kern-badge--success"><span class="kern-label">Erledigt</span></span>',
-            $tester->getDisplay(),
+            $tester,
         );
     }
 
@@ -58,7 +57,7 @@ final class RenderComponentCommandTest extends FunctionalTestCase
         // Running it bare is the quickest check that the component layer resolves at
         // all, so it has to produce markup rather than an empty line.
         self::assertSame(0, $tester->getStatusCode());
-        self::assertStringContainsString('kern-btn', $tester->getDisplay());
+        self::assertDisplayContains('kern-btn', $tester);
     }
 
     #[Test]
@@ -72,6 +71,6 @@ final class RenderComponentCommandTest extends FunctionalTestCase
         // Without the global registration - which is what --xmlns simulates - a project
         // that declares the namespace itself must still resolve the same components.
         self::assertSame(0, $tester->getStatusCode());
-        self::assertStringContainsString('kern-badge', $tester->getDisplay());
+        self::assertDisplayContains('kern-badge', $tester);
     }
 }
