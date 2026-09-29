@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",
+        "typo3/cms-felogin": "^13.4 || ^14.3",
         "typo3/cms-form": "^13.4 || ^14.3",
         "typo3/cms-rte-ckeditor": "^13.4 || ^14.3",
         "typo3/coding-standards": "^0.9",
@@ -38,6 +39,7 @@
     },
     "suggest": {
         "ext-gd": "Required by kern-ux:demo:install, which draws the demo images rather than shipping licensed binaries.",
+        "typo3/cms-felogin": "Required for the KERN-compliant login, logout and password-recovery templates.",
         "typo3/cms-form": "Required for the KERN-compliant ext:form templates and the KernDate form element.",
         "typo3/cms-rte-ckeditor": "Required for the KERN rich-text preset; without it RTE fields fall back to a plain textarea."
     },
