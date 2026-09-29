@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    KERN markup for the felogin logout form.
+
+    The user name becomes a description-list entry rather than core's label followed by a
+    bare text node. A label needs a control to point at; core's points at nothing, which
+    is precisely the kind of defect KERN's form contract exists to prevent. A term and
+    its value is also what this actually is.
+</f:comment>
+<f:variable name="statusHeader"><f:render partial="RenderLabelOrMessage" arguments="{key: 'status_header'}" /></f:variable>
+<f:variable name="usernameLabel"><f:translate key="username" /></f:variable>
+<f:variable name="usernameValue" value="{user.username}" />
+
+<k:molecule.alert
+    variant="info"
+    titleAsHeading="{false}"
+    title="{statusHeader -> f:format.trim()}"
+><f:render partial="RenderLabelOrMessage" arguments="{key: 'status_message'}" /></k:molecule.alert>
+
+<f:form action="login" actionUri="{actionUri}" target="_top" fieldNamePrefix="">
+    <fieldset class="kern-fieldset">
+        <k:atom.label size="large"><f:translate key="logout" /></k:atom.label>
+        <div class="kern-fieldset__body kernt3-form__section">
+
+            <k:molecule.descriptionList items="{0: {key: usernameLabel, value: usernameValue}}" />
+
+            <k:atom.button type="submit" name="submit" id="tx-felogin-input-logout"><f:translate key="logout" /></k:atom.button>
+
+            <f:form.hidden name="logintype" value="logout" />
+        </div>
+    </fieldset>
+</f:form>
+</html>

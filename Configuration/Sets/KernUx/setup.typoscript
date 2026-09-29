@@ -296,3 +296,16 @@ tt_content.shortcut.20 {
     conf.tt_content =< tt_content
 }
 
+# KERN rendering for the felogin plugin.
+#
+# felogin is not ext:form, so the theme under Partials/Form/Frontend does not reach it -
+# those partials are driven by ext:form element objects felogin has no equivalent of. It
+# gets its own templates instead, built from the same atoms.
+#
+# Index 20, with felogin's own paths left at 10: Fluid resolves the highest index first
+# and falls back, so anything not overridden here keeps rendering, and a project can
+# override in turn without replacing the set.
+plugin.tx_felogin_login.view {
+    templateRootPaths.20 = EXT:kern_ux/Resources/Private/Templates/Felogin/
+    partialRootPaths.20 = EXT:kern_ux/Resources/Private/Partials/Felogin/
+}

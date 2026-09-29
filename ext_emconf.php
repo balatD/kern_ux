@@ -25,6 +25,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
         'conflicts' => [],
         'suggests' => [
+            'felogin' => '13.4.0-14.99.99',
             'form' => '13.4.0-14.99.99',
             'rte_ckeditor' => '13.4.0-14.99.99',
         ],
