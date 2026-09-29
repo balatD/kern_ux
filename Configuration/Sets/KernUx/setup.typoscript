@@ -50,8 +50,15 @@ page {
     10 {
         paths.100 = EXT:kern_ux/Resources/Private/PageView/
 
+        # The menus read pages outside the rendered page's own rootline, and core tags a
+        # cached page only with the page it renders - so a change to a footer or
+        # Hilfsnavigation page would not invalidate the pages that show it. The processor
+        # below is core's, plus a cache tag per page it read; see its class comment.
+        #
+        # The breadcrumb stays on core's processor: a rootline menu reads only pages the
+        # page already depends on, and those core tags itself.
         dataProcessing {
-            10 = menu
+            10 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             10 {
                 as = mainNavigation
                 # Two levels. Three were tried and rejected: a section with nineteen
@@ -84,7 +91,7 @@ page {
 
             # The three configurable menus stay switched off until a root page is set,
             # so a fresh install renders a header and footer without empty landmarks.
-            30 = menu
+            30 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             30 {
                 special = directory
                 special.value = {$kernUx.navigation.helpRootPage}
@@ -92,7 +99,7 @@ page {
                 if.isTrue = {$kernUx.navigation.helpRootPage}
             }
 
-            40 = menu
+            40 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             40 {
                 special = directory
                 special.value = {$kernUx.navigation.footerRootPage}
@@ -101,7 +108,7 @@ page {
                 if.isTrue = {$kernUx.navigation.footerRootPage}
             }
 
-            50 = menu
+            50 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             50 {
                 special = directory
                 special.value = {$kernUx.navigation.metaRootPage}
