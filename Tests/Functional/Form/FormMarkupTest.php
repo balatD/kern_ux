@@ -20,6 +20,7 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\AbstractSection;
 use TYPO3\CMS\Form\Domain\Model\FormElements\Section;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -74,13 +75,18 @@ final class FormMarkupTest extends FunctionalTestCase
         $typoScript->setConfigTree(new RootNode());
         $typoScript->setConfigArray([]);
 
+        // On a page the content element supplies this. Extbase's UriBuilder throws without
+        // one since 14.3.8, and the form's action URL is not what these tests are about.
+        $contentObject = self::createStub(ContentObjectRenderer::class);
+
         $this->serverRequest = (new ServerRequest('https://example.com/', 'GET'))
             ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE)
             ->withAttribute('site', $site)
             ->withAttribute('language', $site->getDefaultLanguage())
             ->withAttribute('frontend.typoscript', $typoScript)
             ->withAttribute('frontend.user', new FrontendUserAuthentication())
-            ->withAttribute('extbase', new ExtbaseRequestParameters());
+            ->withAttribute('extbase', new ExtbaseRequestParameters())
+            ->withAttribute('currentContentObject', $contentObject);
 
         $GLOBALS['TYPO3_REQUEST'] = $this->serverRequest;
     }
