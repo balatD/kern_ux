@@ -10,7 +10,7 @@ name: kern_ux
 url: 'https://github.com/balatD/kern_ux'
 landingURL: 'https://github.com/balatD/kern_ux'
 softwareVersion: 1.0.0-beta.1
-releaseDate: '2026-09-24'
+releaseDate: '2026-11-05'
 developmentStatus: beta
 softwareType: addon
 platforms:

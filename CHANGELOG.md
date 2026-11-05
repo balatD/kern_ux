@@ -9,6 +9,15 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+## [1.0.0-beta.1] - 2026-11-05
+
+First beta. The public surface listed under *Breaking changes* in `CLAUDE.md` is now
+expected to hold, and it is defended by tests rather than by intent. Two KERN gaps
+closed, three accessibility defects fixed, and the package finally packaged. It also
+stops the wizard from offering core content elements that render nothing, ships KERN
+templates for `felogin`, and gives editors fields for the accessibility facts axe cannot
+see.
+
 ### Added
 - **Rendering for the core content elements this extension keeps.** `shortcut` and the
   `menu_*` family are registered by `EXT:frontend` itself, not by `fluid_styled_content`,
@@ -50,35 +59,6 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
   One declaration rather than a header per file - a licence comment at the top of a Fluid
   component would be a root-level text node and would land in the rendered output.
 - **`publiccode.yml`** and **`SECURITY.md`**.
-
-### Fixed
-- **`bullets`, `table` and `uploads` were never actually hidden.** They sit in the `lists`
-  wizard group and were listed under `default`, and `removeItems` only reaches the group
-  the item is in - so all three stayed on offer while nothing rendered them. Found by the
-  new coverage test, which reads each item's group from TCA rather than assuming one.
-- **Menus did not invalidate the pages that show them.** The site set builds five menus per
-  page, three of them pointing outside the rendered page's rootline, and neither
-  `MenuProcessor` nor `AbstractMenuContentObject` registers a cache tag (checked against
-  13.4.35). Renaming a footer page changed nothing anywhere until each page happened to be
-  flushed for some other reason. `CacheTaggedMenuProcessor` now tags every page a menu
-  read.
-
-### Changed
-- `menu_section` and `menu_section_pages` are hidden from the wizard along with the four
-  variants that need abstracts or `sys_category`. Core's section index links to `#c<uid>`
-  while every KERN block emits `id="kern-content-<uid>"`, so those links would have
-  resolved to nothing. The `kern-ux/toc` block is the KERN-native equivalent and its anchor
-  contract is pinned by `TocBlockTest`.
-- `lib.kernUx.sitemap` now takes its list rendering from the shared `lib.kernUx.menuLevels`.
-  The output is unchanged; the markup simply exists once instead of per menu.
-
-## [1.0.0-beta.1] - 2026-09-24
-
-First beta. The public surface listed under *Breaking changes* in `CLAUDE.md` is now
-expected to hold, and it is defended by tests rather than by intent. Two KERN gaps
-closed, three accessibility defects fixed, and the package finally packaged.
-
-### Added
 - A **table** content block and `molecule.table`. KERN's `kern-table` was reachable only
   through the rich-text editor, which can set a class on the table element and nothing
   else — CKEditor writes no `scope` and no cell classes, so an RTE table was visually
@@ -98,6 +78,16 @@ closed, three accessibility defects fixed, and the package finally packaged.
   been a manual step, and it is the one that finds defects living *between* components.
 
 ### Fixed
+- **`bullets`, `table` and `uploads` were never actually hidden.** They sit in the `lists`
+  wizard group and were listed under `default`, and `removeItems` only reaches the group
+  the item is in - so all three stayed on offer while nothing rendered them. Found by the
+  new coverage test, which reads each item's group from TCA rather than assuming one.
+- **Menus did not invalidate the pages that show them.** The site set builds five menus per
+  page, three of them pointing outside the rendered page's rootline, and neither
+  `MenuProcessor` nor `AbstractMenuContentObject` registers a cache tag (checked against
+  13.4.35). Renaming a footer page changed nothing anywhere until each page happened to be
+  flushed for some other reason. `CacheTaggedMenuProcessor` now tags every page a menu
+  read.
 - A **numbered list rendered as an unordered one**. The block chose its tag with an
   inline `f:if` whose condition is a comparison, which Fluid does not parse as a
   ViewHelper at all: it emitted the expression as literal text, so `atom.list` fell back
@@ -119,6 +109,13 @@ closed, three accessibility defects fixed, and the package finally packaged.
   so it only ever analysed against Fluid 5.
 
 ### Changed
+- `menu_section` and `menu_section_pages` are hidden from the wizard along with the four
+  variants that need abstracts or `sys_category`. Core's section index links to `#c<uid>`
+  while every KERN block emits `id="kern-content-<uid>"`, so those links would have
+  resolved to nothing. The `kern-ux/toc` block is the KERN-native equivalent and its anchor
+  contract is pinned by `TocBlockTest`.
+- `lib.kernUx.sitemap` now takes its list rendering from the shared `lib.kernUx.menuLevels`.
+  The output is unchanged; the markup simply exists once instead of per menu.
 - The Composer dist tarball dropped from 2.46 MB to 1.08 MB. `.gitattributes` marks the
   development apparatus `export-ignore`; the documentation screenshots went with it, so
   their image references resolve on GitHub but not inside an installed copy.
