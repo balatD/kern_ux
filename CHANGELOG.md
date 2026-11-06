@@ -9,6 +9,18 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+### Fixed
+- **Core menus and `shortcut` failed next to `fluid_styled_content`.** On TYPO3 14,
+  `typo3 setup` puts FSC's sets into the site, and this set loaded before them. FSC's
+  `=<` references then kept the objects this set had defined and looked for FSC's
+  template names in this extension's folder, so `menu_pages`, `menu_subpages`,
+  `menu_sitemap*` and `shortcut` rendered "Oops, an error occurred!", while plugins got
+  FSC's frame instead of the KERN shell. The set now declares FSC as an optional
+  dependency so it always loads after it, which also means FSC's TypoScript is active
+  whenever FSC is installed. `lib.contentElement` adds its template path at index 1 rather
+  than replacing FSC's index 0, so core records FSC still renders keep working. A project
+  that overrode `Generic.html` by replacing `templateRootPaths.0` needs an index above 1.
+
 ## [1.0.0-beta.2] - 2026-11-06
 
 Hotfix for one defect in the media block.

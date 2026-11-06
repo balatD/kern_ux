@@ -104,12 +104,26 @@ dort geht es um das RTE-Preset.
 > `$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['lang']['availableLanguages']`. Im Backend
 > erledigt das „Wartung → Sprachpakete verwalten".
 
-## Projekte ohne `fluid_styled_content`
+## Mit und ohne `fluid_styled_content`
 
 Diese Extension ersetzt FSC und liefert deshalb `lib.contentElement` selbst mit. Ohne
 diese Definition rendert *jedes* Extbase-Plugin — auch das Formular-Plugin — als
-leerer String, ohne Fehler. Wer FSC parallel betreibt, sollte wissen, dass beide
-dieselbe Definition beanspruchen.
+leerer String, ohne Fehler.
+
+FSC darf trotzdem installiert bleiben. Die Base-Distribution bringt es mit, und unter
+TYPO3 14 trägt `typo3 setup` seine Sets schon in die Site ein. Ist FSC installiert, lädt
+das KERN-Set **nach** dessen Set — auch dann, wenn die Site FSC gar nicht ausgewählt
+hat. Dann gilt:
+
+- Plugins, `shortcut` und die Menü-Elemente rendert dieses Set, in KERN-Markup.
+- Bestehende Datensätze der Core-Typen, die der Assistent ausblendet (`text`,
+  `textmedia`, `header` …), rendert weiter FSC. Eine Site, die auf KERN umzieht, bleibt
+  so lesbar, bis ihre Inhalte umgestellt sind.
+
+Das Set `typo3/fluid-styled-content-css` bringt nur FSCs eigenes Stylesheet und kann aus
+der Site entfernt werden. Wer gar kein FSC-Rendering will, entfernt das Paket
+(`composer remove typo3/cms-fluid-styled-content`); ausgeblendete Core-Typen rendern dann
+nichts mehr.
 
 Die klassischen Inhaltselemente kommen allerdings nicht aus FSC, sondern aus
 `EXT:frontend` selbst — sie stehen also unabhängig davon im Assistenten. Welche das Set
