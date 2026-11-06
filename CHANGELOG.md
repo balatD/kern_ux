@@ -9,6 +9,18 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+## [1.0.0-beta.2] - 2026-11-06
+
+Hotfix for one defect in the media block.
+
+### Fixed
+- **The audio player rendered with no height.** `.kernt3-media__player` set
+  `height: auto` on every player, and Chromium sizes `<audio controls>` through its own
+  stylesheet rather than an intrinsic height, so the rule collapsed it to 0 px. The audio
+  variant of the media block has been invisible since the first alpha, while its file
+  loaded and axe passed the page. Video was not affected. The accessibility run now fails
+  on any visible player without height, because axe does not measure layout.
+
 ## [1.0.0-beta.1] - 2026-11-05
 
 First beta. The public surface listed under *Breaking changes* in `CLAUDE.md` is now
@@ -159,7 +171,8 @@ see.
 First public pre-release: the component layer, the content blocks, the `ext:form` theme
 and the page templates, built against KERN UX 2.7.2.
 
-[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.2...HEAD
+[1.0.0-beta.2]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/balatD/kern_ux/compare/1.0.0-alpha.2...1.0.0-beta.1
 [1.0.0-alpha.2]: https://github.com/balatD/kern_ux/compare/1.0.0-alpha...1.0.0-alpha.2
 [1.0.0-alpha]: https://github.com/balatD/kern_ux/releases/tag/1.0.0-alpha
