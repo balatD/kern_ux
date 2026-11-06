@@ -67,7 +67,8 @@ Der letzte Schritt ist **erforderlich**: die KERN-Distribution wird bewusst nich
 mitgeliefert, sondern einmalig zur Installationszeit von npm geholt und per SHA-512
 geprüft (siehe [THIRD-PARTY.md](THIRD-PARTY.md)). Zur Laufzeit werden keine
 Fremd-Requests ausgeführt und kein CDN eingebunden. Das Zielverzeichnis ist nicht
-eingecheckt, der Schritt gehört also in jedes Deployment.
+eingecheckt, der Schritt gehört also in jedes Deployment — am sichersten als
+Composer-Skript, siehe [Im Deployment](Documentation/Installation.md#im-deployment).
 
 Danach in der Site das Set **KERN UX-Standard** auswählen — damit stehen Templates,
 Backend-Layouts und Settings bereit. Einen Demo-Seitenbaum zum Ansehen legt

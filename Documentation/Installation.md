@@ -29,6 +29,25 @@ können externe Requests in der Regel nicht abnehmen.
 
 Das Verzeichnis ist nicht eingecheckt, der Schritt gehört also in jedes Deployment.
 
+### Im Deployment
+
+Das Zielverzeichnis liegt im Paket unter `vendor/`. Jedes `composer install` auf frischem
+Stand und jedes Update dieses Pakets entpackt es neu, und die KERN-Dateien sind weg. Die
+Seite liefert dann weiter `200`, nur ohne `kern.min.css` und Schriften — ungestylt, ohne
+Fehler und ohne Logeintrag. Am sichersten hängt der Schritt deshalb an Composer selbst,
+in der `composer.json` des Projekts:
+
+```json
+"scripts": {
+    "post-install-cmd": ["@php vendor/bin/typo3 kern-ux:assets:install"],
+    "post-update-cmd": ["@php vendor/bin/typo3 kern-ux:assets:install"]
+}
+```
+
+Das Kommando braucht weder Datenbank noch `settings.php`, läuft also auch in einem
+Build-Schritt ohne laufende Instanz. Es braucht aber Zugriff auf `registry.npmjs.org`.
+Ist die gepinnte Version schon da, lädt es nichts erneut.
+
 ## Site Set
 
 In der Site das Set **KERN UX-Standard** auswählen. Damit stehen Seiten-Templates,
@@ -44,7 +63,7 @@ Zum Ansehen und Prüfen gibt es einen Seitenbaum auf Kommando:
 vendor/bin/typo3 kern-ux:demo:install --configure-navigation
 ```
 
-Das legt 47 Seiten und 107 Inhaltselemente an: vier Beispielseiten, wie sie in einer
+Das legt 93 Seiten und 127 Inhaltselemente an: vier Beispielseiten, wie sie in einer
 Verwaltung vorkommen, und **eine Seite je Inhaltstyp**, damit sich jedes Element
 einzeln prüfen lässt. Dazu die drei Navigationsbäume für Hilfs-, Fußbereichs- und
 Rechtsnavigation — ohne die bleiben diese Menüs abgeschaltet und der Seitenrahmen ist
@@ -82,9 +101,11 @@ Sitepackage. Vor dem ersten Seitenaufruf entfernen:
 ```bash
 # TYPO3 14
 rm -f config/sites/<site>/setup.typoscript
-# TYPO3 13: den sys_template-Datensatz löschen oder in der TypoScript-Verwaltung
-# die Haken bei "Clear" für Constants und Setup entfernen
+# TYPO3 13: den sys_template-Datensatz auf der Startseite löschen
 ```
+
+Unter 13 reicht es nicht, nur die Haken bei „Clear" zu entfernen: das Setup des
+Datensatzes setzt `page.10` selbst und überschreibt das Set damit weiterhin.
 
 ## Optionale Extensions
 
@@ -104,12 +125,26 @@ dort geht es um das RTE-Preset.
 > `$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['lang']['availableLanguages']`. Im Backend
 > erledigt das „Wartung → Sprachpakete verwalten".
 
-## Projekte ohne `fluid_styled_content`
+## Mit und ohne `fluid_styled_content`
 
 Diese Extension ersetzt FSC und liefert deshalb `lib.contentElement` selbst mit. Ohne
 diese Definition rendert *jedes* Extbase-Plugin — auch das Formular-Plugin — als
-leerer String, ohne Fehler. Wer FSC parallel betreibt, sollte wissen, dass beide
-dieselbe Definition beanspruchen.
+leerer String, ohne Fehler.
+
+FSC darf trotzdem installiert bleiben. Die Base-Distribution bringt es mit, und unter
+TYPO3 14 trägt `typo3 setup` seine Sets schon in die Site ein. Ist FSC installiert, lädt
+das KERN-Set **nach** dessen Set — auch dann, wenn die Site FSC gar nicht ausgewählt
+hat. Dann gilt:
+
+- Plugins, `shortcut` und die Menü-Elemente rendert dieses Set, in KERN-Markup.
+- Bestehende Datensätze der Core-Typen, die der Assistent ausblendet (`text`,
+  `textmedia`, `header` …), rendert weiter FSC. Eine Site, die auf KERN umzieht, bleibt
+  so lesbar, bis ihre Inhalte umgestellt sind.
+
+Das Set `typo3/fluid-styled-content-css` bringt nur FSCs eigenes Stylesheet und kann aus
+der Site entfernt werden. Wer gar kein FSC-Rendering will, entfernt das Paket
+(`composer remove typo3/cms-fluid-styled-content`); ausgeblendete Core-Typen rendern dann
+nichts mehr.
 
 Die klassischen Inhaltselemente kommen allerdings nicht aus FSC, sondern aus
 `EXT:frontend` selbst — sie stehen also unabhängig davon im Assistenten. Welche das Set

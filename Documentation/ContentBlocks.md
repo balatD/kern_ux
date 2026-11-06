@@ -149,6 +149,11 @@ Seitenabstracts und Schlüsselwörter, `menu_categorized_pages` und
 jeder KERN-Block `id="kern-content-<uid>"` ausgibt — die Links gingen ins Leere, ohne
 Fehlermeldung. Das KERN-eigene Gegenstück ist der `toc`-Block.
 
+Ausgeblendet heißt: nicht mehr im Assistenten. Bestehende Datensätze dieser Typen
+rendert FSC weiter, wenn es installiert ist; das Set lädt dann nach FSC, damit die oben
+gerenderten trotzdem KERN-Markup bekommen. Siehe
+[Installation](Installation.md#mit-und-ohne-fluid_styled_content).
+
 > [!NOTE]
 > `shortcut` gibt das referenzierte Element ein zweites Mal aus, mitsamt seiner `id`.
 > Steht das Original auf derselben Seite, ist die `id` doppelt vergeben — und ein
