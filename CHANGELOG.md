@@ -9,6 +9,12 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+## [1.0.0-beta.3] - 2026-11-06
+
+One fix for sites that keep `fluid_styled_content` installed, which includes every site
+`typo3 setup` creates on TYPO3 14. The installation guide now also shows how to keep the
+KERN assets through a deploy.
+
 ### Fixed
 - **Core menus and `shortcut` failed next to `fluid_styled_content`.** On TYPO3 14,
   `typo3 setup` puts FSC's sets into the site, and this set loaded before them. FSC's
@@ -183,7 +189,8 @@ see.
 First public pre-release: the component layer, the content blocks, the `ext:form` theme
 and the page templates, built against KERN UX 2.7.2.
 
-[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.2...HEAD
+[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.3...HEAD
+[1.0.0-beta.3]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.2...1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/balatD/kern_ux/compare/1.0.0-alpha.2...1.0.0-beta.1
 [1.0.0-alpha.2]: https://github.com/balatD/kern_ux/compare/1.0.0-alpha...1.0.0-alpha.2
