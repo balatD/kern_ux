@@ -833,8 +833,14 @@ body {
 .kernt3-media__player {
     display: block;
     width: 100%;
-    height: auto;
     border-radius: var(--kern-metric-border-radius-default, 4px);
+}
+
+/* Video only: <audio> has no intrinsic height, so `height: auto` collapses it to 0,
+ * and the letterbox black would frame the browser's own control bar. :where() keeps
+ * the specificity a project overriding .kernt3-media__player already relies on. */
+.kernt3-media__player:where(video) {
+    height: auto;
     background: #000;
 }
 
