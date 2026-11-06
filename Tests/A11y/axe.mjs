@@ -83,6 +83,7 @@ const incompletes = [];
 const pageErrors = [];
 const unstyled = [];
 const notFound = [];
+const collapsed = [];
 
 for (const pass of PASSES) {
     // A context per pass, and a page per URL: one shared page would carry
@@ -121,6 +122,15 @@ for (const pass of PASSES) {
         );
         if (!styled) {
             unstyled.push(`${url} (${pass.name})`);
+        }
+
+        // axe does not measure layout, so a native player whose controls collapse to
+        // zero height passes it while nobody can see or operate it.
+        const flat = await page.evaluate(() => [...document.querySelectorAll('audio[controls], video[controls]')]
+            .filter((element) => element.checkVisibility() && element.getBoundingClientRect().height === 0)
+            .map((element) => element.outerHTML.slice(0, 120)));
+        for (const html of flat) {
+            collapsed.push(`${url} (${pass.name}): ${html}`);
         }
 
         const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
@@ -195,6 +205,12 @@ if (notFound.length > 0) {
 if (unstyled.length > 0) {
     console.error(`\nKERN stylesheet did not load on:\n  ${unstyled.join('\n  ')}`);
     console.error('Contrast rules would be skipped, so this counts as a failure.');
+    process.exit(1);
+}
+
+if (collapsed.length > 0) {
+    console.error(`\nMedia controls rendered with no height:\n  ${collapsed.join('\n  ')}`);
+    console.error('Nobody can see or operate them, so this counts as a failure.');
     process.exit(1);
 }
 
