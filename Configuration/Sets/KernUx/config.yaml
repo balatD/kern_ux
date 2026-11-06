@@ -3,3 +3,6 @@ label: 'KERN UX-Standard'
 optionalDependencies:
   - typo3/felogin
   - typo3/form
+  # For load order only: loaded before FSC, FSC's `=<` references keep the menu and
+  # shortcut objects of setup.typoscript and resolve them to templates that do not exist.
+  - typo3/fluid-styled-content
