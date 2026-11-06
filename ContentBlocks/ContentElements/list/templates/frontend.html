@@ -6,7 +6,15 @@
     header="{data.header}"
     layout="{data.header_layout}"
     appearance="{data.tx_kernux_heading_appearance}"
-/><f:if condition="{data.tx_kernux_list_items}"><k:atom.list
-    tag="{f:if(condition: data.tx_kernux_list_variant == 'number', then: 'ol', else: 'ul')}"
+/><f:comment>
+    The tag is chosen in tag form, not inline. An inline f:if whose condition is a
+    *comparison* with an unbraced operand - `f:if(condition: data.x == 'number', ...)` -
+    does not parse as a ViewHelper at all: Fluid emits it as literal text, atom.list
+    receives that string as its tag, falls through to its default and renders a <ul>
+    carrying kern-list--number. The result looks numbered and is announced as an
+    unordered list. An inline condition that is a plain accessor is fine, which is why
+    the same shape elsewhere works.
+</f:comment><f:if condition="{data.tx_kernux_list_items}"><f:variable name="listTag" value="ul" /><f:if condition="{data.tx_kernux_list_variant} == 'number'"><f:variable name="listTag" value="ol" /></f:if><k:atom.list
+    tag="{listTag}"
     variant="{data.tx_kernux_list_variant}"
 ><f:for each="{data.tx_kernux_list_items}" as="item"><li><f:variable name="itemUri"><f:uri.typolink parameter="{item.link}" /></f:variable><f:if condition="{itemUri}"><f:then><k:atom.link href="{itemUri}">{item.text}</k:atom.link></f:then><f:else>{item.text}</f:else></f:if></li></f:for></k:atom.list></f:if></k:molecule.section>

@@ -1,0 +1,43 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    Step one of the password recovery: ask for the identifier.
+
+    Level 2 rather than core's bare h3. A plugin cannot know how deep in the outline it
+    sits, but it does sit inside a content element whose own header is usually an h2, and
+    an h3 under a hidden element header leaves a gap in the outline. Integrators re-level
+    by overriding this one template.
+</f:comment>
+<f:variable name="identifierLabel"><f:translate key="enter_your_data" /></f:variable>
+
+<k:atom.heading level="2"><f:render partial="RenderLabelOrMessage" arguments="{key: 'forgot_header'}" /></k:atom.heading>
+<k:atom.body><f:render partial="RenderLabelOrMessage" arguments="{key: 'forgot_reset_message'}" /></k:atom.body>
+
+<f:render partial="ValidationErrors" />
+
+<f:form action="recovery" method="post">
+    <fieldset class="kern-fieldset">
+        <k:atom.label size="large"><f:render partial="RenderLabelOrMessage" arguments="{key: 'reset_password'}" /></k:atom.label>
+        <div class="kern-fieldset__body kernt3-form__section">
+
+            <f:form.validationResults for="userIdentifier">
+                <f:comment>
+                    false rather than an empty string: Fluid's tag builder drops an attribute
+                    whose value is false and renders aria-describedby="" for an empty one,
+                    which points a screen reader at nothing.
+                </f:comment>
+                <f:variable name="identifierDescribedBy" value="{false}" />
+                <f:if condition="{validationResults.errors}"><f:variable name="identifierDescribedBy" value="tx-felogin-input-data-error" /></f:if>
+                <f:render partial="Field" contentAs="control" arguments="{id: 'tx-felogin-input-data', label: identifierLabel, errors: validationResults.errors}">
+                    <f:form.textfield name="userIdentifier" id="tx-felogin-input-data" class="kern-form-input__input" errorClass="kern-form-input__input--error" additionalAttributes="{aria-describedby: identifierDescribedBy}" />
+                </f:render>
+            </f:form.validationResults>
+
+            <k:atom.button type="submit"><f:translate key="reset_password" /></k:atom.button>
+        </div>
+    </fieldset>
+</f:form>
+
+<k:atom.body>
+    <f:link.action action="login" controller="Login" class="kern-link"><f:translate key="forgot_header_backToLogin" /></f:link.action>
+</k:atom.body>
+</html>

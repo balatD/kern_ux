@@ -14,6 +14,11 @@ services:
     BalatD\KernUx\Styleguide\ComponentCatalog:
         public: true
 
+    # Data processors are resolved from the container by class name, so this one has to
+    # be reachable from outside - TypoScript is not a consumer the autowiring knows about.
+    BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor:
+        public: true
+
     BalatD\KernUx\Command\InstallAssetsCommand:
         tags:
             - name: console.command

@@ -24,6 +24,18 @@
             <trans-unit id="captions.description">
                 <source>Required for any recording with speech (WCAG 1.2.2).</source>
             </trans-unit>
+            <trans-unit id="descriptions.label">
+                <source>Audio description track (WebVTT)</source>
+            </trans-unit>
+            <trans-unit id="descriptions.description">
+                <source>Describes what happens on screen. Browsers do not yet play such a track, so offer a described version of the file as well.</source>
+            </trans-unit>
+            <trans-unit id="audioDescribed.label">
+                <source>Audio-described version</source>
+            </trans-unit>
+            <trans-unit id="audioDescribed.description">
+                <source>The same recording with the picture described in its soundtrack. This is what satisfies WCAG 1.2.3 and 1.2.5 today; it is offered as a link below the player.</source>
+            </trans-unit>
             <trans-unit id="poster.label">
                 <source>Preview image</source>
             </trans-unit>

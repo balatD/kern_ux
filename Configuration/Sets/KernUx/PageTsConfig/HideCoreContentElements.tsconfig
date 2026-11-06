@@ -1,4 +1,4 @@
-# Hides the core content elements this extension replaces.
+# Hides the core content elements this extension replaces or cannot render.
 #
 # Removed from the *wizard* only, deliberately not from the CType select: a site
 # migrating to KERN still has records with these types, and taking the type out of
@@ -7,13 +7,36 @@
 # Kept on purpose:
 #   list                 - the plugin container, without it no plugin (including
 #                          ext:form) can be inserted at all
-#   shortcut, menu_*     - no KERN block replaces these
 #   form_formframework   - the form plugin
+#   shortcut             - rendered by the site set, see setup.typoscript
+#   menu_pages, menu_subpages, menu_sitemap, menu_sitemap_pages
+#                        - rendered by the site set through lib.kernUx.menu
 #
-# Types that only exist when fluid_styled_content is installed are listed anyway;
-# removeItems ignores what is not there.
+# The menu variants below are hidden because nothing here can fill them, and an element
+# an editor can place but never populate is worse than one that is not offered:
+#   menu_abstract, menu_recently_updated, menu_related_pages
+#                        - need page abstracts and keywords this extension does not model
+#   menu_categorized_pages, menu_categorized_content
+#                        - need sys_category, which this extension does not use
+#   menu_section, menu_section_pages
+#                        - core's section index links to #c<uid>, while every KERN block
+#                          emits id="kern-content-<uid>" from kux:uniqueId. The links
+#                          would resolve to nothing, with no error anywhere. The
+#                          kern-ux/toc block is the KERN-native equivalent and its anchor
+#                          contract is pinned by TocBlockTest.
+#
+# All of these are registered by EXT:frontend itself, not by fluid_styled_content, so
+# they are present whether or not FSC is installed.
+#
+# removeItems only reaches the group the item is actually in, and getting that wrong
+# fails silently: bullets, table and uploads sit in `lists`, not `default`, so listing
+# them under `default` hid nothing and editors could still place all three. They are in
+# the `lists` line below now, and CoreContentTypeRenderingTest derives the group from
+# TCA so the mistake cannot come back.
 mod.wizards.newContentElement.wizardItems {
     common.removeItems := addToList(header,text,textpic,textmedia,image,bullets,table,uploads,div,html)
     special.removeItems := addToList(html,div)
     default.removeItems := addToList(header,text,textpic,textmedia,image,bullets,table,uploads,div,html)
+    lists.removeItems := addToList(bullets,table,uploads)
+    menu.removeItems := addToList(menu_abstract,menu_recently_updated,menu_related_pages,menu_categorized_pages,menu_categorized_content,menu_section,menu_section_pages)
 }

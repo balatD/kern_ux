@@ -50,8 +50,15 @@ page {
     10 {
         paths.100 = EXT:kern_ux/Resources/Private/PageView/
 
+        # The menus read pages outside the rendered page's own rootline, and core tags a
+        # cached page only with the page it renders - so a change to a footer or
+        # Hilfsnavigation page would not invalidate the pages that show it. The processor
+        # below is core's, plus a cache tag per page it read; see its class comment.
+        #
+        # The breadcrumb stays on core's processor: a rootline menu reads only pages the
+        # page already depends on, and those core tags itself.
         dataProcessing {
-            10 = menu
+            10 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             10 {
                 as = mainNavigation
                 # Two levels. Three were tried and rejected: a section with nineteen
@@ -84,7 +91,7 @@ page {
 
             # The three configurable menus stay switched off until a root page is set,
             # so a fresh install renders a header and footer without empty landmarks.
-            30 = menu
+            30 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             30 {
                 special = directory
                 special.value = {$kernUx.navigation.helpRootPage}
@@ -92,7 +99,7 @@ page {
                 if.isTrue = {$kernUx.navigation.helpRootPage}
             }
 
-            40 = menu
+            40 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             40 {
                 special = directory
                 special.value = {$kernUx.navigation.footerRootPage}
@@ -101,7 +108,7 @@ page {
                 if.isTrue = {$kernUx.navigation.footerRootPage}
             }
 
-            50 = menu
+            50 = BalatD\KernUx\DataProcessing\CacheTaggedMenuProcessor
             50 {
                 special = directory
                 special.value = {$kernUx.navigation.metaRootPage}
@@ -146,11 +153,15 @@ lib.kernUx.rte {
 
     # Tables are the one place where classes ARE injected server-side.
     #
-    # There is no table content block: the editor can already build tables, and a
-    # two-level collection would be unusable for anything but a tiny grid. But a bare
-    # <table> loses KERN's accessibility affordances - notably the scroll container,
-    # which needs tabindex so keyboard users can reach it, exactly as KERN's own
-    # responsive table does. Scoped CSS cannot add a wrapper, so this does.
+    # This covers tables drawn *inside* rich text, which the editor can already do. A
+    # bare <table> loses KERN's accessibility affordances - notably the scroll
+    # container, which needs tabindex so keyboard users can reach it, exactly as KERN's
+    # own responsive table does. Scoped CSS cannot add a wrapper, so this does.
+    #
+    # It can only reach the table element, though: CKEditor writes no kern-table__cell
+    # and no scope, so an RTE table is approximated by rte.css rather than being KERN
+    # conformant. A standalone table therefore belongs in the kern-ux/table content
+    # block, which renders k:molecule.table and does carry both.
     externalBlocks.table {
         stripNL = 1
         stdWrap.wrap = <div class="kern-table-responsive" tabindex="0">|</div>
@@ -170,24 +181,31 @@ lib.kernUx.rte {
 # Defined here rather than in the block folder: Content Blocks only reads a per-block
 # setup.typoscript from version 2.3, which is the TYPO3 14 line, so a dual-major
 # extension has no per-block place to put it.
+# One KERN list, shared by every menu this extension renders.
+#
+# Extracted rather than repeated: the sitemap block and the core menu content elements
+# below all have to emit the same kern-list and kern-link markup, and KERN's guarantees
+# hang off exactly those classes. A TMENU copied per element is how the two would drift
+# apart - silently, because both sides keep rendering.
+lib.kernUx.menuLevels = TMENU
+lib.kernUx.menuLevels {
+    expAll = 1
+    wrap = <ul class="kern-list kern-list--bullet">|</ul>
+    NO {
+        wrapItemAndSub = <li>|</li>
+        ATagParams = class="kern-link"
+        stdWrap.htmlSpecialChars = 1
+    }
+    CUR < .NO
+    CUR.ATagParams = class="kern-link" aria-current="page"
+}
+
 lib.kernUx.sitemap = HMENU
 lib.kernUx.sitemap {
     special = directory
     special.value.data = field:tx_kernux_sitemap_startPage // page:uid
 
-    1 = TMENU
-    1 {
-        expAll = 1
-        wrap = <ul class="kern-list kern-list--bullet">|</ul>
-        NO {
-            wrapItemAndSub = <li>|</li>
-            ATagParams = class="kern-link"
-            stdWrap.htmlSpecialChars = 1
-        }
-        CUR < .NO
-        CUR.ATagParams = class="kern-link" aria-current="page"
-    }
-
+    1 < lib.kernUx.menuLevels
     2 < .1
     3 < .1
 }
@@ -207,3 +225,94 @@ lib.contentElement {
     templateRootPaths.0 = EXT:kern_ux/Resources/Private/Templates/ContentElements/
 }
 
+
+# Rendering for the core content elements this extension keeps.
+#
+# TYPO3 registers these CTypes in EXT:frontend itself - see
+# EXT:frontend/Configuration/TCA/Overrides/2*-tt_content-content_type-*.php - while
+# rendering them has always been fluid_styled_content's job. This extension replaces
+# FSC, so without the definitions below an editor can insert any of them and the page
+# region is simply empty: no error, no log entry, nothing in the backend to see.
+#
+# Only the elements a KERN pattern can actually carry are defined here. The rest are
+# taken out of the wizard instead; PageTsConfig/HideCoreContentElements.tsconfig lists
+# which, and why.
+lib.kernUx.menu = FLUIDTEMPLATE
+lib.kernUx.menu {
+    templateName = Menu
+    templateRootPaths.0 = EXT:kern_ux/Resources/Private/Templates/ContentElements/
+}
+
+# The menu itself is the numbered child 20, which is the same shape lib.contentElement
+# uses for plugins: the template reaches it with f:cObject on tt_content.<CType>.20, so
+# one template serves every variant and only the HMENU below differs.
+tt_content.menu_pages < lib.kernUx.menu
+tt_content.menu_pages.20 = HMENU
+tt_content.menu_pages.20 {
+    special = list
+    special.value.field = pages
+    1 < lib.kernUx.menuLevels
+}
+
+# Subpages of the selected pages.
+#
+# Falling back to the current page when nothing is selected. Core renders nothing there,
+# which is the same silent emptiness this whole block exists to remove - and "subpages"
+# on an element with no selection can only sensibly mean the ones below the page it
+# sits on.
+tt_content.menu_subpages < lib.kernUx.menu
+tt_content.menu_subpages.20 = HMENU
+tt_content.menu_subpages.20 {
+    special = directory
+    special.value.field = pages
+    special.value.ifEmpty.data = page:uid
+    1 < lib.kernUx.menuLevels
+}
+
+# The tree below the site root. Three levels, matching lib.kernUx.sitemap - deeper
+# turns a page into a wall of links nobody reads.
+tt_content.menu_sitemap < lib.kernUx.menu
+tt_content.menu_sitemap.20 = HMENU
+tt_content.menu_sitemap.20 {
+    special = directory
+    special.value.data = leveluid:0
+    1 < lib.kernUx.menuLevels
+    2 < .1
+    3 < .1
+}
+
+# The tree below each selected page.
+tt_content.menu_sitemap_pages < lib.kernUx.menu
+tt_content.menu_sitemap_pages.20 = HMENU
+tt_content.menu_sitemap_pages.20 {
+    special = directory
+    special.value.field = pages
+    1 < lib.kernUx.menuLevels
+    2 < .1
+    3 < .1
+}
+
+# Insert records. The referenced elements render through their own definitions, so this
+# has no KERN markup of its own - only the section and heading wrapper every content
+# element gets, which is exactly what lib.contentElement already is.
+tt_content.shortcut < lib.contentElement
+tt_content.shortcut.20 = RECORDS
+tt_content.shortcut.20 {
+    source.field = records
+    tables = tt_content
+    conf.tt_content =< tt_content
+}
+
+# KERN rendering for the felogin plugin.
+#
+# felogin is not ext:form, so the theme under Partials/Form/Frontend does not reach it -
+# those partials are driven by ext:form element objects felogin has no equivalent of. It
+# gets its own templates instead, built from the same atoms.
+#
+# Index 20, with felogin's own paths left at 10: Fluid resolves the highest index first
+# and falls back, so anything not overridden here keeps rendering, and a project can
+# override in turn without replacing the set.
+plugin.tx_felogin_login.view {
+    templateRootPaths.20 = EXT:kern_ux/Resources/Private/Templates/Felogin/
+    partialRootPaths.20 = EXT:kern_ux/Resources/Private/Partials/Felogin/
+}

@@ -1,0 +1,92 @@
+# Template: report an accessibility barrier.
+#
+# Every public body's website has to offer a way to report a barrier and to ask for
+# information in an accessible form - the feedback mechanism the EU Web Accessibility
+# Directive requires and BITV 2.0 restates. It is the one form a site of this kind
+# cannot ship without, so it ships here rather than being rebuilt per project.
+#
+# Read-only: it lives in an extension path, so the form editor offers it as a starting
+# point and an integrator duplicates it into their own storage before changing it.
+#
+# No email finisher. The recipient is the one thing this extension cannot know, and a
+# finisher pointing at a placeholder address fails silently at exactly the wrong moment.
+# The confirmation is visible in the first test submission, which is where a missing
+# recipient should be noticed.
+#
+# The page address is a field the visitor fills in, not a hidden field filled by
+# JavaScript: somebody reporting that a page is unusable may well be on it with
+# JavaScript disabled, or reporting it from somewhere else entirely.
+type: Form
+identifier: kern-ux-barriere-melden
+label: 'KERN: Report a barrier'
+prototypeName: standard
+
+renderingOptions:
+  translation:
+    translationFiles:
+      10: 'EXT:kern_ux/Resources/Private/Language/locallang_formtemplates.xlf'
+
+finishers:
+  -
+    identifier: Confirmation
+    options:
+      contentElementUid: 0
+      message: ''
+
+renderables:
+  -
+    type: Page
+    identifier: page-1
+    label: 'Barriere melden'
+    renderables:
+      -
+        type: Text
+        identifier: location
+        label: 'Page address'
+        properties:
+          elementDescription: ''
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        type: Textarea
+        identifier: barrier
+        label: 'The barrier'
+        properties:
+          elementDescription: ''
+        validators:
+          -
+            identifier: NotEmpty
+      -
+        type: SingleSelect
+        identifier: reply-format
+        label: 'Preferred reply format'
+        properties:
+          options:
+            email: 'By email'
+            phone: 'By telephone'
+            post: 'By post'
+            none: 'No reply needed'
+          prependOptionLabel: ''
+      -
+        type: Text
+        identifier: name
+        label: 'Name'
+      -
+        type: Email
+        identifier: email
+        label: 'Email address'
+        validators:
+          -
+            identifier: EmailAddress
+      -
+        type: Telephone
+        identifier: phone
+        label: 'Telephone number'
+      -
+        type: Checkbox
+        identifier: privacy
+        label: 'Privacy notice'
+        validators:
+          -
+            identifier: NotEmpty

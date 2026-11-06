@@ -11,6 +11,10 @@ Zeile TypoScript nötig.
 | `kernUx.site.title` | Name der Organisation. Wird im Header gezeigt, wenn kein Logo gesetzt ist, damit der Header nie leer ist | leer |
 | `kernUx.site.logo` | `EXT:`- oder absoluter Pfad zum Logo. **Nicht** die Bildwortmarke der Digitalen Dachmarke, außer mit Freigabe | leer |
 | `kernUx.site.searchUrl` | Zielseite der Header-Suche. Leer versteckt die Suche samt Mobil-Umschalter | leer |
+| `kernUx.site.faviconSvg` | `EXT:`- oder absoluter Pfad. Wo unterstützt die beste Wahl: eine Datei für jede Größe, dazu eine mögliche Dunkel-Variante | leer |
+| `kernUx.site.faviconIco` | Trotzdem lohnend: ein Browser, der kein Icon findet, fragt ohnehin `/favicon.ico` an — sonst steht ein 404 pro Seitenaufruf im Log | leer |
+| `kernUx.site.appleTouchIcon` | 180×180-PNG für den iOS-Homescreen | leer |
+| `kernUx.site.webmanifest` | Pfad zu einer `site.webmanifest`. Nur nötig, wenn die Seite installierbar sein soll | leer |
 
 ## Thema
 
@@ -38,6 +42,7 @@ weder `maximum-scale` noch `user-scalable=no` ergänzen — beides verletzt WCAG
 | `kernUx.assets.includeCss` | Nur abschalten, wenn das Projekt `kern.css` in seinen eigenen Build bündelt | `true` |
 | `kernUx.assets.includeFonts` | Fira Sans, KERNs Hausschrift. Nur abschalten, wenn das Projekt sie selbst hostet — KERN sieht ohne sie falsch aus | `true` |
 | `kernUx.assets.includeNotoSans` | Optionale Zweitschrift, die KERN nur für bestimmte Inhalte braucht | `false` |
+| `kernUx.assets.projectCss` | `EXT:`- oder absoluter Pfad zum eigenen Stylesheet des Projekts. Wird nach `kernt3.css` geladen und kann deshalb überschreiben, ohne dass das Set ersetzt werden muss | leer |
 
 ## Navigation
 
@@ -95,6 +100,25 @@ kommen aus Site-Settings, und ohne Text erscheint die Zeile gar nicht:
 | `kernUx.dachmarke.noteLogo` | Pfad zur Bund/Länder/Kommunen-Marke | leer |
 | `kernUx.footer.fundingLogo` | Pfad zu einer Fördermarke, etwa der EU-Flagge | leer |
 | `kernUx.footer.fundingLabel` | Alternativtext dazu — benennt das Förderprogramm, nicht das Bild | leer |
+| `kernUx.footer.copyright` | Copyright-Zeile als letzte Zeile im Fuß. Leer lässt sie weg | leer |
+
+## Sicherheit
+
+Die Extension bringt eine `Configuration/ContentSecurityPolicies.php` mit, die genau
+das erklärt, was ihre eigenen Assets brauchen — und nichts sonst. TYPO3 baut die
+Frontend-Policy aus einer leeren auf; ohne diese Datei müsste ein Projekt mit
+eingeschaltetem `security.frontend.enforceContentSecurityPolicy` einen blockierten
+Request nach dem anderen nachziehen.
+
+Alles darin ist `'self'`, und das ist kein Zufall: die KERN-Distribution wird zur
+Installationszeit geholt und von der eigenen Seite ausgeliefert, die Schriften
+ebenso, und die beiden Skripte sind Dateien statt Inline-Handler. Es gibt kein CDN und
+kein `'unsafe-inline'`, das erklärt werden müsste.
+
+Ausschließlich `Extend`, nie `Reduce`. Eine Distribution darf die Core-Vorgaben
+verengen, weil ihr die ganze Seite gehört; eine wiederverwendbare Extension, die
+einem Projekt still eine Quelle aus der Policy nimmt, ist ein Fehler — und einer, den
+man an der falschen Stelle sucht.
 
 ## Rich Text
 

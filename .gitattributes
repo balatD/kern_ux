@@ -1,0 +1,22 @@
+# Keeps the Composer dist tarball to what a project actually installs. Everything below
+# is development apparatus: GitHub serves it from the repository, while a tag's zipball
+# carries it into every deployment of every consuming project, forever.
+#
+# Patterns use gitignore syntax, so the leading slash is load-bearing: a bare "Tests"
+# would also match any nested Tests/ directory.
+/.ddev             export-ignore
+/.github           export-ignore
+/.editorconfig     export-ignore
+/.gitattributes    export-ignore
+/.gitignore        export-ignore
+/.php-cs-fixer.php export-ignore
+/phpstan.neon      export-ignore
+/Build             export-ignore
+/Tests             export-ignore
+/CLAUDE.md         export-ignore
+
+# 1.0 MB in 8 PNGs - a third of the tracked tree, and the largest single item in it.
+# They document the extension for people, who read that on GitHub. The image references
+# in README.md and Documentation/Screenshots.md therefore do not resolve inside an
+# installed copy; that is the trade.
+/Documentation/Images export-ignore

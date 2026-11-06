@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    One KERN field row for felogin.
+
+    Partials/Form/Frontend/Field/Field.html cannot be reused here: that partial is driven
+    by ext:form element objects, and felogin has none. What KERN's field contract is made
+    of - the label, the error, their DOM order - comes from the same atoms the rest of
+    the extension uses, so the only thing written a second time is the kern-form-input
+    wrapper, not the contract.
+
+    Order is label, control, error. That is what KERN prescribes and it is also the order
+    a screen reader reads.
+</f:comment>
+<f:spaceless>
+<div class="kern-form-input<f:if condition="{errors}"> kern-form-input--error</f:if>">
+    <k:atom.label for="{id}">{label}</k:atom.label>
+    <f:format.raw>{control}</f:format.raw>
+    <f:if condition="{errors}">
+        <k:atom.error id="{id}-error"><f:for each="{errors}" as="error">{error} </f:for></k:atom.error>
+    </f:if>
+</div>
+</f:spaceless>
+</html>

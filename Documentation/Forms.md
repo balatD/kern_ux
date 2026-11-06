@@ -33,6 +33,32 @@ Checkbox- und Radio-Gruppen. Was dort einmal implementiert ist:
   (`aria-describedby`, `aria-invalid`, `aria-required`) wird verworfen: kein Redakteur
   soll die Zusagen von Hand aushängen können.
 
+## Einheit an einem Feld
+
+Ein Feld kann eine Einheit tragen — „EUR", „km", „%". Zwei Eigenschaften in der
+Formulardefinition, beide optional und beide reiner Text:
+
+```yaml
+-
+  identifier: amount
+  type: Text
+  label: 'Betrag'
+  properties:
+    kernUxSuffix: 'EUR'
+```
+
+Damit wandert das Control in ein `kern-input-group` und die Einheit in ein
+`kern-input-group-text` daneben; `kernUxPrefix` setzt sie davor. Feldern ohne eine der
+beiden Eigenschaften ändert sich nichts.
+
+Die Einheit wird **immer** angesagt: `aria-describedby` zeigt auf sie, vor Hinweis und
+Fehler. Sie qualifiziert den Wert selbst, gehört also zum Feld und nicht zu den
+Hinweisen darüber. Deshalb gibt es auch kein „dekorativ"-Flag — eine Einheit, die
+niemand hören soll, schreibt man gar nicht erst hin.
+
+Der Formular-Editor kennt die beiden Eigenschaften noch nicht; sie stehen bisher nur in
+der YAML-Definition.
+
 ## Strecke und Zusammenfassung
 
 Dazu kommen eine Fehlerübersicht mit Sprungmarken (`kern-alert--danger` mit
@@ -44,6 +70,29 @@ dabei zu einer Gruppe mit `kern-summary-group__header`. Alles davon hält
 `Tests/Functional/Form/FormMarkupTest.php` fest, indem es ganze Formulare rendert —
 ein Parse-Test kann das nicht: eine Variable, die es nicht gibt, ist gültiges Fluid und
 rendert stillschweigend nichts.
+
+## Mitgelieferte Vorlagen
+
+Zwei Formulardefinitionen liegen unter `Configuration/Form/Forms/` und stehen im
+Formular-Editor als Ausgangspunkt bereit:
+
+- **Barriere melden** — der Rückmeldemechanismus, den die EU-Richtlinie über den
+  barrierefreien Zugang und die BITV 2.0 von jeder öffentlichen Stelle verlangen. Die
+  Seitenadresse ist ein Feld zum Ausfüllen und kein verstecktes, das JavaScript setzt:
+  wer meldet, dass eine Seite unbenutzbar ist, sitzt womöglich ohne JavaScript davor
+  oder meldet von ganz woanders. Ein Feld fragt außerdem, in welcher Form geantwortet
+  werden soll.
+- **Kontakt** — das übliche Kontaktformular.
+
+Beide liegen in einem Extension-Pfad und sind damit für `ext:form` schreibgeschützt.
+Wer sie anpassen will, dupliziert sie im Editor in den eigenen Speicher; ein Update
+überschreibt dann nichts.
+
+Keine der beiden bringt einen E-Mail-Finisher mit. Die Empfängeradresse ist genau das,
+was diese Extension nicht wissen kann, und ein Finisher auf einer Platzhalter-Adresse
+scheitert lautlos im ungünstigsten Moment. Stattdessen bestätigen sie den Versand —
+was beim ersten Testversand auffällt, und das ist die Stelle, an der ein fehlender
+Empfänger auffallen soll.
 
 ## `KernDate`
 

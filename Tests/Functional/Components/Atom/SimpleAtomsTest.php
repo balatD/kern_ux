@@ -81,6 +81,24 @@ final class SimpleAtomsTest extends AbstractComponentTestCase
                 '<k:atom.list tag="ol" variant="number"><li>Eins</li></k:atom.list>',
                 '<ol class="kern-list kern-list--number"><li>Eins</li></ol>',
             ],
+            // A preline sits above a heading and is not part of its accessible name, so
+            // it is a paragraph of its own rather than anything inside the heading.
+            'preline' => [
+                '<k:atom.preline>Dienstleistung</k:atom.preline>',
+                '<p class="kern-preline">Dienstleistung</p>',
+            ],
+            'preline large' => [
+                '<k:atom.preline variant="large">Dienstleistung</k:atom.preline>',
+                '<p class="kern-preline kern-preline--large">Dienstleistung</p>',
+            ],
+            'subline' => [
+                '<k:atom.subline>Etwa 5 Werktage</k:atom.subline>',
+                '<p class="kern-subline">Etwa 5 Werktage</p>',
+            ],
+            'subline large' => [
+                '<k:atom.subline variant="large">Etwa 5 Werktage</k:atom.subline>',
+                '<p class="kern-subline kern-subline--large">Etwa 5 Werktage</p>',
+            ],
         ];
     }
 

@@ -6,12 +6,12 @@ auf und bilden nur Daten darauf ab. Die Barrierefreiheits-Zusagen von KERN häng
 konkreten Klassen und ARIA-Attributen — deshalb existiert dieses Markup genau einmal
 und wird durch Tests festgenagelt, die unter *beiden* TYPO3-Majors laufen.
 
-41 Components, gebaut gegen KERN 2.7.2:
+42 Components, gebaut gegen KERN 2.7.2:
 
 | Ebene | |
 |---|---|
 | **Atome** (15) | Badge, Body, Button, Divider, Error, Heading, Hint, Icon, Label, Link, List, Loader, Preline, Progress, Subline |
-| **Moleküle** (17) | AccordionItem, Alert, Breadcrumb, ButtonGroup, Card, ContentHeader, DescriptionList, DownloadList, Figure, Hgroup, MediaPlayer, NavigationList, OpeningHours, Section, SkipLink, SummaryItem, TaskListItem |
+| **Moleküle** (18) | AccordionItem, Alert, Breadcrumb, ButtonGroup, Card, ContentHeader, DescriptionList, DownloadList, Figure, Hgroup, MediaPlayer, NavigationList, OpeningHours, Section, SkipLink, SummaryItem, Table, TaskListItem |
 | **Organismen** (9) | CardGrid, Dialog, Footer, Gallery, Header, Hero, Kopfzeile, TaskList, TaskListGroup |
 
 Components liegen unter `Resources/Private/Components/` mit einem Ordner pro

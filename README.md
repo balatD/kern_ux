@@ -14,9 +14,10 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/Lizenz-GPL--2.0--or--later-blue" alt="Lizenz GPL-2.0-or-later"></a>
 </p>
 
-Bringt den [KERN UX-Standard](https://www.kern-ux.de/) nach TYPO3 13.4 und 14.3: 41
-barrierefreie **Fluid Components**, 23 **Content Blocks** für Redakteure, ein
-**`ext:form`-Theme** und vier Seiten-Templates mit passenden Backend-Layouts.
+Bringt den [KERN UX-Standard](https://www.kern-ux.de/) nach TYPO3 13.4 und 14.3: 42
+barrierefreie **Fluid Components**, 24 **Content Blocks** für Redakteure, ein
+**`ext:form`-Theme** samt Formularvorlagen und fünf Seiten-Templates mit passenden
+Backend-Layouts.
 
 Die Components sind die einzige Quelle für KERN-Markup — Content Blocks, Formulare und
 Seiten rufen dieselben Components auf und bilden nur Daten darauf ab. Weil die
@@ -24,9 +25,11 @@ Barrierefreiheits-Zusagen von KERN an konkreten Klassen und ARIA-Attributen hän
 existiert dieses Markup genau einmal und wird von Tests festgenagelt, die unter
 *beiden* TYPO3-Majors laufen.
 
-> [!WARNING]
-> **Status: alpha.** In aktiver Entwicklung, noch nicht für Produktivbetrieb geeignet.
-> Öffentliche Schnittstellen können sich ohne Vorwarnung ändern.
+> [!IMPORTANT]
+> **Status: beta.** Die öffentliche Schnittstelle gilt als eingefroren: was unter
+> *Breaking changes* in `CLAUDE.md` steht, ändert sich nicht mehr ohne Eintrag im
+> [Changelog](CHANGELOG.md), und Tests halten es fest. Für einen Produktiveinsatz lohnt
+> ein eigener Blick — die Extension ist in dieser Form noch nicht lange im Feld.
 
 > [!NOTE]
 > **Unabhängige Community-Integration.** Dieses Projekt gehört nicht zum KERN-Team und
@@ -51,11 +54,11 @@ aus dem mitgelieferten Demo-Seitenbaum.
 
 Das Paket liegt auf [Packagist](https://packagist.org/packages/balatd/kern-ux).
 Veröffentlicht ist bisher nur eine Vorabversion, deshalb braucht Composer die
-Stabilitätsangabe `@alpha` — ein Projekt mit dem üblichen `minimum-stability: stable`
+Stabilitätsangabe `@beta` — ein Projekt mit dem üblichen `minimum-stability: stable`
 findet das Paket sonst nicht:
 
 ```bash
-composer require balatd/kern-ux:^1.0@alpha
+composer require balatd/kern-ux:^1.0@beta
 vendor/bin/typo3 extension:setup
 vendor/bin/typo3 kern-ux:assets:install
 ```
@@ -78,7 +81,7 @@ Backend-Layouts und Settings bereit. Einen Demo-Seitenbaum zum Ansehen legt
 | [Installation](Documentation/Installation.md) | Setup, KERN-Assets, Demo-Seitenbaum, Stolperfallen |
 | [Konfiguration](Documentation/Configuration.md) | Site-Settings, Thema, Navigation, Digitale Dachmarke, RTE |
 | [Components](Documentation/Components.md) | Component-Schicht, Galerie, eigene Components schreiben |
-| [Content Blocks](Documentation/ContentBlocks.md) | Die 23 Blöcke, Seiten-Templates, Backend-Vorschauen |
+| [Content Blocks](Documentation/ContentBlocks.md) | Die 24 Blöcke, Seiten-Templates, Backend-Vorschauen |
 | [Formulare](Documentation/Forms.md) | `ext:form`-Theme, Fehlerbehandlung, `KernDate` |
 | [Barrierefreiheit](Documentation/Accessibility.md) | axe-Läufe, Prüfumfang, was von Hand bleibt |
 | [Entwicklung](Documentation/Development.md) | DDEV-Harness für beide Majors, Tests, Sprachen |

@@ -1,0 +1,88 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    KERN markup for the felogin login form.
+
+    The status message is an alert rather than core's heading plus paragraph, and its
+    variant follows the key felogin sets: `error` after a failed attempt, `logout` after
+    signing out, `welcome` otherwise. Only the error case is announced - the other two
+    describe a state the visitor already knows they are in.
+
+    Every label and message key is hoisted into an f:variable before it reaches an
+    arguments= array. Braces inside such an array interpolate into a string, and Fluid
+    then throws at *render* time, long after the template has parsed cleanly; see
+    TemplateSyntaxTest::translateArgumentsAreArraysNotStrings.
+
+    The section/form split is core's and is kept as is: f:form has to wrap the section,
+    and pulling the fields out of it would render them outside the request token.
+</f:comment>
+<f:flashMessages />
+
+<f:if condition="{messageKey}">
+    <f:variable name="messageVariant" value="info" />
+    <f:if condition="{messageKey} == 'error'"><f:variable name="messageVariant" value="danger" /></f:if>
+    <f:if condition="{messageKey} == 'logout'"><f:variable name="messageVariant" value="success" /></f:if>
+    <f:variable name="messageLive" value="{false}" />
+    <f:if condition="{messageKey} == 'error'"><f:variable name="messageLive" value="{true}" /></f:if>
+    <f:variable name="headerKey" value="{messageKey}_header" />
+    <f:variable name="messageBodyKey" value="{messageKey}_message" />
+    <f:variable name="messageHeader"><f:render partial="RenderLabelOrMessage" arguments="{key: headerKey}" /></f:variable>
+    <k:molecule.alert
+        variant="{messageVariant}"
+        titleAsHeading="{false}"
+        live="{messageLive}"
+        title="{messageHeader -> f:format.trim()}"
+    ><f:render partial="RenderLabelOrMessage" arguments="{key: messageBodyKey}" /></k:molecule.alert>
+</f:if>
+
+<f:form target="_top" fieldNamePrefix="" action="login" requestToken="{requestToken}" spellcheck="false">
+    <f:render section="content" arguments="{_all}" />
+</f:form>
+
+<f:if condition="{settings.showForgotPassword}">
+    <f:link.action action="recovery" controller="PasswordRecovery" class="kern-link">
+        <f:render partial="RenderLabelOrMessage" arguments="{key: 'forgot_header'}" />
+    </f:link.action>
+</f:if>
+
+<f:section name="content">
+    <f:variable name="usernameLabel"><f:translate key="username" /></f:variable>
+    <f:variable name="passwordLabel"><f:translate key="password" /></f:variable>
+    <fieldset class="kern-fieldset">
+        <k:atom.label size="large"><f:translate key="login" /></k:atom.label>
+        <div class="kern-fieldset__body kernt3-form__section">
+
+            <f:render partial="Field" contentAs="control" arguments="{id: 'tx-felogin-input-username', label: usernameLabel}">
+                <f:form.textfield name="user" required="true" autocomplete="username" id="tx-felogin-input-username" class="kern-form-input__input" />
+            </f:render>
+
+            <f:render partial="Field" contentAs="control" arguments="{id: 'tx-felogin-input-password', label: passwordLabel}">
+                <f:form.password name="pass" required="required" autocomplete="current-password" id="tx-felogin-input-password" class="kern-form-input__input" />
+            </f:render>
+
+            <f:if condition="{permaloginStatus} > -1">
+                <div class="kern-form-check">
+                    <f:if condition="{permaloginStatus} == 1">
+                        <f:then>
+                            <f:form.hidden name="permalogin" value="0" disabled="disabled" />
+                            <f:form.checkbox name="permalogin" id="permalogin" value="1" checked="checked" class="kern-form-check__checkbox" />
+                        </f:then>
+                        <f:else>
+                            <f:form.hidden name="permalogin" value="0" />
+                            <f:form.checkbox name="permalogin" id="permalogin" value="1" class="kern-form-check__checkbox" />
+                        </f:else>
+                    </f:if>
+                    <k:atom.label for="permalogin"><f:translate key="permalogin" /></k:atom.label>
+                </div>
+            </f:if>
+
+            <k:atom.button type="submit" name="submit"><f:translate key="login" /></k:atom.button>
+
+            <f:form.hidden name="logintype" value="login" />
+        </div>
+        <f:if condition="{redirectURL} != ''"><f:form.hidden name="redirect_url" value="{redirectURL}" /></f:if>
+        <f:if condition="{referer} != ''"><f:form.hidden name="referer" value="{referer}" /></f:if>
+        <f:if condition="{redirectReferrer} != ''"><f:form.hidden name="redirectReferrer" value="off" /></f:if>
+        <f:if condition="{noRedirect} != ''"><f:form.hidden name="noredirect" value="1" /></f:if>
+    </fieldset>
+</f:section>
+</html>

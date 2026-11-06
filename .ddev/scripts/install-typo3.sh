@@ -23,6 +23,7 @@ echo "==> Requiring TYPO3 $CONSTRAINT + EXT:kern_ux"
 composer require -d "$DIR" --no-progress -n \
     "typo3/minimal:$CONSTRAINT" \
     "typo3/cms-install:$CONSTRAINT" \
+    "typo3/cms-felogin:$CONSTRAINT" \
     "typo3/cms-form:$CONSTRAINT" \
     "typo3/cms-rte-ckeditor:$CONSTRAINT" \
     "typo3/cms-tstemplate:$CONSTRAINT" \

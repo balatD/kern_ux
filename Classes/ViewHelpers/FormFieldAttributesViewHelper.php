@@ -21,7 +21,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *     classes. State conveyed by colour alone fails WCAG 1.4.1.
  *   - aria-describedby listing the hint first and the error second, which is the order
  *     KERN's own reference implementation uses. (Its React kit uses the opposite order;
- *     the plain kit is the reference, so this follows the plain kit.)
+ *     the plain kit is the reference, so this follows the plain kit.) An input-group
+ *     addon goes in front of both: it names the unit the value is given in, so it
+ *     belongs to the field rather than to the advice about it. KERN says nothing about
+ *     that position - it only fixes hint before error, which still holds.
  *
  * The ids are derived from the element's unique identifier, so this and the field
  * wrapper agree on them without passing anything around.
@@ -35,6 +38,19 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 final class FormFieldAttributesViewHelper extends AbstractViewHelper
 {
+    /**
+     * Input-group addon properties, mapped to the id suffix the field wrapper gives them.
+     *
+     * Read off the element here rather than passed in, because the element partial calls
+     * this before Field.html wraps the control, so nothing could pass it. That means the
+     * raw property is what counts, while the wrapper renders the translated one - the
+     * same divergence `hasHint` already has, and the same fix would touch 16 partials.
+     */
+    private const ADDONS = [
+        'kernUxPrefix' => 'prefix',
+        'kernUxSuffix' => 'suffix',
+    ];
+
     public function __construct(private readonly RequiredFieldDetector $detector) {}
 
     public function initializeArguments(): void
@@ -80,6 +96,14 @@ final class FormFieldAttributesViewHelper extends AbstractViewHelper
         }
 
         $describedBy = [];
+        // Addons first, then hint, then error. A unit qualifies the value itself, so it
+        // reads as part of the field ("Betrag, Eingabefeld, Euro") rather than as advice
+        // about it. KERN only prescribes that the hint precedes the error, which holds.
+        foreach (self::ADDONS as $property => $suffix) {
+            if ($this->hasAddon($element, $property)) {
+                $describedBy[] = $id . '-' . $suffix;
+            }
+        }
         if ($this->flag('hasHint')) {
             $describedBy[] = $id . '-hint';
         }
@@ -138,6 +162,13 @@ final class FormFieldAttributesViewHelper extends AbstractViewHelper
         }
 
         return $attributes;
+    }
+
+    private function hasAddon(FormElementInterface $element, string $property): bool
+    {
+        $value = $element->getProperties()[$property] ?? null;
+
+        return is_string($value) && trim($value) !== '';
     }
 
     private function flag(string $name): bool
