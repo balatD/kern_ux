@@ -219,10 +219,13 @@ lib.kernUx.sitemap {
 #
 # Defining it here rather than special-casing the form plugin means any third-party
 # plugin dropped onto a KERN page renders correctly too.
+#
+# Index 1, not 0: with FSC installed this set loads after it, and index 0 is FSC's own
+# template path, which the core elements it still renders cannot do without.
 lib.contentElement = FLUIDTEMPLATE
 lib.contentElement {
     templateName = Generic
-    templateRootPaths.0 = EXT:kern_ux/Resources/Private/Templates/ContentElements/
+    templateRootPaths.1 = EXT:kern_ux/Resources/Private/Templates/ContentElements/
 }
 
 

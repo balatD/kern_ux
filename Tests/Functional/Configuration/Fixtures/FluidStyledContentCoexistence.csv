@@ -1,0 +1,10 @@
+"pages",,,,,,
+,"uid","pid","title","slug","doktype","is_siteroot"
+,1,0,"Start","/",1,1
+,2,1,"Bestand","/bestand",1,0
+,3,1,"Kontakt","/kontakt",1,0
+"tt_content",,,,,,,,,
+,"uid","pid","sorting","colPos","header","CType","pages","bodytext","pi_flexform"
+,1,1,10,0,"Seiten","menu_pages","2","",""
+,2,2,10,0,"Altbestand","text","","<p>Ein Text aus der Zeit vor KERN.</p>",""
+,3,3,10,0,"Kontakt","form_formframework","","","<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?><T3FlexForms><data><sheet index=""sDEF""><language index=""lDEF""><field index=""settings.persistenceIdentifier""><value index=""vDEF"">EXT:kern_ux/Configuration/Form/Forms/Kontakt.form.yaml</value></field><field index=""settings.overrideFinishers""><value index=""vDEF"">0</value></field></language></sheet></data></T3FlexForms>"
