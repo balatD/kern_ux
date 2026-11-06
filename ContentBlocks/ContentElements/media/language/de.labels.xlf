@@ -31,6 +31,22 @@
                 <source>Required for any recording with speech (WCAG 1.2.2).</source>
                 <target>Pflicht für jede Aufnahme mit Sprache (WCAG 1.2.2).</target>
             </trans-unit>
+            <trans-unit id="descriptions.label">
+                <source>Audio description track (WebVTT)</source>
+                <target>Audiodeskriptions-Spur (WebVTT)</target>
+            </trans-unit>
+            <trans-unit id="descriptions.description">
+                <source>Describes what happens on screen. Browsers do not yet play such a track, so offer a described version of the file as well.</source>
+                <target>Beschreibt, was im Bild passiert. Browser spielen eine solche Spur bisher nicht ab, hinterlegen Sie deshalb zusätzlich eine beschriebene Fassung.</target>
+            </trans-unit>
+            <trans-unit id="audioDescribed.label">
+                <source>Audio-described version</source>
+                <target>Fassung mit Audiodeskription</target>
+            </trans-unit>
+            <trans-unit id="audioDescribed.description">
+                <source>The same recording with the picture described in its soundtrack. This is what satisfies WCAG 1.2.3 and 1.2.5 today; it is offered as a link below the player.</source>
+                <target>Dieselbe Aufnahme, deren Tonspur das Bild beschreibt. Das erfüllt WCAG 1.2.3 und 1.2.5 heute tatsächlich; sie wird als Link unter dem Player angeboten.</target>
+            </trans-unit>
             <trans-unit id="poster.label">
                 <source>Preview image</source>
                 <target>Vorschaubild</target>

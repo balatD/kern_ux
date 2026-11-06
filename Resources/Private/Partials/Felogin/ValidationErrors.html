@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    The error summary above a felogin form.
+
+    Core lists the raw property paths and error codes, which is developer output rather
+    than something a visitor can act on. KERN puts the same information in an alert, and
+    this one is announced: unlike an editorially placed alert it appears as the result of
+    something the visitor just did, which is exactly the case role=alert exists for.
+
+    Per-field messages are rendered by the Field partial as well. That repetition is
+    deliberate and is what the ext:form theme does too - the summary is what a screen
+    reader user hears first, the inline message is what they find when they reach the
+    control.
+</f:comment>
+<f:form.validationResults>
+    <f:if condition="{validationResults.flattenedErrors}">
+        <k:molecule.alert variant="danger" titleAsHeading="{false}" live="{true}">
+            <k:atom.list>
+                <f:for each="{validationResults.flattenedErrors}" as="errors">
+                    <f:for each="{errors}" as="error">
+                        <li>{error}</li>
+                    </f:for>
+                </f:for>
+            </k:atom.list>
+        </k:molecule.alert>
+    </f:if>
+</f:form.validationResults>
+</html>

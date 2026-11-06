@@ -20,6 +20,7 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\AbstractSection;
 use TYPO3\CMS\Form\Domain\Model\FormElements\Section;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -74,13 +75,18 @@ final class FormMarkupTest extends FunctionalTestCase
         $typoScript->setConfigTree(new RootNode());
         $typoScript->setConfigArray([]);
 
+        // On a page the content element supplies this. Extbase's UriBuilder throws without
+        // one since 14.3.8, and the form's action URL is not what these tests are about.
+        $contentObject = self::createStub(ContentObjectRenderer::class);
+
         $this->serverRequest = (new ServerRequest('https://example.com/', 'GET'))
             ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE)
             ->withAttribute('site', $site)
             ->withAttribute('language', $site->getDefaultLanguage())
             ->withAttribute('frontend.typoscript', $typoScript)
             ->withAttribute('frontend.user', new FrontendUserAuthentication())
-            ->withAttribute('extbase', new ExtbaseRequestParameters());
+            ->withAttribute('extbase', new ExtbaseRequestParameters())
+            ->withAttribute('currentContentObject', $contentObject);
 
         $GLOBALS['TYPO3_REQUEST'] = $this->serverRequest;
     }
@@ -189,6 +195,69 @@ final class FormMarkupTest extends FunctionalTestCase
         // The hint comes first and the error second, which is the order KERN's plain kit
         // uses; with no error yet there is only the hint to point at.
         self::assertStringContainsString('aria-describedby="kernform-name-hint"', $html);
+    }
+
+    #[Test]
+    public function wrapsTheControlInAnInputGroupWhenAnAddonIsSet(): void
+    {
+        $form = $this->form();
+        $element = $this->element($form->createPage('page1'), 'amount', 'Text', 'Betrag');
+        $element->setProperty('kernUxSuffix', 'EUR');
+
+        $html = $this->render($form);
+        self::assertStringContainsString('<div class="kern-input-group">', $html);
+        self::assertStringContainsString(
+            '<span class="kern-input-group-text" id="kernform-amount-suffix">EUR</span>',
+            $html,
+        );
+    }
+
+    #[Test]
+    public function pointsAriaDescribedbyAtTheAddon(): void
+    {
+        $form = $this->form();
+        $element = $this->element($form->createPage('page1'), 'amount', 'Text', 'Betrag');
+        $element->setProperty('kernUxSuffix', 'EUR');
+
+        // A unit that is only painted next to the field tells a screen reader nothing,
+        // so the field would be announced as a bare number.
+        self::assertStringContainsString('aria-describedby="kernform-amount-suffix"', $this->render($form));
+    }
+
+    /**
+     * The error tail is not asserted here: nothing in this suite renders a form with live
+     * validation errors, which would take a POST round-trip through FormRuntime. What
+     * that would add is the `-error` id, whose position is already fixed by
+     * wiresTheHintOntoTheControlWithAriaDescribedby() and by the order the ViewHelper
+     * appends in. The addon-before-hint decision is the new one, so that is what this
+     * pins.
+     */
+    #[Test]
+    public function describesTheFieldByAddonBeforeHint(): void
+    {
+        $form = $this->form();
+        $element = $this->element($form->createPage('page1'), 'amount', 'Text', 'Betrag');
+        $element->setProperty('kernUxPrefix', 'ab');
+        $element->setProperty('kernUxSuffix', 'EUR');
+        $element->setProperty('elementDescription', 'Brutto angeben.');
+
+        self::assertStringContainsString(
+            'aria-describedby="kernform-amount-prefix kernform-amount-suffix kernform-amount-hint"',
+            $this->render($form),
+        );
+    }
+
+    #[Test]
+    public function leavesAFieldWithoutAnAddonUntouched(): void
+    {
+        $form = $this->form();
+        $this->element($form->createPage('page1'), 'name', 'Text', 'Name');
+
+        // The 16 element partials that set no addon must render exactly as before, or
+        // this feature would have changed every form in every project that installs it.
+        $html = $this->render($form);
+        self::assertStringNotContainsString('kern-input-group', $html);
+        self::assertStringNotContainsString('aria-describedby', $html);
     }
 
     #[Test]

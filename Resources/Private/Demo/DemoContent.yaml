@@ -1091,6 +1091,28 @@ pages:
                                             -   key: merkblatt
                                                 description: 'Anforderungen an das Passbild, mit Beispielen.'
 
+                    -   title: 'Core-Elemente'
+                        slug: core-elemente
+                        layout: default
+                        content:
+                            main:
+                                -   type: kernux_text
+                                    header: 'Core-Elemente'
+                                    header_layout: 1
+                                    fields:
+                                        tx_kernux_heading_appearance: x-large
+                                        bodytext: '<p>Die klassischen Inhaltselemente registriert EXT:frontend selbst, nicht fluid_styled_content - sie stehen also im Assistenten, obwohl diese Extension FSC ersetzt. Das Set rendert die, die eine KERN-Entsprechung haben, und blendet die anderen aus.</p>'
+                                -   type: menu_subpages
+                                    header: 'Unterseiten von Beispielseiten'
+                                    header_layout: 2
+                                    refs:
+                                        pages: examples
+                                -   type: menu_pages
+                                    header: 'Ausgewählte Seiten'
+                                    header_layout: 2
+                                    refs:
+                                        pages: elements
+
                     -   title: 'Inhaltsverzeichnis'
                         slug: inhaltsverzeichnis
                         layout: default

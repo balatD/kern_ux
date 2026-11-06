@@ -19,6 +19,17 @@ fields:
     type: File
     maxitems: 1
     allowed: 'vtt'
+  # A described cut of the same recording, not a track on it: browsers parse
+  # kind="descriptions" and then do nothing with it, so a second file is what actually
+  # reaches anyone. The descriptions track is offered alongside for players that will.
+  - identifier: descriptions
+    type: File
+    maxitems: 1
+    allowed: 'vtt'
+  - identifier: audioDescribed
+    type: File
+    maxitems: 1
+    allowed: 'mp4,webm,ogg'
   - identifier: poster
     type: File
     maxitems: 1

@@ -51,6 +51,15 @@
             <trans-unit id="sitemap.label">
                 <source>Sitemap</source>
             </trans-unit>
+            <trans-unit id="menu.label">
+                <source>Menu</source>
+            </trans-unit>
+            <trans-unit id="file.notAccessible">
+                <source>not accessible</source>
+            </trans-unit>
+            <trans-unit id="mediaPlayer.audioDescribed">
+                <source>Watch the version with audio description</source>
+            </trans-unit>
             <trans-unit id="mediaPlayer.transcript">
                 <source>Show transcript</source>
             </trans-unit>

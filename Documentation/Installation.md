@@ -4,11 +4,11 @@
 
 Das Paket liegt auf [Packagist](https://packagist.org/packages/balatd/kern-ux).
 Veröffentlicht ist bisher nur eine Vorabversion, deshalb braucht Composer die
-Stabilitätsangabe `@alpha` — ein Projekt mit dem üblichen `minimum-stability: stable`
+Stabilitätsangabe `@beta` — ein Projekt mit dem üblichen `minimum-stability: stable`
 findet das Paket sonst nicht:
 
 ```bash
-composer require balatd/kern-ux:^1.0@alpha
+composer require balatd/kern-ux:^1.0@beta
 vendor/bin/typo3 extension:setup
 ```
 
@@ -86,9 +86,32 @@ rm -f config/sites/<site>/setup.typoscript
 # die Haken bei "Clear" für Constants und Setup entfernen
 ```
 
+## Optionale Extensions
+
+`typo3/cms-form` und `typo3/cms-felogin` sind optionale Abhängigkeiten und zugleich
+optionale Set-Abhängigkeiten: ist eine installiert, bringt das Set ihre KERN-Templates
+mit; ist sie es nicht, passiert nichts. Für `typo3/cms-rte-ckeditor` gilt dasselbe,
+dort geht es um das RTE-Preset.
+
+> [!NOTE]
+> Die Beschriftungen von `felogin` — „Benutzername", „Passwort", „Anmelden" — gehören
+> `felogin`, nicht dieser Extension. Der Core liefert nur die englische Quelle mit; die
+> deutschen Fassungen kommen vom TYPO3-Übersetzungsserver. Auf einer frischen
+> Installation steht das Anmeldeformular deshalb auf Englisch, obwohl die Site deutsch
+> ist. Einmal `vendor/bin/typo3 language:update de` behebt das. Damit das Kommando die
+> Sprache annimmt, muss sie registriert sein: unter TYPO3 14 in
+> `$GLOBALS['TYPO3_CONF_VARS']['LANG']['availableLocales']`, unter 13 in
+> `$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['lang']['availableLanguages']`. Im Backend
+> erledigt das „Wartung → Sprachpakete verwalten".
+
 ## Projekte ohne `fluid_styled_content`
 
 Diese Extension ersetzt FSC und liefert deshalb `lib.contentElement` selbst mit. Ohne
 diese Definition rendert *jedes* Extbase-Plugin — auch das Formular-Plugin — als
 leerer String, ohne Fehler. Wer FSC parallel betreibt, sollte wissen, dass beide
 dieselbe Definition beanspruchen.
+
+Die klassischen Inhaltselemente kommen allerdings nicht aus FSC, sondern aus
+`EXT:frontend` selbst — sie stehen also unabhängig davon im Assistenten. Welche das Set
+rendert und welche es ausblendet, steht unter
+[Content Blocks](ContentBlocks.md#die-core-elemente).

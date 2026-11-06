@@ -19,5 +19,35 @@
     rte-editor.css, which only the RTE preset loads.
 </f:comment>
 <f:asset.css identifier="kern-ux-rte" href="EXT:kern_ux/Resources/Public/Css/rte.css" />
+<f:comment>
+    The project's own stylesheet, last so it can override without the project having to
+    replace the set. One setting rather than a build step: a project that has a build
+    already knows where to put its output, and one that does not should not need one to
+    change a colour.
+</f:comment>
+<f:if condition="{site.settings.kernUx.assets.projectCss}">
+    <f:asset.css identifier="kern-ux-project" href="{site.settings.kernUx.assets.projectCss}" />
+</f:if>
+<f:comment>
+    Icons. Emitted here rather than through page.shortcutIcon because these are site
+    settings, and a TypoScript constant would flatten an unset one into the string
+    "0" - which is a path, so the browser would request it.
+
+    Each is optional and independent: an SVG icon covers every size where it is
+    supported, the .ico is what a browser asks for at /favicon.ico regardless, and the
+    other two only matter to a site that wants to be installed.
+</f:comment>
+<f:if condition="{site.settings.kernUx.site.faviconSvg}">
+    <link rel="icon" type="image/svg+xml" href="{f:uri.resource(path: site.settings.kernUx.site.faviconSvg)}" />
+</f:if>
+<f:if condition="{site.settings.kernUx.site.faviconIco}">
+    <link rel="icon" sizes="any" href="{f:uri.resource(path: site.settings.kernUx.site.faviconIco)}" />
+</f:if>
+<f:if condition="{site.settings.kernUx.site.appleTouchIcon}">
+    <link rel="apple-touch-icon" href="{f:uri.resource(path: site.settings.kernUx.site.appleTouchIcon)}" />
+</f:if>
+<f:if condition="{site.settings.kernUx.site.webmanifest}">
+    <link rel="manifest" href="{f:uri.resource(path: site.settings.kernUx.site.webmanifest)}" />
+</f:if>
 <f:asset.script identifier="kern-ux-navigation" src="EXT:kern_ux/Resources/Public/JavaScript/navigation.js" />
 <f:asset.script identifier="kern-ux-dialog" src="EXT:kern_ux/Resources/Public/JavaScript/dialog.js" />

@@ -1,0 +1,51 @@
+<f:argument name="rows" type="array"
+            description="Body rows, each a list of cell strings."
+/><f:argument name="head" type="array" optional="{true}" default="{}"
+            description="One header row. Empty renders no thead."
+/><f:argument name="foot" type="array" optional="{true}" default="{}"
+            description="One footer row, e.g. a total. Empty renders no tfoot."
+/><f:argument name="rowHeaders" type="bool" optional="{true}" default="{false}"
+            description="Make the first cell of every body row a row header."
+/><f:argument name="caption" type="string" optional="{true}" default=""
+            description="The table's accessible name, announced on entering it."
+/><f:argument name="captionHidden" type="bool" optional="{true}" default="{false}"
+            description="Keep the caption for screen readers but not on screen - for when a heading right above the table already says the same thing."
+/><f:comment>
+    The scroll container is not decoration. A table that overflows has to be reachable by
+    keyboard, so the wrapper carries tabindex="0" - this is byte-for-byte what
+    lib.kernUx.rte injects around an editor-drawn table in setup.typoscript, so the two
+    paths cannot drift apart and axe's scrollable-region-focusable holds for both.
+
+    No class on thead. KERN defines __body, __row, __header, __cell and __footer and
+    nothing for the head; adding a kern-table__head would be inventing a class.
+
+    The caption is a kern-title because KERN styles it as one:
+    `.kern-table .kern-title { display: table-caption }`. That it may also be visually
+    hidden is anticipated upstream - `.kern-sr-only:not(caption)` exists precisely so a
+    hidden caption keeps its place in the table box instead of being pulled out of it.
+
+    Cells go through f:format.nl2br in tag form, which escapes its children and only
+    emits the <br> itself, so the wizard's in-cell line breaks survive without
+    f:format.raw handing an editor a way to write markup into the page.
+</f:comment><f:spaceless>
+<div class="kern-table-responsive" tabindex="0">
+    <table class="kern-table">
+        <f:if condition="{caption}"><caption class="kern-title<f:if condition="{captionHidden}"> kern-sr-only</f:if>">{caption}</caption></f:if>
+        <f:if condition="{head}">
+            <thead>
+                <tr class="kern-table__row"><f:for each="{head}" as="cell"><th class="kern-table__header" scope="col"><f:format.nl2br>{cell}</f:format.nl2br></th></f:for></tr>
+            </thead>
+        </f:if>
+        <tbody class="kern-table__body">
+            <f:for each="{rows}" as="row">
+                <tr class="kern-table__row"><f:for each="{row}" as="cell" iteration="i"><f:if condition="{rowHeaders} && {i.isFirst}"><f:then><th class="kern-table__header" scope="row"><f:format.nl2br>{cell}</f:format.nl2br></th></f:then><f:else><td class="kern-table__cell"><f:format.nl2br>{cell}</f:format.nl2br></td></f:else></f:if></f:for></tr>
+            </f:for>
+        </tbody>
+        <f:if condition="{foot}">
+            <tfoot class="kern-table__footer">
+                <tr class="kern-table__row"><f:for each="{foot}" as="cell"><td class="kern-table__cell"><f:format.nl2br>{cell}</f:format.nl2br></td></f:for></tr>
+            </tfoot>
+        </f:if>
+    </table>
+</div>
+</f:spaceless>
