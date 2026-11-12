@@ -9,6 +9,13 @@ syntax, so `state` in `ext_emconf.php` carries it instead.
 
 ## [Unreleased]
 
+## [1.0.0-beta.4] - 2026-11-12
+
+The same code as 1.0.0-beta.3. The repository history was rewritten to correct its author
+metadata, which gave every commit and tag a new hash. Packagist keeps 1.0.0-alpha through
+1.0.0-beta.3 at their original commits and marks them "retag blocked", so this release
+is the first one whose Packagist reference matches the tag in git.
+
 ## [1.0.0-beta.3] - 2026-11-06
 
 One fix for sites that keep `fluid_styled_content` installed, which includes every site
@@ -189,7 +196,8 @@ see.
 First public pre-release: the component layer, the content blocks, the `ext:form` theme
 and the page templates, built against KERN UX 2.7.2.
 
-[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.3...HEAD
+[Unreleased]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.4...HEAD
+[1.0.0-beta.4]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.3...1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.2...1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/balatD/kern_ux/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/balatD/kern_ux/compare/1.0.0-alpha.2...1.0.0-beta.1
