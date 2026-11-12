@@ -9,8 +9,8 @@ publiccodeYmlVersion: '0.4'
 name: kern_ux
 url: 'https://github.com/balatD/kern_ux'
 landingURL: 'https://github.com/balatD/kern_ux'
-softwareVersion: 1.0.0-beta.3
-releaseDate: '2026-11-06'
+softwareVersion: 1.0.0-beta.4
+releaseDate: '2026-11-12'
 developmentStatus: beta
 softwareType: addon
 platforms:
